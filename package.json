@@ -1,0 +1,11 @@
+{
+  "name": "abd-pages",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "encrypt": "node encrypt.js"
+  },
+  "dependencies": {
+    "staticrypt": "^3.4.0"
+  }
+}

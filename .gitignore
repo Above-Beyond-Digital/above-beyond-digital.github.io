@@ -6,5 +6,12 @@
 .env
 .env.*
 
+# Node
+node_modules/
+npm-debug.log*
+
+# staticrypt config (we derive salt from master secret instead)
+.staticrypt.json
+
 # Claude Code local settings
 .claude/settings.local.json
