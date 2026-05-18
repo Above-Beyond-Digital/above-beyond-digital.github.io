@@ -59,7 +59,14 @@ for (const rel of files) {
   fs.mkdirSync(outDir, { recursive: true });
 
   execSync(
-    `./node_modules/.bin/staticrypt "${src}" -p "${password}" -d "${outDir}" -s "${salt}" --remember 30 --short --config false`,
+    `./node_modules/.bin/staticrypt "${src}" -p "${password}" -d "${outDir}" -s "${salt}" --remember 30 --short --config false` +
+    ` --template-color-primary "#0099FF"` +
+    ` --template-color-secondary "#FFFFFF"` +
+    ` --template-title "Above & Beyond Digital"` +
+    ` --template-button "Unlock"` +
+    ` --template-placeholder "Enter your password"` +
+    ` --template-instructions "This report is private and intended for the recipient only."` +
+    ` --template-error "Incorrect password. Please try again."`,
     { stdio: 'inherit', cwd: process.cwd() }
   );
 
