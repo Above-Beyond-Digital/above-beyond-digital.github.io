@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0099ff">
+  <title>Above &amp; Beyond Digital — Brand Style Guide</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap">
+  <style>
+    /* --- Generated from tokens.yml. Do NOT hand-edit. Run /brand-skill regen instead. --- */
+:root {
+  --accent:     #0099ff;
+  --accent-alt: #003366;
+  --accent-bg:  rgba(0, 153, 255, 0.06);
+  --bg-base:    #FFFFFF;
+  --bg-alt:     #F7F6F5;
+  --bg-card:    #FFFFFF;
+  --border:     #E0DEDC;
+  --border-med: #C8C5C2;
+  --text-primary:   #000000;
+  --text-secondary: #4A4A4A;
+  --text-muted:     #888888;
+  --green:    #0E9F6E;
+  --green-bg: rgba(14, 159, 110, 0.07);
+  --amber:    #f4b33e;
+  --amber-bg: rgba(244, 179, 62, 0.07);
+  --blue:     #1D4ED8;
+  --blue-bg:  rgba(29, 78, 216, 0.07);
+  --purple:   #7C3AED;
+  --purple-bg: rgba(124, 58, 237, 0.07);
+  --meta-blue:    #0668E1;
+  --meta-bg:      rgba(6, 104, 225, 0.07);
+  --google-color: #34A853;
+  --google-bg:    rgba(52, 168, 83, 0.07);
+  --r-sm:    6px;
+  --r-md:   10px;
+  --r-lg:   12px;
+  --r-xl:   20px;
+  --r-full: 999px;
+  --sidebar-w:    320px;
+  --app-header-h:  60px;
+  --wrap-max:    1180px;
+  --font-heading: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-body:    'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* ============================================================
+   BRAND-SKILL COMPONENT CSS
+   Static token-parameterised component CSS bundle.
+
+   This file is CONCATENATED with a generated :root { ... } block by
+   scripts/generate_css.py to produce assets/design-system.css.
+
+   Do NOT redeclare :root tokens here - they come from tokens.yml.
+   Do NOT hand-edit assets/design-system.css - regenerate via /brand-skill regen.
+
+   All tokens referenced here:
+     --accent, --accent-alt, --accent-bg
+     --bg-base, --bg-alt, --bg-card
+     --border, --border-med
+     --text-primary, --text-secondary, --text-muted
+     --green, --green-bg, --amber, --amber-bg, --blue, --blue-bg, --purple, --purple-bg
+     --meta-blue, --meta-bg, --google-color, --google-bg
+     --r-sm, --r-md, --r-lg, --r-xl, --r-full
+     --sidebar-w, --app-header-h, --wrap-max
+     --font-heading, --font-body
+   ============================================================ */
+
+/* --- Base --- */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-base); color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: var(--wrap-max); margin: 0 auto; padding: 0 28px; }
+.label { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 12px; }
+.section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.12; color: var(--text-primary); margin-bottom: 14px; }
+.section-sub { font-size: 16px; color: var(--text-secondary); max-width: 720px; margin-bottom: 40px; line-height: 1.7; }
+p { margin-bottom: 16px; color: var(--text-secondary); line-height: 1.7; }
+strong { color: var(--text-primary); font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+section, .section { padding: 28px 0 36px; scroll-margin-top: 80px; }
+section + section, .section + .section { border-top: 1px solid var(--border); }
+/* All sections share the white base background. */
+/* Trailing-margin reset: when a grid/list is the last child in its container, drop its bottom margin so section padding controls bottom rhythm */
+section > .wrap > *:last-child,
+.section > .wrap > *:last-child,
+section > *:last-child,
+.section > *:last-child { margin-bottom: 0 !important; }
+/* Aliases for legacy class names (typography variants) */
+.section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 10px; }
+.section-subtitle { font-size: 16px; color: var(--text-secondary); max-width: 720px; margin-bottom: 28px; line-height: 1.65; }
+
+/* --- Section header (canonical, kit pattern) ---
+   Title + small accent eyebrow label inline on the same baseline.
+   Use INSTEAD OF a stacked `.label` + h2 when matching the canonical kit. */
+.section-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+.section-header .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; margin: 0; }
+.section-header .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0; display: inline; }
+
+/* --- Commentary callout (kit pattern) ---
+   Warm-grey insight box with an accent left border. Used under section content
+   for one-sentence narrative ("the system is working more efficiently..."). */
+.commentary {
+  background: var(--bg-alt); border-radius: var(--r-lg);
+  padding: 16px 20px; margin-top: 16px;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.65;
+  border-left: 3px solid var(--accent);
+}
+
+/* --- Typography utility classes (kit canonical) ---
+   Heading roles (.h-*) and content type roles (.t-*) for use OUTSIDE the standard
+   component HTML - e.g. a one-off page section that needs a hero-sized headline
+   without all the .hero-* component scaffolding. Same sizes as the named components.
+*/
+.h-hero { font-size: clamp(36px, 6vw, 60px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: var(--text-primary); }
+.h-hero em { font-style: normal; color: var(--accent); }
+.h-hero-sub { font-size: clamp(16px, 1.8vw, 18px); color: var(--text-secondary); font-weight: 400; line-height: 1.7; }
+.h-section { font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.12; color: var(--text-primary); }
+.h-section-sub { font-size: 16px; color: var(--text-secondary); max-width: 720px; line-height: 1.7; }
+.h-label { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display: block; }
+
+.t-kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.t-kpi-value { font-size: 38px; font-weight: 900; color: var(--text-primary); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.t-kpi-comp-label { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.t-kpi-comp-value { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.t-card-title { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.t-card-body  { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+.t-table-th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.t-table-td { font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.t-meta { font-size: 12px; color: var(--text-muted); }
+.page-hero { padding: 48px 0 36px; background: var(--bg-base); }
+.page-hero .hero-badge { margin-bottom: 22px; }
+.page-hero .hero-heading { font-size: clamp(34px, 5vw, 48px); margin-bottom: 12px; }
+.page-hero .hero-sub { margin-bottom: 0; }
+ul, ol { padding-left: 20px; margin-bottom: 16px; color: var(--text-secondary); }
+ul li, ol li { margin-bottom: 8px; line-height: 1.7; }
+/* Accent bullet markers on unordered lists. Ordered lists keep default
+   colour so the numerals don't read as if they're a separate accent. Lists
+   with their own custom markers (.checklist) are unaffected - they override
+   list-style and use ::before. */
+ul li::marker { color: var(--accent); }
+code, .mono { font-family: 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace; font-size: 0.92em; background: var(--bg-alt); padding: 1px 6px; border-radius: var(--r-sm); color: var(--text-primary); }
+hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* --- Top sticky nav (canonical for reports - kit pattern) ---
+   64px tall, centred horizontal links on desktop, burger collapse below 768px. */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 64px; display: flex; align-items: center;
+}
+.nav-inner {
+  max-width: var(--wrap-max); margin: 0 auto; padding: 0 28px;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; gap: 20px;
+  position: relative;
+}
+.nav-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-logo { display: block; flex-shrink: 0; }
+.nav-logo, .nav-logo svg { height: 22px; width: auto; }
+.nav-logo path, .nav-logo svg path { fill: var(--text-primary); }
+
+.nav-links { display: flex; gap: 2px; flex: 1; justify-content: center; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  text-decoration: none; padding: 6px 14px; border-radius: var(--r-sm);
+  white-space: nowrap; transition: color .15s, background .15s;
+}
+.nav-links a:hover { color: var(--text-primary); background: var(--bg-alt); text-decoration: none; }
+.nav-links a.cur { color: var(--text-primary); background: var(--bg-alt); }
+
+.nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; margin-left: auto; }
+.nav-period { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+/* Legacy alias - older reports use .nav-badge for the period label */
+.nav-badge { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; display: flex; align-items: center; gap: 10px; }
+
+/* Burger toggle - hidden on desktop, shown only at mobile (<768px) via @media block below */
+.nav-burger {
+  display: none; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--r-sm);
+  background: transparent; border: 1px solid var(--border);
+  cursor: pointer; color: var(--text-primary);
+  transition: background .15s, border-color .15s, transform .1s;
+  padding: 0; flex-shrink: 0;
+}
+.nav-burger:hover { background: var(--bg-alt); border-color: var(--text-primary); }
+.nav-burger:active { transform: scale(0.96); }
+.nav-burger svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+.nav-burger .icon-close { display: none; }
+nav.is-open .nav-burger .icon-open { display: none; }
+nav.is-open .nav-burger .icon-close { display: block; }
+
+/* --- Hero (kit canonical) ---
+   `.hero` and `#hero` both supported. `.hero-eyebrow` is the kit's small accent label;
+   `.hero-badge` is the legacy pill variant (kept for older reports). */
+#hero, .hero { padding: 64px 0 36px; background: var(--bg-base); }
+.hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 16px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--r-full); font-size: 12px; color: var(--text-muted); padding: 5px 16px; margin-bottom: 28px; background: var(--bg-alt); font-weight: 600; }
+.hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: block; }
+.hero-heading, .hero-title { font-size: clamp(36px, 6vw, 60px); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; color: var(--text-primary); margin: 0 0 18px; max-width: 880px; }
+.hero-heading em, .hero-title em { font-style: normal; color: var(--accent); }
+.hero-sub { font-size: 18px; color: var(--text-secondary); font-weight: 400; max-width: 720px; margin: 0; line-height: 1.7; }
+
+/* --- KPI tiles --- */
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 0; }
+/* Odd-count helpers:
+   - 1 tile: spans full row, centred + capped at 50% so it doesn't look like a banner.
+   - 2 tiles: each takes 1.5 cols so they fill the row.
+   - 4 tiles: let the 4th sit naturally bottom-left in row 2. */
+.kpi-grid > .kpi-tile:nth-child(2):last-child { grid-column: span 2; }
+.kpi-grid > .kpi-tile:only-child { grid-column: span 3; max-width: 50%; justify-self: center; }
+.kpi-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 22px 22px 20px; text-align: center; }
+.kpi-tile-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+.kpi-tile-value { font-size: 38px; font-weight: 900; color: var(--text-primary); line-height: 1.1; margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+.kpi-tile-comps { display: flex; justify-content: center; gap: 24px; }
+.kpi-comp { text-align: center; }
+.kpi-comp-label { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 2px; }
+.kpi-comp-value { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.kpi-comp-value.up { color: var(--green); }
+.kpi-comp-value.down { color: var(--accent); }
+
+/* --- KPI tile (kit variant) ---
+   Use `.kpi-tile.kit` for the canonical kit layout: left-aligned, comp rows
+   justified to the tile edges instead of centred. Pair with .kpi-label / .kpi-value /
+   .kpi-comp-row inside .kpi-comp (flex container, not the legacy .kpi-tile-comps). */
+.kpi-tile.kit { text-align: left; padding: 22px 22px 20px; }
+.kpi-tile.kit .kpi-comp { display: flex; justify-content: space-between; gap: 12px; }
+.kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; }
+.kpi-value { font-size: 38px; font-weight: 900; color: var(--text-primary); line-height: 1.1; margin: 10px 0 14px; font-variant-numeric: tabular-nums; }
+.kpi-comp-row { display: flex; flex-direction: column; gap: 2px; }
+
+/* --- Tables (kit canonical) ---
+   Black header bar, 13/18 padding, tabular-nums on body cells. Add class `.num`
+   to any numeric th/td (both header and body) for right-alignment.
+   `.table-wrap` is the kit name for the rounded card frame; `.campaign-table-wrap`
+   is the legacy alias kept for performance-reporting consumers.
+   `tr.total` is the kit name; `tr.total-row` is the legacy alias. */
+.campaign-table-wrap, .table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin: 20px 0; overflow-x: auto; }
+.campaign-table, .table-wrap > table { width: 100%; border-collapse: collapse; }
+.campaign-table { min-width: 700px; }
+.campaign-table thead th, .table-wrap thead th { background: var(--text-primary); color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 13px 18px; text-align: left; white-space: nowrap; }
+.campaign-table thead th.num, .table-wrap thead th.num { text-align: right; }
+.campaign-table tbody td, .table-wrap tbody td { padding: 13px 18px; font-size: 13px; color: var(--text-secondary); border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+.campaign-table tbody td.num, .table-wrap tbody td.num { text-align: right; }
+.campaign-table tbody td strong, .table-wrap tbody td strong { color: var(--text-primary); font-weight: 800; }
+.campaign-table tbody tr:last-child td, .table-wrap tbody tr:last-child td { border-bottom: none; }
+.campaign-table .total-row td, .campaign-table tr.total td, .table-wrap tr.total td { background: var(--bg-alt); font-weight: 800; color: var(--text-primary); font-size: 14px; }
+/* Status pill (kit canonical) - `.pill` is the kit name, `.status-pill` is the legacy alias */
+.status-pill, .pill { display: inline-block; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 9px; border-radius: var(--r-full); }
+.status-pill.active, .pill.active { background: var(--green-bg); color: var(--green); }
+.status-pill.paused, .pill.paused { background: var(--bg-alt); color: var(--text-muted); }
+
+/* --- Changes list (kit canonical) ---
+   Each item is its own card with subtle hover. Container uses gap-based spacing
+   (no internal margins on items). Kit alias .changes works alongside .change-list. */
+.change-list, .changes { display: flex; flex-direction: column; gap: 10px; margin: 28px 0; }
+.change-item, .change {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: 14px 18px;
+  transition: border-color .15s, background .15s;
+}
+.change-item:hover, .change:hover { border-color: var(--border-med); background: var(--bg-alt); }
+.change-icon {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.change-icon.fix  { background: var(--green-bg); color: var(--green); }
+.change-icon.cut  { background: var(--accent-bg);    color: var(--accent);    }
+.change-icon.bid  { background: var(--blue-bg);  color: var(--blue);  }
+.change-icon.test { background: var(--amber-bg); color: var(--amber); }
+.change-body { flex: 1; min-width: 0; }
+.change-title { font-size: 14px; font-weight: 800; color: var(--text-primary); margin: 0 0 2px; line-height: 1.35; }
+.change-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+/* --- Next cards (kit canonical) ---
+   3-col grid by default, hover lifts border to accent + translateY.
+   Drop the legacy accent left-stripe - the eyebrow + hover do the work. */
+.next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0; }
+.next-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: 22px 22px 24px;
+  transition: border-color .15s, transform .15s;
+}
+.next-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.next-card-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.next-card-title { font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
+.next-card-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+/* --- Footer (kit canonical) ---
+   Black band, dark-mode wordmark at pure #fff, italic tagline at default weight.
+   Logo + tagline both centred via `text-align: center` on the outer band and
+   `margin: 0 auto 18px` on the logo SVG (which also gives the 18px gap to the
+   tagline below). No `.wrap` wrapper - the kit HTML is `.footer > .footer-logo + p`
+   directly. */
+footer, .footer { background: var(--text-primary); padding: 56px 0 64px; margin-top: 64px; text-align: center; }
+.footer-logo svg, footer svg, .footer svg { height: 22px; width: auto; max-width: 200px; display: block; margin: 0 auto 18px; }
+footer p, .footer p { font-size: 14px; color: rgba(255,255,255,0.4); font-style: italic; margin: 0; }
+
+/* --- Download button --- */
+.btn-download { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: none; cursor: pointer; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 7px 16px; border-radius: var(--r-full); transition: background .15s, transform .1s; white-space: nowrap; text-decoration: none; }
+.btn-download:hover { background: var(--accent-alt); transform: translateY(-1px); text-decoration: none; color: #fff; }
+.btn-download:active { transform: translateY(0); }
+.btn-download svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* Ghost / outline button variant (e.g. secondary download link) */
+.btn-ghost { display: inline-flex; align-items: center; gap: 6px; background: transparent; color: var(--text-primary); border: 1px solid var(--border-med); cursor: pointer; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 6px 14px; border-radius: var(--r-full); transition: background .15s, border-color .15s, color .15s; white-space: nowrap; text-decoration: none; }
+.btn-ghost:hover { background: var(--bg-alt); border-color: var(--text-primary); color: var(--text-primary); text-decoration: none; }
+.btn-ghost svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* --- Print header (hidden on screen) --- */
+.print-header { display: none; }
+.print-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 0 0 16px 0; margin-bottom: 28px; border-bottom: 2px solid var(--accent); }
+.print-header-left { display: flex; flex-direction: column; gap: 2px; }
+.print-header-title { font-size: 11px; font-weight: 700; color: #070909; letter-spacing: 0.02em; }
+.print-header-date { font-size: 10px; font-weight: 500; color: #888; }
+.print-header-logo { height: 22px; width: auto; }
+
+/* ============================================================
+   STYLE-GUIDE-BUILDER EXTENSIONS
+   Additive on top of core tokens
+   ============================================================ */
+
+/* Section eyebrow with channel badge */
+.channel-badges { display: inline-flex; gap: 6px; margin-left: 10px; vertical-align: middle; }
+.channel-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: var(--r-sm); border: 1px solid transparent; }
+.channel-tag.meta { background: var(--meta-bg); color: var(--meta-blue); border-color: rgba(6,104,225,0.2); }
+.channel-tag.google { background: var(--google-bg); color: var(--google-color); border-color: rgba(52,168,83,0.2); }
+.channel-tag.pmax { background: var(--purple-bg); color: var(--purple); border-color: rgba(124,58,237,0.2); }
+.channel-tag.klaviyo { background: var(--amber-bg); color: var(--amber); border-color: rgba(180,83,9,0.2); }
+.channel-tag.all { background: var(--text-primary); color: #fff; }
+
+/* Band badge (S / A / B / C / D / F) */
+.band-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 900; margin-right: 8px; }
+.band-badge.s { background: var(--green); color: #fff; }
+.band-badge.a { background: var(--green-bg); color: var(--green); border: 1px solid rgba(4,120,87,0.3); }
+.band-badge.b { background: var(--bg-alt); color: var(--text-primary); border: 1px solid var(--border); }
+.band-badge.c { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(180,83,9,0.3); }
+.band-badge.d { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(234,70,72,0.3); }
+.band-badge.f { background: var(--accent); color: #fff; }
+
+/* Hook card (single extracted hook with example) */
+.hook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+.hook-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; }
+.hook-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 12px; }
+.hook-card-id { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.hook-card-title { font-size: 15px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; }
+.hook-card-example { font-size: 14px; color: var(--text-secondary); font-style: italic; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--accent-bg); border-radius: 0 var(--r-sm) var(--r-sm) 0; margin: 10px 0; line-height: 1.55; }
+.hook-card-meta { font-size: 12px; color: var(--text-muted); margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* Verbatim example card (hero ad) */
+.example-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px 24px; margin: 20px 0; }
+.example-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 16px; flex-wrap: wrap; }
+.example-title { font-size: 17px; font-weight: 800; color: var(--text-primary); line-height: 1.3; }
+.example-meta { font-size: 12px; color: var(--text-muted); font-family: 'SFMono-Regular', monospace; }
+.example-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 0; margin: 18px 0; padding: 0;
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: var(--r-md); overflow: hidden;
+}
+.example-metric {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 18px; position: relative;
+  border-left: 1px solid var(--border);
+}
+.example-metric:first-child { border-left: none; }
+.example-metric-val {
+  font-size: 20px; font-weight: 900; color: var(--text-primary);
+  line-height: 1.1; font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.example-metric-lbl {
+  font-size: 10px; color: var(--text-muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2;
+}
+/* Colour the value when band badge is present */
+.example-metric.val-roas .example-metric-val,
+.example-metric.val-positive .example-metric-val { color: var(--green); }
+.example-metric.val-warning .example-metric-val { color: var(--amber); }
+.example-metric.val-negative .example-metric-val { color: var(--accent); }
+.example-copy { font-size: 14px; color: var(--text-secondary); white-space: pre-wrap; line-height: 1.65; padding: 16px 18px; background: var(--bg-alt); border-radius: var(--r-md); border-left: 3px solid var(--accent); }
+.example-row { margin-bottom: 12px; }
+.example-row-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; }
+.example-row-val { font-size: 14px; color: var(--text-primary); font-weight: 600; }
+
+/* Pattern table (headlines / descriptions / ctas etc) */
+.pattern-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin: 20px 0; }
+.pattern-table th { background: var(--text-primary); color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 14px; text-align: left; }
+.pattern-table td { padding: 12px 14px; font-size: 13px; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+.pattern-table tbody tr:last-child td { border-bottom: none; }
+.pattern-table td:first-child { font-weight: 600; color: var(--text-primary); }
+.pattern-table .count { font-variant-numeric: tabular-nums; text-align: right; font-weight: 800; color: var(--text-primary); }
+
+/* Anti-pattern block (avoid / do-instead) */
+.ap-block { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+.ap-side { padding: 20px 22px; }
+.ap-side.avoid { background: var(--accent-bg); border-right: 1px solid var(--border); }
+.ap-side.instead { background: var(--green-bg); }
+.ap-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.ap-side.avoid .ap-label { color: var(--accent); }
+.ap-side.instead .ap-label { color: var(--green); }
+.ap-quote { font-size: 14px; color: var(--text-primary); font-style: italic; line-height: 1.55; font-weight: 500; }
+.ap-why { font-size: 13px; color: var(--text-secondary); margin-top: 10px; line-height: 1.6; }
+.ap-name { font-size: 16px; font-weight: 800; color: var(--text-primary); grid-column: 1 / -1; padding: 14px 22px 0; margin-bottom: 0; }
+.ap-block { grid-template-areas: "name name" "avoid instead"; grid-template-columns: 1fr 1fr; }
+.ap-name { grid-area: name; }
+.ap-side.avoid { grid-area: avoid; }
+.ap-side.instead { grid-area: instead; }
+
+/* Rule block (voice rules 1-5) */
+.rule-list { margin: 28px 0; display: flex; flex-direction: column; gap: 20px; }
+.rule { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--r-lg); padding: 22px 24px; }
+.rule-num { display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; }
+.rule-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.3; }
+.rule-body { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px; }
+.rule-example { font-size: 13px; color: var(--text-primary); font-style: italic; padding: 10px 14px; background: var(--green-bg); border-radius: var(--r-sm); border-left: 3px solid var(--green); margin-top: 10px; }
+.rule-counter { font-size: 13px; color: var(--text-primary); font-style: italic; padding: 10px 14px; background: var(--accent-bg); border-radius: var(--r-sm); border-left: 3px solid var(--accent); margin-top: 8px; }
+
+/* Checklist block */
+.checklist { margin: 24px 0; list-style: none; padding-left: 0; }
+.checklist li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-primary); }
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before { content: "☐"; font-size: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: -2px; }
+
+/* Stat callout (big number + label) */
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
+.stat-row.callouts { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.stat-row.callouts .stat-tile { padding: 14px 14px; text-align: center; }
+.stat-row.callouts .stat-tile-lbl { font-size: 11px; }
+.stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 20px; text-align: left; }
+.stat-tile-val { font-size: 28px; font-weight: 900; color: var(--text-primary); line-height: 1.1; margin-bottom: 4px; }
+.stat-tile-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ============================================================
+   RESPONSIVE (mobile-first refinements)
+   ============================================================ */
+
+/* Tablet: 1024px and below */
+@media (max-width: 1024px) {
+  .wrap { padding: 0 22px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .next-grid { grid-template-columns: repeat(2, 1fr); }
+  .hook-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .stat-row.callouts { grid-template-columns: repeat(3, 1fr); }
+  .ap-block { grid-template-columns: 1fr 1fr; } /* still side-by-side at tablet */
+}
+
+/* Mobile: 768px and below */
+@media (max-width: 768px) {
+  /* Base rhythm */
+  section { padding: 48px 0 52px; }
+  .wrap { padding: 0 18px; }
+  p, .section-sub { font-size: 15px; line-height: 1.65; }
+  .section-sub { margin-bottom: 28px; }
+
+  /* Hero */
+  #hero { padding: 52px 0 44px; }
+  .hero-heading { font-size: clamp(28px, 8vw, 36px); letter-spacing: -0.02em; margin-bottom: 14px; }
+  .hero-sub { font-size: 15px; line-height: 1.6; }
+  .hero-badge { font-size: 11px; padding: 4px 12px; margin-bottom: 20px; }
+
+  /* Nav - collapse links behind burger toggle */
+  .nav-inner { gap: 8px; }
+  .nav-burger { display: inline-flex; }
+  .nav-links {
+    display: none; position: absolute; top: calc(64px - 1px); left: 0; right: 0;
+    background: rgba(255,255,255,0.99); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 18px 18px; flex-direction: column; align-items: stretch;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    max-height: calc(100vh - 64px); overflow-y: auto; gap: 2px;
+    flex: none; justify-content: flex-start;
+  }
+  nav.is-open .nav-links { display: flex; }
+  .nav-links a { font-size: 14px; padding: 10px 14px; }
+  .nav-badge { gap: 6px; }
+  .nav-badge span { display: none; }
+  .btn-download, .btn-ghost { padding: 6px 10px; font-size: 10px; gap: 5px; }
+  .btn-download svg, .btn-ghost svg { width: 12px; height: 12px; }
+
+  /* KPI tiles - compact grid, still 2-col */
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .kpi-tile { padding: 18px 16px; }
+  .kpi-tile-label { font-size: 10px; margin-bottom: 4px; letter-spacing: 0.06em; }
+  .kpi-tile-value { font-size: 26px; margin-bottom: 10px; }
+  .kpi-tile-comps { gap: 14px; }
+  .kpi-comp-value { font-size: 13px; }
+  .kpi-comp-label { font-size: 10px; }
+
+  /* Stat tiles - 2-col compact cards */
+  .stat-row { grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
+  .stat-row.callouts { grid-template-columns: repeat(2, 1fr); }
+  .stat-tile { padding: 14px 14px; border-radius: var(--r-md); }
+  .stat-tile-val { font-size: 20px; line-height: 1.2; margin-bottom: 3px; }
+  .stat-tile-lbl { font-size: 10px; letter-spacing: 0.06em; line-height: 1.3; }
+
+  /* Hook cards - full width stacked with snug padding */
+  .hook-grid { gap: 12px; margin: 20px 0; }
+  .hook-card { padding: 16px 18px; }
+  .hook-card-title { font-size: 14px; }
+  .hook-card-example { font-size: 13px; padding: 8px 12px; margin: 8px 0; }
+  .hook-card-meta { font-size: 11px; gap: 8px; margin-top: 8px; }
+
+  /* Example cards - lighter padding, metrics wrap into 2-3 col grid */
+  .example-card { padding: 18px 18px; margin: 16px 0; }
+  .example-head { flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .example-title { font-size: 15px; }
+  .example-meta { font-size: 11px; }
+  .example-metrics { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
+  .example-metric { padding: 12px 14px; gap: 4px; }
+  .example-metric-val { font-size: 16px; }
+  .example-metric-lbl { font-size: 9px; }
+  .example-copy { font-size: 13px; padding: 12px 14px; }
+  .example-row { margin-bottom: 10px; }
+  .example-row-lbl { font-size: 10px; margin-bottom: 3px; }
+  .example-row-val { font-size: 13px; }
+
+  /* Anti-pattern blocks stack */
+  .ap-block { grid-template-columns: 1fr; grid-template-areas: "name" "avoid" "instead"; gap: 0; }
+  .ap-name { font-size: 15px; padding: 14px 18px 0; }
+  .ap-side { padding: 16px 18px; }
+  .ap-side.avoid { border-right: none; border-bottom: 1px solid var(--border); }
+  .ap-quote { font-size: 13px; }
+  .ap-why { font-size: 12px; }
+
+  /* Rule cards */
+  .rule { padding: 18px 20px; }
+  .rule-title { font-size: 16px; }
+  .rule-body { font-size: 13px; }
+  .rule-example, .rule-counter { font-size: 12px; padding: 8px 12px; }
+
+  /* Tables scroll horizontally inside rounded frame */
+  .campaign-table-wrap, .pattern-table { border-radius: var(--r-md); }
+  .pattern-table { display: block; overflow-x: auto; max-width: 100%; }
+  .pattern-table thead, .pattern-table tbody { white-space: nowrap; }
+  .pattern-table th, .pattern-table td { padding: 10px 12px; font-size: 12px; }
+  .campaign-table thead th { padding: 10px 10px; font-size: 9px; }
+  .campaign-table tbody td { padding: 10px 10px; font-size: 12px; }
+
+  /* Changes list - tighter card padding on mobile */
+  .change-item, .change { padding: 12px 14px; gap: 12px; }
+  .change-icon { width: 26px; height: 26px; font-size: 13px; }
+  .change-title { font-size: 13px; }
+  .change-desc { font-size: 12.5px; }
+
+  /* Next cards - stack on mobile */
+  .next-grid { grid-template-columns: 1fr; gap: 12px; }
+  .next-card { padding: 18px 20px; }
+  .next-card-title { font-size: 14px; }
+  .next-card-desc { font-size: 13px; }
+  .next-card:hover { transform: none; } /* disable hover-lift on touch */
+
+  /* Checklist */
+  .checklist li { padding: 8px 0; font-size: 13px; gap: 10px; }
+  .checklist li::before { font-size: 16px; }
+
+  /* Section title */
+  .section-title { font-size: 24px; margin-bottom: 10px; }
+  .label { font-size: 11px; margin-bottom: 10px; }
+
+  /* Band badges */
+  .band-badge { width: 20px; height: 20px; font-size: 10px; margin-right: 6px; }
+
+  /* Channel tags */
+  .channel-tag { font-size: 9px; padding: 2px 6px; }
+}
+
+/* Small phone: 480px and below */
+@media (max-width: 480px) {
+  section { padding: 36px 0 40px; }
+  .wrap { padding: 0 14px; }
+
+  /* Hero tighter */
+  #hero { padding: 40px 0 32px; }
+  .hero-heading { font-size: clamp(26px, 9vw, 32px); }
+  .hero-sub { font-size: 14px; }
+
+  /* KPI tiles - still 2-col but more compact */
+  .kpi-grid { gap: 10px; }
+  .kpi-tile { padding: 14px 12px; }
+  .kpi-tile-value { font-size: 22px; }
+  .kpi-tile-comps { flex-direction: column; gap: 8px; }
+
+  /* Stat tiles stay 2-col (not 1) - looks better balanced */
+  .stat-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stat-tile { padding: 12px 12px; }
+  .stat-tile-val { font-size: 17px; line-height: 1.2; }
+  .stat-tile-lbl { font-size: 9px; }
+
+  /* Hook + example cards tighter */
+  .hook-card { padding: 14px 16px; }
+  .example-card { padding: 16px 16px; }
+  .example-metrics { grid-template-columns: repeat(2, 1fr); }
+  .example-metric { padding: 10px 12px; }
+  .example-metric:nth-child(2n+1) { border-left: none; }
+  .example-metric:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .example-metric-val { font-size: 15px; }
+
+  /* AP */
+  .ap-name { font-size: 14px; padding: 12px 16px 0; }
+  .ap-side { padding: 14px 16px; }
+
+  /* Rule cards */
+  .rule { padding: 16px 18px; }
+
+  /* Nav - at 480px show burger + logo only, hide date and ghost download */
+  .nav-badge { gap: 4px; }
+  .nav-badge .btn-ghost { display: none; } /* hide MD download at very small widths - still accessible via scroll */
+
+  /* Section label smaller */
+  .section-title { font-size: 22px; }
+}
+
+/* Ultra-small: 360px and below (rare but Android minis) */
+@media (max-width: 360px) {
+  .wrap { padding: 0 12px; }
+  .stat-row { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr; }
+  .hero-heading { font-size: 24px; }
+}
+
+/* Print / PDF */
+@media print {
+  @page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  body { background: #fff !important; font-size: 13px; line-height: 1.6; }
+  nav { display: none !important; }
+  .btn-download, .btn-ghost { display: none !important; }
+  .print-header { display: block !important; }
+  .hero-badge { display: none !important; }
+  #hero { padding: 0 0 20px !important; }
+  .hero-heading { font-size: 30px !important; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .hero-sub { font-size: 13px; margin-bottom: 16px; max-width: 100%; }
+  footer { break-before: avoid; padding: 24px 0; background: #fff !important; }
+  footer p { color: rgba(0,0,0,0.3) !important; font-size: 11px; }
+  section { padding: 28px 0 32px !important; background: #fff !important; break-inside: avoid; }
+  section:nth-child(even) { background: #fff !important; }
+  section + section { border-top: 1px solid #E0DEDC; }
+  .wrap { max-width: 100%; padding: 0 !important; }
+  .section-title { font-size: 24px !important; font-weight: 800; margin-bottom: 8px; }
+  .section-sub { font-size: 13px; margin-bottom: 20px; max-width: 100%; color: #4A4A4A; }
+  .label { font-size: 10px; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+  p { font-size: 12.5px; line-height: 1.55; }
+  .kpi-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 12px; margin: 16px 0; }
+  .kpi-tile { break-inside: avoid; border: 1px solid #E0DEDC; border-radius: 10px; padding: 16px 14px; }
+  .kpi-tile-value { font-size: 28px; }
+  .next-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; margin: 16px 0; }
+  .next-card { break-inside: avoid; padding: 16px 18px; border: 1px solid #E0DEDC; border-left: 3px solid var(--accent); border-radius: 10px; }
+  section:nth-child(even) .next-card { background: #fff; }
+  .next-card-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .next-card-desc { font-size: 11px; line-height: 1.5; }
+  .hook-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .hook-card { break-inside: avoid; }
+  .example-card { break-inside: avoid; }
+  .ap-block { break-inside: avoid; }
+  .rule { break-inside: avoid; }
+  .campaign-table-wrap { break-inside: avoid; }
+  .pattern-table { break-inside: avoid; }
+}
+
+/* ============================================================
+   PERFORMANCE-REPORTING COMPONENTS
+   Weekly card, 13-month chart, creative cards, multi-channel sidebar
+   ============================================================ */
+
+/* --- Weekly breakdown card --- */
+.weekly-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin: 20px 0; }
+.weekly-card-header { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); }
+.weekly-card-title { font-size: 16px; font-weight: 800; }
+.weekly-card-sub { font-size: 12px; color: var(--text-muted); }
+.weekly-card-body { padding: 10px 22px 6px; }
+.weekly-table { width: 100%; border-collapse: collapse; }
+.weekly-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(224,222,220,0.5); }
+.weekly-table td { font-size: 13px; color: var(--text-secondary); padding: 8px 10px; border-bottom: 1px solid rgba(224,222,220,0.5); }
+.weekly-table tr:last-child td { border-bottom: none; }
+.weekly-table .wk-rev { font-weight: 800; color: var(--text-primary); }
+.weekly-table .wk-roas { font-weight: 700; }
+.weekly-card-note { padding: 12px 22px; background: var(--bg-alt); font-size: 13px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--border); }
+
+/* --- 13-month bar chart --- */
+.chart-wrap { margin: 20px 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px 28px; }
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.chart-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.chart-legend { display: flex; gap: 16px; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.chart-legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+.chart-legend-swatch.above { background: var(--green); }
+.chart-legend-swatch.below { background: var(--amber); }
+.chart-area { display: flex; align-items: stretch; gap: 6px; height: 220px; position: relative; }
+.chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+.chart-bar-area { flex: 1; width: 100%; position: relative; }
+.chart-bar { width: 100%; border-radius: 6px 6px 0 0; position: absolute; bottom: 0; left: 0; min-height: 8px; }
+.chart-bar.above { background: var(--green); }
+.chart-bar.below { background: var(--amber); }
+.chart-roas { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: var(--text-primary); white-space: nowrap; padding-bottom: 4px; }
+.chart-bar-rev { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+/* Reserve a fixed height for .chart-meta so bar-area heights stay identical
+   across columns regardless of whether .chart-year is rendered. Without this,
+   columns with a year label have a taller meta, the bar-area shrinks, and the
+   bar baselines drift upward visibly on those columns. */
+.chart-meta { margin-top: 8px; text-align: center; min-height: 32px; }
+.chart-label { font-size: 12px; font-weight: 600; color: var(--text-muted); line-height: 1.3; }
+.chart-year { font-size: 11px; color: var(--text-muted); font-weight: 500; line-height: 1.3; }
+
+/* --- Creative cards (Meta ads top-performing grid) --- */
+.tc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+.tc-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; position: relative; transition: box-shadow .2s; }
+.tc-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.tc-card-rank { position: absolute; top: 10px; left: 10px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,0.65); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.tc-card-visual { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #f1f0ee; }
+.tc-card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tc-card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--bg-alt); }
+.tc-card-img-placeholder span { font-size: 14px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.tc-card-visual .tc-type { position: absolute; bottom: 8px; right: 8px; }
+.tc-type { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: var(--r-sm); }
+.tc-type.dpa { background: var(--green-bg); color: var(--green); border: 1px solid rgba(4,120,87,0.2); }
+.tc-type.video { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(29,78,216,0.2); }
+.tc-type.image { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(180,83,9,0.2); }
+.tc-type.carousel { background: rgba(124,58,237,0.07); color: #7C3AED; border: 1px solid rgba(124,58,237,0.2); }
+.tc-card-info { padding: 12px 14px 8px; }
+.tc-card-name { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.35; }
+.tc-card-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.3; }
+.tc-card-metrics { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; padding: 10px 14px 14px; }
+.tc-card-metric { text-align: center; }
+.tc-card-metric-val { font-size: 13px; font-weight: 800; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.tc-card-metric-val.roas-top { color: var(--green); }
+.tc-card-metric-val.roas-ok { color: var(--amber); }
+.tc-card-metric-val.roas-low { color: var(--accent); }
+.tc-card-metric-lbl { font-size: 9px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+.tc-card-link { display: block; text-align: center; padding: 8px 14px; border-top: 1px solid var(--border); font-size: 11px; font-weight: 600; color: var(--blue); text-decoration: none; transition: background .15s; }
+.tc-card-link:hover { background: var(--bg-alt); }
+.tc-card-id { display: block; text-align: center; padding: 6px 14px; border-top: 1px solid var(--border); font-size: 10px; font-family: 'Courier New', monospace; color: var(--text-muted); cursor: pointer; transition: background .15s, color .15s; }
+.tc-card-id:hover { background: var(--bg-alt); color: var(--text-primary); }
+.tc-play-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.tc-play-overlay svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
+.tc-slide-count { position: absolute; top: 10px; right: 10px; z-index: 2; background: rgba(0,0,0,0.55); color: #fff; backdrop-filter: blur(4px); font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: var(--r-sm); letter-spacing: 0.02em; }
+.tc-card-copy-placeholder { flex-direction: column; padding: 24px 20px; text-align: center; gap: 10px; background: linear-gradient(135deg, #f8f7f6 0%, #edecea 100%); }
+.tc-copy-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+.tc-copy-text { font-size: 13px; color: var(--text-secondary); font-style: italic; line-height: 1.5; max-width: 220px; margin: 0 auto; }
+.tc-copy-note { font-size: 10px; color: var(--text-muted); margin-top: 6px; }
+
+/* --- SEO ranking position badges --- */
+.pos-top3 { color: var(--green); font-weight: 800; }
+.pos-up { color: var(--green); }
+.pos-down { color: var(--accent); }
+.pos-same { color: var(--text-muted); }
+
+/* ============================================================
+   SIDEBAR + APP HEADER (canonical)
+   Desktop (≥1024px): permanent left rail (320px) + top app header right of rail.
+   Mobile/tablet (<1024px): slide-out drawer with overlay + ESC + body-scroll-lock.
+   Used by: multi-channel reports, single-page TOC dashboards, audits, enrichment.
+   ============================================================ */
+
+/* --- App header (always visible, sits right of sidebar on desktop) --- */
+.app-header {
+  position: fixed; top: 0; left: var(--sidebar-w); right: 0; z-index: 250;
+  height: var(--app-header-h);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; gap: 14px;
+}
+.app-header-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.app-header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.app-header-logo, .app-header-logo svg { height: 20px; width: auto; max-width: 160px; display: block; flex-shrink: 0; }
+.app-header-logo path, .app-header-logo svg path { fill: var(--text-primary) !important; }
+.app-header-title { font-size: 12px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-header-period { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; white-space: nowrap; }
+
+.sidebar-toggle {
+  display: none; /* hidden on desktop, shown on tablet/mobile */
+  width: 40px; height: 40px; border-radius: var(--r-sm);
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-primary); cursor: pointer;
+  align-items: center; justify-content: center;
+  flex-shrink: 0; padding: 0;
+  transition: background .15s, border-color .15s, transform .1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.sidebar-toggle:hover { background: var(--bg-alt); border-color: var(--text-primary); }
+.sidebar-toggle:active { transform: scale(0.96); }
+.sidebar-toggle svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* --- Sidebar (desktop = permanent rail, mobile = slide-out drawer) --- */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w);
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border); z-index: 300;
+  display: flex; flex-direction: column; overflow-y: auto;
+  transform: none; transition: transform .25s ease;
+  box-shadow: none;
+}
+.sidebar.open { transform: translateX(0); box-shadow: 4px 0 32px rgba(0,0,0,0.12); }
+.sidebar-header { padding: 22px 24px 18px; border-bottom: 1px solid var(--border); position: relative; }
+/* Apply size to BOTH the wrapper (span/div) AND the SVG inside - some HTML wraps the SVG in a span.sidebar-logo, others use the class on the svg directly */
+.sidebar-logo, .sidebar-logo svg { height: 22px; width: auto; max-width: 160px; display: block; }
+.sidebar-logo { margin-bottom: 14px; }
+.sidebar-logo path, .sidebar-logo svg path { fill: var(--text-primary) !important; }
+.sidebar-brand { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.sidebar-period { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.sidebar-close {
+  display: none; /* hidden on desktop (no use); shown on tablet/mobile */
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: var(--r-sm);
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-muted); cursor: pointer;
+  align-items: center; justify-content: center; padding: 0;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.sidebar-close:hover { background: var(--bg-alt); color: var(--text-primary); border-color: var(--text-primary); }
+.sidebar-close svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* Nav with auto-numbered top-level items via CSS counter.
+   Explicit overrides reset the global `nav` rule (sticky/flex/height) when
+   used inside the drawer, which is also a <nav> element. */
+.sidebar-nav {
+  display: block; position: static; height: auto;
+  background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom: none; align-items: stretch;
+  flex: 1 1 auto; padding: 14px 0 24px; counter-reset: sb-page;
+}
+.sidebar-page { display: block; margin-bottom: 2px; }
+.sidebar-page-btn {
+  counter-increment: sb-page;
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 12px 24px;
+  border: none; background: none; cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 600; color: var(--text-primary);
+  text-align: left; border-left: 3px solid transparent;
+  transition: color .15s, background .15s, border-color .15s;
+}
+.sidebar-page-btn::before {
+  content: counter(sb-page, decimal-leading-zero) ".";
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  letter-spacing: 0.06em; flex-shrink: 0; min-width: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.sidebar-page-btn:hover { color: var(--accent); background: rgba(234,70,72,0.03); }
+.sidebar-page-btn:hover::before { color: var(--accent); }
+.sidebar-page-btn.active { color: var(--accent); background: rgba(234,70,72,0.04); border-left-color: var(--accent); }
+.sidebar-page-btn.active::before { color: var(--accent); }
+
+.sidebar-sections { padding: 2px 0 8px 36px; display: flex; flex-direction: column; }
+.sidebar-section-link {
+  display: block; padding: 6px 24px 6px 12px;
+  font-size: 12.5px; font-weight: 500; color: var(--text-secondary);
+  text-decoration: none; line-height: 1.4;
+  border-left: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.sidebar-section-link:hover { color: var(--text-primary); border-left-color: var(--border-med); text-decoration: none; }
+.sidebar-section-link.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+.sidebar-footer { padding: 16px 24px 22px; border-top: 1px solid var(--border); }
+
+/* --- Overlay (covers content when drawer open) --- */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; z-index: 290;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+.sidebar-overlay.visible { display: block; }
+
+/* --- Body scroll-lock when drawer open (set via JS toggleSidebar) --- */
+
+/* --- Main content (desktop: leaves room for sidebar + header) --- */
+.main { margin-left: var(--sidebar-w); padding-top: var(--app-header-h); }
+.main .wrap { max-width: 1100px; padding: 0 36px; }
+.page-content { display: none; }
+.page-content.active { display: block; }
+
+/* --- Tablet + mobile: drawer pattern --- */
+@media (max-width: 1023px) {
+  .app-header { left: 0; padding: 0 18px; }
+  .sidebar-toggle { display: inline-flex; }
+  .sidebar { transform: translateX(-100%); box-shadow: none; }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 32px rgba(0,0,0,0.12); }
+  .sidebar-close { display: inline-flex; }
+  .main { margin-left: 0; }
+  .main .wrap { max-width: 1180px; padding: 0 28px; }
+}
+
+/* --- Small phone refinements --- */
+@media (max-width: 480px) {
+  :root { --sidebar-w: min(320px, 88vw); }
+  .app-header { padding: 0 14px; }
+  .app-header-title { display: none; }
+}
+
+/* --- LEGACY mobile-header alias (deprecated, maps to app-header) --- */
+.mobile-header { display: none; }
+.mobile-header-logo, .mobile-header-logo svg { height: 18px; width: auto; max-width: 140px; display: block; }
+.mobile-header-logo path, .mobile-header-logo svg path { fill: var(--text-primary) !important; }
+
+/* --- Print --- */
+@media print {
+  .app-header { display: none !important; }
+  .sidebar { display: none !important; }
+  .sidebar-overlay { display: none !important; }
+  .mobile-header { display: none !important; }
+  .main { margin-left: 0 !important; padding-top: 0 !important; }
+  .page-content { display: block !important; break-before: page; }
+  .page-content:first-child { break-before: auto; }
+  /* Creative cards in print */
+  .tc-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .tc-card { break-inside: avoid; }
+  .tc-card:hover { box-shadow: none; }
+  /* Weekly card in print */
+  .weekly-card { break-inside: avoid; border: 1px solid #E0DEDC; border-radius: 10px; margin: 12px 0; }
+  .weekly-card-header { padding: 12px 16px 10px; }
+  .weekly-card-title { font-size: 13px; }
+  .weekly-table th { font-size: 9px; padding: 6px 8px; }
+  .weekly-table td { font-size: 11px; padding: 6px 8px; }
+  .weekly-card-note { font-size: 10.5px; padding: 8px 16px; background: #F7F6F5 !important; }
+  /* Chart in print */
+  .chart-wrap { break-inside: avoid; border: 1px solid #E0DEDC; border-radius: 10px; padding: 16px 20px; margin: 12px 0; }
+  .chart-area { height: 160px; }
+  .chart-bar-rev { font-size: 9px; }
+  .chart-roas { font-size: 9px; }
+  .chart-label { font-size: 10px; }
+  .chart-year { font-size: 9px; }
+  /* Campaign table in print */
+  .campaign-table thead th { font-size: 9px; padding: 10px 10px; }
+  .campaign-table tbody td { font-size: 11px; padding: 10px 10px; }
+  /* Changes list in print */
+  .change-list, .changes { margin: 16px 0; gap: 8px; }
+  .change-item, .change { padding: 10px 14px; break-inside: avoid; gap: 12px; border: 1px solid #E0DEDC; }
+  .change-item:hover, .change:hover { background: #fff !important; }
+  .change-icon { width: 26px; height: 26px; font-size: 13px; }
+  .change-title { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .change-desc { font-size: 11px; line-height: 1.5; }
+}
+
+/* === Page-type chrome ===
+   Patterns for marketing / credentialing / standalone pages where the
+   report-style nav (period + Download PDF) doesn't fit. See
+   references/components.md for HTML templates. */
+
+/* Light page-type nav - logo + meta line, no Download PDF */
+.page-nav { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+.page-nav .nav-inner { max-width: var(--wrap-max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; gap: 24px; }
+.page-nav .nav-logo svg { height: 22px; width: auto; }
+.page-nav .nav-meta { display: flex; align-items: baseline; gap: 12px; font-size: 13px; color: var(--text-secondary); }
+.page-nav .nav-meta .nav-role { font-weight: 700; color: var(--text-primary); letter-spacing: -0.005em; }
+.page-nav .nav-meta .nav-updated { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+@media (max-width: 768px) { .page-nav .nav-inner { padding: 12px 16px; gap: 12px; } .page-nav .nav-meta { font-size: 12px; gap: 8px; } .page-nav .nav-meta .nav-updated { display: none; } }
+
+/* Engagement card - title + accent uppercase meta + body prose.
+   Use for credentialing pages, case-study walls, role progressions, project histories. */
+.engagement { padding: 26px 0; border-bottom: 1px solid var(--border); }
+.engagement:last-child { border-bottom: 0; }
+.engagement-title { font-size: 17px; font-weight: 800; line-height: 1.3; color: var(--text-primary); margin-bottom: 6px; }
+.engagement-meta { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.engagement p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+.engagement p:last-child { margin-bottom: 0; }
+
+/* 2-column timeline - date eyebrow + content. Career pages, change logs, project histories. */
+.timeline-2col { margin-top: 12px; }
+.timeline-2col .timeline-item { display: grid; grid-template-columns: 180px 1fr; gap: 28px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+.timeline-2col .timeline-item:last-child { border-bottom: 0; }
+.timeline-2col .timeline-date { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+.timeline-2col .timeline-item h4 { font-size: 15px; font-weight: 800; line-height: 1.3; color: var(--text-primary); margin-bottom: 6px; }
+.timeline-2col .timeline-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+@media (max-width: 768px) { .timeline-2col .timeline-item { grid-template-columns: 1fr; gap: 8px; } .timeline-2col .timeline-date { padding-top: 0; } }
+
+/* Lede-block - longer narrative prose inside a section, max 820px wide. */
+.lede-block { max-width: 820px; }
+.lede-block p { font-size: 16px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px; }
+.lede-block p:last-child { margin-bottom: 0; }
+
+/* Section-intro - the subtitle paragraph below a section header. */
+.section-intro { font-size: 16px; color: var(--text-secondary); max-width: 760px; line-height: 1.65; margin-bottom: 28px; }
+
+/* H3 inside a section - secondary heading for sub-sections within a section. */
+section h3 { font-size: 18px; font-weight: 800; color: var(--text-primary); margin: 36px 0 10px; letter-spacing: -0.005em; }
+section h3:first-of-type { margin-top: 0; }
+
+
+    /* ── Brand-kit-only overrides ── */
+
+    /* Table header: navy instead of black */
+    .table-wrap thead th { background: #003366 !important; }
+
+    /* Delta colours: green = positive, red = negative */
+    .kpi-comp-value.up   { color: #0E9F6E !important; }
+    .kpi-comp-value.down { color: #DC2626 !important; }
+    .kpi-tile-value { color: #003366 !important; }
+
+    /* Footer: navy */
+    footer, .footer { background: #003366 !important; }
+
+    /* Total row: ensure num cells right-align even in tbody */
+    .table-wrap tr.total td.num { text-align: right; }
+
+    /* ── Brand-kit layout components ── */
+    .bk-logo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 28px 0 0;
+    }
+    .bk-logo-panel {
+      border-radius: var(--r-lg);
+      padding: 52px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+    .bk-logo-panel img { max-width: 180px; height: auto; display: block; }
+    .bk-logo-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; margin-top: 24px; display: block;
+    }
+    .bk-logo-when {
+      font-size: 12px; line-height: 1.55; margin-top: 10px; text-align: center;
+    }
+    .bk-logo-panel.on-white  { background: #ffffff; }
+    .bk-logo-panel.on-white  .bk-logo-label { color: var(--text-muted); }
+    .bk-logo-panel.on-white  .bk-logo-when  { color: var(--text-secondary); }
+    .bk-logo-panel.on-navy   { background: #003366; border-color: transparent; }
+    .bk-logo-panel.on-navy   .bk-logo-label { color: rgba(255,255,255,0.5); }
+    .bk-logo-panel.on-navy   .bk-logo-when  { color: rgba(255,255,255,0.6); }
+    .bk-logo-panel.on-black  { background: #000000; border-color: transparent; }
+    .bk-logo-panel.on-black  .bk-logo-label { color: rgba(255,255,255,0.4); }
+    .bk-logo-panel.on-black  .bk-logo-when  { color: rgba(255,255,255,0.5); }
+
+    .bk-variant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0 0;
+    }
+    .bk-variant-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 24px 20px 20px;
+    }
+    .bk-variant-name { font-size: 13px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+    .bk-variant-tag  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; display: block; }
+    .bk-variant-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+    .bk-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .bk-swatch {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .bk-swatch-color { height: 80px; }
+    .bk-swatch-info { padding: 12px 14px; }
+    .bk-swatch-name { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .bk-swatch-hex  { font-size: 12px; font-family: 'SFMono-Regular', monospace; color: var(--text-muted); }
+    .bk-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+    .bk-type-specimen { margin: 28px 0; }
+    .bk-type-row {
+      display: flex; align-items: baseline; gap: 28px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+    }
+    .bk-type-row:first-child { border-top: 1px solid var(--border); }
+    .bk-type-meta { width: 200px; flex-shrink: 0; }
+    .bk-type-tag  { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); display: block; }
+    .bk-type-spec { font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+    .bk-type-sample { flex: 1; color: var(--text-primary); line-height: 1.2; }
+
+    .bk-component-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      margin-bottom: 14px; margin-top: 36px; display: block;
+    }
+    .bk-component-label:first-child { margin-top: 0; }
+
+    .bk-pill-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .bk-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 0; }
+
+    @media (max-width: 900px) {
+      .bk-logo-grid, .bk-variant-grid { grid-template-columns: 1fr; }
+      .bk-swatch-grid { grid-template-columns: repeat(2, 1fr); }
+      .bk-2col { grid-template-columns: 1fr; }
+      .bk-type-row { flex-direction: column; gap: 8px; }
+      .bk-type-meta { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#top" style="flex-shrink:0;display:flex;align-items:center;height:44px;text-decoration:none;">
+        <img src="assets/logo-4-left-2lines-cropped.png" alt="Above &amp; Beyond Digital" style="height:44px;width:auto;display:block;">
+      </a>
+      <div class="nav-links">
+        <a href="#logos">Logo</a>
+        <a href="#colours">Colours</a>
+        <a href="#typography">Typography</a>
+        <a href="#components">Components</a>
+      </div>
+      <div class="nav-right">
+        <button class="btn-download" onclick="window.print()">Download PDF</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO: logo prominent and centred on navy -->
+  <section id="top" style="background: #003366; padding: 64px 0 56px; text-align: center;">
+    <div class="wrap">
+      <img src="assets/logo.png" alt="Above &amp; Beyond Digital"
+           style="height: 120px; width: auto; display: block; margin: 0 auto 32px;
+                  filter: brightness(0) invert(1);">
+      <span style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+                   letter-spacing: 0.2em; color: rgba(255,255,255,0.5); margin-bottom: 12px;">
+        Brand Style Guide
+      </span>
+      <p style="font-size: 15px; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.65; max-width: 560px; margin: 0 auto;">
+        Brand identity, colours, typography, and component reference.
+      </p>
+    </div>
+  </section>
+
+  <!-- 01 LOGO USAGE -->
+  <section id="logos">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Logo</h2>
+        <span class="section-label">01 IDENTITY</span>
+      </div>
+      <p class="section-sub">Colour logo on white and light backgrounds. White logo on navy and black. Minimum height 28px. Maintain clear space equal to the cap-height of the "A" on all sides.</p>
+
+      <!-- Background usage -->
+      <div class="bk-logo-grid">
+        <div class="bk-logo-panel on-white">
+          <img src="assets/logo.png" alt="Above &amp; Beyond Digital — colour on white">
+          <span class="bk-logo-label">Colour on White</span>
+          <span class="bk-logo-when">Default. Use on white, off-white, and light grey backgrounds.</span>
+        </div>
+        <div class="bk-logo-panel on-navy">
+          <img src="assets/logo.png" alt="Above &amp; Beyond Digital — white on navy" style="filter: brightness(0) invert(1);">
+          <span class="bk-logo-label">White on Navy</span>
+          <span class="bk-logo-when">Hero sections, report headers, email banners, footers with navy background.</span>
+        </div>
+        <div class="bk-logo-panel on-black">
+          <img src="assets/logo.png" alt="Above &amp; Beyond Digital — white on black" style="filter: brightness(0) invert(1);">
+          <span class="bk-logo-label">White on Black</span>
+          <span class="bk-logo-when">Dark mode contexts, print on dark stock, co-branded materials.</span>
+        </div>
+      </div>
+
+      <!-- Variant usage guide -->
+      <h3 style="font-size: 16px; font-weight: 800; margin: 36px 0 16px; color: var(--text-primary);">When to use each variant</h3>
+      <div class="bk-variant-grid">
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:16px;">
+            <img src="assets/logo-cropped.png" alt="Vertical primary" style="max-height:96px;max-width:85%;width:auto;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Default</span>
+          <div class="bk-variant-name">3 · Vertical (Primary)</div>
+          <p class="bk-variant-desc">Default for all contexts where space allows — proposals, presentations, marketing materials, website hero, social headers.</p>
+        </div>
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:16px;">
+            <img src="assets/logo-2-horizontal-cropped.png" alt="One line horizontal" style="width:90%;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Compact</span>
+          <div class="bk-variant-name">2 · One Line (Horizontal)</div>
+          <p class="bk-variant-desc">Navigation bars, email headers, document headers, and anywhere vertical space is constrained. Best at &lt;48px height.</p>
+        </div>
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="assets/logo-1-centred-cropped.png" alt="Centred" style="max-height:110px;max-width:95%;width:auto;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Centred layouts</span>
+          <div class="bk-variant-name">1 · Centred</div>
+          <p class="bk-variant-desc">Centred page layouts, email footers, splash/cover pages, and printed collateral where symmetry matters.</p>
+        </div>
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="assets/logo-4-left-2lines-cropped.png" alt="Left aligned 2 lines" style="max-height:110px;max-width:95%;width:auto;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Documents</span>
+          <div class="bk-variant-name">4 · Left Aligned 2-Line</div>
+          <p class="bk-variant-desc">Reports, proposals, and documents with left-aligned headers. Balances text density without going full horizontal.</p>
+        </div>
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="assets/logo-6-icon-circle-cropped.png" alt="Icon with circle" style="max-height:96px;max-width:85%;width:auto;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Small / icon</span>
+          <div class="bk-variant-name">6 · Icon with Circle</div>
+          <p class="bk-variant-desc">Profile images, social media avatars, app icons, and square contexts under 48×48px where the full wordmark won't read.</p>
+        </div>
+        <div class="bk-variant-card">
+          <div style="background:#f7f6f5;border-radius:8px;height:160px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="assets/logo-5-icon-cropped.png" alt="Icon without circle" style="max-height:96px;max-width:85%;width:auto;height:auto;display:block;object-fit:contain;">
+          </div>
+          <span class="bk-variant-tag">Favicon / UI</span>
+          <div class="bk-variant-name">5 · Icon without Circle</div>
+          <p class="bk-variant-desc">Browser favicons, app tiles, and tight UI contexts (16–32px) where the circle adds visual noise at small sizes.</p>
+        </div>
+      </div>
+
+      <!-- Logo sizing + spacing guide -->
+      <h3 style="font-size: 16px; font-weight: 800; margin: 36px 0 16px; color: var(--text-primary);">Size &amp; spacing rules</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 0;">
+        <!-- Clear space demo -->
+        <div style="background: var(--bg-alt); border-radius: var(--r-lg); padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); align-self: flex-start;">Exclusion zone</div>
+          <div style="position: relative; display: inline-block;">
+            <div style="position: absolute; inset: -20px; border: 2px dashed rgba(0,153,255,0.4); border-radius: 4px; background: rgba(0,153,255,0.04);"></div>
+            <img src="assets/logo.png" style="height: 60px; width: auto; display: block; position: relative; z-index: 1;">
+          </div>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; text-align: center;">Maintain clear space equal to the cap-height of the <strong>"A"</strong> letterform on all sides. The dashed zone must never be crowded by text, images, or other logos.</p>
+        </div>
+        <!-- Size requirements -->
+        <div style="background: var(--bg-alt); border-radius: var(--r-lg); padding: 28px 28px 24px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 18px;">Size reference</div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="padding-bottom: 24px; border-bottom: 1px solid var(--border);">
+              <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;min-height:80px;">
+                <img src="assets/logo-cropped.png" style="height:48px;width:auto;display:block;flex-shrink:0;">
+                <div style="font-size:11px;color:var(--text-muted);border-left:2px solid var(--accent);padding-left:12px;line-height:1.5;">48px — absolute minimum<br><span style="font-size:10px;opacity:0.65;">below this, use horizontal or icon variant</span></div>
+              </div>
+              <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">48px — Absolute minimum</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Primary vertical logo floor. Below 48px, switch to the one-line horizontal or icon variant.</div>
+            </div>
+            <div style="padding-bottom: 24px; border-bottom: 1px solid var(--border);">
+              <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;min-height:104px;">
+                <img src="assets/logo-cropped.png" style="height:72px;width:auto;display:block;flex-shrink:0;">
+                <div style="font-size:11px;color:var(--text-muted);border-left:2px solid var(--accent);padding-left:12px;line-height:1.5;">72px — standard nav height<br><span style="font-size:10px;opacity:0.65;">navigation bars, email headers, document headers</span></div>
+              </div>
+              <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">72px — Standard nav height</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Navigation bars, email headers, document headers.</div>
+            </div>
+            <div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:24px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;min-height:168px;">
+                <img src="assets/logo-cropped.png" style="height:120px;width:auto;display:block;flex-shrink:0;">
+                <div style="font-size:11px;color:var(--text-muted);border-left:2px solid var(--accent);padding-left:12px;line-height:1.5;">120px+ — marketing &amp; hero<br><span style="font-size:10px;opacity:0.65;">proposals, presentations, hero sections, covers</span></div>
+              </div>
+              <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">120px+ — Marketing / hero</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Proposals, presentations, hero sections, cover pages.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="commentary" style="margin-top: 24px;">
+        <strong>Note:</strong> White logo variants (for navy/black backgrounds) should be sourced from the Web → Digital → White folder. The CSS <code>filter: brightness(0) invert(1)</code> shown above is a preview approximation only — always use the official white artwork for production.
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 COLOUR PALETTE -->
+  <section id="colours">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Colour palette</h2>
+        <span class="section-label">02 COLOURS</span>
+      </div>
+      <p class="section-sub">Five-colour system from the brand guide. Blue is primary — CTAs, links, and emphasis. Navy anchors dark backgrounds and headers. Orange and gold are secondary accents used sparingly for highlights and warmth.</p>
+
+      <div class="bk-swatch-grid">
+        <div class="bk-swatch">
+          <div class="bk-swatch-color" style="background: #0099ff;"></div>
+          <div class="bk-swatch-info">
+            <div class="bk-swatch-name">Brand Blue</div>
+            <div class="bk-swatch-hex">#0099ff</div>
+            <div class="bk-swatch-role">Primary — CTAs, links, labels</div>
+          </div>
+        </div>
+        <div class="bk-swatch">
+          <div class="bk-swatch-color" style="background: #003366;"></div>
+          <div class="bk-swatch-info">
+            <div class="bk-swatch-name">Dark Navy</div>
+            <div class="bk-swatch-hex">#003366</div>
+            <div class="bk-swatch-role">Dark bg — headers, footers</div>
+          </div>
+        </div>
+        <div class="bk-swatch">
+          <div class="bk-swatch-color" style="background: #ff7e55;"></div>
+          <div class="bk-swatch-info">
+            <div class="bk-swatch-name">Orange</div>
+            <div class="bk-swatch-hex">#ff7e55</div>
+            <div class="bk-swatch-role">Secondary — warm highlights</div>
+          </div>
+        </div>
+        <div class="bk-swatch">
+          <div class="bk-swatch-color" style="background: #f4b33e;"></div>
+          <div class="bk-swatch-info">
+            <div class="bk-swatch-name">Gold</div>
+            <div class="bk-swatch-hex">#f4b33e</div>
+            <div class="bk-swatch-role">Secondary — badges, awards</div>
+          </div>
+        </div>
+        <div class="bk-swatch">
+          <div class="bk-swatch-color" style="background: #000000;"></div>
+          <div class="bk-swatch-info">
+            <div class="bk-swatch-name">Black</div>
+            <div class="bk-swatch-hex">#000000</div>
+            <div class="bk-swatch-role">Text — headings + body</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navy in context -->
+      <div style="background: #003366; border-radius: var(--r-lg); padding: 40px; margin-top: 4px; display: flex; align-items: center; gap: 48px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 240px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); margin-bottom: 12px;">Navy in context</div>
+          <div style="font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 12px; font-family: 'Montserrat', sans-serif;">Dark backgrounds anchor<br>premium positioning.</div>
+          <p style="font-size: 15px; color: rgba(255,255,255,0.65); margin: 0; line-height: 1.65;">Use navy for hero sections, report headers, and footers — creating contrast with the bright blue CTA system.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap;">
+          <button class="btn-download">Get started</button>
+          <button class="btn-ghost" style="color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3);">Learn more</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 TYPOGRAPHY -->
+  <section id="typography">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Typography</h2>
+        <span class="section-label">03 TYPE</span>
+      </div>
+      <p class="section-sub">Two-typeface system. <strong>Montserrat</strong> carries all headings, labels, and UI — it's the brand voice in type. <strong>Open Sans</strong> is used for long-form body copy on the website where readability at small sizes matters most. For client reports and deliverables, Montserrat at weight 400–500 is clean enough for body and keeps things consistent.</p>
+
+      <!-- Montserrat specimens -->
+      <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin: 28px 0 0;">Montserrat — headings, UI, labels</h3>
+      <div class="bk-type-specimen">
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Hero / Display</span>
+            <div class="bk-type-spec">Montserrat 900<br>60px · −0.03em leading</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Montserrat', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;">Above &amp; Beyond</div>
+        </div>
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Section Heading</span>
+            <div class="bk-type-spec">Montserrat 800<br>40px · −0.01em</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Montserrat', sans-serif; font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -0.01em;">Results that go further.</div>
+        </div>
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Subheading</span>
+            <div class="bk-type-spec">Montserrat 700<br>20px</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 700;">Digital advertising for ecommerce entrepreneurs.</div>
+        </div>
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Label / Eyebrow</span>
+            <div class="bk-type-spec">Montserrat 700<br>11px · 0.16em tracking</div>
+          </div>
+          <div class="bk-type-sample"><span class="hero-eyebrow" style="font-family: 'Montserrat', sans-serif;">Brand Style Guide · 2026</span></div>
+        </div>
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Table / UI</span>
+            <div class="bk-type-spec">Montserrat 600–700<br>13px</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-secondary);">Channel · Spend · Revenue · ROAS · CPA · Status</div>
+        </div>
+      </div>
+
+      <!-- Open Sans specimen -->
+      <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin: 32px 0 0;">Open Sans — website body copy</h3>
+      <div class="bk-type-specimen">
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Body (website)</span>
+            <div class="bk-type-spec">Open Sans 400<br>16px · 1.7 leading</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: var(--text-secondary);">We're a boutique digital advertising agency for ecommerce entrepreneurs who want to go above and beyond in business and life. Honest strategy. Transparent reporting. Results that matter.</div>
+        </div>
+        <div class="bk-type-row">
+          <div class="bk-type-meta">
+            <span class="bk-type-tag">Body alt (deliverables)</span>
+            <div class="bk-type-spec">Montserrat 400<br>16px · 1.7 leading</div>
+          </div>
+          <div class="bk-type-sample" style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: var(--text-secondary);">We're a boutique digital advertising agency for ecommerce entrepreneurs who want to go above and beyond in business and life. Honest strategy. Transparent reporting. Results that matter.</div>
+        </div>
+      </div>
+      <div class="commentary">
+        <strong>Recommendation:</strong> Use Montserrat for all client-facing deliverables (reports, proposals, dashboards). It's clean enough at 400 weight for body copy and keeps the typeface consistent with the brand. Reserve Open Sans for the website where the Salient theme applies it by default.
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 COMPONENTS -->
+  <section id="components">
+    <div class="wrap">
+      <div class="section-header">
+        <h2 class="section-title">Components</h2>
+        <span class="section-label">04 UI</span>
+      </div>
+      <p class="section-sub">Core UI patterns used across reports, dashboards, and client deliverables.</p>
+
+      <!-- KPI tiles -->
+      <span class="bk-component-label">KPI Tiles</span>
+      <div class="kpi-grid">
+        <div class="kpi-tile">
+          <div class="kpi-tile-label">Revenue</div>
+          <div class="kpi-tile-value">$248,512</div>
+          <div class="kpi-tile-comps">
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">vs prior</div>
+              <div class="kpi-comp-value up">+18.4%</div>
+            </div>
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">target</div>
+              <div class="kpi-comp-value up">+4.2%</div>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-tile">
+          <div class="kpi-tile-label">ROAS</div>
+          <div class="kpi-tile-value">3.42×</div>
+          <div class="kpi-tile-comps">
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">vs prior</div>
+              <div class="kpi-comp-value up">+0.21×</div>
+            </div>
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">benchmark</div>
+              <div class="kpi-comp-value" style="color: var(--text-secondary);">3.0×</div>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-tile">
+          <div class="kpi-tile-label">CPA</div>
+          <div class="kpi-tile-value">$38.20</div>
+          <div class="kpi-tile-comps">
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">vs prior</div>
+              <div class="kpi-comp-value down">+4.7%</div>
+            </div>
+            <div class="kpi-comp">
+              <div class="kpi-comp-label">target</div>
+              <div class="kpi-comp-value" style="color: var(--text-secondary);">$35</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data table -->
+      <span class="bk-component-label">Data Table</span>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Channel</th>
+              <th>Status</th>
+              <th class="num">Spend</th>
+              <th class="num">Revenue</th>
+              <th class="num">ROAS</th>
+              <th class="num">CPA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Ads</strong></td>
+              <td><span class="pill active">Active</span></td>
+              <td class="num">$48,200</td>
+              <td class="num">$182,500</td>
+              <td class="num" style="color: #0E9F6E; font-weight: 700;">3.79×</td>
+              <td class="num">$28.40</td>
+            </tr>
+            <tr>
+              <td><strong>Meta Ads</strong></td>
+              <td><span class="pill active">Active</span></td>
+              <td class="num">$32,100</td>
+              <td class="num">$96,200</td>
+              <td class="num" style="color: var(--text-secondary);">3.00×</td>
+              <td class="num">$41.10</td>
+            </tr>
+            <tr>
+              <td><strong>Email (Klaviyo)</strong></td>
+              <td><span class="pill active">Active</span></td>
+              <td class="num">$1,800</td>
+              <td class="num">$48,900</td>
+              <td class="num" style="color: #0E9F6E; font-weight: 700;">27.2×</td>
+              <td class="num">$4.20</td>
+            </tr>
+            <tr>
+              <td><strong>Pinterest</strong></td>
+              <td><span class="pill paused">Paused</span></td>
+              <td class="num" style="color: var(--text-muted);">—</td>
+              <td class="num" style="color: var(--text-muted);">—</td>
+              <td class="num" style="color: var(--text-muted);">—</td>
+              <td class="num" style="color: var(--text-muted);">—</td>
+            </tr>
+            <tr class="total">
+              <td><strong>Total</strong></td>
+              <td></td>
+              <td class="num">$82,100</td>
+              <td class="num">$327,600</td>
+              <td class="num">3.99×</td>
+              <td class="num">$28.90</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Buttons + pills -->
+      <div class="bk-2col" style="margin-top: 36px;">
+        <div>
+          <span class="bk-component-label">Buttons</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+            <button class="btn-download">Primary CTA</button>
+            <button class="btn-ghost">Secondary</button>
+            <button class="btn-download" style="background: #003366;">Navy</button>
+          </div>
+        </div>
+        <div>
+          <span class="bk-component-label">Status Pills</span>
+          <div class="bk-pill-row">
+            <span class="pill active">Active</span>
+            <span class="pill paused">Paused</span>
+            <span class="pill" style="background: rgba(0,153,255,0.1); color: #0099ff;">Optimising</span>
+            <span class="pill" style="background: rgba(244,179,62,0.12); color: #b87d10;">Review</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commentary -->
+      <span class="bk-component-label">Commentary / Callout</span>
+      <div class="commentary">
+        <strong>Performance insight:</strong> Email continues to outperform paid channels on ROAS. Consider increasing Klaviyo flow investment before scaling Google spend further.
+      </div>
+
+      <!-- Next steps -->
+      <span class="bk-component-label">Next Steps Cards</span>
+      <div class="next-grid">
+        <div class="next-card">
+          <div class="next-card-eyebrow">Testing</div>
+          <div class="next-card-title">Launch UGC creative batch</div>
+          <div class="next-card-desc">Test 4 new hook variants against control. Ship by end of week.</div>
+        </div>
+        <div class="next-card">
+          <div class="next-card-eyebrow">Optimisation</div>
+          <div class="next-card-title">Consolidate ad sets</div>
+          <div class="next-card-desc">Merge 3 underperforming ad sets to improve learning phase speed.</div>
+        </div>
+        <div class="next-card">
+          <div class="next-card-eyebrow">Strategy</div>
+          <div class="next-card-title">Q2 budget allocation</div>
+          <div class="next-card-desc">Shift 15% of budget from Google Brand to Meta prospecting.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <img src="assets/logo.png" alt="Above &amp; Beyond Digital" style="height:28px; filter: brightness(0) invert(1); display: block; margin: 0 auto 18px;">
+    <p style="color: rgba(255,255,255,0.45);">(c) 2026 Above &amp; Beyond Digital</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav-burger').forEach(b => {
+      b.addEventListener('click', () => b.closest('nav').classList.toggle('is-open'));
+    });
+  </script>
+</body>
+</html>
