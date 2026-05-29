@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria Nicola — ABD Reports</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --pink: #EF6693;
+      --charcoal: #222222;
+      --bg: #F8F8F8;
+      --surface: #FFFFFF;
+      --border: #E0E0E0;
+      --muted: #888888;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--charcoal);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--pink); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(239,102,147,0.15);
+      border: 1px solid var(--pink);
+      color: var(--pink);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 40px 80px; }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .report-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-card:hover { border-color: var(--pink); box-shadow: 0 2px 12px rgba(239,102,147,0.1); }
+    .report-card-icon { font-size: 24px; }
+    .report-card-title { font-size: 15px; font-weight: 700; color: var(--charcoal); }
+    .report-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .report-card-meta {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      background: rgba(239,102,147,0.1); color: var(--pink);
+    }
+    .tag.grey { background: rgba(34,34,34,0.07); color: var(--muted); }
+    .report-card-arrow {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--pink); font-weight: 600;
+    }
+    .coming-soon {
+      opacity: 0.5; pointer-events: none; cursor: default;
+    }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Maria <span>Nicola</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">ABD Client Portal</div>
+  <div class="header-badge">Confidential</div>
+</div>
+
+<div class="page">
+
+  <div class="section-title">Campaign Reports</div>
+  <div class="reports-grid">
+
+    <a href="cij-dashboard.html" class="report-card">
+      <div class="report-card-icon">📊</div>
+      <div class="report-card-title">CIJ 2024 × MN10 2025 Benchmark</div>
+      <div class="report-card-desc">Historical sale performance comparison — ad spend, revenue, MER, day-by-day trajectory, creative analysis.</div>
+      <div class="report-card-meta">
+        <span class="tag">Jul 2024</span>
+        <span class="tag">Jul 2025</span>
+        <span class="tag grey">Meta + Google + Klaviyo</span>
+      </div>
+      <div class="report-card-arrow">Open report →</div>
+    </a>
+
+    <div class="report-card coming-soon">
+      <div class="report-card-icon">🎄</div>
+      <div class="report-card-title">Christmas in July 2026 — Live Tracker</div>
+      <div class="report-card-desc">Real-time daily performance vs 2024 &amp; 2025 benchmarks. Updated daily during the sale.</div>
+      <div class="report-card-meta">
+        <span class="tag grey">Coming Jul 2026</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Monthly Reports</div>
+  <div class="reports-grid">
+
+    <div class="report-card coming-soon">
+      <div class="report-card-icon">📈</div>
+      <div class="report-card-title">Monthly Performance Reports</div>
+      <div class="report-card-desc">Meta Ads, Google Ads, email performance and Shopify revenue — delivered monthly.</div>
+      <div class="report-card-meta">
+        <span class="tag grey">Coming soon</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="page" style="padding-top: 0;">
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>marianicola.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>
