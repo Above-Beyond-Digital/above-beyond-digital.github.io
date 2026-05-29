@@ -20,14 +20,30 @@ if (!MASTER_SECRET) {
   process.exit(1);
 }
 
-// Unique password per file — same master + same path = same password every time
-function derivePassword(relPath) {
-  return crypto.createHmac('sha256', MASTER_SECRET).update(relPath).digest('hex');
+// Portal groups: all files under a portal share one password so "Remember me" auto-unlocks sub-pages.
+// Key is the portal root path. Add new portals here as needed.
+const PORTAL_GROUPS = [
+  'reports/mn/portal',
+];
+
+function portalKey(relPath) {
+  const normalized = relPath.replace(/\\/g, '/');
+  for (const group of PORTAL_GROUPS) {
+    if (normalized.startsWith(group + '/') || normalized === group + '/index.html') {
+      return group;
+    }
+  }
+  return relPath;
 }
 
-// Consistent salt per file — prevents "Remember me" breaking on re-encryption
+// Unique password per file (or per portal group) — same master + same key = same password every time
+function derivePassword(relPath) {
+  return crypto.createHmac('sha256', MASTER_SECRET).update(portalKey(relPath)).digest('hex');
+}
+
+// Consistent salt per file (or per portal group) — prevents "Remember me" breaking on re-encryption
 function deriveSalt(relPath) {
-  return crypto.createHmac('sha256', MASTER_SECRET).update('salt:' + relPath).digest('hex').slice(0, 32);
+  return crypto.createHmac('sha256', MASTER_SECRET).update('salt:' + portalKey(relPath)).digest('hex').slice(0, 32);
 }
 
 function walkHtml(dir, base) {
