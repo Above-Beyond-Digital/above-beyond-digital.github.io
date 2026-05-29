@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIJ 2024 x MN10 2025 — Campaign Benchmark | Maria Nicola</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --pink:#EF6693; --pink-soft:#fbe4ec;
+    --charcoal:#222222; --charcoal-soft:#3a3a3a;
+    --grey-50:#f7f7f8; --grey-100:#eceef1; --grey-200:#dfe2e6; --grey-300:#c8cdd3;
+    --grey-500:#7a8190; --grey-700:#3f4654;
+    --text:#1a1d23; --muted:#6b7280; --bg:#ffffff;
+    --green:#16a34a; --red:#dc2626; --amber:#d97706;
+    --shadow:0 1px 2px rgba(15,23,42,.04),0 4px 12px rgba(15,23,42,.05);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--grey-50);line-height:1.5}
+  a{color:var(--pink);text-decoration:none}
+  .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+  header.site{background:var(--charcoal);color:#fff;padding:28px 0}
+  header.site .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  header.site .logo{width:54px;height:54px;border-radius:50%;background:#fff;color:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;letter-spacing:.5px}
+  header.site h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.2px}
+  header.site .sub{font-size:13px;color:#cfd2d8;margin-top:2px}
+  .pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+  .pill-pink{background:var(--pink);color:#fff}
+  .pill-charcoal{background:#000;color:#fff;border:1px solid #444}
+  .pill-soft{background:var(--pink-soft);color:#a93768}
+
+  section{padding:28px 0 8px}
+  h2.section-title{font-size:18px;margin:0 0 14px;font-weight:700;color:var(--charcoal);letter-spacing:-.1px}
+  h2.section-title .sub-h{font-size:13px;font-weight:500;color:var(--muted);margin-left:8px}
+  h3.sub-title{font-size:14px;margin:0 0 8px;font-weight:600;color:var(--charcoal-soft);text-transform:uppercase;letter-spacing:.6px}
+
+  .card{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .grid{display:grid;gap:16px}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:1100px){.grid-5{grid-template-columns:repeat(2,1fr)} .grid-3{grid-template-columns:1fr} .grid-2{grid-template-columns:1fr}}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  table th, table td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--grey-100)}
+  table th{background:var(--grey-50);font-weight:600;color:var(--grey-700);text-transform:uppercase;font-size:11px;letter-spacing:.6px}
+  table td.num, table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  table tr.total td{font-weight:700;background:var(--grey-50);border-top:2px solid var(--grey-300)}
+  .yr-cij{color:var(--pink);font-weight:700}
+  .yr-mn10{color:var(--charcoal);font-weight:700}
+
+  /* KPI Cards */
+  .kpi{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+  .kpi .label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+  .kpi .yr{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--grey-100)}
+  .kpi .yr:last-child{border-bottom:none}
+  .kpi .yr .ylabel{font-size:12px;font-weight:600}
+  .kpi .yr .yval{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+  .kpi.cij .yr.cij .ylabel,.kpi.cij .yr.cij .yval{color:var(--pink)}
+  .kpi .yr.mn10 .ylabel,.kpi .yr.mn10 .yval{color:var(--charcoal)}
+  .kpi .delta{font-size:11px;font-weight:600;margin-left:6px;padding:2px 6px;border-radius:6px}
+  .delta.up{background:#dcfce7;color:#15803d}
+  .delta.down{background:#fee2e2;color:#b91c1c}
+
+  /* Chart cards */
+  .chart-card{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);min-height:340px}
+  .chart-card h3{margin:0 0 6px;font-size:15px;font-weight:600}
+  .chart-card .desc{font-size:12px;color:var(--muted);margin-bottom:10px}
+  .chart-wrap{position:relative;height:300px}
+
+  /* Customer cards */
+  .cust-card{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .cust-card .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .cust-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+  .cust-stats .it{padding:10px;background:var(--grey-50);border-radius:8px}
+  .cust-stats .it .lab{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .cust-stats .it .val{font-size:17px;font-weight:700;margin-top:4px}
+  .bar-track{height:10px;background:var(--grey-100);border-radius:6px;overflow:hidden;margin-top:6px}
+  .bar-fill{height:100%;border-radius:6px;transition:width .4s ease}
+  .bar-fill.cij{background:var(--pink)}
+  .bar-fill.mn10{background:var(--charcoal)}
+
+  /* Email/SMS */
+  .email-col h4{margin:18px 0 8px;font-size:13px;font-weight:700;color:var(--charcoal);letter-spacing:.3px}
+  .email-col h4:first-child{margin-top:0}
+  .email-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .email-card{background:#fff;border:1px solid var(--grey-200);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+  .email-year-label{font-size:14px;font-weight:700;margin-bottom:16px}
+  .email-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--grey-200);padding-top:16px}
+  .email-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+  .email-channel-block{margin-bottom:16px}
+  .email-channel-title{font-size:12px;font-weight:600;color:var(--charcoal-soft);margin-bottom:8px}
+  .email-stat{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+  .es-label{font-size:11px;color:var(--muted)}
+  .es-value{font-size:13px;font-weight:700}
+
+  /* Creative Filters */
+  .filter-bar{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin-bottom:16px}
+  .filter-row{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+  .filter-group{display:flex;align-items:center;gap:6px}
+  .filter-group .glbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-right:4px}
+  .btn-grp{display:inline-flex;border:1px solid var(--grey-200);border-radius:8px;overflow:hidden}
+  .btn-grp button{appearance:none;border:none;background:#fff;color:var(--text);padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;border-right:1px solid var(--grey-200)}
+  .btn-grp button:last-child{border-right:none}
+  .btn-grp button.active{background:var(--charcoal);color:#fff}
+  .btn-grp button:hover:not(.active){background:var(--grey-50)}
+  .filter-group .dir{display:inline-flex;margin-left:4px}
+  .filter-group .dir button{padding:5px 9px}
+  .filter-count{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600}
+
+  /* Creative Cards */
+  .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .cr-card{background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease}
+  .cr-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(15,23,42,.08)}
+  .cr-thumb{aspect-ratio:1/1;background:var(--grey-100);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .cr-thumb img{width:100%;height:100%;object-fit:cover}
+  .cr-thumb .placeholder{color:var(--grey-500);font-size:12px;font-weight:600;text-align:center;padding:14px;line-height:1.4}
+  .cr-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .cr-head{display:flex;flex-direction:column;gap:4px}
+  .cr-badge-cr{display:inline-block;background:var(--pink);color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.3px;align-self:flex-start}
+  .cr-desc{font-size:11.5px;color:var(--muted);line-height:1.4;font-weight:500}
+  .cr-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+  .b{display:inline-block;padding:2px 7px;font-size:10px;font-weight:700;border-radius:6px;text-transform:uppercase;letter-spacing:.4px}
+  .b-top{background:#dcfce7;color:#15803d}
+  .b-bottom{background:#fee2e2;color:#b91c1c}
+  .b-video{background:#e0e7ff;color:#3730a3}
+  .b-image{background:#dcfce7;color:#15803d}
+  .b-feed{background:#fef3c7;color:#92400e}
+  .b-tof{background:#dbeafe;color:#1e40af}
+  .b-mof{background:#fce7f3;color:#9d174d}
+  .b-cij{background:var(--pink);color:#fff}
+  .b-mn10{background:var(--charcoal);color:#fff}
+  .b-presale{background:#e0f2fe;color:#075985}
+  .b-sale{background:#f5f5f4;color:#44403c}
+  .cr-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:12px;border-top:1px solid var(--grey-100);padding-top:10px}
+  .cr-stats .s{display:flex;justify-content:space-between;align-items:baseline}
+  .cr-stats .s .lab{color:var(--muted);font-weight:500}
+  .cr-stats .s .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .cr-impr{grid-column:span 2;display:flex;justify-content:space-between;border-top:1px dashed var(--grey-100);padding-top:6px;margin-top:2px}
+  .cr-copy{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.45;border-top:1px solid var(--grey-100);padding-top:8px}
+
+  footer.site{margin-top:40px;padding:24px 0;border-top:1px solid var(--grey-200);background:#fff;font-size:12px;color:var(--muted);line-height:1.6}
+  footer.site .wrap p{margin:4px 0}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="logo">MN</div>
+    <div>
+      <h1>CIJ 2024 x MN10 2025 — Campaign Benchmark</h1>
+      <div class="sub">Maria Nicola | Side-by-side analysis of two flagship sales</div>
+    </div>
+    <div style="margin-left:auto"><span class="pill pill-pink">Historical Data</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- SECTION 1: Sale Overview -->
+  <section id="overview">
+    <h2 class="section-title">1. Sale Overview</h2>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Sale</th><th>Pre-sale period</th><th>VIP launch</th><th>Public launch</th><th>Sale end</th><th>Duration</th><th>Offer</th>
+          </tr>
+        </thead>
+        <tbody id="overview-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 2: KPI Cards -->
+  <section id="kpis">
+    <h2 class="section-title">2. Headline KPIs <span class="sub-h">Stacked comparison — CIJ 2024 vs MN10 2025</span></h2>
+    <div class="grid grid-5" id="kpi-cards"></div>
+  </section>
+
+  <!-- SECTION 3: Spend vs Revenue / MER Charts -->
+  <section id="spendrev-charts">
+    <h2 class="section-title">3. Spend vs Revenue & MER</h2>
+    <div class="grid grid-2">
+      <div class="chart-card">
+        <h3>Total Ad Spend vs Net Sales</h3>
+        <div class="desc">All channels (Meta + Google), pre-sale + sale</div>
+        <div class="chart-wrap"><canvas id="chart-spendrev"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>MER (Marketing Efficiency Ratio)</h3>
+        <div class="desc">Net Sales / Total Ad Spend</div>
+        <div class="chart-wrap"><canvas id="chart-mer"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Spend Breakdown -->
+  <section id="spend-breakdown">
+    <h2 class="section-title">4. Spend Breakdown</h2>
+    <div class="grid grid-2">
+      <!-- Table A: Platform x Phase -->
+      <div class="card">
+        <h3 class="sub-title">A. Platform x Phase</h3>
+        <h4 style="margin:6px 0 4px;font-size:13px" class="yr-cij">CIJ 2024</h4>
+        <table>
+          <thead><tr><th>Phase</th><th class="num">Meta</th><th class="num">Google</th><th class="num">Total</th></tr></thead>
+          <tbody id="platform-cij"></tbody>
+        </table>
+        <h4 style="margin:18px 0 4px;font-size:13px" class="yr-mn10">MN10 2025</h4>
+        <table>
+          <thead><tr><th>Phase</th><th class="num">Meta</th><th class="num">Google</th><th class="num">Total</th></tr></thead>
+          <tbody id="platform-mn10"></tbody>
+        </table>
+      </div>
+      <!-- Table B: Meta Audience Segments -->
+      <div class="card">
+        <h3 class="sub-title">B. Meta Audience Segments — Sale Window Only</h3>
+        <table>
+          <thead>
+            <tr><th>Segment</th><th class="num">CIJ 2024</th><th class="num">MN10 2025</th></tr>
+          </thead>
+          <tbody id="audience-rows"></tbody>
+        </table>
+        <p style="font-size:11.5px;color:var(--muted);margin:10px 0 0;line-height:1.5">
+          Segments from Meta's audience breakdown. Prospecting = new + engaged audiences. ROAS is directional only — revenue not attributed at segment level.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pre-sale leads sub-section -->
+    <div class="card" style="margin-top:16px">
+      <h3 class="sub-title">Pre-sale Lead Generation</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;font-size:14px">
+        <div><span class="yr-cij">CIJ 2024:</span> <strong id="leads-cij"></strong></div>
+        <div><span class="yr-mn10">MN10 2025:</span> <strong id="leads-mn10"></strong></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin:10px 0 0">Source: Meta leads-objective campaigns during list-building period.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 5: Day-by-Day Trajectory -->
+  <section id="trajectory">
+    <h2 class="section-title">5. Day-by-Day Trajectory <span class="sub-h">Shopify Net Sales</span></h2>
+    <div class="chart-card">
+      <h3>Daily Net Sales — Day 1 onwards</h3>
+      <div class="desc">CIJ 2024: 9 days (24 Jul–1 Aug). MN10 2025: 12 days (2–13 Jul).</div>
+      <div class="chart-wrap" style="height:380px"><canvas id="chart-daily"></canvas></div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: New vs Returning -->
+  <section id="customers">
+    <h2 class="section-title">6. New vs Returning Customers</h2>
+    <div class="grid grid-2" id="customer-cards"></div>
+  </section>
+
+  <!-- SECTION 7: Email + SMS -->
+  <section id="email">
+    <h2 class="section-title">7. Email + SMS Marketing <span class="sub-h">Klaviyo — sale campaigns only</span></h2>
+    <div class="grid grid-2" id="email-cards"></div>
+  </section>
+
+  <!-- SECTION 8: Creative Performance -->
+  <section id="creative">
+    <h2 class="section-title">8. Creative Performance <span class="sub-h">Combined view — both sales</span></h2>
+
+    <div class="filter-bar">
+      <div class="filter-row">
+        <div class="filter-group"><span class="glbl">Sale</span>
+          <div class="btn-grp" data-filter="sale">
+            <button class="active" data-val="all">All</button>
+            <button data-val="cij2024">CIJ 2024</button>
+            <button data-val="mn10_2025">MN10 2025</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="glbl">Format</span>
+          <div class="btn-grp" data-filter="format">
+            <button class="active" data-val="all">All</button>
+            <button data-val="video">Video</button>
+            <button data-val="image">Image</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="glbl">Funnel</span>
+          <div class="btn-grp" data-filter="funnel">
+            <button class="active" data-val="all">All</button>
+            <button data-val="tof">TOF</button>
+            <button data-val="mof">MOF/BOF</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="glbl">Phase</span>
+          <div class="btn-grp" data-filter="phase">
+            <button class="active" data-val="all">All</button>
+            <button data-val="presale">Pre-sale</button>
+            <button data-val="sale">Main Sale</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="glbl">Sort</span>
+          <div class="btn-grp" data-filter="sort">
+            <button class="active" data-val="roas">ROAS</button>
+            <button data-val="revenue">Revenue</button>
+            <button data-val="spend">Spend</button>
+            <button data-val="ctr_all">CTR</button>
+            <button data-val="thumbstop_pct">Thumbstop</button>
+          </div>
+          <div class="btn-grp dir" data-filter="dir">
+            <button data-val="desc" class="active">&#x2193;</button>
+            <button data-val="asc">&#x2191;</button>
+          </div>
+        </div>
+        <div class="filter-count" id="creative-count">— creatives</div>
+      </div>
+    </div>
+
+    <div class="creative-grid" id="creative-grid"></div>
+  </section>
+
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Revenue: Shopify Net Sales | Spend: Meta + Google Ads | Email/SMS: Klaviyo (sale campaigns only) | Generated: 29 May 2026</p>
+    <p>Pre-sale spend = list-building campaigns only. Sale spend = all account spend during sale dates. MER = Net Sales / Total Ad Spend (pre-sale + sale).</p>
+  </div>
+</footer>
+
+<script>
+const DATA = {"cij2024": {"sale_name": "Christmas in July 2024", "offer": "20% Off sitewide", "key_message": "Our biggest sale of the year", "presale_dates": "17 Jul – 23 Jul 2024", "vip_date": "24 Jul 2024", "public_date": "25 Jul 2024", "sale_end": "1 Aug 2024", "sale_dates": "24 Jul – 1 Aug 2024", "sale_days": 9, "revenue": {"total_net_sales": 362301.66, "vip_day_net_sales": 131514.64}, "spend": {"meta_presale": 3584.81, "meta_sale": 38645.89, "google_presale": 0.0, "google_sale": 1106.75, "total_presale": 3584.81, "total_sale": 39752.64, "total_all": 43337.45, "meta_tof": 35950.25, "meta_mof_bof": 2606.57}, "mer": 8.36, "audience_segments": {"prospecting": 34311.39, "existing_customers": 4243.46, "unknown": 91.04, "total": 38645.89}, "presale_leads": {"total_leads": 626, "spend": 3584.81, "cost_per_lead": 5.73}, "daily": [{"date": "2024-07-24", "day": 1, "label": "VIP", "net_sales": 131514.64}, {"date": "2024-07-25", "day": 2, "label": "Public", "net_sales": 43897.75}, {"date": "2024-07-26", "day": 3, "label": "", "net_sales": 30898.69}, {"date": "2024-07-27", "day": 4, "label": "", "net_sales": 24858.81}, {"date": "2024-07-28", "day": 5, "label": "", "net_sales": 26284.81}, {"date": "2024-07-29", "day": 6, "label": "", "net_sales": 18343.38}, {"date": "2024-07-30", "day": 7, "label": "", "net_sales": 22740.92}, {"date": "2024-07-31", "day": 8, "label": "", "net_sales": 38203.02}, {"date": "2024-08-01", "day": 9, "label": "Last Day", "net_sales": 25559.64}], "creatives": [{"cr_number": "CR251K", "cr_desc": "VID: PR-MN-Christmas-In-July-Main-Offer-Video-Ad_2m27s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/451545033_349224548219201_6668730943838651895_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=109&ccb=1-7&_nc_sid=61326a&_nc_ohc=7slRHO648t0Q7kNvwFGgDN1&_nc_oc=AdrVrsrwXJl-touMdziYucuUW3OYv4jAFj4p7THjW5vU49XYLQp6hP38QZpJbp92v5ykdXUTVZu43bNAOjIbM5Ws&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=lwPWDXaNpbUK9xlCZ-xXAQ&_nc_tpa=Q5bMBQGm83TfeGPncG9GcsIKZKfd5ItJUVe-IMQfhMWS28LUazqlDzLTfDFQVbD7R1Q1CgXvPM_FbHus&oh=00_Af4Scm96A98CISM1gblAsA-5UWEUSCWQjaXMU1eoqgY9LA&oe=6A1EB3FD", "body": "🎅🏻 Ho ho ho! Santa's Bringing Sparkle to July with 20% OFF everything + Up to 60% OFF select items at Maria Nicola! 🎄  Treat yourself to the iconic 10-Way Necklace – a bracelet, a necklace… it's whatever you want it to be. 😍  With endless colours and styles, create a signature look for any occasion. ✨  Build your collection of forever pieces.  Plus, SAVE up to 60% on discounted bundles and last-chance sale items! 🛍️  It's the gift that keeps on giving! 🎁  Shop the sale until July 31st – no code needed, discount auto-applied at checkout  👉marianicola.com  *Not valid with other discount codes.", "headline": "Christmas in July Sale 🎄", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 6228.18, "revenue": 31296.63, "roas": 5.03, "purchases": 146, "impressions": 97676, "ctr_all": 0.0321, "ctr_link": 0.0195, "thumbstop_pct": 23.03, "conv_rate": 7.68, "cpurchase": 42.66, "aov": 214.36, "ad_ids": ["6618972618938", "6618972619138", "6618972952538", "6618972952738", "6618973096738", "6618973097138", "6618974059938", "6618974061738", "6618974067538", "6618974069338", "6618975372738"]}, {"cr_number": "CR251J", "cr_desc": "VID: PR-MN-Christmas-In-July-SMS-Sign-Up-Video-Ad_1m14s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/450400053_492389129933605_7441506043228471432_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=110&ccb=1-7&_nc_sid=61326a&_nc_ohc=65wt5uUBi9AQ7kNvwEwy9BR&_nc_oc=Adrd_7qEeYtv498mY_0mPfVSwdWWRtNG98V5cY6FnEpiBGbA94c3mhqt_iQpsCeQEsk&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=K7-dzadsTDHcpXG4jrPV7g&_nc_tpa=Q5bMBQGC9bVHSqiAjiYpV0qKuasiaXhL5MNfCLYdVIPN2hbAuEcsgSeIEZmq3OvHJ5Z9I9lZYfzvdzxc&oh=00_Af4guhCpVFRgOEmMXQSfCc3ekrCGRH-ar_BSo1mXfPwp6w&oe=6A1EAF2D", "body": "Want the inside scoop on the hottest jewellery sale of the season?  Join our exclusive VIP SMS club for early access to our Christmas in July Sale!  Be first to shop our iconic 10-Way Necklace & must-have accessories at 20% OFF! 🌟  Popular pieces go fast, so don't miss your chance to shine! 💎✨  Sign up by 23 July, 5 PM AEST for exclusive access. 👉 mnic.la/xmas-july-sms", "headline": "20% OFF 10-Way Necklace & More 😍", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "cij2024", "spend": 3053.76, "revenue": 18012.0, "roas": 5.9, "purchases": 55, "impressions": 78266, "ctr_all": 0.061, "ctr_link": 0.0389, "thumbstop_pct": 48.22, "conv_rate": 1.81, "cpurchase": 55.52, "aov": 327.49, "ad_ids": ["6618939371138", "6618939518738", "6618939830338", "6618940612738"]}, {"cr_number": "CR251F", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-Green-White-BG", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/557965120_24667723532854931_2707364237281097678_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=mXz6K3jCp68Q7kNvwFSkd9s&_nc_oc=AdoLFfxs0nk5LmLKCim5X-9bpAR3baHQqHtCIgmLnt1TbwOJaWNEbORGf2sfHxS-qSE7FaNewCK8XgmqSM2vrlO5&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=hyHtV6qF5Yrnx3FMt3k7RQ&_nc_tpa=Q5bMBQFb7iVSSqdLZ0BqN9HzL-jYkGlZiOT6YyeNVLE2wH2ooJXBWYzulpHh5feIb_Ys4modoUyldO66&oh=00_Af43qB2ZIXnKWQis5llK6imgfCpaxH7UzBq-tD8-BU03Ig&oe=6A1ED51A", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 2987.04, "revenue": 16898.74, "roas": 5.66, "purchases": 91, "impressions": 64788, "ctr_all": 0.0294, "ctr_link": 0.014, "thumbstop_pct": null, "conv_rate": 10.02, "cpurchase": 32.82, "aov": 185.7, "ad_ids": ["6618972618338", "6618972951738", "6618973095938", "6618974060338", "6618974067938", "6618975371538"]}, {"cr_number": "CR251D", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-Pink-BG", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/17692703441550694225?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJAT-No-RawQrH8n4S9iqdmVYVPfLlJw0bdDA-NyDgT56YKJi8cb2eO4l3L_jSgaQ4bZjvMHvnjC9ppTWLeLw8iv4CvN4mDrVNB4tz7i9BlVquGIiKbkDxQW4n7wXSg6SHJuDjXrO7zgbijpFBCk5AM&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=3PlK0MWHdg9XO5iF1ecyBw&_nc_oc=AdpZMltaJEYyO_8UZyqvhc848YxB3T5I4_YsQVgGJ0DI9AYYJ851zm_fUjKofNoew1oT7eD-CvJjEFxFmJNNJ-na&ccb=13-1&oh=06_Q3-_AY_nt-PgHv6DE5fqgAfJffAjIeuD4xKvYbMEqEUNspfK&oe=6A1AD617&_nc_sid=58080a", "body": "🎄 Christmas in July Sparkle Sale! 🌟 Get 20% OFF Sitewide at Maria Nicola! 🛍️  Experience endless style possibilities with our bestselling 10-Way Necklace — the only accessory you'll ever need!  Wear it long, short, as a bracelet and more to make every outfit shine. ✨  Our Sparkle Sisterhood loves mixing and matching our versatile pieces for any occasion, from work to play and everything in between. 💫  Don't miss out on these ho-ho-hot 🔥 deals!  Shop now and stock up on your favourites before they're gone.  Sale ends July 31st. Shop Now for HUGE savings. 👉 marianicola.com  *Not valid with any other discount code.", "headline": "Maria Nicola", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 2877.62, "revenue": 14981.87, "roas": 5.21, "purchases": 81, "impressions": 110375, "ctr_all": 0.017, "ctr_link": 0.0117, "thumbstop_pct": null, "conv_rate": 6.28, "cpurchase": 35.53, "aov": 184.96, "ad_ids": ["6618972617938", "6618972619738", "6618972950738", "6618972951538", "6618973095338", "6618973095538", "6618974059738", "6618974060938", "6618974067738", "6618974068738", "6618975371338", "6618975371938"]}, {"cr_number": "CR251C", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-Product-Lifestyle-Focused-Green-Gold-BG", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/561430469_32184241291167279_8684422122920838379_n.png?stp=dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=Zl7uJ37e5dQQ7kNvwGOPTzK&_nc_oc=Adodc_jFBlhReYSF0BMPsvRxpSt1uYIzGRPOCNVwIRTS01ziX06KBrSWR6Sv-xQnP_0&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=q7cNHtZNtzZoN5k4cAN9Xg&_nc_tpa=Q5bMBQGkmk0kagryUf5UmEj436w0dBZKKr5Xn5xD546PPeugINayyJDPPN85e_mXo7d4pA5CSkqugIfF&oh=00_Af7adZP9azIakJocin_7mmrqKexdowr3onj2bkj1kZwAUA&oe=6A1EC69C", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 2810.87, "revenue": 13486.9, "roas": 4.8, "purchases": 70, "impressions": 60641, "ctr_all": 0.0168, "ctr_link": 0.0113, "thumbstop_pct": null, "conv_rate": 10.2, "cpurchase": 40.16, "aov": 192.67, "ad_ids": ["6618972618738", "6618972951938", "6618973097338", "6618974061338", "6618974068338"]}, {"cr_number": "CR251E", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-Blue-BG", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/17009018389876388935?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJ5Lkw8U-F1S8gU10ALlnj1rax3ztT3TnfqULsIxQajW83vpoM_Tbv0vAVPVEu6Bmg10rxIQuE3mZesUrSWXwZtF0kcwY_BeMHqWoIHRqRy-U3U_L7d8AoMoSpXfzgybD8VR8JlPtMPMsh6ccnsYaUl&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=4CpqxDj5_X5LsFE0WG3EFw&_nc_oc=AdrWPhppRgKpY-bFUI2cIt23swJ97BjcrNrWNPdkAx4JvxF1q4H47MKe5caWjDcf_QHs-B_ndr6CWI1HXHFik5r-&ccb=13-1&oh=06_Q3-_ASMQijG_BZlLYZlZiriEZby8nZJiqsTDPT41i8DIzPAs&oe=6A1AC3CC&_nc_sid=58080a", "body": "20% off the most versatile necklace and fashion you will ever own!😍 Imagine creating a new signature look daily with the Maria Nicola collection.  Our Sparkle Sisters ✨ love coming up with unique combinations for every occasion, every outfit, and every mood with the 10-Way Necklace and accessories.  Whether out for drinks, in the office, or swanning around a cruise ship deck wrapped in a flowing kimono... 💫  The Maria Nicola collection will add sparkle to your life…✨ Especially if you join our online Sparkle Sisterhood Facebook Group for styling advice, belly laughs, and all things girlie goodness! 💕  Shop the Maria Nicola range this Christmas in July.  The Sale includes already discounted bundles and last-chance items with up to 60% savings on select items.  No codes to remember, the discount will be applied automatically.   The Sale runs until July 31st. 🤩   Shop Now for HUGE savings. 👉 marianicola.com/collections/blue-colours", "headline": "Christmas in July Sale 🎄", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 1995.64, "revenue": 15208.02, "roas": 7.62, "purchases": 57, "impressions": 37260, "ctr_all": 0.031, "ctr_link": 0.0141, "thumbstop_pct": null, "conv_rate": 10.86, "cpurchase": 35.01, "aov": 266.81, "ad_ids": ["6618972618538", "6618972951138", "6618973095738", "6618974061138", "6618974068138", "6618975372538"]}, {"cr_number": "CR251A", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-White-Gold-BG", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/12853278913084578251?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIEGLpap0MDCfyq0yo61ddIHIM_M1teU6OvzgnKADL06Ah8j2F9AB3kTPNDk5RBxPxisIOz-s1_tpufaHSOxRPRSgmOtly4A6dMG3jvvOsJYNsH1OZq9WSrBkuPq0GxYnh8r1tVY_qsvTCssYS2ymaT&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=EmFAX1JW1l2ceEKqI3FHoQ&_nc_oc=AdrDxgnJqdNjzuHx5ONwYYYFjquTfq4Sq73oWrMTptWk7a7K0kgVblK1MS1JX_r7DVMeUIQXzsWRYbiInUXtAi3V&ccb=13-1&oh=06_Q3-_AUZib5H5wD2akhF5_FbuYdKyn5Xccr0guJ2_bxM4OKc8&oe=6A1ABCF9&_nc_sid=58080a", "body": "🎅🏻🎄 Maria Nicola's Christmas in July Sale: 20% OFF Sitewide! 🌟  Experience endless possibilities with our bestselling 10-Way Necklace.  Click below for HUGE savings. 👇", "headline": "Christmas in July Sale 🎄", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 1389.0, "revenue": 6569.52, "roas": 4.73, "purchases": 34, "impressions": 58075, "ctr_all": 0.0089, "ctr_link": 0.0058, "thumbstop_pct": null, "conv_rate": 10.06, "cpurchase": 40.85, "aov": 193.22, "ad_ids": ["6618972618138", "6618972952338", "6618973096338", "6618974060738", "6618974068538"]}, {"cr_number": "CR38.1", "cr_desc": "VID_ PR-MN-10-Way-Necklace-2019-Edited-Square", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/450962651_1667437564052032_5625879661613217666_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=101&ccb=1-7&_nc_sid=61326a&_nc_ohc=xZesoILLwL0Q7kNvwE4c8HS&_nc_oc=AdqvvLqU26-b_qulA0W6oeQiBuWSB6ZmyoKee5q4OWupMkJOLDMku1O3lEkhsD1Njyw&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=B5pslMxsg1GAC0YtWTxYIg&_nc_tpa=Q5bMBQH-4mWWVlfX6RuazDByjgDZEYSmPzCukjexnGWyCMNxh5yQIxAnQ3vjcJZ89QbeNSuzF5tXhL5I&oh=00_Af5MAPsNRL9PGcZDIKfmXZ3UCQyBCU0_A_OdZsJVNyxbNw&oe=6A1ECAFC", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 1221.58, "revenue": 6390.94, "roas": 5.23, "purchases": 26, "impressions": 12247, "ctr_all": 0.0542, "ctr_link": 0.0316, "thumbstop_pct": 38.74, "conv_rate": 6.72, "cpurchase": 46.98, "aov": 245.81, "ad_ids": ["6618972619338", "6618972951338", "6618973096938", "6618974060538", "6618974069538"]}, {"cr_number": "CR189.0", "cr_desc": "VID:TRAVEL_AD", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/438084386_430665463101821_4935751813932308191_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=110&ccb=1-7&_nc_sid=61326a&_nc_ohc=GnHq4AlxGJ4Q7kNvwGIMAJF&_nc_oc=Adrth_dVCGXYZmut4Ymm7q2LOy5jbAqFNWw33thF75t5uKnlCYTEJoQ7lEW4JqwQGypb1C4IlTxM22pt_qt0PkQS&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=wBoncgOYeFLkfHtOco6wHQ&_nc_tpa=Q5bMBQFIVU1AL0SP0TNLJmdpvDSe3173A5To5N-t3hrEbeYlEJeVw4G2OdlNjVwIdu5N4cawy51s6BjP&oh=00_Af5jWJTchfbVrwTBTUOTCLN-PYRnP9ejDpB6h0-WwtUfuA&oe=6A1EC6AC", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 1182.41, "revenue": 1868.1, "roas": 1.58, "purchases": 15, "impressions": 21930, "ctr_all": 0.0595, "ctr_link": 0.0285, "thumbstop_pct": 32.24, "conv_rate": 2.4, "cpurchase": 78.83, "aov": 124.54, "ad_ids": ["6618972617738", "6618972950938", "6618973096538", "6618974060138", "6618974068938", "6618975372338"]}, {"cr_number": "CR251B", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-MN-Lifestyle-Focused-Green-Gold-BG", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/3918934439432034279?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLiCsxqp6E4kiwArp-7z1KzWUfVkXGr0a_PMAMMAq9SDWBVrDFyFELsv3AlMLb0YcM1izYNQe-qy8ol6R2Sta39XkWEEVfL4kKHge0pjSgnDYLNyKZlPEFntceZwexb3e2VW91Ro8XzkLmjIw9voncn&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=S8z-H2PaPTIOhcUCuj3Cww&_nc_oc=AdrgtY3_5y9WyWKZ9zcj2dsBVCDHjZdJTVzfouUdalRaL-OCvR1wqSmczHP6VOSgE4mXZgx1WWLnaeGfkyrObPDU&ccb=13-1&oh=06_Q3-_AfQ6fZuo8zUPxWnX0xAL35PC5v-w8z-m_Xdsj4buZ5Db&oe=6A1ABC37&_nc_sid=58080a", "body": "20% off the most versatile necklace and fashion you will ever own!😍 Imagine creating a new signature look daily with the Maria Nicola collection.  Our Sparkle Sisters ✨ love coming up with unique combinations for every occasion, every outfit, and every mood with the 10-Way Necklace and accessories.  Whether out for drinks, in the office, or swanning around a cruise ship deck wrapped in a flowing kimono... 💫  The Maria Nicola collection will add sparkle to your life…✨ Especially if you join our online Sparkle Sisterhood Facebook Group for styling advice, belly laughs, and all things girlie goodness! 💕  Shop the Maria Nicola range this Christmas in July.  The Sale includes already discounted bundles and last-chance items with up to 60% savings on select items.  No codes to remember, the discount will be applied automatically.   The Sale runs until July 31st. 🤩   Click below for HUGE savings. 👇", "headline": "Christmas in July Sale 🎄", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "cij2024", "spend": 746.63, "revenue": 3920.55, "roas": 5.25, "purchases": 25, "impressions": 32209, "ctr_all": 0.0083, "ctr_link": 0.0052, "thumbstop_pct": null, "conv_rate": 14.97, "cpurchase": 29.87, "aov": 156.82, "ad_ids": ["6618972619538", "6618972952138", "6618973096138", "6618974061538", "6618974069138"]}, {"cr_number": "CR251I", "cr_desc": "VID: MN-Christmas-In-July-Image-Ad-SMS-Sign-Up-iMessage-With-Animation", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/450914419_8225404267510545_1524334241940092805_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=108&ccb=1-7&_nc_sid=61326a&_nc_ohc=AoyPhW3fLzkQ7kNvwEaCt1p&_nc_oc=Adrreq3glRGLf8EmLSvT5xoJrOMlyLo1rluNEG170e2KGa7jp991IArktxH1lMZBh8I&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=6-j43YBbsJmIxMermMluVA&_nc_tpa=Q5bMBQF2QpTw7NipRIHpQUfelVydqu_gwzeJG0RcJ2HD13gu3hzZucFJlVnNxZwa7E5Xx8ktYqdKzJgr&oh=00_Af4P567lbOPxu2cXII_Ld4zSma-fCe4cVTJfXZSOg3bFgA&oe=6A1ED1EC", "body": "Want the inside scoop on the hottest jewellery sale of the season?  Join our exclusive VIP SMS club for early access to our Christmas in July Sale!  Be first to shop our iconic 10-Way Necklace & must-have accessories at 20% OFF! 🌟  Popular pieces go fast, so don't miss your chance to shine! 💎✨  Sign up by 23 July, 5 PM AEST for exclusive access. 👉 mnic.la/xmas-july-sms", "headline": "20% OFF 10-Way Necklace & More 😍", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "cij2024", "spend": 248.9, "revenue": 4733.14, "roas": 19.02, "purchases": 22, "impressions": 5122, "ctr_all": 0.0568, "ctr_link": 0.0279, "thumbstop_pct": 18.43, "conv_rate": 15.38, "cpurchase": 11.31, "aov": 215.14, "ad_ids": ["6618939371538", "6618939519138", "6618939830938", "6618940612938"]}, {"cr_number": "CR251G", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-SMS-Sign-Up-With-MN-Lifestyle", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/10583143448741779151?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJrgWx1bBBG-_6TK5XdiDpfoAdG-6hqfrF6a7vVUSOy60LMdkxKGWT_o5mRCZzWq6-LGjOdAxZEeiGqFSkKLuBURXor6QD2muC2jAEAhvbIlUkkuRIfsfWsZYZuhfpW2sZ9kYQV1jsje5kY5IZtwQnp&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=gZQxtI0Jp0ZBJ3omWDbW9A&_nc_oc=AdqHpL6ey4WOKVyjo829WnGFFqXHaO1wZX1wRLbKTDa-bGIx_cXvnjB_uNVdRVbbcN5MvKTQfdTk5os5GM0qFVMO&ccb=13-1&oh=06_Q3-_AZHhY2KR4IwMoHc5Fvg78Qqgw1xq0Jfx0cOxVWEdohXi&oe=6A1AD13D&_nc_sid=58080a", "body": "Want the inside scoop on the hottest jewellery sale of the season?  Join our exclusive VIP SMS club for early access to our Christmas in July Sale!  Be first to shop our iconic 10-Way Necklace & must-have accessories at 20% OFF! 🌟  Popular pieces go fast, so don't miss your chance to shine! 💎✨  Sign up by 23 July, 5 PM AEST for exclusive access. 👉 mnic.la/xmas-july-sms", "headline": "20% OFF 10-Way Necklace & More 😍", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "cij2024", "spend": 211.8, "revenue": 6301.36, "roas": 29.75, "purchases": 30, "impressions": 5733, "ctr_all": 0.0508, "ctr_link": 0.0253, "thumbstop_pct": null, "conv_rate": 20.69, "cpurchase": 7.06, "aov": 210.05, "ad_ids": ["6618939371738", "6618939518938", "6618939830738", "6618940613138"]}, {"cr_number": "CR251H", "cr_desc": "IMG: MN-Christmas-In-July-Image-Ad-SMS-Sign-Up-iMessage-Style", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/13860026822776456843?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJ26083p4ngVIwQVJnMzTpLm3pwHk0XpwSoKHzqWgJEG0xrlRVI-Ql8rs83M5xuYyk-Byv7LzqpOZMenzFfF_FVitO6zRAFTHkFbwOL8bEPBYghmz-ZJUzBKEBXqZVIs0u7JHDZ-99speR2JscX0GL4&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=42D_DmiVMzzGzFICpV5Fqw&_nc_oc=AdpR3jKZagTKbyHBH-8SNZurTfQJ28Pbt2e1ikWJ14hPmFlicxgCVCP-OxyAXIWq0MWHLoGBKJFSkn6zuVM2PhI0&ccb=13-1&oh=06_Q3-_AbwtL-4PAa8YiO8IvJuz78U3W_usq9i7G4CjbVOsJC2_&oe=6A1AA64C&_nc_sid=58080a", "body": "Want the inside scoop on the hottest jewellery sale of the season?  Join our exclusive VIP SMS club for early access to our Christmas in July Sale!  Be first to shop our iconic 10-Way Necklace & must-have accessories at 20% OFF! 🌟  Popular pieces go fast, so don't miss your chance to shine! 💎✨  Sign up by 23 July, 5 PM AEST for exclusive access. 👉 mnic.la/xmas-july-sms", "headline": "20% OFF 10-Way Necklace & More 😍", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "cij2024", "spend": 70.35, "revenue": 733.38, "roas": 10.42, "purchases": 4, "impressions": 2182, "ctr_all": 0.0431, "ctr_link": 0.0229, "thumbstop_pct": null, "conv_rate": 8.0, "cpurchase": 17.59, "aov": 183.34, "ad_ids": ["6618939371338", "6618939519338", "6618939830538", "6618940613338"]}], "email": {"presale": {"email_sent": 17639, "email_revenue": 3533.88, "email_rpe": 0.2, "email_click_rate": 0.0229, "sms_sent": 0, "sms_revenue": 0.0, "sms_rps": 0.0, "sms_click_rate": 0.0, "new_subs": 1085}, "sale": {"email_sent": 27588, "email_revenue": 50787.77, "email_rpe": 1.84, "email_click_rate": 0.0377, "sms_sent": 9250, "sms_revenue": 142320.88, "sms_rps": 15.39, "sms_click_rate": 0.0859, "new_subs": 231}}, "customers": {"total_orders": 1756, "new_customers": 215, "returning_customers": 1309, "new_pct": 14.1, "aov": 206.32, "vip_day_orders": 552, "vip_day_new": 27, "vip_day_returning": 400}}, "mn10_2025": {"sale_name": "10-Year Anniversary Sale 2025", "offer": "20% Off sitewide + Sparkle Sisterhood giveaways + 3 new product launches", "key_message": "Celebrating 10 years of Maria Nicola", "presale_dates": "17 Jun – 1 Jul 2025", "vip_date": "2 Jul 2025", "public_date": "3 Jul 2025", "sale_end": "13 Jul 2025", "sale_dates": "2 Jul – 13 Jul 2025", "sale_days": 12, "revenue": {"total_net_sales": 411840.29, "vip_day_net_sales": 78089.09}, "spend": {"meta_presale": 7535.02, "meta_sale": 50549.58, "google_presale": 0.0, "google_sale": 2135.9, "total_presale": 7535.02, "total_sale": 52685.48, "total_all": 60220.5, "meta_tof": 47646.28, "meta_mof_bof": 2785.69}, "mer": 6.84, "audience_segments": {"prospecting": 40348.95, "existing_customers": 8528.78, "unknown": 1671.85, "total": 50549.58}, "presale_leads": {"total_leads": 455, "spend": 7535.02, "cost_per_lead": 16.56}, "daily": [{"date": "2025-07-02", "day": 1, "label": "VIP", "net_sales": 78089.09}, {"date": "2025-07-03", "day": 2, "label": "Public", "net_sales": 23322.13}, {"date": "2025-07-04", "day": 3, "label": "", "net_sales": 18552.0}, {"date": "2025-07-05", "day": 4, "label": "", "net_sales": 32780.41}, {"date": "2025-07-06", "day": 5, "label": "", "net_sales": 13793.41}, {"date": "2025-07-07", "day": 6, "label": "", "net_sales": 39689.0}, {"date": "2025-07-08", "day": 7, "label": "", "net_sales": 15950.27}, {"date": "2025-07-09", "day": 8, "label": "", "net_sales": 17863.4}, {"date": "2025-07-10", "day": 9, "label": "", "net_sales": 61078.72}, {"date": "2025-07-11", "day": 10, "label": "", "net_sales": 34521.77}, {"date": "2025-07-12", "day": 11, "label": "", "net_sales": 37434.17}, {"date": "2025-07-13", "day": 12, "label": "Last Day", "net_sales": 38765.92}], "creatives": [{"cr_number": "CR350B", "cr_desc": "VID-PR-MN-Main-Sale-Video-Annoucement-Phone-Hook_2m17s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/503843267_1708915296438994_6127646982939379590_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=103&ccb=1-7&_nc_sid=200999&_nc_ohc=VONdYdIvwS4Q7kNvwGej2ER&_nc_oc=AdpmIczeP3GdVs5lQZ0-445_AwHyak6IUvcZgtjTf8RNWb_EHo7Gtnowe6H_5_02AKdCByFKH2abbfkTNEsxaULj&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=uPvu3xxzgS4Td7fEhfG46Q&_nc_tpa=Q5bMBQEfeq6vvHIvl0_88CyQxNcTF3jXeMIkrgwOJ5OSd8Q7QqCFgq-T6j_GWAMcVsyztZ11B77kBP2B&oh=00_Af5jYBhh_Vm7XBluF3J3Pcx2p53_k52-XrUDmx6EFeHZlg&oe=6A1EACCB", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 3319.01, "revenue": 28594.53, "roas": 8.62, "purchases": 132, "impressions": 74354, "ctr_all": 0.047, "ctr_link": 0.0345, "thumbstop_pct": 37.64, "conv_rate": 5.15, "cpurchase": 25.14, "aov": 216.63, "ad_ids": ["6862561404338", "6862561405338", "6862561405538", "6862562705138", "6862562706138", "6862562706338", "6862562711138", "6862562712138", "6862562712338", "6862564331138", "6862564332138", "6862564332338", "6862568241538", "6862568241938", "6862568242138", "6862568247738", "6862568247938", "6862568248338", "6862568253738", "6862568253938", "6862568254138", "6862861533738", "6862861534138", "6862861534538", "6862861849938", "6862861850138", "6862861850938"]}, {"cr_number": "CR350A", "cr_desc": "VID-PR-MN-Main-Sale-Video-Annoucement-Cupcake-Hook_2m15s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/504722731_1071900674337287_152542683015165550_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=103&ccb=1-7&_nc_sid=61326a&_nc_ohc=XEAULFuwONEQ7kNvwGW5V1-&_nc_oc=AdpDTgPqEjUJt-XJaLoAzfyHTzVjv_07cNkaMsyRkSutw4OChZR9QbP6lYvZmBh8hsrZj8HNuAGtuyQhrpjryRCf&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=sK9UYt-N0hey4tO2gCMNgg&_nc_tpa=Q5bMBQG0x2QFZoeSMmSRsZZG3cQL798NRK1a7kUJiO462gVuDD5KX8uLbUHC3QyVer8GR0ugvetic_EH&oh=00_Af49vindIV76OcIdu-EitsLGzevEf6xQ2UPn80LUuzNzgg&oe=6A1ECD4C", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 1948.15, "revenue": 6238.68, "roas": 3.2, "purchases": 34, "impressions": 57678, "ctr_all": 0.0401, "ctr_link": 0.0329, "thumbstop_pct": 32.64, "conv_rate": 1.79, "cpurchase": 57.3, "aov": 183.49, "ad_ids": ["6862561404938", "6862561405138", "6862562705738", "6862562705938", "6862562711738", "6862562711938", "6862564331538", "6862564331938", "6862568239738", "6862568242538", "6862568245938", "6862568248738", "6862568251938", "6862568254738", "6862861532138", "6862861534938", "6862861848138", "6862861850738"]}, {"cr_number": "CR337", "cr_desc": "VID-MN_Version1_Presale_Vid_Ad_2025_2m", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/508409548_1182141296932342_7919983293215187842_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=109&ccb=1-7&_nc_sid=61326a&_nc_ohc=nfuY3YZnUrUQ7kNvwHaSp4B&_nc_oc=Adrh5x88iok5_NjVzMamX0_ANPv8YdS6CmJtIQTPTRDVJgRI7mX26MH7Yudc5SHBSsY&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=UpcbZOmHKq_dxWZc-RnXxQ&_nc_tpa=Q5bMBQFmlyAUeijJK0iA8T1xBiDjvJEiedn98sabF3QzzUnm63xzk53FIZ26c-CxwaSEAsueN_CI1lNI&oh=00_Af6jsikzU-SUf93L6bvzOjMszoFU3JOX85NnQw1n8cPqNQ&oe=6A1EB802", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 1601.11, "revenue": 8729.13, "roas": 5.45, "purchases": 42, "impressions": 33464, "ctr_all": 0.0398, "ctr_link": 0.0209, "thumbstop_pct": 22.56, "conv_rate": 5.99, "cpurchase": 38.12, "aov": 207.84, "ad_ids": ["6852443513138", "6852443523738", "6852444645338", "6852847499938"]}, {"cr_number": "CR357", "cr_desc": "VID-PR-MN-10YrSale_MariaNicolaJewellery_DemoAd_1m39s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/513889390_708898442127125_9016544693316945755_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=102&ccb=1-7&_nc_sid=61326a&_nc_ohc=MTLFUeZfI_UQ7kNvwFxUJDq&_nc_oc=AdojUBM5ymfbF9WONAEfYKtAN6olAcG0kSeikeUfxqjo7LHx-WMNR8vbisQEDFnUsEM&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=rKIntmynvu8eaL8Nw6Bg5A&_nc_tpa=Q5bMBQF3rAj-TB-nO0V0QSYeX-YKs8SbFxSFIU6B08hIdHWzkSixIp8Dpxw_v3rSx3g7yA_PWpyfWxWQ&oh=00_Af5yQPx0N4iTteOZnFrNkjgEmGm0eJ9x_lKbazgYiWrAGg&oe=6A1ED6DC", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 1429.58, "revenue": 6490.19, "roas": 4.54, "purchases": 28, "impressions": 35081, "ctr_all": 0.0262, "ctr_link": 0.0214, "thumbstop_pct": 23.3, "conv_rate": 3.73, "cpurchase": 51.06, "aov": 231.79, "ad_ids": ["6862561406138", "6862562706938", "6862562712938", "6862564332938", "6862568240938", "6862568247138", "6862568253138", "6862861533338", "6862861849338"]}, {"cr_number": "CR341", "cr_desc": "IMG-MN-Sign-Up-Our-Biggest-Sale-Event-Ever", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/5138825182668208451?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJRUQFIc4-sbmqAPeKMlkySyppLaudeQwOpSyMRbS5iV4-FTPIRPtzK3Tab67SoooQ936K-3DQ9qFVZXAngt3UquwJKXGo4jXDLFkbJ4gYpNBnAQMISevsRLssQyulm2KjgHtJjiuXlYoKVWYkUNWAs&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=NZNTGmvvAE7FpeWSiv7qIA&_nc_oc=AdoudTZRcEiHqlTY0ggczSDXDVvHRDqGRrCCvYgrKDX6Eh1hrG2_4dmoJTdrwXmUs3g&ccb=13-1&oh=06_Q3-_AY2IzP0AiEHuUD02k2NpR_FgDwglIVZYbD6WBNvGy4Ox&oe=6A1AAA9C&_nc_sid=58080a", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 1257.45, "revenue": 5782.96, "roas": 4.6, "purchases": 28, "impressions": 52817, "ctr_all": 0.0137, "ctr_link": 0.0078, "thumbstop_pct": null, "conv_rate": 6.81, "cpurchase": 44.91, "aov": 206.53, "ad_ids": ["6852443512938", "6852443523938", "6852444645538", "6852847499738"]}, {"cr_number": "CR355", "cr_desc": "VID-PR-MN-10YrSale_Travel_Ad_2m_54s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/514537189_756065673509916_5119120138503766833_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=111&ccb=1-7&_nc_sid=61326a&_nc_ohc=_L38GP2r3MkQ7kNvwGOwPg7&_nc_oc=AdpkCrqGnfgKsFdWAFNxjBzrmroUaGqRzDjjz9dmjHZ09Uq2cCzkhTQxjxPxIYp2HgjvgK1LHh453tzPyk8hUZZO&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=FDAShCXbmCuT5z5OfxtjRg&_nc_tpa=Q5bMBQFigehineDc2R0iZn2AB1nS3imstOV0IGUOg4ieIGJYmhCE9UAa_yWGLHrzxVuON1SgML1KucEl&oh=00_Af7q4S1IMfBVrr1kgP04kAcQCPwuv_KKgFhBCYZ9V6xXNw&oe=6A1EC5FB", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 1150.99, "revenue": 3303.54, "roas": 2.87, "purchases": 16, "impressions": 22416, "ctr_all": 0.044, "ctr_link": 0.0323, "thumbstop_pct": 39.96, "conv_rate": 2.21, "cpurchase": 71.94, "aov": 206.47, "ad_ids": ["6862561405938", "6862562706738", "6862562712738", "6862564332738", "6862568241138", "6862568247338", "6862568253338", "6862861533538", "6862861849538"]}, {"cr_number": "CR344F", "cr_desc": "VID-MN10-Sign-Up-Loop-Text-Travel-Video-Ad_2m54s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/509189589_1225481812409692_150463561301114441_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=100&ccb=1-7&_nc_sid=200999&_nc_ohc=rrLMo6VM6UoQ7kNvwGGuMjJ&_nc_oc=AdoUQwfNDcu24VgDdoE-7fW8SR2wu1yMEsNlXqMso87laPWC-WjMoXcDIaSAM_35puIyJtdxKsqRRDGjgVZbv3MR&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=65FHOLwK4KN_hJwcPFblNQ&_nc_tpa=Q5bMBQHTIFZzIb04DCkjQBavVNHNitnA9mdh_4s2nrWBrSvHLKNvlPxzZqeVCLClDC-bakhbJmV-icuF&oh=00_Af6jH53iWPMgns9_72zV0UesYwgT09aolkX095XqirOZ9A&oe=6A1EC948", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 996.61, "revenue": 7095.74, "roas": 7.12, "purchases": 27, "impressions": 25125, "ctr_all": 0.0322, "ctr_link": 0.015, "thumbstop_pct": 19.05, "conv_rate": 7.16, "cpurchase": 36.91, "aov": 262.81, "ad_ids": ["6853350869138", "6853352626938", "6853352627738", "6853353502538"]}, {"cr_number": "CR344A", "cr_desc": "VID-MN10-Sign-Up-Loop-Text-10-Way-Necklace-Demo_1m39s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/509733490_2216942622071415_3185033907720164711_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=109&ccb=1-7&_nc_sid=61326a&_nc_ohc=ite-jrW4mbcQ7kNvwEt4MkJ&_nc_oc=Ado_8Qnl_KJapTZpdXoiYvf0AgjNkQjyQXQEWOfe6dY2PEg58rlDlle4FyOocjiBqOwadSfcR-mvf7zMqspaaKdl&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=o59WfqhTb319Je9PobXMpw&_nc_tpa=Q5bMBQGKdWqi98EC1CNCGtL5jPIoDvsAhy2h87qQGg1-PMXegXBXXk-oUjKfQdLqQio9kPBNeQkr5CPf&oh=00_Af55nyTEUeXQTzWWwrPxEZl8nwcsUgObo0utaHCROvyqww&oe=6A1EC977", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 537.83, "revenue": 6144.42, "roas": 11.42, "purchases": 27, "impressions": 14174, "ctr_all": 0.0268, "ctr_link": 0.0139, "thumbstop_pct": 16.23, "conv_rate": 13.71, "cpurchase": 19.92, "aov": 227.57, "ad_ids": ["6853350868938", "6853352627338", "6853352627538", "6853353502738"]}, {"cr_number": "CR342A", "cr_desc": "VID-MN-SS-Interview-Montage-9-by-16-1m32s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/510381057_1050656996702666_7679588273220104010_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=100&ccb=1-7&_nc_sid=61326a&_nc_ohc=ocNWzi9D8gIQ7kNvwGVPgGp&_nc_oc=Adph9SdXxCK5cVrOUAb76famwcgWyS42XAXrfYgD53v3xj3fEEceF0ZIQJlov5E6xhH2z_juT8PN3Aiz7K_imscc&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=sBTNMKIXuK7KsojR9rRMyA&_nc_tpa=Q5bMBQEjU0RAYgULYedCpwbeJD3pxX2eQO07vV3t2mon5S3ouJGdz1I-NLYFWpMKLndmkJB_vEi8Y1v1&oh=00_Af67Y4cK1fGVBms6mPqAlj3oSWvF8VfG_2FxNRfEr8ZbEA&oe=6A1EAE1F", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": true, "is_sale": true, "sale_year": "mn10_2025", "spend": 522.42, "revenue": 887.72, "roas": 1.7, "purchases": 6, "impressions": 20826, "ctr_all": 0.0307, "ctr_link": 0.0206, "thumbstop_pct": 33.16, "conv_rate": 1.4, "cpurchase": 87.07, "aov": 147.95, "ad_ids": ["6853778187338", "6853780837938", "6853780843938", "6853782980938", "6862561404738", "6862562705538", "6862562711538", "6862564331338", "6862568241738", "6862568248138", "6862568254338", "6862861534338", "6862861850338"]}, {"cr_number": "CR358C", "cr_desc": "IMG-MN-Public-Sale-Image-ad-Version-2-with-cupcakes", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/9140818451742749798?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLyGI3xmqj7l5sWPs5WUVFtkiXGHgcAkpjDLRJ783SKi8Zr2SKK15gXgpZcKNdzI41UvFJrathnaoUQ0VqxsEyuUP5VKAoYORg-CBheGxZvffTcs0x0eajUz7PTjMVzdoqDGY4ED274PNcB1CNuIATi&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=OcysGYSiA8MZhK8hx6E2lA&_nc_oc=Ado8myE14B9A3YrJJxFdn8jWRNeBsXHV3b-ezyZ3B58LdMVTwtkPGPALZ1uNTtbuY7A&ccb=13-1&oh=06_Q3-_AZnymGPTHJa-uwj6dNZgaHMvWq-hCseWsJC3PtgVsVKn&oe=6A1AD8DF&_nc_sid=58080a", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 503.51, "revenue": 4681.53, "roas": 9.3, "purchases": 17, "impressions": 120807, "ctr_all": 0.0032, "ctr_link": 0.0027, "thumbstop_pct": null, "conv_rate": 5.15, "cpurchase": 29.62, "aov": 275.38, "ad_ids": ["6862561406538", "6862562707338", "6862562713338", "6862564333138", "6862568239938", "6862568246138", "6862568252138", "6862861532338", "6862861848338"]}, {"cr_number": "CR338U", "cr_desc": "VID-MN-SS-Solo-Interview-with-CTA-Blythe-9-by-16_4m34s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/502318380_739891002048043_3991784057285349176_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=106&ccb=1-7&_nc_sid=200999&_nc_ohc=yWNh3nuUFo4Q7kNvwGwfMGr&_nc_oc=AdpjBiqJ49XIgdYdqmbGdKKriNPopesU9vmCh88vPWg0NXqlcAqMYhVMNg8kszkixnk&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=p8ZKqdQ7VR5rkwp3ZwQFTw&_nc_tpa=Q5bMBQFwK2O1e1WBl53_qum6eeV5QgydGLzIo8aOzrU1ZNd_-IOK8630FYRgzXdTm39gBwz5AKNw7NPv&oh=00_Af4DcOyFfoCXWsb9kZEaT0tPG_nSn5rtUSirCPFATxLZlQ&oe=6A1EDE2E", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 460.48, "revenue": 3590.05, "roas": 7.8, "purchases": 19, "impressions": 11469, "ctr_all": 0.0283, "ctr_link": 0.0135, "thumbstop_pct": 31.95, "conv_rate": 12.26, "cpurchase": 24.24, "aov": 188.95, "ad_ids": ["6857118415138", "6857118714938", "6857118715538", "6857120012938"]}, {"cr_number": "CR338A", "cr_desc": "VID-MN-SS-Solo-Interview-with-CTA-Denise-9-by-16_3m28s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/510085097_586368480804151_2987158329952049349_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=102&ccb=1-7&_nc_sid=61326a&_nc_ohc=BY91Xod9gQoQ7kNvwH43AVa&_nc_oc=AdrbgUanvu-HreMR06pm0uajFSlufcNaNZNbPSj1avkfzFLsoXMYbXIYRMQ45NEtqx1Kggh1VpEV7F9-l5tA-GD-&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=V5DC2LtCzNqmzZXNzOGcfA&_nc_tpa=Q5bMBQEEBuoseR3p2RydG_uGAtnh_V76qN37pmhP0QjgpZUsHLTEVS-l-iK7ZFSVsN7fIt9lgo7q2skc&oh=00_Af59ev3JkhdASYfxj9byWZIxn9dcniW2r_n7VctaCoe71w&oe=6A1ECC88", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 456.7, "revenue": 2752.84, "roas": 6.03, "purchases": 16, "impressions": 9013, "ctr_all": 0.0355, "ctr_link": 0.014, "thumbstop_pct": 28.05, "conv_rate": 12.7, "cpurchase": 28.54, "aov": 172.05, "ad_ids": ["6858294032738", "6858295384338", "6858295385138", "6858295632738"]}, {"cr_number": "CR358F", "cr_desc": "IMG-MN-Public-Sale-Image-ad-Version-3-Maria-Sitting", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/10833896570319991074?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIT1oe-C1iu6XR9sDNV-x7E62iCDXHul-c48b9xF1Vu4wiXbYwOUtZBcP60ScvLP25faZLVm5EIloTdNQchChSJ9uf_-AWa7_nDYYn8TAjP6oA53tjLcXh-_BJZvb1JiGeW8f9kTfP712b9txICJIPr&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=mY_e2NcM0U7AR2cAB9NN4w&_nc_oc=AdqQKeGCFORHnyhBxnBCHlYg12UUtKBkPqfym6NxRFWCbbE-5h_KUYv4PdYDRWPtZl8&ccb=13-1&oh=06_Q3-_AQrUD3tIRC3bawD6Gwzqsl-WyxNRHNs_g_PmfSjqkKbF&oe=6A1AC6FC&_nc_sid=58080a", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 411.78, "revenue": 2101.4, "roas": 5.1, "purchases": 10, "impressions": 10870, "ctr_all": 0.0225, "ctr_link": 0.0124, "thumbstop_pct": null, "conv_rate": 7.41, "cpurchase": 41.18, "aov": 210.14, "ad_ids": ["6862561406738", "6862562707538", "6862562713538", "6862564333538", "6862568240538", "6862568246738", "6862568252738", "6862861532938", "6862861848938"]}, {"cr_number": "CR343F", "cr_desc": "IMG-MN10-SMS-List-Buidling-Text-Block-Style-Light-Pink", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/508171989_24606672312268304_784485778035586543_n.png?stp=dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=hlOIoNMtjoAQ7kNvwF8YN3g&_nc_oc=AdqVNBUBksMtGMfUG6ojqDfqhLwhuct_lK4l0kiKX5rxqdESlAkjoZB86W6abdEJtIE&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=2a-LeDSg_X0VuWEnnFVEcg&_nc_tpa=Q5bMBQH3aGh2meVwLpDzOQay9UFEBr9qxCJK5-PaFGtu7krt8Cz4eq3yb6qmv_7molPMi4OJLVeT147y&oh=00_Af7MdRVIfgsH1sCFlriI9lpkZ9RwKxer87pvUU4Flv6LzA&oe=6A1EC8B0", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 403.54, "revenue": 2139.09, "roas": 5.3, "purchases": 11, "impressions": 31560, "ctr_all": 0.007, "ctr_link": 0.0045, "thumbstop_pct": null, "conv_rate": 7.8, "cpurchase": 36.69, "aov": 194.46, "ad_ids": ["6852886039138", "6852886714738", "6852886715538", "6852887339338"]}, {"cr_number": "CR343D", "cr_desc": "IMG-MN10-SMS-List-Buidling-Main-Image-Card-Light-Pink", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/489371326_24606668505602018_8077650394825441168_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=_wAwYbJrtycQ7kNvwHH__Ja&_nc_oc=AdrA85koEqJKRwsDUw4X7r9NzNIIIz9jv1bCuIkdSb76pvp9Q-4C0ls2NLzP7O6YNB-R4QCzzM1Vh1qVnhehsPVV&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=ieHhlbDBOaA5CamAYJP9-g&_nc_tpa=Q5bMBQGsBVjKbjck-RpTEPYC238jmBlfmo88sKHAUzSnEva0XVPXMtWh_MaG8R6ubOjSg_ACvHYyoVWK&oh=00_Af7LmHCALqmUgsb3-F7Vl6XxEWtAVp5BuKywTKS2hhdESQ&oe=6A1EB961", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 351.67, "revenue": 3065.77, "roas": 8.72, "purchases": 13, "impressions": 30139, "ctr_all": 0.0067, "ctr_link": 0.0039, "thumbstop_pct": null, "conv_rate": 11.11, "cpurchase": 27.05, "aov": 235.83, "ad_ids": ["6852886038538", "6852886715138", "6852886716138", "6852887339138"]}, {"cr_number": "CR358A", "cr_desc": "IMG-MN-Public-Sale-Image-ad-Version-1-with-cupcakes", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/17943116971860596662?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJW7zPzaWrkusm-8Ug3_PC9NiS47E7F9lXidDZlXXUc_LIQ5X_M4tR3rP_8e9qyiXvnffwF5GfS4nH2pXDYOmiDjkHzgUTjwrWh-FAhzhWrx33H9QAQl2tqKk1zg9Y_hwtam0q43EMUKtGdm2GR05UU&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=HjY1wxpvA6OfjgelVngKDQ&_nc_oc=AdqfOFPWuqJAlVQE7t7cBul9WCSD7kFXhxxeXe8OMceLHBFbrD11UgxDmF9ODGp6llk&ccb=13-1&oh=06_Q3-_AebgSXJ9Pf6C6P6AKO7dNuyu9RsKoja7Ueq3ff8qMACw&oe=6A1AAA30&_nc_sid=58080a", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "image", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 264.98, "revenue": 503.96, "roas": 1.9, "purchases": 3, "impressions": 12112, "ctr_all": 0.0131, "ctr_link": 0.0064, "thumbstop_pct": null, "conv_rate": 3.85, "cpurchase": 88.33, "aov": 167.99, "ad_ids": ["6862561406338", "6862562707138", "6862562713138", "6862564333338", "6862568240738", "6862568246938", "6862568252938", "6862861533138", "6862861849138"]}, {"cr_number": "CR338F", "cr_desc": "VID-MN-SS-Solo-Interview-with-CTA-Jeannine-9-by-16_3m7s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/510253082_1212694510186136_1881132750700084030_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=105&ccb=1-7&_nc_sid=61326a&_nc_ohc=RoUwoDK1bHYQ7kNvwHwQPI9&_nc_oc=Adr8DfIOVgKCgPa9CkA1p0-47nJS3SzuQKiv4u4aEW9e_7Eh_g48F98r-jhyth803SUrK7LqZPED9diDyIN4TP04&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=AxdCyycYZFPePY61_s7zqw&_nc_tpa=Q5bMBQGbMOI7DQr2EVDtu2C-NgK0SZcdPHpk6Waws9-SKTPtaX20uEOhaf-GK5UKvLkejoZWwbbJHnUH&oh=00_Af6_g4naIeAnfVWxUIc63-8zeHznLI20ePcOvKffr6j_4Q&oe=6A1EF2B8", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 200.34, "revenue": 2773.36, "roas": 13.84, "purchases": 7, "impressions": 3716, "ctr_all": 0.0339, "ctr_link": 0.014, "thumbstop_pct": 23.74, "conv_rate": 13.46, "cpurchase": 28.62, "aov": 396.19, "ad_ids": ["6858294032938", "6858295384138", "6858295384938", "6858295632938"]}, {"cr_number": "CR345", "cr_desc": "VID-MN_Version2_Presale_Vid_Ad_2025_2m", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/509269174_1192325676030038_1819993647188007416_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=104&ccb=1-7&_nc_sid=200999&_nc_ohc=pcA1DLGqSkwQ7kNvwGJEDRr&_nc_oc=Adrz0RZzycJ-58dFXJmvbkriBSBeS4hjnMy4JOAGPHscwsHUGqjZSGLlS9zVmtVtFknONnpvDQOUaybbPVIiFhk8&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=-HZj2qoi19_whyxRsz80fA&_nc_tpa=Q5bMBQEpbQtr4A_M12h1ppRpJ990pbidsa0LQwVWBy8m9_JSSg3y62dn2YByQBCRsrTnGbd5TQ208tvK&oh=00_Af6s1sFdqLRUJf1nd13Jr64Nxnt-O_fsIdmh_Sv0beItqQ&oe=6A1EDEE1", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 187.21, "revenue": 680.75, "roas": 3.64, "purchases": 3, "impressions": 4414, "ctr_all": 0.0276, "ctr_link": 0.0136, "thumbstop_pct": 18.94, "conv_rate": 5.0, "cpurchase": 62.4, "aov": 226.92, "ad_ids": ["6853705813738", "6853706103138", "6853706142738", "6853706527338"]}, {"cr_number": "CR343B", "cr_desc": "IMG-MN10-SMS-List-Buidling-iMessage-Layout-Light-Pink", "thumbnail_url": "https://external.xx.fbcdn.net/emg1/v/t13/2942615743340425383?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLAVoau38pPCdY_MleE6ui4-6QtzJMBliLu9NEbY5X0I8F_bLKBEJd8Jj_LVyUqPVHeF6-y_kCUL74w8OMex40cgI5r1LHoczUyIf0doXHPyOHW5GrUH03zDgqg_3kV-KrPjtCJIG9jL11gxIE27VCV&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAT1rw8EAAAA&_nc_gid=-Q25ZtrG5-tr6UxcYA9ZAA&_nc_oc=AdoElLJG8SRtTb8lSJFsn8qMYa1jEc3wzjL_Qb6dQLzp0n1AJXHvTwueJXYxVo-TblU&ccb=13-1&oh=06_Q3-_AWT0vFUIhCoJp4wNLvYs2zzxH7G6WLaVC411gpDqBs67&oe=6A1A9F1E&_nc_sid=58080a", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 156.16, "revenue": 187.98, "roas": 1.2, "purchases": 1, "impressions": 11204, "ctr_all": 0.0056, "ctr_link": 0.0029, "thumbstop_pct": null, "conv_rate": 3.12, "cpurchase": 156.16, "aov": 187.98, "ad_ids": ["6852886038138", "6852886714938", "6852886715938", "6852887338938"]}, {"cr_number": "CR343A", "cr_desc": "IMG-MN10-SMS-List-Buidling-iMessage-Layout-Dark-Pink", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/508411964_24606639608938241_3162215770158943919_n.png?stp=dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=wibksWnXNzYQ7kNvwHFDd6s&_nc_oc=Adr5gCx8PESJX-ru442cX0dQHIz0OGRqPIFIByOGop2jtgLtiW2-nb3gHAbjqpp7hho&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=YO-vlxhm_Sn_clWWWgV7xw&_nc_tpa=Q5bMBQGjc4HHjPMyqTuFOgR3oEr47HMS7TKHync8Zg8s15NdzgedQNENOkoHLrrXZ_h70-cJrc5yI6-Q&oh=00_Af77hxnMwAlMjeI-QcQC3hmPNVhKW4cR-kdaGdws0_WAUA&oe=6A1ED23E", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 152.08, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 27601, "ctr_all": 0.0023, "ctr_link": 0.0016, "thumbstop_pct": null, "conv_rate": 0.0, "cpurchase": null, "aov": null, "ad_ids": ["6852886038738", "6852886714338", "6852886716538", "6852887338738"]}, {"cr_number": "CR358H", "cr_desc": "IMG-MN-Public-Sale-SS-Community-Image-Animation-WhiteBG", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/514212449_1020313623254371_2788888342276171881_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=100&ccb=1-7&_nc_sid=200999&_nc_ohc=d5ONwCoLhJsQ7kNvwGaFzy2&_nc_oc=AdrTlwIUFN9zJCEGbO5IDpkvw2bDoOR2q-cMQddsKfXFkqFyEEhKl-d_oYdt9Eh8KCZ5dezcXPFDHur6Un_oGqaK&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=QkLL0P4ySArw3-FjMRkczQ&_nc_tpa=Q5bMBQHXAPpJj45N38FRutf50o89-GOuEb0jTDRwr1LlB4gEENEWIYGCXmufN_xVnBzxUFT6QIsjrwB1&oh=00_Af5K9pifI4zIUypFpz8oJczQ3TEhUyhTFroHieU06N8sdQ&oe=6A1ED86C", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 147.97, "revenue": 2233.87, "roas": 15.1, "purchases": 7, "impressions": 9475, "ctr_all": 0.0114, "ctr_link": 0.0094, "thumbstop_pct": 20.15, "conv_rate": 7.87, "cpurchase": 21.14, "aov": 319.12, "ad_ids": ["6862561404138", "6862562704938", "6862562710938", "6862564330938", "6862568240138", "6862568246338", "6862568252338", "6862861532538", "6862861848538"]}, {"cr_number": "CR344B", "cr_desc": "VID-MN10-Sign-Up-Loop-SS-Competition-Montage-This-Jewellery-Styles-Confidence_1m1s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/509415740_1235452098277080_2765558688757102092_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=103&ccb=1-7&_nc_sid=200999&_nc_ohc=LifeMwXHFpgQ7kNvwFLEjfL&_nc_oc=AdrOaRRs-ZhgNVVuWrHsv8Ur5he2exQSKvVb6RBpwLMrWTQZUjd4nUFGJgnKURKGlds&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=xMF-832KmvSg2adtaURIQQ&_nc_tpa=Q5bMBQG4Av7G2xNyE2RZNxXV9qo0_MJ_VnsWEp-qlZht9MSZa34uumktRKQM8d7-xeQHnxeRQifaYWwj&oh=00_Af7Xi4GjAYMt89K6MkQwpDOhMvomZh6jjkyo8hgms0MaBw&oe=6A1EC663", "body": "Something big is coming. 👀 We're celebrating 10 Years of Sparkle and Style. Register for early access to 20% OFF — plus your invite to exclusive giveaways. ✨", "headline": "10 Days of Surprises for MN10 🤯", "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 120.62, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 7371, "ctr_all": 0.0106, "ctr_link": 0.0038, "thumbstop_pct": 16.93, "conv_rate": 0.0, "cpurchase": null, "aov": null, "ad_ids": ["6853350869338", "6853352627138", "6853352627938", "6853353502938"]}, {"cr_number": "CR343E", "cr_desc": "IMG-MN10-SMS-List-Buidling-Text-Block-Style-Dark-Pink", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/489370703_24606681065600762_4428428845694372899_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=N9-0beUqWyEQ7kNvwFmEIhh&_nc_oc=AdphbMafpaqXtRHdUkwMahe0jAJufh3IpYH8gPHY96TpLFVlXsQPAPE6a1YbQQPYmHM&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=fjcLWLz7jGks07fvaqcdlg&_nc_tpa=Q5bMBQHw-92b01hMa0SthhSmsmQvZl0E54FH2_8BsJmPHQ0vlgUm9_QpaYUd9vKWn2YEHpwvUMY59YF7&oh=00_Af6H-LWI5WYH2YAq_OYKFJQM35IzIkAhKDCjhs2BUTmiaA&oe=6A1ECD1D", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 105.53, "revenue": 2153.48, "roas": 20.41, "purchases": 10, "impressions": 6764, "ctr_all": 0.0075, "ctr_link": 0.004, "thumbstop_pct": null, "conv_rate": 37.04, "cpurchase": 10.55, "aov": 215.35, "ad_ids": ["6852886038338", "6852886714538", "6852886715738", "6852887338338"]}, {"cr_number": "CR344C", "cr_desc": "VID-MN10-Sign-Up-Loop-Text-SS-Competition-Carol_57s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/502473781_1239007783953730_6990888929312503223_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=100&ccb=1-7&_nc_sid=200999&_nc_ohc=4Q3F78wgS44Q7kNvwFsWpLR&_nc_oc=AdpxtGKdThHh1mJOFj31_rL9UpcttcPbnnc_76oZwtQq2zxuddPU9MIvSIGalrh6ezthr0v3_c3BW-9qYafw0uYL&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=AE0BBlb80XmpZBeoBgMLLQ&_nc_tpa=Q5bMBQGZf1jp6ck34Kc2eHKrI9pRKOrxdRgNelOzv6Txb-8kRoEmOeIO5PPi0FnmOZUfKHtxpKvBwlnw&oh=00_Af4gSfYAEenFW0u4lZPk1Ur9s8C-hsK9oLxsJAxDBhEZBA&oe=6A1ECB10", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 88.92, "revenue": 147.2, "roas": 1.66, "purchases": 2, "impressions": 3292, "ctr_all": 0.0134, "ctr_link": 0.0076, "thumbstop_pct": 25.46, "conv_rate": 8.0, "cpurchase": 44.46, "aov": 73.6, "ad_ids": ["6853705813538", "6853706103338", "6853706142938", "6853706527138"]}, {"cr_number": "CR358G", "cr_desc": "IMG-MN-Public-Sale-SS-Community-Image-Animation-PinkBG", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/514175407_24831894046398709_4968040330084459495_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=102&ccb=1-7&_nc_sid=61326a&_nc_ohc=ay63WDuy78wQ7kNvwHvNBbm&_nc_oc=AdoKKipLP75cr5ASnvsQOoyqruqnVOlf5zmI29XfRU2FiKjhUQmIZcI3rFY_rkt4RB8Wv4uYkfAtrxrd3RPtm5Hq&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=9dKHkHVt_vDVL2Ej6OJHYQ&_nc_tpa=Q5bMBQFwyR1dYeyUl54-WJ4lYHsJsXO5mgE3K-S2PcNZ-19etuheg860cSyapyNyLTFR8RNcCdqxd1_S&oh=00_Af69EaqCf02h02MJYkNQAiKjgZYr_32jZUAtA1T2hXgBpQ&oe=6A1EB2DF", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 78.24, "revenue": 637.33, "roas": 8.15, "purchases": 3, "impressions": 9411, "ctr_all": 0.0086, "ctr_link": 0.0072, "thumbstop_pct": 17.93, "conv_rate": 4.41, "cpurchase": 26.08, "aov": 212.44, "ad_ids": ["6862561406938", "6862562707738", "6862562713738", "6862564333738", "6862568240338", "6862568246538", "6862568252538", "6862861532738", "6862861848738"]}, {"cr_number": "CR333B", "cr_desc": "VID-MN-SS-Community-Laurie-Feagans-Reel-SQ_2m20s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/500791563_730717569454367_8961304503270356507_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=111&ccb=1-7&_nc_sid=61326a&_nc_ohc=GBC5DSPZENcQ7kNvwHic9nn&_nc_oc=Adp_D2-Twbq9t1KkzSzX6Z8ixVkY0oLTZvL2JtVOUR1ynbTWRZRVJ_7cHsbyE4kOt1gBfiABlXWXylbOp-FDUZX1&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=5Q3ETQ9d476sCO1cshJV9g&_nc_tpa=Q5bMBQEUnuCfcq0xrTS9tLfshHa0e260xpDzUVv1vfxFlq-muC3Z1peuS4ctk9IXwagBoFwnG7PiW1Ia&oh=00_Af7b_my14qTd-1gp2WJBq0LWuXr0o3Bs6TJoXFbLuzNRLQ&oe=6A1EC607", "body": null, "headline": null, "format": "video", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 62.0, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 3114, "ctr_all": 0.0154, "ctr_link": 0.0083, "thumbstop_pct": 25.34, "conv_rate": 0.0, "cpurchase": null, "aov": null, "ad_ids": ["6853705813938", "6853706102938", "6853706142538", "6853706526938"]}, {"cr_number": "CR354", "cr_desc": "VID-PR-MN-10YrSale_Banner_Montage_WhatMakesMNJewellery_Empowering_59s", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.5256-10/515093703_1327555456042225_259732625589554365_n.jpg?stp=dst-jpg_p160x160_tt6&_nc_cat=106&ccb=1-7&_nc_sid=200999&_nc_ohc=2jkpADHrsCAQ7kNvwE6fuq8&_nc_oc=AdoIietm-pNEa0JRBHN4ljkvEhEpa5nQ-dfyNy_ev_4BOuwtFLyD_BmycZSzXQB74gM&_nc_zt=23&_nc_ht=scontent.xx&edm=APRAPSkEAAAA&_nc_gid=WSsJxu-i2zzJQ3Y0qMT_Fg&_nc_tpa=Q5bMBQEKb2JSte5BTXZY_CJq-xod5j2sdKMgR4Pm4wRnWknaLCPy9vR3c7YGHPN3Xo7oeJ5B6KESoD0B&oh=00_Af7Zeoav51Ob5cLulbLI3OovRjmXrnsK3xh_ZhmRjTYgPA&oe=6A1EC400", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "video", "is_feed": false, "is_tof": true, "is_mof": true, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 55.6, "revenue": 138.65, "roas": 2.49, "purchases": 1, "impressions": 4499, "ctr_all": 0.0153, "ctr_link": 0.0107, "thumbstop_pct": 19.36, "conv_rate": 2.08, "cpurchase": 55.6, "aov": 138.65, "ad_ids": ["6862561405738", "6862562706538", "6862562712538", "6862564332538", "6862568241338", "6862568247538", "6862568253538", "6862861533938", "6862861849738"]}, {"cr_number": "CR343G", "cr_desc": "IMG-MN10-SMS-List-Buidling-iMessage-Style-Solid-Dark-Pink", "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/508108193_24606684155600453_7263907831607963115_n.png?stp=dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=d5bd00&_nc_ohc=BN--j0nWz5EQ7kNvwHtrKCu&_nc_oc=AdoRtZvIl7k04ueqN0fNO8HW3ZFWdoFz2gmwEa77MRyy0d-M8kpxX3rgcldOl934ge6A9Ze8qCL_8W9UGVWZuDBY&_nc_zt=1&_nc_ht=scontent.xx&edm=AEuWsiQEAAAA&_nc_gid=lHVZgJbSTWKzGjLnmQgkYA&_nc_tpa=Q5bMBQE7hnHcr9Xczykb6PgIcllgJ85MRpRasnAsCC3yOlzxluIyIxleqOdm0t2s6N6RhwCS4_zL-OiK&oh=00_Af4JrnitmXYJ3StwA7fbiATPaa9x0FSTtBYawbpoqN_Ifw&oe=6A1EB818", "body": null, "headline": null, "format": "image", "is_feed": false, "is_tof": false, "is_mof": true, "is_presale": true, "is_sale": false, "sale_year": "mn10_2025", "spend": 48.42, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 6245, "ctr_all": 0.0038, "ctr_link": 0.0016, "thumbstop_pct": null, "conv_rate": 0.0, "cpurchase": null, "aov": null, "ad_ids": ["6852886038938", "6852886715338", "6852886716338", "6852887338538"]}, {"cr_number": "Ad878 - Feed", "cr_desc": null, "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t39.2147-6/75341531_494485104475166_2751028116179648512_n.png?_nc_cat=1&ccb=1-7&_nc_ohc=ECjKzZ8nDdcQ7kNvwH5MBHV&_nc_oc=AdpPnjgclyDisRoZlgVhzuqf8cyZhDz6bEuAri53oqmGLFPMCPNiPZgF8rWCIT8WhRA&_nc_zt=14&_nc_ht=scontent.xx&edm=AAT1rw8EAAAA&_nc_gid=1WvVsmnd0zRvSSlkLVynLQ&_nc_tpa=Q5bMBQEHacwRk16xkSWt_K0TauKnSDK_gYqGDVmuIGFmGQ1eDkIxtD1j9CUY7slcqBOyuKywtlfahRPY&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=39b8c1&_nc_sid=58080a&oh=00_Af52wda0op9dly5mbO3YOcXdIYQ1nVi8De6rICPkcfZ41A&oe=6A1EAC44", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "{{product.name}}", "format": "feed", "is_feed": true, "is_tof": true, "is_mof": false, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 1151.97, "revenue": 11573.74, "roas": 10.05, "purchases": 55, "impressions": 34381, "ctr_all": 0.0233, "ctr_link": 0.0198, "thumbstop_pct": null, "conv_rate": 6.23, "cpurchase": 20.94, "aov": 210.43, "ad_ids": ["6863711467338", "6863707123138", "6863711136738", "6863711466138", "6863711137138", "6863711465738"]}, {"cr_number": "Ad864 - Flex", "cr_desc": null, "thumbnail_url": "https://scontent.xx.fbcdn.net/v/t15.13418-10/510085097_586368480804151_2987158329952049349_n.jpg?_nc_cat=102&ccb=1-7&_nc_ohc=A0kg0WDrttYQ7kNvwE9oBUu&_nc_oc=AdoGUa2nmiyTnrSratSkiVpJ64Vr9N3q4rgDYdITzCS79-YiEof6l9ZNs9LPJc3vbME&_nc_zt=23&_nc_ht=scontent.xx&edm=AAT1rw8EAAAA&_nc_gid=6LLEm_L_nwseV6c62uFI8A&_nc_tpa=Q5bMBQGIhNobDpCijPp4R-wfy7hY7ahcbtbMdM7s3TjTskbCmS9nh43FSm5lp0-SfyGkAI_HtZvrNQeN&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=aaa768&_nc_sid=58080a&oh=00_Af7OmTfh8c4VZB_MHcsAeIJ2dVlc4HwwKolvlNIgTwcILg&oe=6A1E9448", "body": "The MN 10-Year Celebration Sale is here! 20% OFF site-wide for 10 days. 🥳 Shop now, then join the Sparkle Sisterhood for exclusive new releases and surprises. ✨", "headline": "20% OFF Site-wide — Shop Now! 🥳", "format": "flex", "is_feed": false, "is_tof": true, "is_mof": false, "is_presale": false, "is_sale": true, "sale_year": "mn10_2025", "spend": 930.59, "revenue": 15923.32, "roas": 17.11, "purchases": 65, "impressions": 18984, "ctr_all": 0.0859, "ctr_link": 0.0349, "thumbstop_pct": 40.55, "conv_rate": 6.93, "cpurchase": 14.32, "aov": 244.97, "ad_ids": ["6862561404538", "6862562705338", "6862568254538", "6862568242338", "6862562711338", "6862568248538"], "is_flex": true}], "email": {"presale": {"email_sent": 49502, "email_revenue": 17279.59, "email_rpe": 0.3491, "sms_sent": 0, "sms_revenue": 0.0, "new_subs": 265, "campaigns": [{"id": "01JXW1N6RXF16YXP94QGBCF80A", "name": "E | MN10 Teaser - 19 JUN 2025, 9 AM RTZ", "channel": "email", "send_date": "2025-06-19", "sent": 12405, "revenue": 2240.87, "rpe": 0.1814}, {"id": "01JY3JV7BXJ266E95KS9WQBC0Q", "name": "E | MN10 Teaser - 23 JUN 2025, 9 AM RTZ", "channel": "email", "send_date": "2025-06-23", "sent": 11491, "revenue": 3149.82, "rpe": 0.27445}, {"id": "01JYGK0GAHGZE600HZDFDAAS87", "name": "E | MN10 Teaser - 25 JUN 2025, 9 AM RTZ", "channel": "email", "send_date": "2025-06-25", "sent": 8603, "revenue": 1551.99, "rpe": 0.18048}, {"id": "01JYNPPNWZ0J71RJGVVAHK4GZ4", "name": "E | MN10 Teaser - 27 JUN 2025, 9 AM RTZ", "channel": "email", "send_date": "2025-06-27", "sent": 8515, "revenue": 5833.96, "rpe": 0.68554}, {"id": "01JYQV2RFD8DHNG7MKASRDH9ZN", "name": "E | MN10 Teaser - 30 JUN 2025, 9 AM RTZ", "channel": "email", "send_date": "2025-06-30", "sent": 8488, "revenue": 4502.95, "rpe": 0.53095}], "email_click_rate": 0.0235, "sms_click_rate": null, "sms_rps": 0.0}, "sale": {"email_sent": 83957, "email_revenue": 177308.04, "email_rpe": 2.1119, "sms_sent": 7211, "sms_revenue": 72413.08, "new_subs": 651, "campaigns": [{"id": "01JZ06ZF6VGGEYHR2ZQ98DVP8Q", "name": "E | MN10 Launch (VIP SMS Subscribers) - 2 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-02", "sent": 3948, "revenue": 36044.59, "rpe": 9.15302}, {"id": "01JZ4VD7KPT47NFAGKPV4Z7MJ0", "name": "E | MN10 Launch (VIP SMS Subscribers - Not Klaviyo Supported) - 2 JUL 2025, 4 PM AEST", "channel": "email", "send_date": "2025-07-02", "sent": 430, "revenue": 1643.09, "rpe": 3.839}, {"id": "01JYR9H75G8EF1Q9W56XF3EWW3", "name": "E | MN10 Public Sale Launch - 3 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-03", "sent": 14170, "revenue": 3050.75, "rpe": 0.22462}, {"id": "01JZ9NHD51ZH6JQGGC2HG3QASM", "name": "E | MN10 Public Sale + Ruby Zoisite Launch - 5 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-05", "sent": 17836, "revenue": 33415.89, "rpe": 1.91715}, {"id": "01JZA3DNXVA2DK0MGTM8BXFN7R", "name": "E | MN10 Public Sale + New Pave Pendants Launch - 7 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-07", "sent": 17506, "revenue": 36981.19, "rpe": 2.13148}, {"id": "01JZMCAYA36E8D2EHSGVX67BAB", "name": "E | MN10 Public Sale + New Chunky LinX Collection Launch - 10 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-10", "sent": 14947, "revenue": 43558.31, "rpe": 2.9175}, {"id": "01JZMNEXJC0DB746FNB7P54FGP", "name": "E | MN10 Public Sale + Final Sale Reminder - 12 JUL 2025, 8 AM AEST", "channel": "email", "send_date": "2025-07-12", "sent": 15120, "revenue": 22614.22, "rpe": 1.49932}, {"id": "01JYRGJBH7NDG30NCVXY2Q4NH3", "name": "S | MN10 Launch (AU/US/CA) - 2 JUL 2025, 8 AM AEST", "channel": "sms", "send_date": "2025-07-02", "sent": 6816, "revenue": 70914.55, "rpe": 10.81839}, {"id": "01JYRH2M25XK65Q8RMV80GNNS7", "name": "S | MN10 Launch (UK/EU) - 1 JUL 2025, 7 PM RTZ", "channel": "sms", "send_date": "2025-07-02", "sent": 395, "revenue": 1498.53, "rpe": 3.85226}], "email_click_rate": 0.0296, "sms_click_rate": 0.1185, "sms_rps": 10.042}}, "customers": {"total_orders": 1889, "new_customers": 209, "returning_customers": 1485, "new_pct": 12.3, "aov": 218.02, "vip_day_orders": 340, "vip_day_new": 17, "vip_day_returning": 271}}};
+</script>
+
+<script>
+/* ---------- Helpers ---------- */
+const fmtAUD = v => new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(v||0);
+const fmtAUD2 = v => new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:2}).format(v||0);
+const fmtNum = v => new Intl.NumberFormat('en-AU').format(v||0);
+const fmtPct = (v,dp=1) => v!=null ? (Number(v)||0).toFixed(dp)+'%' : '—';
+const fmtX = v => v!=null && v>0 ? (Number(v)||0).toFixed(2)+'x' : '—';
+const fmtDash = v => v!=null && v>0 ? v : '—';
+const pctDelta = (a,b) => {
+  if(!a || !b) return null;
+  return ((b-a)/a*100);
+};
+const deltaBadge = (cij, mn10, higherIsBetter=true) => {
+  const d = pctDelta(cij, mn10);
+  if(d == null) return '';
+  const up = d > 0;
+  const good = (higherIsBetter ? up : !up);
+  return `<span class="delta ${good?'up':'down'}">${up?'+':''}${d.toFixed(1)}%</span>`;
+};
+
+const CIJ = DATA.cij2024;
+const MN  = DATA.mn10_2025;
+
+/* ---------- SECTION 1: Overview Table ---------- */
+function renderOverview(){
+  const rows = [
+    {y:CIJ, cls:'yr-cij'},
+    {y:MN, cls:'yr-mn10'}
+  ];
+  document.getElementById('overview-rows').innerHTML = rows.map(r => `
+    <tr>
+      <td class="${r.cls}">${r.y.sale_name}</td>
+      <td>${r.y.presale_dates}</td>
+      <td>${r.y.vip_date}</td>
+      <td>${r.y.public_date}</td>
+      <td>${r.y.sale_end}</td>
+      <td>${r.y.sale_days} days</td>
+      <td>${r.y.offer}</td>
+    </tr>
+  `).join('');
+}
+
+/* ---------- SECTION 2: KPI Cards ---------- */
+function renderKPIs(){
+  const kpis = [
+    {label:'Net Sales (Shopify)', cij:CIJ.revenue.total_net_sales, mn10:MN.revenue.total_net_sales, fmt:fmtAUD, hb:true},
+    {label:'VIP Day Revenue (Day 1)', cij:CIJ.revenue.vip_day_net_sales, mn10:MN.revenue.vip_day_net_sales, fmt:fmtAUD, hb:true},
+    {label:'MER (Net Sales / Spend)', cij:CIJ.revenue.total_net_sales/CIJ.spend.total_all, mn10:MN.revenue.total_net_sales/MN.spend.total_all, fmt:fmtX, hb:true},
+    {label:'Total Ad Spend', cij:CIJ.spend.total_all, mn10:MN.spend.total_all, fmt:fmtAUD, hb:false},
+    {label:'Total Orders', cij:CIJ.customers.total_orders, mn10:MN.customers.total_orders, fmt:fmtNum, hb:true}
+  ];
+  document.getElementById('kpi-cards').innerHTML = kpis.map(k => `
+    <div class="kpi">
+      <div class="label">${k.label}</div>
+      <div class="yr cij">
+        <span class="ylabel" style="color:var(--pink)">CIJ 24</span>
+        <span class="yval" style="color:var(--pink)">${k.fmt(k.cij)}</span>
+      </div>
+      <div class="yr mn10">
+        <span class="ylabel">MN10 25</span>
+        <span class="yval">${k.fmt(k.mn10)} ${deltaBadge(k.cij,k.mn10,k.hb)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ---------- SECTION 3: Spend vs Revenue Charts ---------- */
+function renderSpendRevChart(){
+  new Chart(document.getElementById('chart-spendrev'), {
+    type:'bar',
+    data:{
+      labels:['CIJ 2024','MN10 2025'],
+      datasets:[
+        {label:'Total Ad Spend', data:[CIJ.spend.total_all, MN.spend.total_all], backgroundColor:'#c8cdd3', borderRadius:6},
+        {label:'Net Sales', data:[CIJ.revenue.total_net_sales, MN.revenue.total_net_sales], backgroundColor:'#EF6693', borderRadius:6}
+      ]
+    },
+    options:{
+      maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{boxWidth:14}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtAUD(c.raw)}}},
+      scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtAUD(v)}}}
+    }
+  });
+}
+function renderMerChart(){
+  new Chart(document.getElementById('chart-mer'), {
+    type:'bar',
+    data:{
+      labels:['CIJ 2024','MN10 2025'],
+      datasets:[{
+        label:'MER',
+        data:[CIJ.revenue.total_net_sales/CIJ.spend.total_all, MN.revenue.total_net_sales/MN.spend.total_all],
+        backgroundColor:['#EF6693','#222222'],
+        borderRadius:8
+      }]
+    },
+    options:{
+      maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'MER: '+fmtX(c.raw)}}},
+      scales:{y:{beginAtZero:true,ticks:{callback:v=>v.toFixed(1)+'x'}}}
+    }
+  });
+}
+
+/* ---------- SECTION 4: Spend Breakdown ---------- */
+function renderPlatformTable(elId, y){
+  const rows = [
+    {ph:'Pre-sale (List Building)', meta:y.spend.meta_presale, g:y.spend.google_presale, t:y.spend.total_presale},
+    {ph:'Main Sale', meta:y.spend.meta_sale, g:y.spend.google_sale, t:y.spend.total_sale},
+    {ph:'Total', meta:y.spend.meta_presale+y.spend.meta_sale, g:y.spend.google_presale+y.spend.google_sale, t:y.spend.total_all, tot:true}
+  ];
+  document.getElementById(elId).innerHTML = rows.map(r => `
+    <tr class="${r.tot?'total':''}">
+      <td>${r.ph}</td>
+      <td class="num">${fmtAUD(r.meta)}</td>
+      <td class="num">${r.g>0?fmtAUD(r.g):'—'}</td>
+      <td class="num">${fmtAUD(r.t)}</td>
+    </tr>
+  `).join('');
+}
+function renderAudienceTable(){
+  const rows = [
+    {seg:'Prospecting (New Audience)', c:CIJ.audience_segments.prospecting, m:MN.audience_segments.prospecting},
+    {seg:'Existing Customers', c:CIJ.audience_segments.existing_customers, m:MN.audience_segments.existing_customers},
+    {seg:'Unknown', c:CIJ.audience_segments.unknown, m:MN.audience_segments.unknown},
+    {seg:'Total', c:CIJ.audience_segments.total, m:MN.audience_segments.total, tot:true}
+  ];
+  document.getElementById('audience-rows').innerHTML = rows.map(r => `
+    <tr class="${r.tot?'total':''}">
+      <td>${r.seg}</td>
+      <td class="num">${fmtAUD(r.c)}</td>
+      <td class="num">${fmtAUD(r.m)}</td>
+    </tr>
+  `).join('');
+}
+function renderLeads(){
+  document.getElementById('leads-cij').innerHTML =
+    `${fmtNum(CIJ.presale_leads.total_leads)} leads @ ${fmtAUD2(CIJ.presale_leads.cost_per_lead)} CPL (${fmtAUD(CIJ.presale_leads.spend)} spend)`;
+  document.getElementById('leads-mn10').innerHTML =
+    `${fmtNum(MN.presale_leads.total_leads)} leads @ ${fmtAUD2(MN.presale_leads.cost_per_lead)} CPL (${fmtAUD(MN.presale_leads.spend)} spend)`;
+}
+
+/* ---------- SECTION 5: Daily Trajectory ---------- */
+function renderDailyChart(){
+  // Build 12-slot arrays; CIJ has 9 days, MN10 has 12.
+  const labels = [];
+  for(let i=1;i<=12;i++){
+    let lbl = 'Day '+i;
+    if(i===1) lbl += ' (VIP)';
+    else if(i===2) lbl += ' (Public)';
+    labels.push(lbl);
+  }
+  const cijData = Array(12).fill(null);
+  CIJ.daily.forEach(d => { cijData[d.day-1] = d.net_sales; });
+  const mnData = Array(12).fill(null);
+  MN.daily.forEach(d => { mnData[d.day-1] = d.net_sales; });
+
+  new Chart(document.getElementById('chart-daily'), {
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {label:'CIJ 2024 (9 days)', data:cijData, borderColor:'#EF6693', backgroundColor:'rgba(239,102,147,.10)', tension:.28, pointRadius:4, pointHoverRadius:6, borderWidth:2.5, spanGaps:false, fill:true},
+        {label:'MN10 2025 (12 days)', data:mnData, borderColor:'#222222', backgroundColor:'rgba(34,34,34,.08)', tension:.28, pointRadius:4, pointHoverRadius:6, borderWidth:2.5, spanGaps:false, fill:true}
+      ]
+    },
+    options:{
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{position:'top',labels:{boxWidth:14}},
+        tooltip:{
+          callbacks:{
+            title:(items)=>items[0].label,
+            label:c=>{
+              if(c.raw==null) return null;
+              const arr = c.dataset.label.startsWith('CIJ') ? CIJ.daily : MN.daily;
+              const dayIdx = c.dataIndex+1;
+              const rec = arr.find(d=>d.day===dayIdx);
+              const date = rec ? rec.date : '';
+              return `${c.dataset.label}: ${fmtAUD(c.raw)}${date?' ('+date+')':''}`;
+            }
+          }
+        }
+      },
+      scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtAUD(v)}}}
+    }
+  });
+}
+
+/* ---------- SECTION 6: Customers ---------- */
+function renderCustomers(){
+  const items = [
+    {y:CIJ, key:'cij', name:'CIJ 2024', col:'pink'},
+    {y:MN, key:'mn10', name:'MN10 2025', col:'charcoal'}
+  ];
+  document.getElementById('customer-cards').innerHTML = items.map(it => {
+    const c = it.y.customers;
+    return `
+      <div class="cust-card">
+        <div class="head">
+          <h3 style="margin:0;font-size:15px;color:var(--${it.col})">${it.name}</h3>
+          <span class="pill ${it.col==='pink'?'pill-pink':'pill-charcoal'}">${fmtNum(c.total_orders)} orders</span>
+        </div>
+        <div class="cust-stats">
+          <div class="it"><div class="lab">Total Orders</div><div class="val">${fmtNum(c.total_orders)}</div></div>
+          <div class="it"><div class="lab">New Customers</div><div class="val">${fmtNum(c.new_customers)}</div></div>
+          <div class="it"><div class="lab">Returning</div><div class="val">${fmtNum(c.returning_customers)}</div></div>
+          <div class="it"><div class="lab">AOV</div><div class="val">${fmtAUD(c.aov)}</div></div>
+          <div class="it"><div class="lab">VIP Day Orders</div><div class="val">${fmtNum(c.vip_day_orders)}</div></div>
+          <div class="it"><div class="lab">VIP Day New</div><div class="val">${fmtNum(c.vip_day_new)}</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px">
+          New Customer Mix: ${fmtPct(c.new_pct)}
+        </div>
+        <div class="bar-track"><div class="bar-fill ${it.key}" style="width:${c.new_pct}%"></div></div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ---------- SECTION 7: Email + SMS ---------- */
+function renderEmailColumn(label, win){
+  const hasSms = win.sms_sent > 0;
+  const smsSent = hasSms ? fmtNum(win.sms_sent) : '—';
+  const smsRev = hasSms ? fmtAUD(win.sms_revenue) : '—';
+  const smsRps = hasSms ? fmtAUD2(win.sms_rps) : '—';
+  const smsCtr = hasSms ? fmtPct((win.sms_click_rate||0)*100, 2) : '—';
+  return `
+    <div class="email-col">
+      <div class="email-col-label">${label}</div>
+      <div class="email-channel-block">
+        <div class="email-channel-title">📧 Email</div>
+        <div class="email-stat"><span class="es-label">Sent</span><span class="es-value">${fmtNum(win.email_sent)}</span></div>
+        <div class="email-stat"><span class="es-label">Revenue</span><span class="es-value">${fmtAUD(win.email_revenue)}</span></div>
+        <div class="email-stat"><span class="es-label">Rev/Email</span><span class="es-value">${fmtAUD2(win.email_rpe)}</span></div>
+        <div class="email-stat"><span class="es-label">Click Rate</span><span class="es-value">${fmtPct((win.email_click_rate||0)*100, 2)}</span></div>
+      </div>
+      <div class="email-channel-block">
+        <div class="email-channel-title">📱 SMS</div>
+        <div class="email-stat"><span class="es-label">Sent</span><span class="es-value">${smsSent}</span></div>
+        <div class="email-stat"><span class="es-label">Revenue</span><span class="es-value">${smsRev}</span></div>
+        <div class="email-stat"><span class="es-label">Rev/SMS</span><span class="es-value">${smsRps}</span></div>
+        <div class="email-stat"><span class="es-label">Click Rate</span><span class="es-value">${smsCtr}</span></div>
+        <div class="email-stat"><span class="es-label">New Subscribers</span><span class="es-value">${fmtNum(win.new_subs)}</span></div>
+      </div>
+    </div>
+  `;
+}
+function renderEmail(){
+  const items = [
+    {y:CIJ, name:'CIJ 2024', col:'pink'},
+    {y:MN, name:'MN10 2025', col:'charcoal'}
+  ];
+  document.getElementById('email-cards').innerHTML = items.map(it => `
+    <div class="email-card">
+      <div class="email-year-label" style="color:var(--${it.col})">${it.name}</div>
+      <div class="email-columns">
+        ${renderEmailColumn('Pre-Sale', it.y.email.presale)}
+        ${renderEmailColumn('During Sale', it.y.email.sale)}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ---------- SECTION 8: Creative ---------- */
+const CR_ALL = [...CIJ.creatives, ...MN.creatives];
+const filters = { sale:'all', format:'all', funnel:'all', phase:'all' };
+let sortField = 'roas';
+let sortDir = 'desc';
+
+function passes(c){
+  if(filters.sale !== 'all' && c.sale_year !== filters.sale) return false;
+  if(filters.format !== 'all'){
+    if(filters.format === 'video' && c.format !== 'video') return false;
+    if(filters.format === 'image' && !(c.format === 'image' || c.format === 'feed' || c.format === 'flex')) return false;
+  }
+  if(filters.funnel === 'tof' && !c.is_tof) return false;
+  if(filters.funnel === 'mof' && !c.is_mof) return false;
+  if(filters.phase === 'presale' && !c.is_presale) return false;
+  if(filters.phase === 'sale' && !c.is_sale) return false;
+  return true;
+}
+function compareCreatives(a, b){
+  const av = a[sortField] ?? -Infinity;
+  const bv = b[sortField] ?? -Infinity;
+  return sortDir === 'desc' ? bv - av : av - bv;
+}
+const placeholderImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23eceef1' width='100' height='100'/><text x='50' y='52' font-family='Arial' font-size='10' fill='%237a8190' text-anchor='middle' dominant-baseline='middle'>No thumbnail</text></svg>";
+
+function renderCard(c){
+  const isTop = c.roas != null && c.roas >= 7;
+  const isBottom = c.roas != null && c.roas < 2.5 && c.spend > 100;
+  const ctrAll = c.ctr_all != null ? (c.ctr_all*100) : null;
+  const ctrLink = c.ctr_link != null ? (c.ctr_link*100) : null;
+
+  let thumb = '';
+  if(c.thumbnail_url){
+    thumb = `<img src="${c.thumbnail_url}" loading="lazy" onerror="this.onerror=null;this.src='${placeholderImg}';this.style.objectFit='contain';this.style.padding='20px'">`;
+  } else if(c.is_feed){
+    thumb = `<div class="placeholder"><strong>Product Feed Ad</strong><br>Catalogue-driven creative</div>`;
+  } else {
+    thumb = `<div class="placeholder">Thumbnail Unavailable<br>Archived</div>`;
+  }
+
+  const badges = [];
+  if(isTop) badges.push(`<span class="b b-top">TOP</span>`);
+  if(isBottom) badges.push(`<span class="b b-bottom">BOTTOM</span>`);
+  if(c.format === 'video') badges.push(`<span class="b b-video">Video</span>`);
+  else if(c.format === 'feed') badges.push(`<span class="b" style="background:#fff3e0;color:#e65100">Feed</span>`);
+  else if(c.format === 'flex') badges.push(`<span class="b" style="background:#e8eaf6;color:#3949ab">Flex</span>`);
+  else if(c.format === 'image') badges.push(`<span class="b b-image">Image</span>`);
+  if(c.is_feed && c.format !== 'feed') badges.push(`<span class="b b-feed">Feed</span>`);
+  if(c.is_tof) badges.push(`<span class="b b-tof">TOF</span>`);
+  if(c.is_mof) badges.push(`<span class="b b-mof">MOF</span>`);
+  badges.push(c.sale_year==='cij2024' ? `<span class="b b-cij">CIJ 24</span>` : `<span class="b b-mn10">MN10 25</span>`);
+  if(c.is_presale) badges.push(`<span class="b b-presale">Pre-sale</span>`);
+  if(c.is_sale) badges.push(`<span class="b b-sale">Sale</span>`);
+
+  const bodyText = c.body ? c.body.replace(/\n/g,' ').slice(0,120) + (c.body.length > 120 ? '...' : '') : '';
+
+  return `
+    <div class="cr-card">
+      <div class="cr-thumb">${thumb}</div>
+      <div class="cr-body">
+        <div class="cr-head">
+          <span class="cr-badge-cr">${c.cr_number || 'NOCR'}</span>
+          <div class="cr-desc">${c.cr_desc || '(no description)'}</div>
+          <div class="cr-badges">${badges.join('')}</div>
+        </div>
+        <div class="cr-stats">
+          <div class="s"><span class="lab">Ad Spend</span><span class="val">${fmtAUD(c.spend)}</span></div>
+          <div class="s"><span class="lab">Revenue</span><span class="val">${fmtAUD(c.revenue)}</span></div>
+          <div class="s"><span class="lab">ROAS</span><span class="val">${fmtX(c.roas)}</span></div>
+          <div class="s"><span class="lab">Purchases</span><span class="val">${fmtDash(c.purchases)}</span></div>
+          <div class="s"><span class="lab">CTR (all)</span><span class="val">${fmtPct(ctrAll,2)}</span></div>
+          <div class="s"><span class="lab">CTR (link)</span><span class="val">${fmtPct(ctrLink,2)}</span></div>
+          <div class="s"><span class="lab">Thumbstop</span><span class="val">${c.thumbstop_pct!=null?fmtPct(c.thumbstop_pct,1):'—'}</span></div>
+          <div class="s"><span class="lab">Conv. Rate</span><span class="val">${c.conv_rate!=null&&c.conv_rate>0?fmtPct(c.conv_rate,1):'—'}</span></div>
+          <div class="s"><span class="lab">cPUR</span><span class="val">${c.cpurchase!=null&&c.cpurchase>0?fmtAUD2(c.cpurchase):'—'}</span></div>
+          <div class="s"><span class="lab">AOV</span><span class="val">${c.aov!=null&&c.aov>0?fmtAUD(c.aov):'—'}</span></div>
+          <div class="cr-impr"><span class="lab">Impressions</span><span class="val">${fmtNum(c.impressions)}</span></div>
+        </div>
+        ${bodyText ? `<div class="cr-copy">"${bodyText}"</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderCreatives(){
+  const filtered = CR_ALL.filter(passes).slice().sort(compareCreatives);
+  document.getElementById('creative-grid').innerHTML = filtered.map(renderCard).join('');
+  document.getElementById('creative-count').textContent = filtered.length + ' creative' + (filtered.length===1?'':'s');
+}
+
+function wireFilters(){
+  document.querySelectorAll('.btn-grp').forEach(grp => {
+    const key = grp.dataset.filter;
+    grp.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        grp.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const val = btn.dataset.val;
+        if(key === 'sort'){ sortField = val; }
+        else if(key === 'dir'){ sortDir = val; }
+        else { filters[key] = val; }
+        renderCreatives();
+      });
+    });
+  });
+}
+
+/* ---------- INIT ---------- */
+renderOverview();
+renderKPIs();
+renderSpendRevChart();
+renderMerChart();
+renderPlatformTable('platform-cij', CIJ);
+renderPlatformTable('platform-mn10', MN);
+renderAudienceTable();
+renderLeads();
+renderDailyChart();
+renderCustomers();
+renderEmail();
+wireFilters();
+renderCreatives();
+</script>
+
+</body>
+</html>
