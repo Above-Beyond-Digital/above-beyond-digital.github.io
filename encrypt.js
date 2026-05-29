@@ -23,7 +23,7 @@ if (!MASTER_SECRET) {
 // Portal groups: all files under a portal share one password so "Remember me" auto-unlocks sub-pages.
 // Key is the portal root path. Add new portals here as needed.
 const PORTAL_GROUPS = [
-  'reports/mn/portal',
+  'clients/mn/portal',
 ];
 
 function portalKey(relPath) {
