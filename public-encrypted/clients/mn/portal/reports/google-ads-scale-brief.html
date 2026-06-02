@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Maria Nicola - Google Ads scale brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ECOMM GOOGLE ADS AUDIT - DESIGN SYSTEM
+   Self-contained, generic. No external CSS frameworks needed.
+   Inline this entire file into a <style> block in the deliverable.
+   ============================================================ */
+
+/* --- Tokens --- */
+:root {
+  /* Surfaces */
+  --c-bg: #FFFFFF;
+  --c-bg-alt: #F8FAFC;
+  --c-bg-dark: #0F172A;
+  --c-bg-dark-alt: #1E293B;
+
+  /* Text */
+  --c-text: #0F172A;
+  --c-text-muted: #64748B;
+  --c-text-light: #94A3B8;
+  --c-text-on-dark: #F8FAFC;
+  --c-text-on-dark-muted: #CBD5E1;
+
+  /* Lines */
+  --c-border: #E2E8F0;
+  --c-border-dark: #334155;
+
+  /* Brand accent (swap for your own brand colour) */
+  --c-accent: #0F766E;
+  --c-accent-light: #14B8A6;
+  --c-accent-bg: #F0FDFA;
+
+  /* Semantic */
+  --c-good: #16A34A;
+  --c-good-bg: #F0FDF4;
+  --c-warn: #F59E0B;
+  --c-warn-bg: #FFFBEB;
+  --c-bad: #DC2626;
+  --c-bad-bg: #FEF2F2;
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Layout */
+  --max-w: 1200px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+/* --- Base --- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { margin: 0 0 12px; font-weight: 600; letter-spacing: -0.01em; }
+h1 { font-size: 36px; line-height: 1.15; }
+h2 { font-size: 26px; line-height: 1.2; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+p { margin: 0 0 12px; }
+a { color: var(--c-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { font-weight: 600; }
+
+/* --- Top nav (sticky) --- */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-border);
+  padding: 0 28px;
+}
+.topnav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 64px;
+}
+.brand-mark {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+}
+.nav-links {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.nav-link {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.nav-link:hover {
+  color: var(--c-text);
+  background: var(--c-bg-alt);
+  text-decoration: none;
+}
+
+/* --- Layout shell --- */
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+section:last-of-type { border-bottom: none; }
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 8px;
+}
+.section-sub {
+  color: var(--c-text-muted);
+  font-size: 15px;
+  max-width: 680px;
+  margin-bottom: 28px;
+}
+
+/* --- Hero --- */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--c-border);
+}
+.hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-size: 42px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--c-accent);
+}
+.hero-sub {
+  font-size: 17px;
+  color: var(--c-text-muted);
+  max-width: 720px;
+  margin-bottom: 28px;
+}
+.hero-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 16px 24px;
+}
+.hero-stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+}
+.hero-stat-label {
+  font-size: 13px;
+  color: var(--c-text-muted);
+  font-weight: 500;
+}
+
+/* --- KPI tiles --- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.kpi-tile {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.kpi-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+  line-height: 1.1;
+}
+.kpi-sub {
+  font-size: 13px;
+  color: var(--c-text-muted);
+  margin-top: 6px;
+}
+.kpi-value.good { color: var(--c-good); }
+.kpi-value.warn { color: var(--c-warn); }
+.kpi-value.bad { color: var(--c-bad); }
+
+/* --- 13-month bar chart (pure CSS) --- */
+.chart-wrap {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.chart-sub {
+  font-size: 13px;
+  color: var(--c-text-muted);
+  margin-bottom: 20px;
+}
+.chart-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 240px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--c-border);
+  position: relative;
+}
+.chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+}
+.chart-bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 4px 0;
+  min-height: 8px;
+}
+.chart-bar.above { background: var(--c-good); }
+.chart-bar.below { background: var(--c-warn); }
+.chart-bar-roas {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+.chart-bar-rev {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+.chart-x-label {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: var(--c-text-muted);
+}
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--c-text-muted);
+}
+.chart-legend-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* --- Tables --- */
+.table-wrap {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table thead {
+  background: var(--c-bg-dark);
+  color: var(--c-text-on-dark);
+}
+.data-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.data-table td {
+  padding: 12px 14px;
+  border-top: 1px solid var(--c-border);
+  vertical-align: top;
+}
+.data-table tbody tr:hover { background: var(--c-bg-alt); }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table .total-row {
+  background: var(--c-bg-alt);
+  font-weight: 600;
+}
+.data-table .total-row td { border-top: 2px solid var(--c-border); }
+
+/* Status pills */
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-pill.active { background: var(--c-good-bg); color: var(--c-good); }
+.status-pill.paused { background: var(--c-bg-alt); color: var(--c-text-muted); }
+.status-pill.removed { background: var(--c-bad-bg); color: var(--c-bad); }
+
+/* ROAS colour coding */
+.roas-top { color: var(--c-good); font-weight: 600; }
+.roas-ok { color: var(--c-warn); font-weight: 600; }
+.roas-low { color: var(--c-bad); font-weight: 600; }
+
+/* --- Change items (waste findings, fixes) --- */
+.change-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.change-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.change-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.change-icon.cut { background: var(--c-bad-bg); color: var(--c-bad); }
+.change-icon.fix { background: var(--c-warn-bg); color: var(--c-warn); }
+.change-icon.add { background: var(--c-accent-bg); color: var(--c-accent); }
+.change-body { flex: 1; }
+.change-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.change-text {
+  font-size: 14px;
+  color: var(--c-text-muted);
+  line-height: 1.55;
+}
+.change-amount {
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-text);
+  white-space: nowrap;
+}
+.change-amount-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* --- Next cards (growth levers) --- */
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.next-card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.next-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 8px;
+}
+.next-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.next-card-body {
+  font-size: 14px;
+  color: var(--c-text-muted);
+  margin-bottom: 16px;
+}
+.next-card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-good);
+}
+.next-card-value-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  margin-top: 2px;
+}
+
+/* Visibility bars (for impression share) */
+.vis-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--c-bg-alt);
+  margin: 12px 0 6px;
+}
+.vis-bar-seg.captured { background: var(--c-good); }
+.vis-bar-seg.budget-lost { background: var(--c-warn); }
+.vis-bar-seg.rank-lost { background: var(--c-bad); }
+.vis-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  font-size: 11px;
+  color: var(--c-text-muted);
+}
+.vis-legend-item { display: flex; align-items: center; gap: 6px; }
+.vis-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* --- Exec summary dark box --- */
+.exec-summary {
+  background: var(--c-bg-dark);
+  border-radius: var(--radius);
+  padding: 36px;
+  color: var(--c-text-on-dark);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+.exec-summary-block { }
+.exec-summary-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-on-dark-muted);
+  margin-bottom: 8px;
+}
+.exec-summary-value {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.exec-summary-value.waste { color: #FCA5A5; }
+.exec-summary-value.growth { color: #6EE7B7; }
+.exec-summary-body {
+  color: var(--c-text-on-dark-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* --- Callouts --- */
+.callout {
+  background: var(--c-bg-alt);
+  border-left: 3px solid var(--c-accent);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.callout-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.callout-body {
+  font-size: 14px;
+  color: var(--c-text-muted);
+}
+.callout.warn { border-left-color: var(--c-warn); background: var(--c-warn-bg); }
+.callout.bad { border-left-color: var(--c-bad); background: var(--c-bad-bg); }
+
+/* --- Footer --- */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--c-text-muted);
+  border-top: 1px solid var(--c-border);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  h1, .hero-title { font-size: 28px; }
+  h2 { font-size: 22px; }
+  .topnav { padding: 0 16px; }
+  .topnav-inner { height: 56px; flex-wrap: wrap; gap: 8px; }
+  .nav-links { gap: 0; }
+  .nav-link { padding: 6px 8px; font-size: 12px; }
+  .wrap { padding: 0 16px; }
+  section { padding: 36px 0; }
+  .hero { padding: 48px 0 36px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .chart-area { height: 180px; }
+  .chart-bar-rev, .chart-bar-roas { font-size: 9px; }
+  .exec-summary { grid-template-columns: 1fr; padding: 24px; }
+  .exec-summary-value { font-size: 32px; }
+  .change-item { flex-wrap: wrap; }
+  .change-amount { text-align: left; }
+  .data-table { font-size: 12px; }
+  .data-table th, .data-table td { padding: 10px 12px; }
+}
+
+/* --- Print --- */
+@media print {
+  body { font-size: 11pt; }
+  .topnav { position: static; }
+  section { page-break-inside: avoid; }
+  .chart-wrap, .table-wrap, .next-card, .change-item, .kpi-tile {
+    page-break-inside: avoid;
+  }
+}
+
+
+/* --- Maria Nicola brand override --- */
+:root{
+  --c-accent:#EF6693; --c-accent-light:#F48BAE; --c-accent-bg:#FDEFF4;
+  --c-bg-dark:#222222; --c-bg-dark-alt:#333333;
+  --c-good:#1E9E6A; --c-good-bg:#EFFaf4;
+}
+.hero{background:linear-gradient(135deg,#222222 0%,#3a2a31 100%);}
+.hero-title em{color:#EF6693;font-style:normal;}
+.hero-stat-value{color:#EF6693;}
+.brand-mark{color:#EF6693;}
+.section-label{color:#EF6693;}
+.nav-link:hover{color:#EF6693;}
+.kpi-value.good{color:#1E9E6A;}
+.roas-top{color:#1E9E6A;}
+h2{color:#222222;}
+.exec-summary{background:#222222;}
+.change-icon.add{background:#EF6693;}
+.prio{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase;}
+.prio.p1{background:#EF6693;color:#fff;}
+.prio.p2{background:#FDEFF4;color:#C13D6B;}
+.prio.p3{background:#F1F5F9;color:#64748B;}
+.meta-line{display:inline-block;border-bottom:2px dashed #EF6693;}
+.win{color:#1E9E6A;font-weight:700;}
+.bad{color:#DC2626;font-weight:700;}
+
+</style></head><body>
+<nav class="topnav"><div class="topnav-inner">
+  <div class="brand-mark">Maria Nicola &times; Above &amp; Beyond Digital</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#newcust">New customers</a>
+    <a class="nav-link" href="#action">Action plan</a>
+    <a class="nav-link" href="#campaigns">Campaigns</a>
+    <a class="nav-link" href="#pmax">Performance Max</a>
+    <a class="nav-link" href="#summary">Summary</a>
+  </div>
+</div></nav>
+
+<section class="hero" id="top"><div class="wrap">
+  <div class="hero-label">Google Ads scale brief - pre-meeting read</div>
+  <h1 class="hero-title">Maria Nicola - <em>scaling non-brand</em> on Google</h1>
+  <p class="hero-sub">The goal: pull more new-customer volume out of Google and lean less on Meta. The data says it's there - two non-brand campaigns already win new customers for $40 and $86, versus roughly $100 on Meta - but both are capped at $10/day. Brand search, by contrast, is mostly existing customers and isn't the place to scale. This brief is the case and the action plan for today's meeting.</p>
+  <div class="hero-stat">
+    <div class="hero-stat-value">$40</div>
+    <div class="hero-stat-label">New-customer cost from non-brand Performance Max (Meta is ~$100)</div>
+  </div>
+</div></section>
+
+<section id="overview"><div class="wrap">
+  <div class="section-label">Overview</div>
+  <h2>Account at a glance</h2>
+  <p class="section-sub">Trailing 12 months (Jun 2025 - May 2026). Figures from Google Ads platform reporting. Revenue is Google last-click conversion value - it overstates true incrementality, and Shopify net sales stays the source of truth for blended return.</p>
+  <div class="kpi-grid">
+    <div class="kpi-tile"><div class="kpi-label">Spend</div><div class="kpi-value">$57,899</div><div class="kpi-sub">12 months</div></div>
+    <div class="kpi-tile"><div class="kpi-label">Revenue</div><div class="kpi-value">$1,131,670</div><div class="kpi-sub">platform-reported</div></div>
+    <div class="kpi-tile"><div class="kpi-label">ROAS</div><div class="kpi-value good">19.6x</div><div class="kpi-sub">brand-led, healthy</div></div>
+    <div class="kpi-tile"><div class="kpi-label">Active campaigns</div><div class="kpi-value">18</div><div class="kpi-sub">of 127 total</div></div>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-title">Monthly revenue (last 13 months)</div>
+    <div class="chart-sub">Bar height = revenue. Green = ROAS above the 12-month average of 19.6x, amber = below. Spend has climbed steadily while the last three months softened - the account is being pushed harder for less, which is why the next dollar should chase new customers, not more brand.</div>
+    <div class="chart-area"><div class="chart-col"><div class="chart-bar below" style="height:58.8%;"><span class="chart-bar-roas">18x</span><span class="chart-bar-rev">$74.9K</span></div><span class="chart-x-label">May 25</span></div><div class="chart-col"><div class="chart-bar below" style="height:51.0%;"><span class="chart-bar-roas">16x</span><span class="chart-bar-rev">$65.0K</span></div><span class="chart-x-label">Jun 25</span></div><div class="chart-col"><div class="chart-bar above" style="height:93.3%;"><span class="chart-bar-roas">30x</span><span class="chart-bar-rev">$118.8K</span></div><span class="chart-x-label">Jul 25</span></div><div class="chart-col"><div class="chart-bar above" style="height:58.0%;"><span class="chart-bar-roas">26x</span><span class="chart-bar-rev">$73.9K</span></div><span class="chart-x-label">Aug 25</span></div><div class="chart-col"><div class="chart-bar above" style="height:74.2%;"><span class="chart-bar-roas">27x</span><span class="chart-bar-rev">$94.4K</span></div><span class="chart-x-label">Sep 25</span></div><div class="chart-col"><div class="chart-bar above" style="height:75.9%;"><span class="chart-bar-roas">24x</span><span class="chart-bar-rev">$96.6K</span></div><span class="chart-x-label">Oct 25</span></div><div class="chart-col"><div class="chart-bar above" style="height:88.2%;"><span class="chart-bar-roas">24x</span><span class="chart-bar-rev">$112.2K</span></div><span class="chart-x-label">Nov 25</span></div><div class="chart-col"><div class="chart-bar below" style="height:64.0%;"><span class="chart-bar-roas">17x</span><span class="chart-bar-rev">$81.5K</span></div><span class="chart-x-label">Dec 25</span></div><div class="chart-col"><div class="chart-bar below" style="height:57.3%;"><span class="chart-bar-roas">15x</span><span class="chart-bar-rev">$73.0K</span></div><span class="chart-x-label">Jan 26</span></div><div class="chart-col"><div class="chart-bar below" style="height:87.4%;"><span class="chart-bar-roas">17x</span><span class="chart-bar-rev">$111.2K</span></div><span class="chart-x-label">Feb 26</span></div><div class="chart-col"><div class="chart-bar above" style="height:100.0%;"><span class="chart-bar-roas">20x</span><span class="chart-bar-rev">$127.3K</span></div><span class="chart-x-label">Mar 26</span></div><div class="chart-col"><div class="chart-bar below" style="height:81.7%;"><span class="chart-bar-roas">18x</span><span class="chart-bar-rev">$104.0K</span></div><span class="chart-x-label">Apr 26</span></div><div class="chart-col"><div class="chart-bar below" style="height:58.0%;"><span class="chart-bar-roas">11x</span><span class="chart-bar-rev">$73.8K</span></div><span class="chart-x-label">May 26</span></div></div>
+    <div class="chart-legend"><span><span class="chart-legend-swatch" style="background:var(--c-good);"></span>Above average ROAS</span><span><span class="chart-legend-swatch" style="background:var(--c-warn);"></span>Below average</span></div>
+  </div>
+</div></section>
+
+<section id="newcust" style="background:var(--c-bg-alt);"><div class="wrap">
+  <div class="section-label">The opportunity</div>
+  <h2>New-customer economics - where the scale is</h2>
+  <p class="section-sub">This is the cut that matters. Google reports whether each sale came from a new or returning customer. Cost per <em>new</em> customer, last 90 days, by engine - benchmarked against the <span class="meta-line">~$100 Meta cost per acquisition</span>. Two non-brand campaigns beat Meta comfortably and are both throttled at $10/day.</p>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Engine</th><th class="num">New-cust cost</th><th class="num">New share</th><th>Priority</th><th>What to do</th></tr></thead>
+    <tbody><tr><td>PMax | AU | Non-Brand</td><td class="num"><span class="win">$40</span></td><td class="num">37%</td><td><span class="prio p1">P1</span></td><td>Uncap now - best new-customer engine in the account</td></tr><tr><td>Shopping | AU | All Products</td><td class="num"><span class="win">$86</span></td><td class="num">55%</td><td><span class="prio p1">P1</span></td><td>Drop ROAS target 1000% to 400%, lift budget</td></tr><tr><td>PMax | AU-NZ | Collections</td><td class="num"><span class="bad">$229</span></td><td class="num">10%</td><td><span class="prio p2">P2</span></td><td>Split: new-customer campaign vs retention</td></tr><tr><td>PMax | CA-US | Collections</td><td class="num"><span class="bad">$534</span></td><td class="num">7%</td><td><span class="prio p2">P2</span></td><td>Split: acquisition optimised separately</td></tr><tr><td>Brand search (AU/US/Global)</td><td class="num"><span class="bad">$221</span></td><td class="num">12%</td><td><span class="prio p3">P3</span></td><td>Hold as cheap defensive floor - do not scale</td></tr><tr><td>Demand Gen | YouTube | AU+US</td><td class="num"><span class="bad">~$0 new</span></td><td class="num">8%</td><td><span class="prio p1">P1</span></td><td>Pause - near-zero new customers</td></tr></tbody>
+  </table></div>
+  <p class="section-sub" style="margin-top:10px;">New share = new customers as a share of new + returning (Google's "unknown" bucket excluded). Read it with the cost: <span class="win">PMax AU Non-Brand</span> books new customers at $40 with the cleanest attribution in the account (zero unknowns), and <span class="win">Shopping AU</span> at $86 with 55% new. The brand and "Acquisition &amp; Retention" Performance Max campaigns are 7-16% new - they harvest people who already know us.</p>
+  <div class="callout">
+    <div class="callout-title">On brand search and cannibalisation</div>
+    <div class="callout-body">Brand search is 84-98% returning or already-known customers, and a new customer off brand costs $185-286 - worse than Meta. A lot of that brand demand is people who saw a Meta ad, or word of mouth, and would likely find us organically. Brand spend isn't high and isn't the worry today, so leave it running as a cheap defensive floor - just don't pour scale budget into it. Confirming exactly how much is truly incremental (a brand-pause holdout test) is a second-priority follow-up, not today's focus.</div>
+  </div>
+</div></section>
+
+<section id="action"><div class="wrap">
+  <div class="section-label">Action plan</div>
+  <h2>What to change - for today's meeting</h2>
+  <p class="section-sub">Ordered by impact. The brief: move budget toward the engines that bring new customers under $100, and stop optimising them like retention. We can run new-customer campaigns down to 3-4x ROAS because the new cost still beats Meta well below that.</p>
+  <div class="change-list">
+    <div class="change-item">
+      <div class="change-icon add">1</div>
+      <div class="change-body">
+        <div class="change-title">Uncap PMax AU Non-Brand <span class="prio p1">Priority 1</span></div>
+        <div class="change-text">$40 new-customer cost, 37% new, zero attribution noise - and it's sitting paused on a $10/day budget. Re-enable, lift budget to a real test level ($75-100/day), exclude existing-customer lists so it optimises for acquisition, and set a new-customer value rule so the system bids up for new buyers. Floor: 3-4x ROAS.</div>
+      </div>
+      <div class="change-amount"><span class="win">$40</span><span class="change-amount-label">new-cust cost</span></div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon add">2</div>
+      <div class="change-body">
+        <div class="change-title">Unthrottle Shopping AU <span class="prio p1">Priority 1</span></div>
+        <div class="change-text">$86 new-customer cost and 55% new, but strangled by a 1000% (10x) ROAS target on $10/day - which is why it loses 71% of visibility to ad rank, not budget. Drop the target to 400% (your 4x floor) and lift budget. Expect volume to jump at a still-sub-Meta cost.</div>
+      </div>
+      <div class="change-amount"><span class="win">$86</span><span class="change-amount-label">new-cust cost</span></div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon add">3</div>
+      <div class="change-body">
+        <div class="change-title">Launch non-brand search <span class="prio p1">Priority 1</span></div>
+        <div class="change-text">There is no non-brand search in the account - non-brand jewellery queries ("magnetic necklace clasps", "layered pearl necklace", "convertible necklace") only ever trigger through Shopping. Build one tightly-themed campaign around the convertible/magnetic necklace angle, exact and phrase match, tight negatives, new-customer value rule. This is the cleanest read on non-brand search demand and the most scalable long-term lever.</div>
+      </div>
+      <div class="change-amount">Test<span class="change-amount-label">new build</span></div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon fix">4</div>
+      <div class="change-body">
+        <div class="change-title">Split the "Acquisition &amp; Retention" Performance Max campaigns <span class="prio p2">Priority 2</span></div>
+        <div class="change-text">CA-US and AU-NZ Collections are 7-10% new but their ROAS looks great because returning customers flatter it. Split each into a new-customer campaign (new-customer goal, existing lists excluded, bid up for new) and a retention one. That exposes the true acquisition cost and lets us scale the acquisition half on its own merits.</div>
+      </div>
+      <div class="change-amount">-<span class="change-amount-label">restructure</span></div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon cut">5</div>
+      <div class="change-body">
+        <div class="change-title">Pause Demand Gen YouTube (AU + US) <span class="prio p1">Priority 1</span></div>
+        <div class="change-text">$1,891 over 90 days for 0.4 new customers between them. AU's new-customer cost is $2,355; US books zero. Pause both and move the ~$630/month into Priorities 1-3. Revisit Demand Gen later as a creative-led prospecting test, not an always-on line.</div>
+      </div>
+      <div class="change-amount"><span class="bad">$630</span><span class="change-amount-label">per month freed</span></div>
+    </div>
+    <div class="change-item">
+      <div class="change-icon fix">6</div>
+      <div class="change-body">
+        <div class="change-title">Hold brand search, fix conversion goals <span class="prio p3">Priority 3</span></div>
+        <div class="change-text">Keep brand running as a cheap floor - don't scale it. Separately, Add to Cart and Begin Checkout are set as primary conversion actions. Value bidding currently keys to purchases so it's contained, but demote both to secondary so the new acquisition campaigns can't optimise toward carts.</div>
+      </div>
+      <div class="change-amount">-<span class="change-amount-label">protect bidding</span></div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:20px;">
+    <div class="callout-title">The budget swap, in one line</div>
+    <div class="callout-body">Free ~$630/month from Demand Gen, redirect it plus fresh budget into PMax Non-Brand, Shopping AU and new non-brand search. Hold brand. Measure on new-customer cost (target under $100, floor 3-4x ROAS), not blended ROAS - blended ROAS will fall as we buy more new customers, and that's the point.</div>
+  </div>
+</div></section>
+
+<section id="campaigns" style="background:var(--c-bg-alt);"><div class="wrap">
+  <div class="section-label">Campaigns</div>
+  <h2>Campaign performance (last 90 days)</h2>
+  <p class="section-sub">The 18 campaigns that actually spent, ranked by revenue, of 127 total. Several big brand and Performance Max campaigns show paused - the account is mid-restructure (per-geo brand search is being consolidated into one Global-EN brand campaign).</p>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Campaign</th><th>Type</th><th>Status</th><th class="num">Spend</th><th class="num">Revenue</th><th class="num">ROAS</th><th class="num">Conv</th></tr></thead>
+    <tbody><tr><td>PMax | Global-EN | Sale</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$1,674</td><td class="num">$45,897</td><td class="num roas-top">27.4x</td><td class="num">186</td></tr><tr><td>Search | AU | Brand</td><td>Search</td><td><span class="status-pill paused">Paused</span></td><td class="num">$1,757</td><td class="num">$43,783</td><td class="num roas-top">24.9x</td><td class="num">224</td></tr><tr><td>PMax | CA-US | Collections</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$1,783</td><td class="num">$41,388</td><td class="num roas-top">23.2x</td><td class="num">132</td></tr><tr><td>Search | US | Brand</td><td>Search</td><td><span class="status-pill paused">Paused</span></td><td class="num">$1,982</td><td class="num">$40,729</td><td class="num roas-top">20.5x</td><td class="num">149</td></tr><tr><td>PMax | AU | Brand | All Products</td><td>Performance Max</td><td><span class="status-pill paused">Paused</span></td><td class="num">$1,550</td><td class="num">$34,373</td><td class="num roas-top">22.2x</td><td class="num">171</td></tr><tr><td>PMax | Global-EN | Last Chance Sale</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$2,161</td><td class="num">$17,109</td><td class="num roas-top">7.9x</td><td class="num">80</td></tr><tr><td>PMax | AU-NZ | Collections</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$1,075</td><td class="num">$11,642</td><td class="num roas-top">10.8x</td><td class="num">54</td></tr><tr><td>Search | UK | Brand</td><td>Search</td><td><span class="status-pill active">Active</span></td><td class="num">$507</td><td class="num">$10,867</td><td class="num roas-top">21.4x</td><td class="num">53</td></tr><tr><td>Search | Global-EN | Brand</td><td>Search</td><td><span class="status-pill active">Active</span></td><td class="num">$554</td><td class="num">$10,223</td><td class="num roas-top">18.5x</td><td class="num">51</td></tr><tr><td>PMax | AU | Non-Brand | All Products</td><td>Performance Max</td><td><span class="status-pill paused">Paused</span></td><td class="num">$677</td><td class="num">$7,834</td><td class="num roas-top">11.6x</td><td class="num">46</td></tr><tr><td>Search | CA | Brand</td><td>Search</td><td><span class="status-pill paused">Paused</span></td><td class="num">$488</td><td class="num">$6,526</td><td class="num roas-top">13.4x</td><td class="num">32</td></tr><tr><td>PMax | CA | Test | Pearl Collection</td><td>Performance Max</td><td><span class="status-pill paused">Paused</span></td><td class="num">$608</td><td class="num">$5,790</td><td class="num roas-top">9.5x</td><td class="num">30</td></tr><tr><td>Search | NZ | Brand</td><td>Search</td><td><span class="status-pill active">Active</span></td><td class="num">$135</td><td class="num">$5,712</td><td class="num roas-top">42.4x</td><td class="num">26</td></tr><tr><td>PMax | IE-UK | Collections</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$875</td><td class="num">$4,745</td><td class="num roas-top">5.4x</td><td class="num">20</td></tr><tr><td>Demand Gen | YouTube | US</td><td>Demand Gen</td><td><span class="status-pill active">Active</span></td><td class="num">$948</td><td class="num">$3,927</td><td class="num roas-top">4.1x</td><td class="num">15</td></tr><tr><td>Shopping | AU | All Products</td><td>Shopping</td><td><span class="status-pill active">Active</span></td><td class="num">$362</td><td class="num">$2,346</td><td class="num roas-top">6.5x</td><td class="num">17</td></tr><tr><td>Demand Gen | YouTube | AU</td><td>Demand Gen</td><td><span class="status-pill active">Active</span></td><td class="num">$942</td><td class="num">$2,205</td><td class="num roas-ok">2.3x</td><td class="num">8</td></tr><tr><td>PMax | Global-EN | Acquisition</td><td>Performance Max</td><td><span class="status-pill active">Active</span></td><td class="num">$344</td><td class="num">$1,647</td><td class="num roas-top">4.8x</td><td class="num">6</td></tr><tr class="total-row"><td>Total (90 days)</td><td></td><td></td><td class="num">$18,421</td><td class="num">$296,742</td><td class="num">16.1x</td><td class="num">1300</td></tr></tbody>
+  </table></div>
+  <h3 style="margin-top:32px;">Top revenue products (90 days)</h3>
+  <p class="section-sub">The 10 Way Necklace&trade; in its colour variants is the clear hero, with link and pendant lines following.</p>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Product (feed title)</th><th>Campaign</th><th class="num">Spend</th><th class="num">Revenue</th><th class="num">ROAS</th></tr></thead>
+    <tbody><tr><td>10 Way Necklace - Cream Pearl - Silver</td><td>PMax CA-US</td><td class="num">$86</td><td class="num">$5,010</td><td class="num roas-top">58x</td></tr><tr><td>LONGER Link Necklace - Midnight - Yellow Gold</td><td>PMax AU Brand</td><td class="num">$24</td><td class="num">$2,871</td><td class="num roas-top">117x</td></tr><tr><td>Pendant - Crystal Pearl - Dusty Rose - Rose Gold</td><td>PMax CA-US</td><td class="num">$18</td><td class="num">$1,521</td><td class="num roas-top">83x</td></tr><tr><td>10 Way Necklace - Shell Pearl PINK - Silver</td><td>PMax AU-NZ</td><td class="num">$63</td><td class="num">$1,114</td><td class="num roas-top">18x</td></tr><tr><td>Pendant - Austrian Crystal BABY Cushion EMERALD - YG</td><td>PMax AU Brand</td><td class="num">$41</td><td class="num">$818</td><td class="num roas-top">20x</td></tr><tr><td>10 Way Necklace - Turquoise HOWLITE - Yellow Gold</td><td>PMax AU Brand</td><td class="num">$17</td><td class="num">$781</td><td class="num roas-top">45x</td></tr><tr><td>10 Way Necklace - Shell Pearl OLIVE - Rose Gold</td><td>PMax CA-US</td><td class="num">$21</td><td class="num">$740</td><td class="num roas-top">35x</td></tr><tr><td>LONGER Link Necklace - Golden Crystal & Brown - Silver</td><td>PMax AU Brand</td><td class="num">$20</td><td class="num">$730</td><td class="num roas-top">37x</td></tr><tr><td>Hanging Pendant - Shell pearl Pink - Yellow Gold</td><td>PMax AU-NZ</td><td class="num">$40</td><td class="num">$654</td><td class="num roas-top">16x</td></tr><tr><td>Tassel Conversion - Plum Crystal</td><td>PMax AU Brand</td><td class="num">$21</td><td class="num">$636</td><td class="num roas-top">31x</td></tr><tr><td>10 Way Necklace - Cream Pearl - Yellow Gold</td><td>PMax CA-US</td><td class="num">$106</td><td class="num">$548</td><td class="num roas-top">5x</td></tr><tr><td>Sisterhood Pendant - Silver</td><td>PMax AU Brand</td><td class="num">$15</td><td class="num">$521</td><td class="num roas-top">34x</td></tr><tr><td>10 Way Necklace - Cream Pearl - YG</td><td>PMax CA Test</td><td class="num">$18</td><td class="num">$408</td><td class="num roas-top">23x</td></tr><tr><td>10 Way Bundle - Cream Pearl</td><td>PMax CA-US</td><td class="num">$27</td><td class="num">$394</td><td class="num roas-top">15x</td></tr><tr><td>Medium Strand - Cream Pearl - Silver</td><td>PMax CA Test</td><td class="num">$15</td><td class="num">$235</td><td class="num roas-top">16x</td></tr><tr><td>10 Way Necklace - Shell Pearl BURGUNDY - YG</td><td>PMax CA-US</td><td class="num">$23</td><td class="num">$219</td><td class="num roas-top">10x</td></tr></tbody>
+  </table></div>
+</div></section>
+
+<section id="pmax"><div class="wrap">
+  <div class="section-label">Performance Max</div>
+  <h2>Performance Max breakdown</h2>
+  <p class="section-sub">Structure is sound - products are filtered by collection (Pearl, Fuchsia, Black Crystal bundles), not dumped in one bucket, and creative is deep. The issue isn't the build, it's that the acquisition and retention conversions are mixed together.</p>
+  <h3>Asset group performance (90 days)</h3>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Campaign</th><th>Asset group</th><th class="num">Spend</th><th class="num">Revenue</th><th class="num">ROAS</th><th>Status</th></tr></thead>
+    <tbody><tr><td>PMax CA-US</td><td>Pearl Collection | Search Themes</td><td class="num">$1,290</td><td class="num">$28,577</td><td class="num roas-top">22x</td><td><span class="status-pill active">Active</span></td></tr><tr><td>PMax AU-NZ</td><td>Pearl Collection | Search Themes</td><td class="num">$679</td><td class="num">$7,817</td><td class="num roas-top">12x</td><td><span class="status-pill active">Active</span></td></tr><tr><td>PMax CA-US</td><td>Pearl Collection | Generic Search Themes</td><td class="num">$390</td><td class="num">$6,985</td><td class="num roas-top">18x</td><td><span class="status-pill paused">Paused</span></td></tr><tr><td>PMax CA-US</td><td>Pearl Collection | Frequently Visits Salons</td><td class="num">$99</td><td class="num">$5,826</td><td class="num roas-top">59x</td><td><span class="status-pill paused">Paused</span></td></tr><tr><td>PMax Global-EN</td><td>Last Chance Sale | All Assets</td><td class="num">$2,161</td><td class="num">$17,109</td><td class="num roas-top">8x</td><td><span class="status-pill active">Active</span></td></tr><tr><td>PMax IE-UK</td><td>Pearl Collection | Search Themes</td><td class="num">$412</td><td class="num">$1,743</td><td class="num roas-top">4x</td><td><span class="status-pill active">Active</span></td></tr><tr><td>PMax AU-NZ</td><td>Fuchsia Collection | Search Themes</td><td class="num">$22</td><td class="num">$1,942</td><td class="num roas-top">90x</td><td><span class="status-pill active">Active</span></td></tr><tr><td>PMax Global-EN</td><td>Black Crystal Beginner Bundle</td><td class="num">$266</td><td class="num">$474</td><td class="num roas-low">2x</td><td><span class="status-pill active">Active</span></td></tr></tbody>
+  </table></div>
+  <h3 style="margin-top:32px;">Creative inventory (active asset groups)</h3>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Asset group</th><th class="num">Images</th><th class="num">Videos</th><th class="num">Headlines</th><th class="num">Descriptions</th></tr></thead>
+    <tbody><tr><td>Last Chance Sale</td><td class="num">20</td><td class="num">8</td><td class="num">20</td><td class="num">5</td></tr><tr><td>Pearl Collection</td><td class="num">60</td><td class="num">15</td><td class="num">61</td><td class="num">15</td></tr><tr><td>Fuchsia Collection</td><td class="num">92</td><td class="num">17</td><td class="num">80</td><td class="num">20</td></tr><tr><td>Black Crystal Beginner Bundle</td><td class="num">29</td><td class="num">8</td><td class="num">20</td><td class="num">5</td></tr></tbody>
+  </table></div>
+  <p class="section-sub" style="margin-top:12px;">No creative gaps - every active asset group has 8+ videos and a deep image and headline pack.</p>
+  <div class="callout" style="margin-top:20px;">
+    <div class="callout-title">One structural note for Australia</div>
+    <div class="callout-body">Three AU campaigns draw on overlapping products - PMax AU Brand (all products), PMax AU Non-Brand (all products) and the AU-NZ collection campaign. They can compete for the same searches. As we scale PMax Non-Brand, tighten the product split so they don't bid against each other.</div>
+  </div>
+</div></section>
+
+<section id="summary" style="background:var(--c-bg-alt);"><div class="wrap">
+  <div class="section-label">Summary</div>
+  <h2>The takeaway</h2>
+  <div class="exec-summary">
+    <div class="exec-summary-block">
+      <div class="exec-summary-label">The opportunity</div>
+      <div class="exec-summary-value growth">New customers under $100</div>
+      <div class="exec-summary-body">PMax AU Non-Brand ($40) and Shopping AU ($86) already beat Meta on new-customer cost and are both capped at $10/day. Uncap them, add non-brand search, optimise for new customers not blended ROAS. We can absorb 3-4x ROAS here because the new-customer cost still wins.</div>
+    </div>
+    <div class="exec-summary-block">
+      <div class="exec-summary-label">The trap to avoid</div>
+      <div class="exec-summary-value waste">Scaling brand search</div>
+      <div class="exec-summary-body">Brand is 84-98% existing customers at a $185-286 new-customer cost. It's a cheap defensive floor, not a growth lever. Hold it, don't feed it. Pause Demand Gen (0.4 new customers in 90 days) and move that budget to the engines that actually acquire.</div>
+    </div>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="wrap">
+  Prepared by Above &amp; Beyond Digital for Maria Nicola. Google Ads platform reporting, pulled 02/06/2026. Account: Maria Nicola Google Search (9730601417). New/returning split from Google's customer segmentation; "unknown" conversions excluded from new-share. Revenue is last-click conversion value - Shopify net sales is the source of truth for blended return. Meta cost per acquisition (~$100) per client.
+</div></footer>
+</body></html>
