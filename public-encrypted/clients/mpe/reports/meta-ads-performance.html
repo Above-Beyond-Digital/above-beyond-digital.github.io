@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Property Empire — Meta Ads Performance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0A2540; --navy-2:#143a5e; --gold:#C9A227; --gold-soft:#e7c94d;
+    --ink:#1c2b3a; --muted:#6b7a8d; --line:#e3e8ef; --bg:#f4f6f9; --card:#ffffff;
+    --good:#1f9d6b; --bad:#d2493b; --flat:#6b7a8d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding:0 0 60px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:34px 0 30px;border-bottom:4px solid var(--gold)}
+  header .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .brand h1{font-size:25px;font-weight:700;letter-spacing:.3px}
+  .brand .sub{color:var(--gold-soft);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:6px}
+  .meta{text-align:right;font-size:12.5px;color:#c4d2e0}
+  .meta b{color:#fff}
+
+  h2{font-size:17px;margin:38px 0 4px;color:var(--navy);display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:5px;height:18px;background:var(--gold);border-radius:2px}
+  .note{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+
+  /* period switcher */
+  .tabs{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px;margin:6px 0 20px;gap:4px}
+  .tabs button{border:0;background:none;padding:8px 20px;font-size:14px;font-weight:600;color:var(--muted);border-radius:7px;cursor:pointer;transition:.15s}
+  .tabs button.active{background:var(--navy);color:#fff}
+
+  .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;box-shadow:0 1px 2px rgba(10,37,64,.04)}
+  .card .lab{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .card .val{font-size:27px;font-weight:700;color:var(--navy);margin-top:6px;line-height:1}
+  .card .unit{font-size:14px;color:var(--muted);font-weight:600}
+  .card .delta{font-size:11.5px;font-weight:700;margin-top:7px;display:inline-flex;align-items:center;gap:4px}
+  .up{color:var(--good)} .down{color:var(--bad)} .nv{color:var(--flat)}
+  .card.hero{background:var(--navy);border-color:var(--navy)}
+  .card.hero .lab{color:var(--gold-soft)} .card.hero .val{color:#fff} .card.hero .unit{color:#aab9c9}
+
+  .secondary{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+  .secondary .card .val{font-size:22px}
+
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px}
+  th,td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:var(--navy);color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#f8fafc}
+  tfoot td{font-weight:700;background:#f0f3f7;color:var(--navy);border-top:2px solid var(--gold)}
+  .best{color:var(--good);font-weight:700} .worst{color:var(--bad);font-weight:700}
+
+  .chartbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 18px 8px;margin-top:6px}
+  .chartwrap{position:relative;height:330px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  footer{margin-top:46px;font-size:12px;color:var(--muted);text-align:center;border-top:1px solid var(--line);padding-top:20px}
+  @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.secondary{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="sub">My Property Empire · Meta Ads</div>
+      <h1>Performance Dashboard</h1>
+    </div>
+    <div class="meta">
+      Account <b>act_556654502206041</b> (AUD)<br>
+      Reporting through <b>02 Jun 2026</b><br>
+      Prepared by Above &amp; Beyond Digital
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===== RECENT PERIODS ===== -->
+  <h2>Recent Performance — 7 / 14 / 21 Days</h2>
+  <div class="note">Account-level totals for the trailing windows ending 02 Jun 2026. Toggle the period to update the cards. Δ = vs the 6-month norm (hover a chip).</div>
+
+  <div class="tabs" id="tabs">
+    <button data-p="7" class="active">Last 7 days</button>
+    <button data-p="14">Last 14 days</button>
+    <button data-p="21">Last 21 days</button>
+  </div>
+
+  <div class="cards">
+    <div class="card hero"><div class="lab">Cost per Lead</div><div class="val" id="c_cpl"></div><div class="delta" id="d_cpl"></div></div>
+    <div class="card"><div class="lab">CTR (all)</div><div class="val" id="c_ctr"></div><div class="delta" id="d_ctr"></div></div>
+    <div class="card"><div class="lab">CTR (link)</div><div class="val" id="c_lctr"></div><div class="delta" id="d_lctr"></div></div>
+    <div class="card"><div class="lab">Frequency</div><div class="val" id="c_freq"></div><div class="delta" id="d_freq"></div></div>
+    <div class="card"><div class="lab">CPM</div><div class="val" id="c_cpm"></div><div class="delta" id="d_cpm"></div></div>
+  </div>
+  <div class="secondary">
+    <div class="card"><div class="lab">Leads</div><div class="val" id="c_leads"></div></div>
+    <div class="card"><div class="lab">Spend</div><div class="val" id="c_spend"></div></div>
+  </div>
+
+  <h2 style="margin-top:34px">Side-by-Side Comparison</h2>
+  <div class="note">All three windows in one view. CPL = spend ÷ leads. Link CTR = link clicks ÷ impressions.</div>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Last 7d</th><th>Last 14d</th><th>Last 21d</th></tr>
+    </thead>
+    <tbody id="cmp"></tbody>
+  </table>
+
+  <!-- ===== 6 MONTH TREND ===== -->
+  <h2 style="margin-top:42px">6-Month Trend — Monthly Totals &amp; Averages</h2>
+  <div class="note">Dec 2025 – May 2026, complete calendar months. Bars = leads &amp; spend (totals). Lines = CPL &amp; CTR (averages).</div>
+
+  <div class="grid2">
+    <div class="chartbox">
+      <div class="chartwrap"><canvas id="chCplCtr"></canvas></div>
+    </div>
+    <div class="chartbox">
+      <div class="chartwrap"><canvas id="chLeadSpend"></canvas></div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:34px">Monthly Detail</h2>
+  <table>
+    <thead>
+      <tr><th>Month</th><th>Spend</th><th>Leads</th><th>CPL</th><th>CTR (all)</th><th>CTR (link)</th><th>CPM</th><th>Freq</th><th>Impr.</th></tr>
+    </thead>
+    <tbody id="mtab"></tbody>
+    <tfoot id="mfoot"></tfoot>
+  </table>
+
+  <footer>
+    Source: Meta Ads API (Pipeboard) · pulled 03 Jun 2026 · figures in AUD.<br>
+    CPL counts the Meta <em>lead</em> conversion (free mini-course sign-up). All values account-level across active campaigns.
+  </footer>
+</div>
+
+<script>
+// ---- DATA (account level, from Meta Ads API) ----
+const periods = {
+  7:  {cpl:43.45, ctr:3.16, lctr:1.250, freq:1.79, cpm:62.32, leads:7,  spend:304.16},
+  14: {cpl:51.35, ctr:3.16, lctr:1.247, freq:2.09, cpm:62.47, leads:12, spend:616.22},
+  21: {cpl:37.29, ctr:3.12, lctr:1.305, freq:2.41, cpm:63.05, leads:25, spend:932.28},
+};
+// Benchmark = 6-month norm (Dec25–May26). Each window's Δ is measured against this,
+// because clean prior-equal-length windows aren't fully derivable (frequency/reach is not additive).
+// CPL = 6-mo blended (spend/leads). CTR/linkCTR = 6-mo monthly averages. CPM/freq = API 6-mo aggregates.
+const bench = {cpl:29.69, ctr:3.19, lctr:1.383, freq:2.76, cpm:59.59};
+
+const months = [
+  {m:"Dec 25", spend:1393.25, leads:48, cpl:29.03, ctr:2.90, lctr:1.100, cpm:54.15, freq:2.55, impr:25728},
+  {m:"Jan 26", spend:1370.56, leads:48, cpl:28.55, ctr:3.25, lctr:1.196, cpm:51.57, freq:2.68, impr:26578},
+  {m:"Feb 26", spend:1240.26, leads:50, cpl:24.81, ctr:3.38, lctr:1.389, cpm:58.82, freq:2.86, impr:21087},
+  {m:"Mar 26", spend:1406.15, leads:54, cpl:26.04, ctr:3.46, lctr:1.781, cpm:64.56, freq:3.21, impr:21781},
+  {m:"Apr 26", spend:1341.80, leads:33, cpl:40.66, ctr:2.99, lctr:1.375, cpm:66.36, freq:2.72, impr:20221},
+  {m:"May 26", spend:1384.07, leads:41, cpl:33.76, ctr:3.18, lctr:1.457, cpm:65.47, freq:2.68, impr:21141},
+];
+
+// ---- helpers ----
+const f = {
+  money:v=>"$"+v.toLocaleString("en-AU",{minimumFractionDigits:2,maximumFractionDigits:2}),
+  money0:v=>"$"+v.toLocaleString("en-AU",{maximumFractionDigits:0}),
+  pct:v=>v.toFixed(2)+"%", pct3:v=>v.toFixed(3)+"%", num:v=>v.toLocaleString("en-AU"),
+};
+// for CPL/CPM/freq lower is better; for CTR/leads higher is better
+function delta(el, cur, prev, lowerBetter, isPct, isMoney){
+  if(prev==null){el.textContent="";return;}
+  const diff = cur-prev, pctChg = prev!==0 ? (diff/prev*100) : 0;
+  const improved = lowerBetter ? diff<0 : diff>0;
+  const cls = Math.abs(pctChg)<0.5 ? "nv" : (improved?"up":"down");
+  const arrow = Math.abs(pctChg)<0.5 ? "→" : (diff<0?"▼":"▲");
+  el.className = "delta "+cls;
+  el.textContent = `${arrow} ${Math.abs(pctChg).toFixed(0)}%`;
+}
+
+function render(p){
+  const d=periods[p];
+  document.getElementById("c_cpl").innerHTML  = f.money(d.cpl);
+  document.getElementById("c_ctr").innerHTML  = d.ctr.toFixed(2)+'<span class="unit">%</span>';
+  document.getElementById("c_lctr").innerHTML = d.lctr.toFixed(3)+'<span class="unit">%</span>';
+  document.getElementById("c_freq").innerHTML = d.freq.toFixed(2)+'<span class="unit">×</span>';
+  document.getElementById("c_cpm").innerHTML  = f.money(d.cpm);
+  document.getElementById("c_leads").innerHTML= d.leads;
+  document.getElementById("c_spend").innerHTML= f.money(d.spend);
+  delta(document.getElementById("d_cpl"),  d.cpl,  bench.cpl,  true);
+  delta(document.getElementById("d_ctr"),  d.ctr,  bench.ctr,  false);
+  delta(document.getElementById("d_lctr"), d.lctr, bench.lctr, false);
+  delta(document.getElementById("d_freq"), d.freq, bench.freq, true);
+  delta(document.getElementById("d_cpm"),  d.cpm,  bench.cpm,  true);
+  [...document.querySelectorAll("#d_cpl,#d_ctr,#d_lctr,#d_freq,#d_cpm")].forEach(e=>{
+    e.title = "vs 6-month norm";
+  });
+}
+
+// tabs
+document.querySelectorAll("#tabs button").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll("#tabs button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active"); render(b.dataset.p);
+  };
+});
+render(7);
+
+// comparison table
+const cmpRows=[
+  ["Spend",      p=>f.money(periods[p].spend)],
+  ["Leads",      p=>periods[p].leads],
+  ["CPL",        p=>f.money(periods[p].cpl)],
+  ["CTR (all)",  p=>f.pct(periods[p].ctr)],
+  ["CTR (link)", p=>f.pct3(periods[p].lctr)],
+  ["Frequency", p=>periods[p].freq.toFixed(2)+"×"],
+  ["CPM",        p=>f.money(periods[p].cpm)],
+];
+document.getElementById("cmp").innerHTML = cmpRows.map(r=>
+  `<tr><td>${r[0]}</td><td>${r[1](7)}</td><td>${r[1](14)}</td><td>${r[1](21)}</td></tr>`).join("");
+
+// monthly table
+const tot = {spend:0,leads:0,impr:0};
+months.forEach(m=>{tot.spend+=m.spend;tot.leads+=m.leads;tot.impr+=m.impr;});
+const cplVals=months.map(m=>m.cpl), bestCpl=Math.min(...cplVals), worstCpl=Math.max(...cplVals);
+document.getElementById("mtab").innerHTML = months.map(m=>{
+  const cls = m.cpl===bestCpl?"best":(m.cpl===worstCpl?"worst":"");
+  return `<tr><td>${m.m}</td><td>${f.money(m.spend)}</td><td>${m.leads}</td>
+    <td class="${cls}">${f.money(m.cpl)}</td><td>${f.pct(m.ctr)}</td><td>${f.pct3(m.lctr)}</td>
+    <td>${f.money(m.cpm)}</td><td>${m.freq.toFixed(2)}×</td><td>${f.num(m.impr)}</td></tr>`;
+}).join("");
+const blendCpl = tot.spend/tot.leads;
+const avgCtr = months.reduce((a,m)=>a+m.ctr,0)/months.length;
+const avgLctr= months.reduce((a,m)=>a+m.lctr,0)/months.length;
+const avgCpm = months.reduce((a,m)=>a+m.cpm,0)/months.length;
+const avgFreq= months.reduce((a,m)=>a+m.freq,0)/months.length;
+document.getElementById("mfoot").innerHTML =
+  `<tr><td>6-mo total / avg</td><td>${f.money(tot.spend)}</td><td>${tot.leads}</td>
+   <td>${f.money(blendCpl)}</td><td>${f.pct(avgCtr)}</td><td>${f.pct3(avgLctr)}</td>
+   <td>${f.money(avgCpm)}</td><td>${avgFreq.toFixed(2)}×</td><td>${f.num(tot.impr)}</td></tr>`;
+
+// ---- charts ----
+const NAVY="#0A2540", GOLD="#C9A227", labels=months.map(m=>m.m);
+Chart.defaults.font.family="-apple-system,Segoe UI,Roboto,sans-serif";
+Chart.defaults.color="#6b7a8d";
+
+new Chart(document.getElementById("chCplCtr"),{
+  data:{labels,datasets:[
+    {type:"line",label:"CPL (AUD)",data:months.map(m=>m.cpl),borderColor:NAVY,backgroundColor:NAVY,yAxisID:"y",tension:.3,borderWidth:3,pointRadius:4,pointBackgroundColor:NAVY},
+    {type:"line",label:"CTR all (%)",data:months.map(m=>m.ctr),borderColor:GOLD,backgroundColor:GOLD,yAxisID:"y1",tension:.3,borderWidth:3,pointRadius:4,pointBackgroundColor:GOLD},
+    {type:"line",label:"CTR link (%)",data:months.map(m=>m.lctr),borderColor:"#7aa0c4",backgroundColor:"#7aa0c4",yAxisID:"y1",borderDash:[5,4],tension:.3,borderWidth:2,pointRadius:3},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+    plugins:{legend:{position:"bottom",labels:{usePointStyle:true,padding:16}},title:{display:true,text:"CPL vs Click-Through Rate",font:{size:14,weight:"600"},color:NAVY,padding:{bottom:14}}},
+    scales:{
+      y:{position:"left",title:{display:true,text:"CPL (AUD)"},ticks:{callback:v=>"$"+v},grid:{color:"#eef2f6"}},
+      y1:{position:"right",title:{display:true,text:"CTR (%)"},ticks:{callback:v=>v+"%"},grid:{drawOnChartArea:false},min:0}
+    }}
+});
+
+new Chart(document.getElementById("chLeadSpend"),{
+  data:{labels,datasets:[
+    {type:"bar",label:"Leads",data:months.map(m=>m.leads),backgroundColor:GOLD,yAxisID:"y",borderRadius:4,maxBarThickness:42},
+    {type:"line",label:"Spend (AUD)",data:months.map(m=>m.spend),borderColor:NAVY,backgroundColor:NAVY,yAxisID:"y1",tension:.3,borderWidth:3,pointRadius:4,pointBackgroundColor:NAVY},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+    plugins:{legend:{position:"bottom",labels:{usePointStyle:true,padding:16}},title:{display:true,text:"Leads vs Spend",font:{size:14,weight:"600"},color:NAVY,padding:{bottom:14}}},
+    scales:{
+      y:{position:"left",title:{display:true,text:"Leads"},grid:{color:"#eef2f6"},beginAtZero:true},
+      y1:{position:"right",title:{display:true,text:"Spend (AUD)"},ticks:{callback:v=>"$"+v},grid:{drawOnChartArea:false},beginAtZero:true}
+    }}
+});
+</script>
+</body>
+</html>
