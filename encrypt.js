@@ -57,6 +57,30 @@ function walkHtml(dir, base) {
   return results;
 }
 
+// Mirror non-HTML static assets (thumbnails, images, css) from SRC → OUT verbatim.
+// HTML is encrypted by StatiCrypt; assets are copied unchanged so dashboards can reference
+// them by relative path (e.g. <img src="assets/thumbnails/CR123.jpg">). Meta CDN thumbnail
+// URLs expire (403 after hours/days), so all dashboard thumbnails MUST be hosted here as
+// static files and never hot-linked. Assets stay unencrypted and load fine after the user
+// enters the portal password.
+function copyAssets(dir, base, out) {
+  let count = 0;
+  if (!fs.existsSync(dir)) return count;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      count += copyAssets(full, base, out);
+    } else if (!entry.name.endsWith('.html') && entry.name !== '.gitkeep') {
+      const rel = path.relative(base, full);
+      const dest = path.join(out, rel);
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(full, dest);
+      count++;
+    }
+  }
+  return count;
+}
+
 const SRC = 'public-encrypted';
 const OUT = 'docs';
 const files = walkHtml(SRC, SRC);
@@ -89,4 +113,7 @@ for (const rel of files) {
   console.log(`Encrypted: ${rel}`);
 }
 
-console.log(`\nDone. ${files.length} file(s) encrypted to ${OUT}/`);
+const assetCount = copyAssets(SRC, SRC, OUT);
+if (assetCount) console.log(`Copied ${assetCount} static asset(s) to ${OUT}/`);
+
+console.log(`\nDone. ${files.length} file(s) encrypted, ${assetCount} asset(s) copied to ${OUT}/`);
