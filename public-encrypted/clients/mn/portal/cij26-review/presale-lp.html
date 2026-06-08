@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!--
+  Maria Nicola — Christmas in July 2026 (CIJ26)
+  PRE-SALE VIP SIGN-UP LANDING PAGE — DESIGN / COPY REFERENCE DRAFT
+
+  This is a design and copy reference draft only. The live landing page is
+  Mark's rebuild in Shopify. Use this to review look, layout and copy.
+
+  PRE-SALE PHASE = TEASE ONLY. The 20% off* offer is NOT shown anywhere here
+  (it stays secret until VIP day, 18 Jul). Job of this page: build the VIP /
+  SMS list so Sisters go first on Sat 18 July.
+
+  Placeholders to keep (do not invent): [VIP SIGN-UP URL — CONFIRM]
+  Image areas are styled blush/pink placeholder blocks with captions — final
+  photography not ready yet.
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maria Nicola — Christmas in July 2026 — VIP Early Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#EF6693;
+    --charcoal:#222222;
+    --blush:#FEF6F9;
+    --white:#FFFFFF;
+    --gold:#C9A24B;
+    --gold-soft:#E7D2A0;
+    --green:#2E6E5A;
+    --line:#EFE3E8;
+    --ink-soft:#6B6166;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',Arial,sans-serif;
+    color:var(--charcoal);
+    background:var(--white);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.mont{font-family:'Montserrat',Arial,sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* draft ribbon */
+  .draft-ribbon{
+    background:var(--charcoal);color:#fff;text-align:center;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;
+  }
+
+  /* nav */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;}
+  .nav .brand{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:.3em;text-transform:uppercase;font-size:14px;color:var(--charcoal);}
+  .nav .nav-sprig{font-size:12px;letter-spacing:.42em;color:var(--green);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(150deg,#FFFFFF 0%, var(--blush) 58%, #FBE9F0 100%);
+    border-bottom:3px solid var(--gold-soft);
+    position:relative;overflow:hidden;
+  }
+  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:56px 0 64px;}
+  .holly{position:absolute;right:-40px;top:-50px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(239,102,147,.10), rgba(201,162,75,.06) 70%, transparent 72%);}
+  .lockup{text-align:left;position:relative;z-index:2;}
+  .lockup .sprig{font-size:16px;color:var(--green);letter-spacing:.5em;opacity:.85;}
+  .lockup .l-script{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:var(--pink);line-height:1;margin:8px 0 4px;}
+  .lockup .l-main{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(40px,6.4vw,68px);letter-spacing:.01em;line-height:.96;color:var(--charcoal);text-transform:uppercase;}
+  .lockup .l-main .in{color:var(--pink);}
+  .lockup .l-rule{display:flex;align-items:center;gap:14px;margin-top:14px;color:var(--ink-soft);font-family:'Montserrat',sans-serif;font-weight:600;font-size:13px;letter-spacing:.34em;text-transform:uppercase;}
+  .lockup .l-rule:after{content:"";flex:0 0 auto;width:46px;height:1px;background:var(--gold);}
+  .lockup .l-year{color:var(--gold);}
+  .hero-lede{margin-top:24px;font-size:18px;color:var(--charcoal);max-width:42ch;}
+  .hero-lede strong{font-weight:600;}
+  .hero-sub{margin-top:14px;font-size:15px;color:var(--ink-soft);max-width:46ch;}
+  .hero-cta-row{margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .btn-pink{display:inline-block;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;padding:14px 30px;border-radius:999px;}
+  .hero-microproof{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.05em;color:var(--ink-soft);}
+
+  /* hero image placeholder */
+  .img-ph{
+    border-radius:16px;position:relative;overflow:hidden;border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 70% 28%, rgba(255,255,255,.55), transparent 55%),
+      linear-gradient(150deg,#FAD9E4 0%, var(--blush) 55%, #F7E8C9 100%);
+    display:flex;align-items:flex-end;justify-content:flex-start;min-height:420px;
+  }
+  .img-ph .img-cap{
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);background:rgba(255,255,255,.82);border-radius:9px;padding:9px 12px;margin:14px;line-height:1.4;max-width:74%;
+  }
+
+  /* ---------- SIGN-UP FORM ---------- */
+  .signup{background:var(--charcoal);}
+  .signup-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:56px 0;}
+  .signup .eyebrow{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:12px;}
+  .signup h2{color:#fff;font-weight:800;font-size:30px;line-height:1.08;letter-spacing:-.01em;}
+  .signup h2 .pk{color:var(--pink);}
+  .signup p{color:rgba(255,255,255,.82);font-size:15px;margin-top:14px;max-width:42ch;}
+  .signup .sprig{font-size:14px;letter-spacing:.5em;color:var(--gold-soft);margin-bottom:8px;display:block;}
+
+  .form-card{background:#fff;border-radius:18px;padding:34px 32px;box-shadow:0 18px 50px rgba(0,0,0,.22);}
+  .form-card h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:19px;margin-bottom:4px;}
+  .form-card .fc-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:20px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--charcoal);margin-bottom:6px;}
+  .field input[type=email],.field input[type=tel]{
+    width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:10px;
+    font-family:'Inter',sans-serif;font-size:15px;color:var(--charcoal);background:#fff;
+  }
+  .field input::placeholder{color:#B9AEB3;}
+  .optin{display:flex;align-items:flex-start;gap:10px;margin:18px 0 22px;}
+  .optin input{margin-top:3px;width:17px;height:17px;accent-color:var(--pink);flex:0 0 auto;}
+  .optin label{font-size:13px;color:var(--ink-soft);line-height:1.45;font-family:'Inter',sans-serif;font-weight:400;letter-spacing:0;}
+  .btn-join{
+    width:100%;display:block;text-align:center;background:var(--pink);color:#fff;
+    font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;letter-spacing:.02em;
+    padding:16px;border-radius:999px;border:none;cursor:pointer;
+  }
+  .form-fine{font-size:11.5px;color:var(--ink-soft);margin-top:14px;text-align:center;line-height:1.45;}
+
+  /* ---------- VALUE SECTION ---------- */
+  .section{padding:64px 0;}
+  .section .eyebrow{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:12px;text-align:center;}
+  .section h2{text-align:center;font-weight:800;font-size:clamp(26px,3.6vw,34px);letter-spacing:-.01em;line-height:1.1;max-width:18ch;margin:0 auto;}
+  .section h2 .pk{color:var(--pink);}
+  .divider-mini{width:46px;height:3px;background:var(--gold);border-radius:3px;margin:18px auto 12px;}
+  .section .lead{text-align:center;color:var(--ink-soft);font-size:16px;max-width:56ch;margin:0 auto;}
+  .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:42px;}
+  .vc{background:var(--blush);border:1px solid var(--line);border-radius:16px;padding:30px 26px;text-align:center;}
+  .vc .vc-num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:34px;color:var(--pink);line-height:1;}
+  .vc h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:17px;margin:12px 0 8px;}
+  .vc p{font-size:14px;color:var(--ink-soft);}
+
+  /* split value + image */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:54px;}
+  .split h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;line-height:1.12;letter-spacing:-.01em;}
+  .split h3 .pk{color:var(--pink);}
+  .split p{font-size:16px;color:var(--charcoal);margin-top:14px;max-width:46ch;}
+  .split .sprig-line{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:400;font-size:18px;color:var(--pink);margin-top:18px;}
+
+  /* ---------- SOCIAL PROOF BAR ---------- */
+  .proof-bar{background:linear-gradient(135deg, var(--blush) 0%, #FFFFFF 55%, #FBEED4 100%);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .proof-inner{display:flex;align-items:center;justify-content:center;gap:60px;padding:42px 0;flex-wrap:wrap;text-align:center;}
+  .proof-item .pi-big{font-family:'Montserrat',sans-serif;font-weight:800;font-size:30px;color:var(--charcoal);line-height:1;}
+  .proof-item .pi-big .star{color:var(--gold);}
+  .proof-item .pi-lab{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px;}
+  .proof-sep{width:1px;height:48px;background:var(--line);}
+
+  /* ---------- CLOSING CTA ---------- */
+  .closing{background:linear-gradient(150deg,#FFFFFF 0%, var(--blush) 60%, #FBE9F0 100%);text-align:center;padding:66px 0;border-top:3px solid var(--gold-soft);}
+  .closing .sprig{font-size:15px;color:var(--green);letter-spacing:.5em;}
+  .closing h2{font-weight:800;font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;line-height:1.06;margin:14px auto 0;max-width:16ch;}
+  .closing h2 .in{color:var(--pink);}
+  .closing p{color:var(--ink-soft);font-size:16px;margin:16px auto 0;max-width:44ch;}
+  .closing .btn-pink{margin-top:26px;}
+
+  /* ---------- FOOTER ---------- */
+  .footer{background:var(--charcoal);color:rgba(255,255,255,.7);padding:40px 0;font-size:13px;}
+  .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .footer .f-brand{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:.3em;text-transform:uppercase;font-size:13px;color:#fff;}
+  .footer a{color:rgba(255,255,255,.7);text-decoration:underline;}
+
+  @media(max-width:860px){
+    .hero-inner,.signup-inner,.split{grid-template-columns:1fr;gap:34px;}
+    .value-grid{grid-template-columns:1fr;}
+    .proof-sep{display:none;}
+    .proof-inner{gap:30px;}
+    .img-ph{min-height:300px;}
+    .hero-inner{padding:40px 0 48px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-ribbon">Draft · CIJ26 Pre-sale Landing Page · design &amp; copy reference · live page is Mark's rebuild</div>
+
+<div class="wrap">
+  <nav class="nav">
+    <span class="brand">Maria Nicola</span>
+    <span class="nav-sprig">&#10043; &#8226; &#10043;</span>
+  </nav>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="holly"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="lockup">
+        <div class="sprig">&#10043; &#8226; &#10043;</div>
+        <div class="l-script">A little gift to yourself</div>
+        <div class="l-main">Christmas<br><span class="in">in July</span></div>
+        <div class="l-rule"><span class="l-year">2026</span></div>
+        <p class="hero-lede"><strong>Something gorgeous is coming this July.</strong> And our Sparkle Sisters get to see it first.</p>
+        <p class="hero-sub">Sign up to SMS and you will go first on Saturday 18 July, a full day before everyone else. No spoilers, lovely. Just your spot saved at the very front of the queue.</p>
+        <div class="hero-cta-row">
+          <a class="btn-pink" href="#join">Join the VIP List</a>
+          <span class="hero-microproof">4.9&#9733; from 7,500+ reviews</span>
+        </div>
+      </div>
+      <div class="img-ph">
+        <div class="img-cap">IMAGE AREA · Warm lifestyle portrait, real woman 45-65 wearing the 10 Way Necklace&trade;, natural light, soft blush styling, joyful first-look feeling</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SIGN-UP FORM ============ -->
+<section class="signup" id="join">
+  <div class="wrap">
+    <div class="signup-inner">
+      <div>
+        <span class="sprig">&#10043; &#8226; &#10043;</span>
+        <div class="eyebrow">VIP Early Access</div>
+        <h2>Be first through the door, <span class="pk">this July.</span></h2>
+        <p>I have set something up just for our Sisters. The lovely ones who sign up to my SMS list go first, a full day before the world. Pop your number below and I will send you a little message the moment it opens on Saturday 18 July.</p>
+        <p style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold-soft);">Stay close, lovely. Something divine is on its way.</p>
+      </div>
+
+      <!-- Signup form mockup (non-functional design reference) -->
+      <form class="form-card" action="[VIP SIGN-UP URL — CONFIRM]" method="post" onsubmit="return false;">
+        <h3>Join the VIP List</h3>
+        <p class="fc-sub">Go first on 18 July, before everyone else.</p>
+
+        <div class="field">
+          <label for="vip-email">Email address</label>
+          <input type="email" id="vip-email" name="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <div class="field">
+          <label for="vip-phone">Mobile number</label>
+          <input type="tel" id="vip-phone" name="phone" placeholder="04XX XXX XXX" autocomplete="tel">
+        </div>
+
+        <div class="optin">
+          <input type="checkbox" id="vip-sms" name="sms_optin">
+          <label for="vip-sms">Yes, text me first. I would like SMS early access so I go a full day ahead of everyone else. I can reply STOP any time.</label>
+        </div>
+
+        <button type="submit" class="btn-join">Join the VIP List</button>
+        <p class="form-fine">By joining you agree to receive marketing emails and SMS from Maria Nicola. Unsubscribe any time.<br>Form submits to: [VIP SIGN-UP URL — CONFIRM]</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUE: ONE NECKLACE, TEN WAYS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Why Sisters love it</div>
+    <h2>One necklace. <span class="pk">Ten ways to sparkle.</span></h2>
+    <div class="divider-mini"></div>
+    <p class="lead">The 10 Way Necklace&trade; goes from shore day to formal dinner, all from one little pouch the size of a sunglasses case. No fussy clasps, just magnets on, confidence up, ready to go.</p>
+
+    <div class="value-grid">
+      <div class="vc">
+        <div class="vc-num">10</div>
+        <h4>Ten looks, one set</h4>
+        <p>Style it ten gorgeous ways for the office, the cruise and everything in between.</p>
+      </div>
+      <div class="vc">
+        <div class="vc-num">1</div>
+        <h4>One little pouch</h4>
+        <p>Your whole jewellery box, packed into something that slips into your handbag.</p>
+      </div>
+      <div class="vc">
+        <div class="vc-num">&#10043;</div>
+        <h4>No fussy clasps</h4>
+        <p>Clever magnets click into place in a moment. Magnets on, confidence up, ready to go.</p>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="img-ph" style="min-height:360px;">
+        <div class="img-cap">IMAGE AREA · Close-up of the magnetic click moment, 10 Way Necklace&trade; on skin, hands styling it a second way, warm natural light</div>
+      </div>
+      <div>
+        <h3>Wear it your way, <span class="pk">for every version of you.</span></h3>
+        <p>Whether you are off to work, heading away on the trip or simply treating yourself to a lovely day, one set does it all. That is the freedom our Sisters fall in love with.</p>
+        <p class="sprig-line">A little gift to yourself this July.</p>
+        <a class="btn-pink" href="#join" style="margin-top:22px;">Join the VIP List</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF ============ -->
+<section class="proof-bar">
+  <div class="wrap">
+    <div class="proof-inner">
+      <div class="proof-item">
+        <div class="pi-big"><span class="star">&#9733;</span> 4.9</div>
+        <div class="pi-lab">from 7,500+ reviews</div>
+      </div>
+      <div class="proof-sep"></div>
+      <div class="proof-item">
+        <div class="pi-big">4,900</div>
+        <div class="pi-lab">Sparkle Sisterhood members</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING CTA ============ -->
+<section class="closing">
+  <div class="wrap">
+    <span class="sprig">&#10043; &#8226; &#10043;</span>
+    <h2>Want in, <span class="in">lovely?</span></h2>
+    <p>Sign up to SMS and you will be first in line on 18 July. Something gorgeous is on its way.</p>
+    <a class="btn-pink" href="#join">Join the VIP List</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <span class="f-brand">Maria Nicola</span>
+      <span>&copy; 2026 Maria Nicola. The most versatile necklace you will ever own. AU English. The 10 Way Necklace&trade;.</span>
+      <span><a href="[VIP SIGN-UP URL — CONFIRM]">VIP early access</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  Maria Nicola — Christmas in July 2026 (CIJ26)
+  SHOPIFY HOMEPAGE HERO BANNER — DESIGN / COPY REFERENCE DRAFT
+
+  This is a design and copy reference draft only. The live banner is built in
+  Shopify by Mark. Use this to review look, layout and copy.
+
+  SALE PHASE asset (public sale 19-31 Jul). The 20% off* offer IS shown here,
+  with the exclusion footnote. Shows desktop (wide) and mobile (narrow)
+  versions stacked, each labelled.
+
+  Offer: 20% off* — Excludes Beginner Bundles, Gift Cards and Flash Sale items.
+  Dates: sale ends Fri 31 Jul 11:59pm AEST.
+  Placeholder to keep (do not invent): [SHOP URL — CONFIRM]
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maria Nicola — CIJ26 Homepage Banner — Desktop &amp; Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#EF6693;
+    --charcoal:#222222;
+    --blush:#FEF6F9;
+    --white:#FFFFFF;
+    --gold:#C9A24B;
+    --gold-soft:#E7D2A0;
+    --green:#2E6E5A;
+    --line:#EFE3E8;
+    --ink-soft:#6B6166;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',Arial,sans-serif;color:var(--charcoal);background:#F4ECEF;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4,.mont{font-family:'Montserrat',Arial,sans-serif;}
+  .board{max-width:1240px;margin:0 auto;padding:44px 28px 80px;}
+
+  .stage-head{margin-bottom:8px;}
+  .stage-head .eyebrow{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);}
+  .stage-head h1{font-weight:800;font-size:26px;letter-spacing:-.01em;margin-top:8px;}
+  .stage-head p{color:var(--ink-soft);font-size:14.5px;margin-top:6px;max-width:64ch;}
+
+  .device-label{font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:38px 0 12px;display:flex;align-items:center;gap:12px;}
+  .device-label:before{content:"";width:34px;height:1px;background:var(--gold);}
+
+  /* shared homepage banner component (from key visual .home-bn) */
+  .home-bn{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 82% 40%, rgba(255,255,255,.5), transparent 50%),
+      linear-gradient(120deg,#FFFFFF 0%, var(--blush) 48%, #FAD9E4 100%);
+    border:1px solid var(--line);
+  }
+  .home-bn .hb-sprig{font-size:12px;letter-spacing:.42em;color:var(--green);}
+  .home-bn .hb-eyebrow{font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-top:6px;}
+  .home-bn h3{font-family:'Montserrat',sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.01em;margin:8px 0 6px;color:var(--charcoal);}
+  .home-bn h3 .in{color:var(--pink);}
+  .home-bn p{color:var(--ink-soft);}
+  .home-bn .hb-cta{display:inline-block;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:.02em;border-radius:999px;}
+  .home-bn .hb-pill{display:inline-flex;align-items:baseline;gap:8px;background:var(--charcoal);color:#fff;border-radius:999px;font-family:'Montserrat',sans-serif;padding:9px 18px;}
+  .home-bn .hb-pill .pn{font-weight:800;color:var(--pink);}
+  .home-bn .hb-pill .pt{font-weight:600;letter-spacing:.14em;text-transform:uppercase;}
+  .home-bn .hb-badge{
+    border-radius:50%;background:#fff;border:2px solid var(--gold);
+    box-shadow:0 0 0 6px rgba(201,162,75,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:0 0 auto;
+  }
+  .home-bn .hb-badge .b-top{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;line-height:1;}
+  .home-bn .hb-badge .n{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--pink);line-height:.85;}
+  .home-bn .hb-badge .o{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--charcoal);}
+  .home-bn .hb-fine{color:var(--ink-soft);font-style:italic;}
+
+  /* ----- DESKTOP variant ----- */
+  .bn-desktop{border-radius:18px;min-height:340px;display:flex;align-items:center;justify-content:space-between;gap:40px;padding:46px 56px;box-shadow:0 18px 50px rgba(34,34,34,.08);}
+  .bn-desktop .hb-copy{max-width:56%;min-width:300px;}
+  .bn-desktop h3{font-size:42px;}
+  .bn-desktop .hb-eyebrow{font-size:12px;}
+  .bn-desktop p{font-size:15.5px;max-width:48ch;margin-top:4px;}
+  .bn-desktop .hb-dates{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.04em;color:var(--charcoal);margin-top:14px;}
+  .bn-desktop .hb-row{display:flex;align-items:center;gap:18px;margin-top:20px;flex-wrap:wrap;}
+  .bn-desktop .hb-cta{font-size:15px;padding:14px 30px;}
+  .bn-desktop .hb-pill .pn{font-size:20px;}
+  .bn-desktop .hb-pill .pt{font-size:12px;}
+  .bn-desktop .hb-fine{font-size:11.5px;margin-top:14px;max-width:54ch;}
+  .bn-desktop .hb-visual{position:relative;flex:0 0 auto;display:flex;align-items:center;}
+  .bn-desktop .hb-imgph{
+    width:230px;height:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line);position:relative;
+    background:radial-gradient(circle at 70% 30%, rgba(255,255,255,.5), transparent 55%),linear-gradient(150deg,#FAD9E4 0%, var(--blush) 55%, #F7E8C9 100%);
+    display:flex;align-items:flex-end;
+  }
+  .bn-desktop .hb-imgph .img-cap{font-family:'Montserrat',sans-serif;font-weight:600;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:rgba(255,255,255,.82);border-radius:7px;padding:7px 9px;margin:10px;line-height:1.35;}
+  .bn-desktop .hb-badge{width:128px;height:128px;position:absolute;top:-18px;right:-26px;}
+  .bn-desktop .hb-badge .b-top{font-size:20px;}
+  .bn-desktop .hb-badge .n{font-size:36px;}
+  .bn-desktop .hb-badge .o{font-size:11px;}
+
+  /* ----- MOBILE variant ----- */
+  .phone{width:390px;max-width:100%;margin:0;border:10px solid var(--charcoal);border-radius:38px;overflow:hidden;box-shadow:0 18px 50px rgba(34,34,34,.16);background:#fff;}
+  .phone .notch{height:26px;background:var(--charcoal);display:flex;align-items:center;justify-content:center;}
+  .phone .notch:after{content:"";width:90px;height:7px;border-radius:999px;background:rgba(255,255,255,.25);}
+  .bn-mobile{min-height:430px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:30px 26px 34px;}
+  .bn-mobile .hb-badge{width:96px;height:96px;margin:4px 0 14px;}
+  .bn-mobile .hb-badge .b-top{font-size:15px;}
+  .bn-mobile .hb-badge .n{font-size:28px;}
+  .bn-mobile .hb-badge .o{font-size:9px;}
+  .bn-mobile h3{font-size:30px;margin:6px 0;}
+  .bn-mobile .hb-eyebrow{font-size:11px;}
+  .bn-mobile p{font-size:14px;max-width:30ch;margin:0 auto;}
+  .bn-mobile .hb-dates{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;color:var(--charcoal);margin-top:12px;}
+  .bn-mobile .hb-cta{font-size:15px;padding:14px 34px;margin-top:18px;}
+  .bn-mobile .hb-fine{font-size:10.5px;margin-top:16px;max-width:34ch;line-height:1.45;}
+
+  .footer{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:48px;font-family:'Montserrat',sans-serif;letter-spacing:.04em;}
+
+  @media(max-width:760px){
+    .bn-desktop{flex-direction:column;text-align:center;padding:36px 26px;}
+    .bn-desktop .hb-copy{max-width:100%;}
+    .bn-desktop h3{font-size:32px;}
+    .bn-desktop .hb-row{justify-content:center;}
+    .bn-desktop .hb-visual{margin-top:30px;}
+    .bn-desktop .hb-badge{right:-10px;}
+  }
+</style>
+</head>
+<body>
+<div class="board">
+
+  <div class="stage-head">
+    <div class="eyebrow">CIJ26 · Sale phase · Homepage hero</div>
+    <h1>Shopify homepage banner — Christmas in July 2026</h1>
+    <p>Sale-phase hero for the public sale (19 to 31 July). Reuses the CIJ26 lockup, blush-to-warm gradient and the round Sale 20% Off* seal from the key visual. Image area is a placeholder until final photography lands. Shown at desktop and mobile sizes below.</p>
+  </div>
+
+  <!-- ============ DESKTOP ============ -->
+  <div class="device-label">Desktop — full-width hero (approx 1440&times;340)</div>
+  <div class="home-bn bn-desktop">
+    <div class="hb-copy">
+      <span class="hb-sprig">&#10043; &#8226; &#10043;</span>
+      <div class="hb-eyebrow">Christmas in July 2026</div>
+      <h3>Wear it your way, <span class="in">this July.</span></h3>
+      <p>One necklace, ten gorgeous styles, packed into a pouch the size of a sunglasses case. A little gift to yourself, now 20% off*.</p>
+      <div class="hb-dates">On now until Fri 31 July, 11:59pm AEST.</div>
+      <div class="hb-row">
+        <a class="hb-cta" href="[SHOP URL — CONFIRM]">Shop the Sale</a>
+        <span class="hb-pill"><span class="pt">Sale</span><span class="pn">20%</span><span class="pt">off*</span></span>
+      </div>
+      <div class="hb-fine">*Excludes Beginner Bundles, Gift Cards and Flash Sale items.</div>
+    </div>
+    <div class="hb-visual">
+      <div class="hb-imgph">
+        <div class="img-cap">IMAGE AREA · 10 Way Necklace&trade; on skin, real woman 45-65, warm natural light</div>
+      </div>
+      <div class="hb-badge">
+        <span class="b-top">Sale</span>
+        <span class="n">20%</span>
+        <span class="o">Off*</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MOBILE ============ -->
+  <div class="device-label">Mobile — stacked hero (approx 390&times;430)</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="home-bn bn-mobile">
+      <span class="hb-sprig">&#10043; &#8226; &#10043;</span>
+      <div class="hb-badge">
+        <span class="b-top">Sale</span>
+        <span class="n">20%</span>
+        <span class="o">Off*</span>
+      </div>
+      <div class="hb-eyebrow">Christmas in July 2026</div>
+      <h3>Wear it your way, <span class="in">this July.</span></h3>
+      <p>One necklace, ten gorgeous styles. A little gift to yourself, now 20% off*.</p>
+      <div class="hb-dates">Until Fri 31 July, 11:59pm AEST.</div>
+      <a class="hb-cta" href="[SHOP URL — CONFIRM]">Shop the Sale</a>
+      <div class="hb-fine">*Excludes Beginner Bundles, Gift Cards and Flash Sale items.</div>
+    </div>
+  </div>
+
+  <p class="footer">Maria Nicola · Christmas in July 2026 (CIJ26) · Homepage banner draft · Above and Beyond Digital · For review</p>
+
+</div>
+</body>
+</html>
