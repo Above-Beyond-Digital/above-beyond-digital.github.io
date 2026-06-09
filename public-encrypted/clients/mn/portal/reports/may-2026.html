@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maria Nicola — May 2026 Monthly Report</title>
+<style>
+:root{--pink:#EF6693;--char:#222222;--ink:#2b2b2b;--mut:#7a7a7a;--line:#ececec;--bg:#faf7f8;
+--green:#2e9e6b;--red:#d6455d;--blush:#fdeef3;--card:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+.callout,.callout p,.sec-sub{max-width:none}
+h1,h2,h3{font-weight:700;letter-spacing:-.01em;color:var(--char)}
+a{color:var(--pink);text-decoration:none}
+/* header */
+.hero{background:linear-gradient(135deg,#EF6693,#d44e7e);color:#fff;padding:54px 0 46px}
+.hero .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.hero .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12px;opacity:.9;font-weight:600}
+.hero h1{color:#fff;font-size:40px;line-height:1.05;margin:8px 0 4px}
+.hero .sub{font-size:18px;opacity:.95}
+.hero .by{font-size:13px;opacity:.85;text-align:right}
+/* sticky nav */
+nav.toc{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 24px}
+nav.toc a{white-space:nowrap;font-size:13px;font-weight:600;color:var(--mut);padding:7px 12px;border-radius:8px}
+nav.toc a:hover{background:var(--blush);color:var(--pink)}
+/* sections */
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-num{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.1em}
+.sec-head h2{font-size:26px}
+.sec-sub{color:var(--mut);font-size:14px;margin-bottom:24px}
+/* KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpis.k4{grid-template-columns:repeat(4,1fr)}
+.kpis.k3{grid-template-columns:repeat(3,1fr)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;
+position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--pink)}
+.kpi .lab{font-size:12px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.kpi .val{font-size:27px;font-weight:800;color:var(--char);margin-top:8px;line-height:1}
+.kpi .chg{font-size:12.5px;margin-top:9px;font-weight:600}
+.up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--mut)}
+.kpi .chg .vs{color:var(--mut);font-weight:500}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
+border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--pink);color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+tbody tr:nth-child(even){background:#fcfafb}
+tbody tr:last-child td{border-bottom:none}
+.tot td{font-weight:800;background:var(--blush)!important}
+/* insight callout */
+.callout{background:var(--blush);border-left:4px solid var(--pink);border-radius:10px;
+padding:16px 18px;margin-top:20px;font-size:14.5px}
+.callout h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--pink);margin-bottom:8px}
+.callout ul{margin:6px 0 0 18px}.callout li{margin:4px 0}
+.callout em{color:#b06; background:#fff3f7;padding:1px 6px;border-radius:5px;font-style:normal;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid2-13{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}
+@media(max-width:880px){.kpis,.kpis.k4,.kpis.k3{grid-template-columns:repeat(2,1fr)}
+.grid2,.grid2-13{grid-template-columns:1fr}.hero h1{font-size:30px}}
+/* trend chart */
+.trend{display:flex;align-items:flex-end;gap:3px;height:150px;padding:14px;background:var(--card);
+border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.bar{flex:1;background:linear-gradient(180deg,#f59bbb,#EF6693);border-radius:3px 3px 0 0;min-height:2px;
+position:relative}
+.bar:hover{background:var(--char)}
+.bar:hover::after{content:attr(data-t);position:absolute;bottom:103%;left:50%;transform:translateX(-50%);
+background:var(--char);color:#fff;font-size:10.5px;padding:3px 6px;border-radius:5px;white-space:nowrap;z-index:5}
+.trend-x{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mut);padding:4px 14px 0}
+/* new vs returning */
+.nvr-bars{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+.nvr-row{}
+.nvr-row .lab{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between}
+.nvr-track{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.nvr-new{background:var(--pink);color:#fff}
+.nvr-ret{background:#f3d3df;color:#7a3550}
+.nvr-track div{display:flex;align-items:center;padding:0 10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.legend{display:flex;gap:18px;font-size:12.5px;color:var(--mut);margin-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+.big-stat{display:flex;gap:26px;flex-wrap:wrap;margin-top:4px}
+.big-stat .s{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;flex:1;min-width:150px}
+.big-stat .s .n{font-size:32px;font-weight:800;color:var(--pink)}
+.big-stat .s .l{font-size:12.5px;color:var(--mut);font-weight:600;margin-top:4px}
+/* creative cards */
+.cr-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 20px}
+.cr-controls .grp{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:4px}
+.cr-controls button{border:none;background:none;font-size:12.5px;font-weight:600;color:var(--mut);
+padding:6px 12px;border-radius:6px;cursor:pointer}
+.cr-controls button.active{background:var(--pink);color:#fff}
+.cr-controls .cl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:700;margin-right:2px}
+.cr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.cr-grid{grid-template-columns:1fr}}
+.cr-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cr-card.top{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.cr-thumb{aspect-ratio:1/1;background:#f2eef0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cr-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.cr-ph{color:#bbb;font-size:13px;font-weight:700}
+.cr-b{padding:14px}
+.cr-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.cr-id{font-weight:800;font-size:14px}
+.badges{display:flex;gap:4px;flex-wrap:wrap}
+.bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em}
+.b-top{background:#e3f5ec;color:var(--green)}.b-vid{background:#e8eefc;color:#3b62c4}
+.b-img{background:#eef6ee;color:#4a8a4a}.b-flex{background:#eee9fb;color:#6b4bc4}
+.b-tof{background:#fde4ee;color:#c43670}.b-mof{background:#eee;color:#666}
+.cr-desc{font-size:11.5px;color:var(--mut);margin-bottom:10px;min-height:15px}
+.cr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.cr-stats .st .sl{font-size:10px;color:var(--mut);font-weight:600;text-transform:uppercase}
+.cr-stats .st .sv{font-size:14px;font-weight:800;color:var(--char)}
+.sv.green{color:var(--green)}
+/* wins/opps */
+.wo{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:880px){.wo{grid-template-columns:1fr}}
+.wo .col{border-radius:14px;padding:20px 22px}
+.wo .win{background:#eaf7f0;border:1px solid #c7ebd7}
+.wo .opp{background:var(--blush);border:1px solid #f7d4e2}
+.wo h3{font-size:15px;margin-bottom:10px}
+.wo .win h3{color:var(--green)}.wo .opp h3{color:var(--pink)}
+.wo ul{margin-left:18px}.wo li{margin:8px 0;font-size:14px}
+.wo strong{color:var(--char)}
+/* tests */
+.test{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+.test .th{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+.test .tn{font-weight:800;font-size:16px}
+.test .where{font-size:12px;color:var(--mut);font-weight:600;margin-bottom:10px}
+.st-tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;white-space:nowrap}
+.st-win{background:#e3f5ec;color:var(--green)}.st-prog{background:#fff3d6;color:#b8860b}
+.st-up{background:#e8eefc;color:#3b62c4}.st-flat{background:#eee;color:#666}
+.test .what{font-size:13.5px;color:var(--ink);margin-bottom:14px}
+.test .shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:4px 0 16px}
+.shotwrap{display:flex;flex-direction:column}
+.shotlab{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;
+display:flex;align-items:center;gap:6px}
+.shotlab .pip{font-size:9px;padding:2px 7px;border-radius:20px}
+.pip-ctrl{background:#eee;color:#666}.pip-var{background:#fde4ee;color:var(--pink)}
+.shot{height:440px;overflow-y:auto;background:#f0ecee;border:1px solid var(--line);border-radius:10px;
+display:block;color:#b9a8b0;font-size:12px;font-weight:600;-webkit-overflow-scrolling:touch}
+.shot img{width:100%;height:auto;display:block;cursor:zoom-in}
+.shot>span{display:flex;height:100%;align-items:center;justify-content:center}
+.shotcap{font-size:11px;color:var(--mut);margin:6px 0 2px}
+.ov-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:880px){.ov-strip{grid-template-columns:repeat(2,1fr)}.test .shots{grid-template-columns:1fr}}
+.ovp{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.ovp .l{font-size:10.5px;color:var(--mut);font-weight:700;text-transform:uppercase}
+.ovp .v{font-size:18px;font-weight:800;color:var(--char);margin-top:3px}
+.ovp .v small{font-size:12px;font-weight:700}
+.bd-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px}
+@media(max-width:880px){.bd-grid{grid-template-columns:1fr}}
+.bd h5{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin-bottom:6px}
+.bd table{font-size:12.5px}.bd th,.bd td{padding:7px 10px}
+.sig{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px}
+.sig-y{background:#e3f5ec;color:var(--green)}.sig-n{background:#f3eef0;color:var(--mut)}
+.test .read{background:var(--blush);border-left:4px solid var(--pink);border-radius:10px;
+padding:13px 16px;margin-top:14px;font-size:13.5px}
+.test .read b{color:var(--pink)}
+.foot{padding:40px 0 60px;text-align:center;color:var(--mut)}
+.foot .tnk{font-size:24px;font-weight:800;color:var(--pink);margin-bottom:6px}
+.src{font-size:11px;color:#aaa;margin-top:8px}
+.mini{font-size:12px;color:var(--mut)}
+/* sortable country table */
+th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+th.sortable:hover{background:#e0567f}
+th.sortable .ar{font-size:9px;opacity:.85;margin-left:3px}
+/* meta top-roas legend */
+.cr-legend{font-size:11.5px;color:var(--mut);margin:-8px 0 16px;display:flex;align-items:center;gap:6px}
+.cr-legend .bdg{font-size:10px}
+/* funnel mini-bars */
+.fnl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:4px 0 18px}
+.fnl .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative}
+.fnl .step .sn{font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.fnl .step .sv{font-size:24px;font-weight:800;color:var(--char);margin-top:6px;line-height:1}
+.fnl .step .sr{font-size:11.5px;color:var(--pink);font-weight:700;margin-top:5px}
+.fnl .step .sc{font-size:11px;margin-top:6px}
+@media(max-width:880px){.fnl{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<div><div class="eyebrow">Monthly Performance Report</div>
+<h1>Maria Nicola</h1><div class="sub" id="h-month">May 2026</div></div>
+<div class="by">Prepared by<br><strong>Above &amp; Beyond Digital</strong><br>
+<span class="mini" id="h-gen"></span></div>
+</div></header>
+
+<nav class="toc"><div class="wrap">
+<a href="#overview">Overview</a>
+<a href="#nvr">New vs Returning ★</a>
+<a href="#country">Country</a>
+<a href="#insights">Insights</a>
+<a href="#email">Email &amp; SMS</a>
+<a href="#meta">Meta Ads</a>
+<a href="#mday">Mother's Day Sale</a>
+<a href="#tests">Split Tests</a>
+<a href="#wo">Wins &amp; Opps</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="overview">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Performance Overview</h2></div>
+  <div class="sec-sub">Shopify store · Meta + Google · MER = net sales ÷ total paid spend · AUD</div>
+  <div class="kpis" id="ov-kpis"></div>
+  <h3 style="margin:28px 0 4px;font-size:16px">Month-on-month &amp; year-on-year</h3>
+  <div id="ov-table"></div>
+  <h3 style="margin:28px 0 4px;font-size:16px">Daily net sales — May 2026</h3>
+  <div class="trend" id="trend"></div><div class="trend-x" id="trend-x"></div>
+  <h3 style="margin:30px 0 4px;font-size:16px">Website conversion funnel &amp; AOV</h3>
+  <div class="sec-sub" style="margin-bottom:8px">The path from visit to purchase — and how each step compares to last month and last year (Shopify online-store sessions)</div>
+  <div class="fnl" id="ov-funnel"></div>
+  <div id="ov-funnel-table"></div>
+  <div class="callout" id="ci-perf"></div>
+  <div class="callout" id="ci-upcoming" style="background:#eef4ff;border-left-color:#3b62c4"></div>
+</section>
+
+<section id="nvr">
+  <div class="sec-head"><span class="sec-num">02 ★</span><h2>New vs Returning Customers</h2></div>
+  <div class="sec-sub">The headline this month — first-time-buyer acquisition vs prior month &amp; prior year</div>
+  <div class="big-stat" id="nvr-stats"></div>
+  <div class="nvr-bars" id="nvr-bars" style="margin-top:24px"></div>
+  <div class="legend"><span><i class="dot" style="background:#EF6693"></i> New customers</span>
+  <span><i class="dot" style="background:#f3d3df"></i> Returning customers</span></div>
+  <div class="callout" id="ci-nvr"></div>
+</section>
+
+<section id="country">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Country Performance</h2></div>
+  <div class="sec-sub">Paid spend (Meta + Google) vs Shopify net sales by country · MER = net sales ÷ paid spend · click any column to sort · AUD</div>
+  <div id="country-table"></div>
+  <div class="mini" style="margin-top:10px">Spend reflects where ads were delivered (Meta) and customer location (Google, location of presence). Revenue is Shopify net sales by billing country. Markets with sales but little/no paid spend are earning largely through organic, email &amp; SMS.</div>
+</section>
+
+<section id="insights">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Performance Insights</h2></div>
+  <div class="sec-sub">What changed month-on-month and year-on-year</div>
+  <div class="grid2">
+    <div class="callout"><h4>📉 vs Last Month (April 2026)</h4><div id="ci-vslm"></div></div>
+    <div class="callout"><h4>📅 vs Last Year (May 2025)</h4><div id="ci-vsly"></div></div>
+  </div>
+  <div class="callout" id="ci-country"><h4>🌍 By country</h4><div id="ci-country-body"></div></div>
+</section>
+
+<section id="email">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Email &amp; SMS — Klaviyo</h2></div>
+  <div class="sec-sub">How the owned channels are performing vs last month and last year · attributed revenue (overlaps paid/organic — not incremental)</div>
+  <h3 style="margin:0 0 12px;font-size:16px">Email</h3>
+  <div class="kpis k4" id="em-kpis"></div>
+  <h3 style="margin:30px 0 4px;font-size:16px">Email performance — month-on-month &amp; year-on-year</h3>
+  <div id="em-compare"></div>
+  <h3 style="margin:30px 0 4px;font-size:16px">Are we pulling buyers back via email?</h3>
+  <div class="sec-sub" style="margin-bottom:14px">Flow revenue grouped by customer stage. Klaviyo can't flag a strict "2nd purchase", so these are the closest proxies — new (welcome) vs returning (post-purchase) vs lapsed (win-back).</div>
+  <div id="em-repeat"></div>
+  <h3 style="margin:34px 0 12px;font-size:16px">SMS</h3>
+  <div class="kpis k4" id="sms-kpis"></div>
+  <h3 style="margin:30px 0 4px;font-size:16px">SMS performance — month-on-month &amp; year-on-year</h3>
+  <div id="sms-compare"></div>
+  <div class="callout" id="ci-email"></div>
+</section>
+
+<section id="meta">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Meta Ads — Creative Performance</h2></div>
+  <div class="sec-sub">Grouped by creative (CR number) · Meta-attributed · min $500 spend (MOF/retargeting min $100) · toggle funnel to see TOF vs MOF performance for the same creative</div>
+  <div class="kpis k4" id="meta-kpis"></div>
+  <div class="cr-controls" style="margin-top:22px">
+    <span class="cl">Funnel</span>
+    <div class="grp" id="f-funnel">
+      <button class="active" data-v="all">All (combined)</button>
+      <button data-v="tof">TOF</button>
+      <button data-v="mof">MOF/BOF</button>
+    </div>
+    <span class="cl" style="margin-left:8px">Sort</span>
+    <div class="grp" id="f-sort">
+      <button class="active" data-v="roas">ROAS</button>
+      <button data-v="revenue">Revenue</button>
+      <button data-v="spend">Spend</button>
+    </div>
+    <span class="mini" id="cr-count" style="margin-left:auto"></span>
+  </div>
+  <div class="cr-legend"><span class="bdg b-top">★ Top</span> = ROAS ≥ 7× in the selected funnel view. Tags show which funnel(s) the creative ran in.</div>
+  <div class="cr-grid" id="cr-grid"></div>
+  <div class="callout" id="ci-meta"></div>
+</section>
+
+<section id="mday">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Mother's Day Flash Sale</h2></div>
+  <div class="sec-sub" id="mday-sub"></div>
+  <div class="kpis k4" id="mday-kpis"></div>
+  <h3 style="margin:26px 0 4px;font-size:15px">Owned-channel breakdown (Klaviyo-attributed)</h3>
+  <div id="mday-table"></div>
+  <div class="callout" id="ci-mday"></div>
+</section>
+
+<section id="tests">
+  <div class="sec-head"><span class="sec-num">08</span><h2>On-site Split Tests &amp; CRO</h2></div>
+  <div class="sec-sub">Intelligems A/B tests on the website — results to date, broken down by device and by new vs returning visitors</div>
+  <div id="tests-list"></div>
+</section>
+
+<section id="wo">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Wins &amp; Opportunities</h2></div>
+  <div class="sec-sub">The month in summary — pulling together everything above</div>
+  <div class="wo">
+    <div class="col win"><h3>✅ Wins this month</h3><div id="ci-wins"></div></div>
+    <div class="col opp"><h3>🎯 Opportunities</h3><div id="ci-opps"></div></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot"><div class="wrap">
+<div class="tnk">Thank you</div>
+<div>Maria Nicola — May 2026 Monthly Report · Prepared by Above &amp; Beyond Digital</div>
+<div class="src">Sources: Shopify (net sales), Meta/Pipeboard, Google Ads, Klaviyo. All AUD.
+10 Way Necklace™. Figures live-pulled 05/06/2026.</div>
+</div></footer>
+
+<script>
+const DATA = {"meta_info": {"client": "Maria Nicola", "month": "May 2026", "prior_month": "April 2026", "prior_year": "May 2025", "currency": "AUD", "generated": "2026-06-05", "meta_account": "act_369051939", "google_account": "973-060-1417"}, "overview": {"may26": {"meta_spend": 49804.64, "google_spend": 6872.03, "total_spend": 56676.67, "net_sales": 281620.38, "orders": 1347, "aov": 210.47, "mer": 4.97, "meta_roas": 3.08, "google_roas": 12.52}, "apr26": {"meta_spend": 54234.76, "google_spend": 5624.01, "total_spend": 59858.77, "net_sales": 289951.77, "orders": 1460, "aov": 201.07, "mer": 4.84, "meta_roas": 2.91, "google_roas": 18.5}, "may25": {"meta_spend": 60702.79, "google_spend": 4222.55, "total_spend": 64925.34, "net_sales": 288298.86, "orders": 1465, "aov": 198.84, "mer": 4.44, "meta_roas": 4.13, "google_roas": 17.74}}, "shopify": {"may26": {"orders": 1347, "gross": 299928.22, "discounts": -15737.54, "returns": -2570.3, "net_sales": 281620.38, "aov": 210.467, "customers": 706, "returning": 519, "returning_rate": 0.7351, "new": 187, "new_rate": 0.2649}, "apr26": {"orders": 1460, "gross": 342804.43, "discounts": -48176.97, "returns": -4675.69, "net_sales": 289951.77, "aov": 201.072, "customers": 770, "returning": 608, "returning_rate": 0.7896, "new": 162, "new_rate": 0.2104}, "may25": {"orders": 1465, "gross": 296717.81, "discounts": -3983.59, "returns": -4435.36, "net_sales": 288298.86, "aov": 198.837, "customers": 619, "returning": 545, "returning_rate": 0.8805, "new": 74, "new_rate": 0.1195}}, "sessions_may26": {"sessions": 45195, "conversion_rate": 0.026552}, "daily_net": [["2026-05-01", 6289.17], ["2026-05-02", 3564.03], ["2026-05-03", 3724.85], ["2026-05-04", 2896.7], ["2026-05-05", 6081.71], ["2026-05-06", 15052.13], ["2026-05-07", 3464.59], ["2026-05-08", 40701.17], ["2026-05-09", 19837.62], ["2026-05-10", 14719.32], ["2026-05-11", 10124.06], ["2026-05-12", 7393.07], ["2026-05-13", 10596.21], ["2026-05-14", 6068.96], ["2026-05-15", 6864.09], ["2026-05-16", 3594.77], ["2026-05-17", 3793.79], ["2026-05-18", 3962.96], ["2026-05-19", 2901.9], ["2026-05-20", 9708.77], ["2026-05-21", 4053.71], ["2026-05-22", 38925.05], ["2026-05-23", 5232.58], ["2026-05-24", 4425.43], ["2026-05-25", 4872.24], ["2026-05-26", 4614.56], ["2026-05-27", 16288.45], ["2026-05-28", 4107.71], ["2026-05-29", 6545.29], ["2026-05-30", 6007.08], ["2026-05-31", 5208.41]], "meta": {"may26": {"spend": 49804.64, "revenue": 153476.89, "purchases": 656, "impressions": 1154428, "clicks": 41703, "ctr": 0.03612, "reach": 366565, "roas": 3.08}, "apr26": {"spend": 54234.76, "revenue": 158016.89, "purchases": 708, "impressions": 1723541, "clicks": 53877, "ctr": 0.03126, "reach": 659382, "roas": 2.91}, "may25": {"spend": 60702.79, "revenue": 250658.4, "purchases": 1212, "impressions": 2982221, "clicks": 56026, "ctr": 0.01879, "reach": 1337360, "roas": 4.13}}, "google": {"may26": {"spend": 6872.03, "revenue": 86068.16, "conversions": 390.9, "roas": 12.52}, "apr26": {"spend": 5624.01, "revenue": 104037.13, "conversions": 478.5, "roas": 18.5}, "may25": {"spend": 4222.55, "revenue": 74900.17, "conversions": 372.0, "roas": 17.74}}, "email": {"campaign_rev": 162438.16, "flow_rev": 29028.89, "email_campaign_rev": 81570.12, "sms_campaign_rev": 80868.04, "flow_email_rev": 25220.69, "flow_sms_rev": 3808.2, "total_email_klaviyo": 106790.81, "total_sms_klaviyo": 84676.24, "total_klaviyo_rev": 191467.05, "avg_open_rate": 0.6597, "avg_click_rate": 0.0256, "pct_of_store_rev": 0.6799, "campaigns": [{"name": "Sparkling New Selections \u2014 1 May", "channel": "email", "recipients": 7299, "open_rate": 0.6485, "click_rate": 0.025, "revenue": 3769.33, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "FB Live Flash Sale Reminder \u2014 6 May", "channel": "email", "recipients": 7311, "open_rate": 0.6553, "click_rate": 0.0303, "revenue": 13785.27, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "Sparkling New Selections \u2014 8 May", "channel": "email", "recipients": 7237, "open_rate": 0.6786, "click_rate": 0.0271, "revenue": 6022.04, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "Last-Minute Mother's Day Early Access \u2014 9 May", "channel": "email", "recipients": 7234, "open_rate": 0.6625, "click_rate": 0.0252, "revenue": 10734.19, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Last-Minute Mother's Day Final Reminder \u2014 11 May", "channel": "email", "recipients": 7211, "open_rate": 0.6577, "click_rate": 0.0149, "revenue": 5209.54, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "FB Live Flash Sale Teaser \u2014 13 May", "channel": "email", "recipients": 7213, "open_rate": 0.658, "click_rate": 0.0266, "revenue": 5027.52, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "Sparkling New Selections \u2014 15 May", "channel": "email", "recipients": 7189, "open_rate": 0.6748, "click_rate": 0.0354, "revenue": 5504.2, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "FB Live Flash Sale Reminder \u2014 20 May", "channel": "email", "recipients": 7353, "open_rate": 0.6354, "click_rate": 0.0179, "revenue": 8099.28, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "Sparkling New Selections \u2014 22 May", "channel": "email", "recipients": 7152, "open_rate": 0.6737, "click_rate": 0.0307, "revenue": 6393.67, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "FB Live Flash Sale Teaser \u2014 27 May", "channel": "email", "recipients": 7112, "open_rate": 0.6403, "click_rate": 0.0268, "revenue": 10516.36, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "Sparkling New Selections \u2014 29 May (cancelled mid-send)", "channel": "email", "recipients": 4241, "open_rate": 0.6347, "click_rate": 0.0274, "revenue": 3405.49, "status": "Cancelled", "md_sale": false, "tag": "What's New"}, {"name": "Apology \u2014 Sparkling New Selections \u2014 29 May", "channel": "email", "recipients": 4230, "open_rate": 0.6702, "click_rate": 0.0168, "revenue": 869.95, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "Sparkling New Selections (Corrected) \u2014 29 May", "channel": "email", "recipients": 2845, "open_rate": 0.6776, "click_rate": 0.0293, "revenue": 2233.28, "status": "Sent", "md_sale": false, "tag": "What's New"}, {"name": "FB Live Flash Sale Reminder (UK/EU) \u2014 7 May", "channel": "sms", "recipients": 88, "open_rate": null, "click_rate": 0.069, "revenue": 383.54, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "FB Live Flash Sale Reminder (AU/US/CA) \u2014 8 May", "channel": "sms", "recipients": 2748, "open_rate": null, "click_rate": 0.0817, "revenue": 30816.5, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "Mother's Day Early Access (AU) \u2014 9 May", "channel": "sms", "recipients": 3410, "open_rate": null, "click_rate": 0.0462, "revenue": 6369.98, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Mother's Day Early Access (US/CA) \u2014 9 May", "channel": "sms", "recipients": 2371, "open_rate": null, "click_rate": 0.0376, "revenue": 10152.45, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Mother's Day Early Access (UK/EU) \u2014 9 May", "channel": "sms", "recipients": 320, "open_rate": null, "click_rate": 0.0349, "revenue": 749.0, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "FB Live Flash Sale Reminder (UK/EU) \u2014 21 May", "channel": "sms", "recipients": 103, "open_rate": null, "click_rate": 0.068, "revenue": 854.62, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}, {"name": "FB Live Flash Sale Reminder (AU/US/CA) \u2014 22 May", "channel": "sms", "recipients": 2471, "open_rate": null, "click_rate": 0.0831, "revenue": 31541.95, "status": "Sent", "md_sale": false, "tag": "Flash Sale"}], "top_flows": [{"name": "Abandoned Checkout Flow", "revenue": 6353, "channel": "email"}, {"name": "Onboarding Flow (After Purchase)", "revenue": 5076, "channel": "email"}, {"name": "Welcome Series \u2014 10% OFF (LIVE A/B TEST)", "revenue": 4528, "channel": "sms/email"}, {"name": "Abandoned Cart (Added to Cart Trigger)", "revenue": 3397, "channel": "sms/email"}, {"name": "Thank You / Post-Purchase Flow", "revenue": 2904, "channel": "email"}, {"name": "Birthday Flow", "revenue": 2378, "channel": "sms/email"}]}, "mothers_day": {"dates": "9\u201312 May 2026", "channels_note": "Email, SMS & Sparkle Sisterhood \u2014 no paid ads", "shopify_net": 52074.07, "orders": 271, "customers": 227, "returning": 196, "new": 31, "aov": 192.16, "email_rev": 15943.73, "email_sends": 14445, "sms_rev": 17271.43, "sms_sends": 6101, "email_campaigns": [{"name": "Last-Minute Mother's Day Early Access \u2014 9 May", "channel": "email", "recipients": 7234, "open_rate": 0.6625, "click_rate": 0.0252, "revenue": 10734.19, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Last-Minute Mother's Day Final Reminder \u2014 11 May", "channel": "email", "recipients": 7211, "open_rate": 0.6577, "click_rate": 0.0149, "revenue": 5209.54, "status": "Sent", "md_sale": true, "tag": "Sale"}], "sms_campaigns": [{"name": "Mother's Day Early Access (AU) \u2014 9 May", "channel": "sms", "recipients": 3410, "open_rate": null, "click_rate": 0.0462, "revenue": 6369.98, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Mother's Day Early Access (US/CA) \u2014 9 May", "channel": "sms", "recipients": 2371, "open_rate": null, "click_rate": 0.0376, "revenue": 10152.45, "status": "Sent", "md_sale": true, "tag": "Sale"}, {"name": "Mother's Day Early Access (UK/EU) \u2014 9 May", "channel": "sms", "recipients": 320, "open_rate": null, "click_rate": 0.0349, "revenue": 749.0, "status": "Sent", "md_sale": true, "tag": "Sale"}], "klaviyo_attributed": 33215.16}, "meta_creative": {"meta": {"account": "act_369051939", "since": "2026-05-01", "until": "2026-05-31", "generated": "2026-06-09T20:23:41.074703", "min_spend": 100.0}, "tof_summary": {"spend": 47299.34, "revenue": 78433.91, "roas": 1.66, "purchases": 350}, "mof_summary": {"spend": 2508.07, "revenue": 51004.35, "roas": 20.34, "purchases": 210}, "creatives": [{"cr_number": "CR531", "display_id": "CR531", "cr_desc": "Cream-Pearl-Starter-Maria-37s-9x16", "format": "feed", "ad_number": "AT085", "thumbnail_url": "assets/thumbs/CR531.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 8910.69, "revenue": 9340.42, "roas": 1.05, "purchases": 36, "impressions": 152223, "ctr_link": 0.035, "cpurchase": 247.52, "aov": 259.46}, "tof": {"spend": 8790.17, "revenue": 8199.57, "roas": 0.93, "purchases": 32, "impressions": 150653, "ctr_link": 0.0349, "cpurchase": 274.69, "aov": 256.24}, "mof": {"spend": 120.52, "revenue": 1140.85, "roas": 9.47, "purchases": 4, "impressions": 1570, "ctr_link": 0.051, "cpurchase": 30.13, "aov": 285.21}, "ad_ids": ["52519015005342", "52519015037142", "52526554141142", "52526576311742"]}, {"cr_number": "CR541", "display_id": "CR541", "cr_desc": "Not-Sure-Which-10-Way-Subtitles-1m25s", "format": "video", "ad_number": "AT101", "thumbnail_url": "assets/thumbs/CR541.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 6797.99, "revenue": 11281.1, "roas": 1.66, "purchases": 48, "impressions": 143722, "ctr_link": 0.0112, "cpurchase": 141.62, "aov": 235.02}, "tof": {"spend": 6748.53, "revenue": 9737.41, "roas": 1.44, "purchases": 42, "impressions": 142146, "ctr_link": 0.0108, "cpurchase": 160.68, "aov": 231.84}, "mof": {"spend": 49.46, "revenue": 1543.69, "roas": 31.21, "purchases": 6, "impressions": 1576, "ctr_link": 0.0451, "cpurchase": 8.24, "aov": 257.28}, "ad_ids": ["52534262002142", "52534262936742", "52534263493342", "52538215496542", "52538215496742"]}, {"cr_number": "CR365", "display_id": "CR365", "cr_desc": null, "format": "video", "ad_number": "Ad939", "thumbnail_url": "assets/thumbs/CR365.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 6452.65, "revenue": 5794.17, "roas": 0.9, "purchases": 40, "impressions": 99239, "ctr_link": 0.0179, "cpurchase": 161.32, "aov": 144.85}, "tof": {"spend": 6452.65, "revenue": 5794.17, "roas": 0.9, "purchases": 40, "impressions": 99239, "ctr_link": 0.0179, "cpurchase": 161.32, "aov": 144.85}, "mof": null, "ad_ids": ["52522718544742", "52537431007142"]}, {"cr_number": "CR342", "display_id": "CR342", "cr_desc": null, "format": "flex", "ad_number": "Ad855", "thumbnail_url": "assets/thumbs/CR342.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 5727.98, "revenue": 7579.08, "roas": 1.32, "purchases": 40, "impressions": 146693, "ctr_link": 0.0214, "cpurchase": 143.2, "aov": 189.48}, "tof": {"spend": 5727.98, "revenue": 7579.08, "roas": 1.32, "purchases": 40, "impressions": 146693, "ctr_link": 0.0214, "cpurchase": 143.2, "aov": 189.48}, "mof": null, "ad_ids": ["52509552088542", "52525464721742", "52526023568342", "52537427520342", "52537431007542"]}, {"cr_number": "CR443", "display_id": "CR443", "cr_desc": "Mgnet-Mechanism-Video-Ad_1m26s", "format": "video", "ad_number": "Ad1059", "thumbnail_url": "assets/thumbs/CR443.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 4409.56, "revenue": 9914.03, "roas": 2.25, "purchases": 37, "impressions": 84872, "ctr_link": 0.0301, "cpurchase": 119.18, "aov": 267.95}, "tof": {"spend": 4389.29, "revenue": 6564.21, "roas": 1.5, "purchases": 24, "impressions": 84287, "ctr_link": 0.0297, "cpurchase": 182.89, "aov": 273.51}, "mof": {"spend": 20.27, "revenue": 3349.82, "roas": 165.26, "purchases": 13, "impressions": 585, "ctr_link": 0.0872, "cpurchase": 1.56, "aov": 257.68}, "ad_ids": ["6976492279538", "6997165640938", "6997165646738", "6997165661938", "52509573989742", "52520231195342", "52527707309542", "52527707309742", "52527708836542", "52527708836742", "52532665579942", "52532666117742", "52533287893142", "52533287893342"]}, {"cr_number": "CR537", "display_id": "CR537", "cr_desc": "Reaction-10-Way-Nacklace-59s", "format": "video", "ad_number": "AT094", "thumbnail_url": "assets/thumbs/CR537.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 2278.02, "revenue": 6923.51, "roas": 3.04, "purchases": 32, "impressions": 74338, "ctr_link": 0.0325, "cpurchase": 71.19, "aov": 216.36}, "tof": {"spend": 2201.48, "revenue": 3087.87, "roas": 1.4, "purchases": 12, "impressions": 71998, "ctr_link": 0.0322, "cpurchase": 183.46, "aov": 257.32}, "mof": {"spend": 76.54, "revenue": 3835.64, "roas": 50.11, "purchases": 20, "impressions": 2340, "ctr_link": 0.0419, "cpurchase": 3.83, "aov": 191.78}, "ad_ids": ["52529752257542", "52529761145342", "52529761145942", "52529764227742", "52529764228342", "52532666117942", "52533287892942", "52534837247942", "52538215260942", "52538215261142"]}, {"cr_number": "CR532", "display_id": "CR532", "cr_desc": "Birth-Stone-Maria-9x16-34s", "format": "feed", "ad_number": "AT090", "thumbnail_url": "assets/thumbs/CR532.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 1832.24, "revenue": 2669.67, "roas": 1.46, "purchases": 14, "impressions": 48377, "ctr_link": 0.0283, "cpurchase": 130.87, "aov": 190.69}, "tof": {"spend": 1778.6, "revenue": 1405.98, "roas": 0.79, "purchases": 8, "impressions": 47226, "ctr_link": 0.0275, "cpurchase": 222.32, "aov": 175.75}, "mof": {"spend": 53.64, "revenue": 1263.69, "roas": 23.56, "purchases": 6, "impressions": 1151, "ctr_link": 0.0591, "cpurchase": 8.94, "aov": 210.62}, "ad_ids": ["52529665369942", "52529736923742", "52529761146342", "52529764228742", "52529779600142", "52529783264342", "52530416680942", "52532665580342", "52533287892742", "52534837247542"]}, {"cr_number": "CR548", "display_id": "CR548", "cr_desc": "SeaGreenCrystal-Discontinue-35s", "format": "video", "ad_number": "AT108", "thumbnail_url": "assets/thumbs/CR548.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 1401.76, "revenue": 2749.68, "roas": 1.96, "purchases": 11, "impressions": 46573, "ctr_link": 0.0116, "cpurchase": 127.43, "aov": 249.97}, "tof": {"spend": 1401.05, "revenue": 2077.18, "roas": 1.48, "purchases": 9, "impressions": 46551, "ctr_link": 0.0115, "cpurchase": 155.67, "aov": 230.8}, "mof": {"spend": 0.71, "revenue": 672.5, "roas": 947.18, "purchases": 2, "impressions": 22, "ctr_link": 0.1818, "cpurchase": 0.35, "aov": 336.25}, "ad_ids": ["52537467649942", "52537467684342", "52538215798342"]}, {"cr_number": "CR538", "display_id": "CR538", "cr_desc": "Leanne-Obsessed-Pearls", "format": "video", "ad_number": "AT097", "thumbnail_url": "assets/thumbs/CR538.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 1326.08, "revenue": 2810.72, "roas": 2.12, "purchases": 12, "impressions": 28979, "ctr_link": 0.0162, "cpurchase": 110.51, "aov": 234.23}, "tof": {"spend": 1186.91, "revenue": 1577.66, "roas": 1.33, "purchases": 7, "impressions": 26091, "ctr_link": 0.0147, "cpurchase": 169.56, "aov": 225.38}, "mof": {"spend": 139.17, "revenue": 1233.06, "roas": 8.86, "purchases": 5, "impressions": 2888, "ctr_link": 0.0298, "cpurchase": 27.83, "aov": 246.61}, "ad_ids": ["52532641271342", "52538215496342", "52538215496942"]}, {"cr_number": "CR349", "display_id": "CR349", "cr_desc": null, "format": "flex", "ad_number": "Ad881", "thumbnail_url": "assets/thumbs/CR349.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 1249.22, "revenue": 4130.17, "roas": 3.31, "purchases": 21, "impressions": 21203, "ctr_link": 0.0329, "cpurchase": 59.49, "aov": 196.67}, "tof": {"spend": 1243.92, "revenue": 1824.66, "roas": 1.47, "purchases": 10, "impressions": 21081, "ctr_link": 0.033, "cpurchase": 124.39, "aov": 182.47}, "mof": {"spend": 5.3, "revenue": 2305.51, "roas": 435.0, "purchases": 11, "impressions": 122, "ctr_link": 0.0164, "cpurchase": 0.48, "aov": 209.59}, "ad_ids": ["6874070874538", "6993838055138", "52522719386742", "52526023568942", "52527668172942", "52527668182342"]}, {"cr_number": "CR530", "display_id": "CR530", "cr_desc": "Flash-Sale-Evergreen-40s-9x16", "format": "video", "ad_number": "AD559", "thumbnail_url": "assets/thumbs/CR530.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 1046.14, "revenue": 10433.04, "roas": 9.97, "purchases": 42, "impressions": 60897, "ctr_link": 0.0006, "cpurchase": 24.91, "aov": 248.41}, "tof": {"spend": 1046.14, "revenue": 10433.04, "roas": 9.97, "purchases": 42, "impressions": 60897, "ctr_link": 0.0006, "cpurchase": 24.91, "aov": 248.41}, "mof": {"spend": 1046.14, "revenue": 10433.04, "roas": 9.97, "purchases": 42, "impressions": 60897, "ctr_link": 0.0006, "cpurchase": 24.91, "aov": 248.41}, "ad_ids": ["52524953366742", "52532667857942", "52542764153142"]}, {"cr_number": "CR386", "display_id": "CR386", "cr_desc": "Starter-Offer-Collage", "format": "video", "ad_number": "Ad959", "thumbnail_url": "assets/thumbs/CR386.png", "is_tof": true, "is_mof": true, "combined": {"spend": 872.91, "revenue": 1278.34, "roas": 1.46, "purchases": 7, "impressions": 25522, "ctr_link": 0.0225, "cpurchase": 124.7, "aov": 182.62}, "tof": {"spend": 787.11, "revenue": 1171.39, "roas": 1.49, "purchases": 6, "impressions": 23700, "ctr_link": 0.0225, "cpurchase": 131.19, "aov": 195.23}, "mof": {"spend": 85.8, "revenue": 106.95, "roas": 1.25, "purchases": 1, "impressions": 1822, "ctr_link": 0.0225, "cpurchase": 85.8, "aov": 106.95}, "ad_ids": ["52522719061142", "52525952286942", "52526023569342", "52526717772742", "52527668173142", "52527668182542"]}, {"cr_number": null, "display_id": "AT053", "cr_desc": null, "format": "video", "ad_number": "AT053", "thumbnail_url": "", "is_tof": true, "is_mof": false, "combined": {"spend": 720.92, "revenue": 691.26, "roas": 0.96, "purchases": 3, "impressions": 18098, "ctr_link": 0.0153, "cpurchase": 240.31, "aov": 230.42}, "tof": {"spend": 720.92, "revenue": 691.26, "roas": 0.96, "purchases": 3, "impressions": 18098, "ctr_link": 0.0153, "cpurchase": 240.31, "aov": 230.42}, "mof": null, "ad_ids": ["52509552091542"]}, {"cr_number": "CR523", "display_id": "CR523", "cr_desc": null, "format": "video", "ad_number": "AT086", "thumbnail_url": "assets/thumbs/CR523.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 709.04, "revenue": 1472.63, "roas": 2.08, "purchases": 4, "impressions": 22945, "ctr_link": 0.0322, "cpurchase": 177.26, "aov": 368.16}, "tof": {"spend": 698.04, "revenue": 1472.63, "roas": 2.11, "purchases": 4, "impressions": 22721, "ctr_link": 0.0321, "cpurchase": 174.51, "aov": 368.16}, "mof": {"spend": 11.0, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 224, "ctr_link": 0.0446, "cpurchase": null, "aov": null}, "ad_ids": ["52522756856342", "52522787283542", "52522791277742", "52527708836942"]}, {"cr_number": "CR544", "display_id": "CR544", "cr_desc": "10Way-Birthstone-43s", "format": "feed", "ad_number": "AT104", "thumbnail_url": "assets/thumbs/CR544.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 633.27, "revenue": 886.35, "roas": 1.4, "purchases": 2, "impressions": 16040, "ctr_link": 0.0332, "cpurchase": 316.63, "aov": 443.18}, "tof": {"spend": 619.87, "revenue": 485.47, "roas": 0.78, "purchases": 1, "impressions": 15691, "ctr_link": 0.0327, "cpurchase": 619.87, "aov": 485.47}, "mof": {"spend": 13.4, "revenue": 400.88, "roas": 29.92, "purchases": 1, "impressions": 349, "ctr_link": 0.0544, "cpurchase": 13.4, "aov": 400.88}, "ad_ids": ["52534836910742", "52534837170942", "52534837248142"]}, {"cr_number": "CR539", "display_id": "CR539", "cr_desc": "Cruise-Reaction-Wow", "format": "video", "ad_number": "AT098", "thumbnail_url": "assets/thumbs/CR539.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 511.45, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 16377, "ctr_link": 0.011, "cpurchase": null, "aov": null}, "tof": {"spend": 511.45, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 16377, "ctr_link": 0.011, "cpurchase": null, "aov": null}, "mof": null, "ad_ids": ["52532643166342", "52537431007342"]}, {"cr_number": "CR38.1", "display_id": "CR38.1", "cr_desc": "VID_ PR-MN-10-Way-Necklace-2019-Edited-Square", "format": "flex", "ad_number": "AT004", "thumbnail_url": "assets/thumbs/CR38.1.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 483.73, "revenue": 985.93, "roas": 2.04, "purchases": 4, "impressions": 10337, "ctr_link": 0.027, "cpurchase": 120.93, "aov": 246.48}, "tof": {"spend": 483.73, "revenue": 985.93, "roas": 2.04, "purchases": 4, "impressions": 10337, "ctr_link": 0.027, "cpurchase": 120.93, "aov": 246.48}, "mof": null, "ad_ids": ["6990566966538", "52509546219742", "52522718545142"]}, {"cr_number": "CR454", "display_id": "CR454", "cr_desc": null, "format": "image", "ad_number": "AT014", "thumbnail_url": "assets/thumbs/CR454.png", "is_tof": true, "is_mof": true, "combined": {"spend": 467.46, "revenue": 455.13, "roas": 0.97, "purchases": 2, "impressions": 17231, "ctr_link": 0.0141, "cpurchase": 233.73, "aov": 227.56}, "tof": {"spend": 428.8, "revenue": 455.13, "roas": 1.06, "purchases": 2, "impressions": 16311, "ctr_link": 0.014, "cpurchase": 214.4, "aov": 227.56}, "mof": {"spend": 38.66, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 920, "ctr_link": 0.0152, "cpurchase": null, "aov": null}, "ad_ids": ["52509546219542", "52509546219942", "52519013630942", "52522793446342", "52522794633142", "52522794848142"]}, {"cr_number": "CR455", "display_id": "CR455", "cr_desc": null, "format": "video", "ad_number": "AT004", "thumbnail_url": "assets/thumbs/CR455.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 352.17, "revenue": 1068.02, "roas": 3.03, "purchases": 3, "impressions": 7308, "ctr_link": 0.0394, "cpurchase": 117.39, "aov": 356.01}, "tof": {"spend": 352.17, "revenue": 1068.02, "roas": 3.03, "purchases": 3, "impressions": 7308, "ctr_link": 0.0394, "cpurchase": 117.39, "aov": 356.01}, "mof": null, "ad_ids": ["52509546220342", "52509546220542", "52526569376742", "52526576311542"]}, {"cr_number": "CR551", "display_id": "CR551", "cr_desc": "OceansLink-29s", "format": "video", "ad_number": "AT111", "thumbnail_url": "assets/thumbs/CR551.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 322.25, "revenue": 1170.04, "roas": 3.63, "purchases": 5, "impressions": 8501, "ctr_link": 0.0231, "cpurchase": 64.45, "aov": 234.01}, "tof": {"spend": 233.84, "revenue": 177.0, "roas": 0.76, "purchases": 1, "impressions": 6145, "ctr_link": 0.0181, "cpurchase": 233.84, "aov": 177.0}, "mof": {"spend": 88.41, "revenue": 993.04, "roas": 11.23, "purchases": 4, "impressions": 2356, "ctr_link": 0.0361, "cpurchase": 22.1, "aov": 248.26}, "ad_ids": ["52537515326342", "52538216216342"]}, {"cr_number": null, "display_id": "AD721 - Flex", "cr_desc": null, "format": "flex", "ad_number": "AD721", "thumbnail_url": "", "is_tof": true, "is_mof": true, "combined": {"spend": 318.59, "revenue": 4658.25, "roas": 14.62, "purchases": 21, "impressions": 7831, "ctr_link": 0.0324, "cpurchase": 15.17, "aov": 221.82}, "tof": null, "mof": {"spend": 318.59, "revenue": 4658.25, "roas": 14.62, "purchases": 21, "impressions": 7831, "ctr_link": 0.0324, "cpurchase": 15.17, "aov": 221.82}, "ad_ids": ["52522812679542", "52522820169142", "52522820169342", "52532665580142", "52534837247742"]}, {"cr_number": "CR460", "display_id": "CR460", "cr_desc": null, "format": "video", "ad_number": "AT005", "thumbnail_url": "assets/thumbs/CR460.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 287.16, "revenue": 249.0, "roas": 0.87, "purchases": 1, "impressions": 14134, "ctr_link": 0.0227, "cpurchase": 287.16, "aov": 249.0}, "tof": {"spend": 287.16, "revenue": 249.0, "roas": 0.87, "purchases": 1, "impressions": 14134, "ctr_link": 0.0227, "cpurchase": 287.16, "aov": 249.0}, "mof": null, "ad_ids": ["52509546219342"]}, {"cr_number": "CR549", "display_id": "CR549", "cr_desc": "Lariat-28s", "format": "video", "ad_number": "AT109", "thumbnail_url": "assets/thumbs/CR549.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 265.59, "revenue": 2329.84, "roas": 8.77, "purchases": 6, "impressions": 7545, "ctr_link": 0.0186, "cpurchase": 44.26, "aov": 388.31}, "tof": {"spend": 236.98, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 6706, "ctr_link": 0.0133, "cpurchase": null, "aov": null}, "mof": {"spend": 28.61, "revenue": 2329.84, "roas": 81.43, "purchases": 6, "impressions": 839, "ctr_link": 0.0608, "cpurchase": 4.77, "aov": 388.31}, "ad_ids": ["52537515326142", "52538217285342", "52538217290342"]}, {"cr_number": "CR546", "display_id": "CR546", "cr_desc": "AnySeason_1m24s", "format": "video", "ad_number": "AT106", "thumbnail_url": "assets/thumbs/CR546.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 247.8, "revenue": 550.88, "roas": 2.22, "purchases": 3, "impressions": 8741, "ctr_link": 0.0271, "cpurchase": 82.6, "aov": 183.63}, "tof": {"spend": 72.05, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 1677, "ctr_link": 0.0167, "cpurchase": null, "aov": null}, "mof": {"spend": 175.75, "revenue": 550.88, "roas": 3.13, "purchases": 3, "impressions": 7064, "ctr_link": 0.0296, "cpurchase": 58.58, "aov": 183.63}, "ad_ids": ["52537459323542", "52538216017742"]}, {"cr_number": "CR545", "display_id": "CR545", "cr_desc": "10Way-Winter", "format": "video", "ad_number": "AT105", "thumbnail_url": "assets/thumbs/CR545.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 235.2, "revenue": 490.79, "roas": 2.09, "purchases": 3, "impressions": 5335, "ctr_link": 0.0189, "cpurchase": 78.4, "aov": 163.6}, "tof": {"spend": 233.91, "revenue": 106.95, "roas": 0.46, "purchases": 1, "impressions": 5302, "ctr_link": 0.0179, "cpurchase": 233.91, "aov": 106.95}, "mof": {"spend": 1.29, "revenue": 383.84, "roas": 297.55, "purchases": 2, "impressions": 33, "ctr_link": 0.1818, "cpurchase": 0.65, "aov": 191.92}, "ad_ids": ["52537456606542", "52537457889742"]}, {"cr_number": "CR525", "display_id": "CR525", "cr_desc": "Mothers-Day-2026-Fuchsia-Maria-Solo-9x16-45s", "format": "video", "ad_number": "AT080", "thumbnail_url": "assets/thumbs/CR525.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 216.46, "revenue": 3258.39, "roas": 15.05, "purchases": 8, "impressions": 6637, "ctr_link": 0.0211, "cpurchase": 27.06, "aov": 407.3}, "tof": {"spend": 180.32, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 5341, "ctr_link": 0.0163, "cpurchase": null, "aov": null}, "mof": {"spend": 36.14, "revenue": 3258.39, "roas": 90.16, "purchases": 8, "impressions": 1296, "ctr_link": 0.0409, "cpurchase": 4.52, "aov": 407.3}, "ad_ids": ["52518370004142", "52522805249542", "52533280075142"]}, {"cr_number": "CR242", "display_id": "CR242", "cr_desc": "GIF: MN-Animated-Flash-Sale-Campaign", "format": "video", "ad_number": "AD648", "thumbnail_url": "assets/thumbs/CR242.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 165.05, "revenue": 12544.48, "roas": 76.0, "purchases": 55, "impressions": 6895, "ctr_link": 0.0019, "cpurchase": 3.0, "aov": 228.08}, "tof": {"spend": 165.05, "revenue": 12544.48, "roas": 76.0, "purchases": 55, "impressions": 6895, "ctr_link": 0.0019, "cpurchase": 3.0, "aov": 228.08}, "mof": {"spend": 165.05, "revenue": 12544.48, "roas": 76.0, "purchases": 55, "impressions": 6895, "ctr_link": 0.0019, "cpurchase": 3.0, "aov": 228.08}, "ad_ids": ["52524953367142", "52532667857742", "52542764153342"]}, {"cr_number": "CR451", "display_id": "CR451", "cr_desc": null, "format": "video", "ad_number": "AT039", "thumbnail_url": "assets/thumbs/CR451.jpg", "is_tof": true, "is_mof": true, "combined": {"spend": 138.23, "revenue": 172.53, "roas": 1.25, "purchases": 1, "impressions": 3633, "ctr_link": 0.0449, "cpurchase": 138.23, "aov": 172.53}, "tof": {"spend": 129.89, "revenue": 172.53, "roas": 1.33, "purchases": 1, "impressions": 3412, "ctr_link": 0.0466, "cpurchase": 129.89, "aov": 172.53}, "mof": {"spend": 8.34, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 221, "ctr_link": 0.0181, "cpurchase": null, "aov": null}, "ad_ids": ["6997170167538", "52509552089342", "52515497550342", "52515525297142", "52522803911942", "52527708836342"]}, {"cr_number": "CR536", "display_id": "CR536", "cr_desc": "One-Necklace-10-Looks-Animated-Image-9x16-08s", "format": "video", "ad_number": "AT092", "thumbnail_url": "assets/thumbs/CR536.png", "is_tof": true, "is_mof": true, "combined": {"spend": 109.5, "revenue": 413.09, "roas": 3.77, "purchases": 1, "impressions": 4601, "ctr_link": 0.018, "cpurchase": 109.5, "aov": 413.09}, "tof": {"spend": 84.22, "revenue": 413.09, "roas": 4.9, "purchases": 1, "impressions": 4062, "ctr_link": 0.0172, "cpurchase": 84.22, "aov": 413.09}, "mof": {"spend": 25.28, "revenue": 0.0, "roas": 0.0, "purchases": 0, "impressions": 539, "ctr_link": 0.0241, "cpurchase": null, "aov": null}, "ad_ids": ["52529744209342", "52529761145742", "52529761146142", "52529764228542"]}, {"cr_number": "CR540", "display_id": "CR540", "cr_desc": "Pink-10way-37s", "format": "video", "ad_number": "AT099", "thumbnail_url": "assets/thumbs/CR540.jpg", "is_tof": true, "is_mof": false, "combined": {"spend": 107.11, "revenue": 160.2, "roas": 1.5, "purchases": 1, "impressions": 2507, "ctr_link": 0.014, "cpurchase": 107.11, "aov": 160.2}, "tof": {"spend": 107.11, "revenue": 160.2, "roas": 1.5, "purchases": 1, "impressions": 2507, "ctr_link": 0.014, "cpurchase": 107.11, "aov": 160.2}, "mof": null, "ad_ids": ["52532654514942"]}]}, "email_compare": {"may26": {"campaigns_sent": 13, "campaign_recipients": 83628, "flow_recipients": 7603, "total_sent": 91231, "campaign_rev": 81570, "flow_rev": 25221, "total_rev": 106791, "open_rate": 0.661, "click_rate": 0.0257, "rpe": 1.17}, "apr26": {"campaigns_sent": 14, "campaign_recipients": 113518, "flow_recipients": 5992, "total_sent": 119510, "campaign_rev": 99164, "flow_rev": 17902, "total_rev": 117066, "open_rate": 0.526, "click_rate": 0.018, "rpe": 0.98}, "may25": {"campaigns_sent": 12, "campaign_recipients": 92292, "flow_recipients": 6900, "total_sent": 99192, "campaign_rev": 112705, "flow_rev": 15818, "total_rev": 128523, "open_rate": 0.709, "click_rate": 0.0363, "rpe": 1.3}}, "email_repeat": [{"stage": "Welcome series", "desc": "New subscribers \u2192 1st purchase", "recipients": 396, "conversions": 20, "revenue": 4555}, {"stage": "Post-purchase / onboarding", "desc": "Recent buyers \u2192 repeat purchase", "recipients": 2558, "conversions": 38, "revenue": 9717}, {"stage": "Win-back", "desc": "Lapsed buyers \u2192 reactivate", "recipients": 976, "conversions": 1, "revenue": 253}], "funnel": {"may26": {"visitors": 24655, "sessions": 45195, "atc": 3429, "checkout": 2222, "completed": 1200, "cr": 0.0265516}, "apr26": {"visitors": 24251, "sessions": 44721, "atc": 3766, "checkout": 2337, "completed": 1336, "cr": 0.0298741}, "may25": {"visitors": 35690, "sessions": 57111, "atc": 3278, "checkout": 1719, "completed": 1230, "cr": 0.021537}}, "sms_compare": {"may26": {"campaigns_sent": 7, "total_sent": 11946, "campaign_rev": 80868, "flow_rev": 3808, "total_rev": 84676, "rps": 7.09}, "apr26": {"campaigns_sent": 7, "total_sent": 21519, "campaign_rev": 68572, "flow_rev": 6085, "total_rev": 74657, "rps": 3.47}, "may25": {"campaigns_sent": 4, "total_sent": 2539, "campaign_rev": 59716, "flow_rev": 2086, "total_rev": 61802, "rps": 24.34}}};
+const INSIGHTS = {"upcoming": "- **Christmas in July 2026** \u2014 our mid-year sale. The campaign brief has been issued and the pack is underway (offer, creative, email & SMS, pre-sale). We'll lock in timings shortly and share them \u2014 any questions, just let us know.", "performance_summary": "- **New-customer acquisition surged** in May while spend fell and efficiency rose \u2014 exactly the brief.\n- **Net sales held essentially flat** at $281,620 (\u20132.9% MoM, \u20132.3% YoY).\n- **MER improved to 4.97x** (from 4.84 MoM and 4.44 YoY) on $3.2k less spend than April and $8.2k less than May 2025.\n- The store is earning the same revenue more efficiently \u2014 and from a healthier, newer customer base.", "vs_last_month": "- Net sales $281,620 vs $289,952 \u2014 down 2.9%, but April carried the Easter sale tail.\n- MER up to 4.97x from 4.84x \u2014 more revenue per ad dollar despite lower spend.\n- New customers 187 vs 162 \u2014 up 15.4%; new-customer rate 26.5% vs 21.0%.\n- Site conversion rate eased to 2.66% from 2.99% \u2014 fewer sessions converting, worth watching.", "vs_last_year": "- Net sales $281,620 vs $288,299 \u2014 essentially flat (\u20132.3%) on **$8.2k less total ad spend**.\n- New customers 187 vs 74 \u2014 **up 153%**; new-customer rate 26.5% vs 11.9% (more than doubled).\n- MER 4.97x vs 4.44x \u2014 efficiency up while acquiring far more first-time buyers.\n- Site conversion rate up to 2.66% from 2.15% \u2014 converting better on less traffic (45k vs 57k sessions).", "new_vs_returning": "- **New customers more than doubled year-on-year** \u2014 187 vs 74 (+153%). This is the month's headline.\n- **New-customer share of buyers climbed** 11.9% (May 2025) \u2192 21.0% (April) \u2192 26.5% (May).\n- Returning-customer rate eased from 88.0% to 73.5% \u2014 not churn, but the natural effect of a much larger top-of-funnel intake.\n- **The next job:** convert this new cohort into a second purchase (see the welcome-series A/B test + post-purchase flows).", "country": "- **The United States is now the #1 revenue market** ($121.7k net sales) and one of the most efficient \u2014 MER 6.0x, alongside **Canada at 6.2x**. North America is the standout.\n- **Australia** is the volume engine (612 orders, $106.5k) at a healthy 5.2x, with **New Zealand** strong at 5.9x.\n- **The UK** sits at 4.0x \u2014 profitable but the softest of the core markets.\n- **Europe (newly launched)** is showing early signs: France (4.4x) and Poland (5.4x) are encouraging, while Switzerland, Italy, Spain and Sweden are still near break-even (1.0\u20131.2x) as we seed them, and Norway, Denmark and Finland sit in between (3.1\u20133.5x).\n- Net: North America is the most efficient growth lever and Australia the dependable base \u2014 and **Europe is early but live, worth watching closely as spend and learnings build.**", "meta_ads": "- **Meta spend $49,805** (down from $54,235 MoM / $60,703 YoY), with attributed ROAS at 3.08x.\n- TOF ran at 2.29x, MOF/BOF at 3.93x.\n- Standouts: **CR530 \"Flash-Sale-Evergreen\" at 9.97x** and the **CR242 animated flash-sale GIF at 76x** (retargeting).\n- The flash-evergreen angle is the best-performing concept; **fresh top-of-funnel creative is the priority** to keep new-customer acquisition efficient as the account scales.", "email_sms": "- **Email earned $106,791** (campaigns $81,570 + flows $25,221) \u2014 down on April ($117,066) and May 2025 ($128,523), but on far fewer sends (91k vs 120k in April, 99k a year ago).\n- **Revenue per email sent rose to $1.17 \u2014 up 19% on April's $0.98** (just under last May's $1.30): fewer, better-targeted sends earning more each. Open rate recovered to 66.1% (from 52.6%) and clicks to 2.57%.\n- **SMS earned $84,676 \u2014 up 13% MoM and 37% YoY.** The two FB Live Flash Sale texts (8 & 22 May) drove ~74% of SMS campaign revenue. Revenue per SMS sent is $7.09 (well above email); it's down year-on-year only because the list has scaled ~5x from a tiny, hyper-targeted 2025 base.\n- **Pulling buyers back:** post-purchase / onboarding flows are the standout \u2014 $9,717 from 2,558 recipients ($3.80 each, more than 3x the email average) \u2014 clear proof email re-engages recent buyers. The welcome series (new subscribers) added $4,555.\n- **The gap:** win-back earns almost nothing ($253 from 976 lapsed buyers) and there's no dedicated \"nudge to a 2nd order\" flow yet \u2014 the clearest near-term opportunity.\n- _All figures Klaviyo-attributed (overlap paid/organic \u2014 not incremental). A strict new-vs-2nd-purchase split needs Shopify order-count data._", "mothers_day": "- **Ran with no paid ads** (9\u201312 May) \u2014 email, SMS and the Sparkle Sisterhood only.\n- Delivered **$52,074 in net sales across 271 orders**.\n- $33,215 directly attributed to Klaviyo (email $15,944 + SMS $17,271).\n- Proof the owned channels can drive a meaningful sale unaided.", "wins": "- **New-customer acquisition +153% YoY** (187 vs 74) \u2014 directly attacks MN's #1 growth lever.\n- **MER up to 4.97x on lower spend** \u2014 efficiency improved both month-on-month and year-on-year.\n- **SMS flash sales** drove $62k+ in two FB Live events \u2014 a high-ROI owned channel.\n- **North America efficiency** \u2014 US and Canada both returning 6x+ MER as the US becomes the #1 revenue market.\n- **Mother's Day $52k with zero ad spend** \u2014 owned-channel strength.", "opportunities": "- **Roll the homepage best-sellers block out to mobile** \u2014 the \"same row\" layout lifted mobile revenue-per-visitor strongly in both AU (+81%) and US (+30%); desktop is the soft spot. A mobile-first rollout is the safe, significant win.\n- **Protect the new-visitor journey** \u2014 the homepage, Black Crystal and Cream Pearl tests all show first-time visitors convert worse when extra modules or a straight-to-product path distract them. Keep cold/paid traffic on focused landing pages, and consider suppressing the best-sellers block for new visitors.\n- **Build a 2nd-purchase email flow + fix win-back** \u2014 post-purchase flows already earn 3x the average per send, while win-back earns almost nothing ($253 from 976 lapsed buyers). A dedicated Day-30/60 repeat-purchase nudge is the biggest owned-channel lever for converting the new cohort to a 2nd order.\n- **Keep leaning on FB Live flash sales** \u2014 the SMS-led live events were the month's highest-ROI owned activity; maintaining the fortnightly cadence is a low-cost revenue lever."};
+let IGEMS = {"_comment": "Intelligems on-site split tests, pulled live 09/06/2026 via Intelligems MCP (org Maria Nicola). Real platform values. RPV = net revenue per visitor. p2bc = probability to beat control (>=0.95 or <=0.05 = significant). est_monthly_impact = Intelligems projected (overview analysis). Screenshots in assets/splittests/.", "pulled": "2026-06-09", "source": "Intelligems", "tests": [{"id": "27eb61c3-d767-44d8-ba4b-4ae7f7dd7921", "name": "Homepage \u2014 \u201cBest Selling Products\u201d section (AU)", "status": "in-progress", "running_since": "2026-03-16", "page": "Homepage (marianicola.com)", "what": "Adds a curated \u201cBest Selling Products\u201d block to the homepage so popular items surface immediately. Two layouts tested against the current homepage: \u201csame row\u201d (single scrollable row) and \u201c2x2 row\u201d (grid).", "control_label": "Current homepage (no section)", "variant_label": "\u201cSame row\u201d best-sellers block", "control_img_desktop": "assets/splittests/homepage-control-desktop.png", "variant_img_desktop": "assets/splittests/homepage-variant-desktop.png", "overview": {"control": {"visitors": 3897, "cr": "10.3%", "rpv": "$19.31"}, "winner": {"name": "Same row", "visitors": 1032, "cr": "12.9%", "rpv": "$26.61", "cr_uplift": "+25.2%", "rpv_uplift": "+37.8%", "p2bc": 0.99}, "est_monthly_impact": "+$20,218"}, "device": {"mobile": {"rpv_uplift": "+81.4%", "p2bc": 0.999}, "desktop": {"rpv_uplift": "-18.9%", "p2bc": 0.18}}, "visitor": {"returning": {"rpv_uplift": "+60.3%", "p2bc": 0.999}, "new": {"rpv_uplift": "-51.6%", "p2bc": 0.02}}, "read": "A clear winner overall, powered by mobile and returning visitors \u2014 but it measurably hurts NEW visitors, who appear to be distracted from the main path. Given new-customer acquisition is the priority, the recommendation is to roll \u201csame row\u201d out to mobile / returning audiences and rework or suppress it for first-time visitors rather than a blanket switch."}, {"id": "334369ed-14fb-458a-87e1-f684ed21ff9c", "name": "Homepage \u2014 \u201cBest Selling Products\u201d section (US)", "status": "in-progress", "running_since": "2026-03-30", "page": "Homepage (marianicola.com, US traffic)", "what": "Same test as AU, run on US traffic: \u201csame row\u201d vs \u201c2x2 row\u201d best-sellers block vs the current homepage.", "control_label": "Current homepage (no section)", "variant_label": "\u201cSame row\u201d best-sellers block", "control_img_desktop": "assets/splittests/homepage-control-desktop.png", "variant_img_desktop": "assets/splittests/homepage-variant-desktop.png", "overview": {"control": {"visitors": 2599, "cr": "9.1%", "rpv": "$25.39"}, "winner": {"name": "Same row", "visitors": 1267, "cr": "9.6%", "rpv": "$26.56", "cr_uplift": "+5.6%", "rpv_uplift": "+4.6%", "p2bc": 0.6}, "est_monthly_impact": "+$2,555"}, "device": {"mobile": {"rpv_uplift": "+30.2%", "p2bc": 0.93}, "desktop": {"rpv_uplift": "-47.3%", "p2bc": 0.03}}, "visitor": {"new": {"rpv_uplift": "+29.0%", "p2bc": 0.8}, "returning": {"rpv_uplift": "-3.2%", "p2bc": 0.42}}, "read": "Leaning positive but not yet conclusive overall (let it keep running). The consistent signal across both markets is mobile: the best-sellers block lifts mobile RPV strongly in AU and US alike, while desktop is the soft spot in both. A mobile-first rollout is the through-line."}, {"id": "3afd5c4a-b203-41df-88b3-0ca6abd6a938", "name": "Collection page \u2014 layout & price emphasis", "status": "rolled-out", "running_since": "2026-04-20", "page": "Collection pages \u00b7 concluded 31/05 \u00b7 now rolled out", "what": "Tested a 3-column grid layout with stronger pink price emphasis on collection pages, against the previous layout. The new layout has since been rolled out, so it is now the live design.", "control_label": "Previous layout", "variant_label": "New 3-column layout (now live)", "control_img_desktop": "", "control_note": "Previous layout \u2014 no longer live (this design has been rolled out)", "variant_img_desktop": "assets/splittests/collection-control-desktop.png", "overview": {"control": {"visitors": 14211, "cr": "10.0%", "rpv": "$22.62"}, "winner": {"name": "New layout", "visitors": 14275, "cr": "9.6%", "rpv": "$22.11", "cr_uplift": "-4.0%", "rpv_uplift": "-2.3%", "p2bc": 0.34}, "est_monthly_impact": "-$4,717"}, "device": {"mobile": {"rpv_uplift": "-9.4%", "p2bc": 0.06}, "desktop": {"rpv_uplift": "+14.9%", "p2bc": 0.94}}, "visitor": {"new": {"rpv_uplift": "+13.6%", "p2bc": 0.93}, "returning": {"rpv_uplift": "-9.3%", "p2bc": 0.06}}, "read": "Rolled out on the strength of its desktop (+14.9% RPV, near-significant) and NEW-visitor (+13.6%) gains \u2014 the segments the new grid was designed for. The trade-off to keep watching is mobile and returning visitors, which ran slightly behind, so the blended figure is roughly flat. Worth a mobile-specific follow-up to lift the segment that carries the most traffic."}, {"id": "eb521c4d-6fdb-4d4a-b7e6-4cb7d3d6f6e2", "name": "Black Crystal Bundle \u2014 Landing Page vs Product Page", "status": "in-progress", "running_since": "2026-04-24", "page": "Beginner Bundle special offer", "what": "Tests whether sending paid traffic to a dedicated landing page (control) or straight to the product page (variant) converts better for the Black Crystal Beginner Bundle.", "control_label": "Dedicated landing page", "variant_label": "Straight to product page", "control_img_desktop": "assets/splittests/black-crystal-control-desktop.png", "variant_img_desktop": "assets/splittests/black-crystal-variant-desktop.png", "overview": {"control": {"visitors": 1683, "cr": "4.0%", "rpv": "$7.34"}, "winner": {"name": "Product page", "visitors": 1749, "cr": "3.9%", "rpv": "$7.26", "cr_uplift": "-2.3%", "rpv_uplift": "-1.2%", "p2bc": 0.47}, "est_monthly_impact": "-$195"}, "device": {"mobile": {"rpv_uplift": "-0.9%", "p2bc": 0.48}, "desktop": {"rpv_uplift": "+16.0%", "p2bc": null}}, "visitor": {"new": {"rpv_uplift": "-35.3%", "p2bc": 0.13}, "returning": {"rpv_uplift": "+16.8%", "p2bc": 0.7}}, "read": "Effectively a tie at the topline. The detail matters: the landing page protects NEW-visitor revenue (who need the education/context), while returning visitors and desktop do better going straight to the product page (desktop +16%, though on a small sample). Net: keep the landing page for cold/paid traffic; the same 'new visitors need more context' pattern recurs across the site tests."}, {"id": "40e687e3-4ed0-460c-8fee-b1d5b96b9df1", "name": "Cream Pearl Bundle \u2014 Landing Page vs Product Page", "status": "completed-loss", "running_since": "2026-04-20", "page": "Beginner Bundle special offer \u00b7 Paid Social \u00b7 concluded 15/05", "what": "Same landing-page-vs-product-page test as Black Crystal, for the Cream Pearl Beginner Bundle on Paid Social traffic.", "control_label": "Dedicated landing page", "variant_label": "Straight to product page", "control_img_desktop": "assets/splittests/cream-pearl-control-desktop.png", "variant_img_desktop": "assets/splittests/cream-pearl-variant-desktop.png", "overview": {"control": {"visitors": 1725, "cr": "2.4%", "rpv": "$6.34"}, "winner": {"name": "Product page", "visitors": 1636, "cr": "1.0%", "rpv": "$2.76", "cr_uplift": "-57.3%", "rpv_uplift": "-56.4%", "p2bc": 0.02}, "est_monthly_impact": "-$14,389"}, "device": {"mobile": {"rpv_uplift": "-55.4%", "p2bc": 0.03}, "desktop": {"rpv_uplift": "n/a", "p2bc": null}}, "visitor": {"new": {"rpv_uplift": "-54.3%", "p2bc": 0.05}, "returning": {"rpv_uplift": "-62.6%", "p2bc": null}}, "read": "A decisive result \u2014 sending Paid Social traffic straight to the product page roughly halved revenue per visitor (significant). The dedicated landing page wins clearly and should stay for this audience. This is the strongest confirmation yet that cold/paid traffic needs the landing-page context before the product."}, {"id": "76218dbc-5801-42b9-8bc0-8de3cf775be5", "name": "Product page video (rebuilt & relaunched)", "status": "in-progress", "running_since": "2026-03-31", "page": "10 Way Necklace\u2122 product pages", "what": "Adds an auto-playing product video into the image gallery on 11 hero 10 Way Necklace\u2122 colourways. The first version (ran 31/03\u201313/05) is shown below; a rebuilt version with a revised mobile implementation relaunched 02/06 \u2014 results to come in the June report.", "control_label": "Gallery without video", "variant_label": "Gallery with product video", "control_img_desktop": "assets/splittests/product-video-control-desktop.png", "variant_img_desktop": "assets/splittests/product-video-variant-desktop.png", "overview": {"control": {"visitors": 2023, "cr": "5.0%", "rpv": "$13.28"}, "winner": {"name": "With video (v1)", "visitors": 2035, "cr": "4.6%", "rpv": "$11.55", "cr_uplift": "-8.4%", "rpv_uplift": "-13.0%", "p2bc": 0.24}, "est_monthly_impact": "-$4,854"}, "device": {"mobile": {"rpv_uplift": "-27.5%", "p2bc": 0.09}, "desktop": {"rpv_uplift": "+32.2%", "p2bc": 0.8}}, "visitor": {"new": {"rpv_uplift": "-24.0%", "p2bc": 0.19}, "returning": {"rpv_uplift": "-5.0%", "p2bc": 0.41}}, "read": "Version 1 hurt mobile conversion (where most traffic is) even though desktop trended positive \u2014 the same mobile-vs-desktop split we keep seeing. That's exactly why it was rebuilt: a revised, lighter mobile video implementation relaunched on 02/06 and is now live. We'll report the rebuilt version's result next month."}]};
+let COUNTRY = {"_comment": "Per-country MER, May 2026. MER=Shopify net sales / (Meta+Google spend). Google=LOP only. organic=true when paid spend <$20 (EU launch markets are largely organic).", "totals": {"meta_spend": 49805, "google_spend": 5815, "total_paid_spend": 55620, "net_sales": 281620, "orders": 1347, "mer": 5.06}, "rows": [{"country": "United States", "meta_spend": 18367, "google_spend": 1884, "total_spend": 20251, "net_sales": 121679, "orders": 485, "aov": 252.93, "mer": 6.01, "organic": false}, {"country": "Australia", "meta_spend": 18177, "google_spend": 2185, "total_spend": 20362, "net_sales": 106483, "orders": 612, "aov": 174.92, "mer": 5.23, "organic": false}, {"country": "Canada", "meta_spend": 3082, "google_spend": 422, "total_spend": 3504, "net_sales": 21713, "orders": 99, "aov": 219.45, "mer": 6.2, "organic": false}, {"country": "United Kingdom", "meta_spend": 2834, "google_spend": 398, "total_spend": 3232, "net_sales": 13043, "orders": 72, "aov": 184.92, "mer": 4.04, "organic": false}, {"country": "New Zealand", "meta_spend": 1341, "google_spend": 148, "total_spend": 1489, "net_sales": 8785, "orders": 40, "aov": 220.41, "mer": 5.9, "organic": false}, {"country": "France", "meta_spend": 487, "google_spend": 0, "total_spend": 487, "net_sales": 2138, "orders": 10, "aov": 213.77, "mer": 4.39, "organic": false}, {"country": "Norway", "meta_spend": 379, "google_spend": 0, "total_spend": 379, "net_sales": 1325, "orders": 2, "aov": 662.45, "mer": 3.5, "organic": false}, {"country": "Switzerland", "meta_spend": 926, "google_spend": 0, "total_spend": 926, "net_sales": 1120, "orders": 5, "aov": 223.98, "mer": 1.21, "organic": false}, {"country": "Denmark", "meta_spend": 270, "google_spend": 0, "total_spend": 270, "net_sales": 845, "orders": 2, "aov": 422.6, "mer": 3.13, "organic": false}, {"country": "Netherlands", "meta_spend": 451, "google_spend": 0, "total_spend": 451, "net_sales": 801, "orders": 4, "aov": 200.36, "mer": 1.78, "organic": false}, {"country": "Finland", "meta_spend": 224, "google_spend": 0, "total_spend": 224, "net_sales": 722, "orders": 3, "aov": 240.83, "mer": 3.23, "organic": false}, {"country": "Poland", "meta_spend": 116, "google_spend": 0, "total_spend": 116, "net_sales": 632, "orders": 3, "aov": 210.61, "mer": 5.45, "organic": false}, {"country": "Italy", "meta_spend": 467, "google_spend": 0, "total_spend": 467, "net_sales": 502, "orders": 2, "aov": 251.14, "mer": 1.08, "organic": false}, {"country": "Spain", "meta_spend": 418, "google_spend": 0, "total_spend": 418, "net_sales": 429, "orders": 2, "aov": 214.38, "mer": 1.03, "organic": false}, {"country": "Sweden", "meta_spend": 427, "google_spend": 0, "total_spend": 427, "net_sales": 429, "orders": 1, "aov": 428.74, "mer": 1.0, "organic": false}, {"country": "Rest of world", "meta_spend": 1839, "google_spend": 778, "total_spend": 2617, "net_sales": 975, "orders": 5, "aov": 195.0, "mer": 0.37, "organic": false}]};
+const fmtAUD=n=>n==null?"—":"$"+Math.round(n).toLocaleString("en-AU");
+const fmtAUD2=n=>n==null?"—":"$"+n.toLocaleString("en-AU",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtNum=n=>n==null?"—":Math.round(n).toLocaleString("en-AU");
+const pct=n=>n==null?"—":(n*100).toFixed(1)+"%";
+const pct2=n=>n==null?"—":(n*100).toFixed(2)+"%";
+
+// mini markdown: **bold**, _italic-prompt_, lines starting with - => list
+function md(t){
+  if(!t) return "";
+  t=t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const lines=t.split("\n");let out="",inUl=false,liOpen=false,para=[];
+  const flushP=()=>{if(para.length){out+="<p>"+para.join(" ")+"</p>";para=[];}};
+  const closeLi=()=>{if(liOpen){out+="</li>";liOpen=false;}};
+  const closeUl=()=>{closeLi();if(inUl){out+="</ul>";inUl=false;}};
+  for(let ln of lines){
+    ln=ln.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/_(.+?)_/g,"<em>$1</em>");
+    const m=ln.match(/^\s*-\s+(.*)/);
+    if(m){ flushP(); if(!inUl){out+="<ul>";inUl=true;} closeLi(); out+="<li>"+m[1]; liOpen=true; }
+    else if(!ln.trim()){ flushP(); closeUl(); }          // blank line = paragraph/list break
+    else if(inUl){ out+=" "+ln.trim(); }                 // wrapped bullet continuation
+    else { para.push(ln.trim()); }                       // wrapped paragraph line — joined, fills width
+  }
+  flushP(); closeUl();
+  return out;
+}
+function ins(key){return md(INSIGHTS[key]||"");}
+
+function delta(cur,prev,inv=false,suffix=""){
+  if(prev==null||prev===0)return '<span class="flat">—</span>';
+  const d=(cur-prev)/Math.abs(prev);const up=d>=0;
+  const good=inv?!up:up;const cls=Math.abs(d)<0.001?"flat":(good?"up":"down");
+  const arrow=Math.abs(d)<0.001?"":(up?"▲":"▼");
+  return '<span class="'+cls+'">'+arrow+" "+(d*100).toFixed(1)+"%"+suffix+'</span>';
+}
+
+function kpi(lab,val,chg){return '<div class="kpi"><div class="lab">'+lab+'</div><div class="val">'+val+
+  '</div>'+(chg?'<div class="chg">'+chg+'</div>':'')+'</div>';}
+
+function render(){
+  const d=DATA,o=d.overview,m=o.may26,a=o.apr26,y=o.may25;
+  document.getElementById("h-month").textContent=d.meta_info.month;
+  document.getElementById("h-gen").textContent="Generated "+d.meta_info.generated;
+
+  // overview KPIs
+  document.getElementById("ov-kpis").innerHTML=
+    kpi("Meta Spend",fmtAUD(m.meta_spend),delta(m.meta_spend,a.meta_spend,true)+' <span class="vs">MoM</span>')+
+    kpi("Google Spend",fmtAUD(m.google_spend),delta(m.google_spend,a.google_spend,true)+' <span class="vs">MoM</span>')+
+    kpi("Total Ad Spend",fmtAUD(m.total_spend),delta(m.total_spend,a.total_spend,true)+' <span class="vs">MoM</span>')+
+    kpi("Net Sales",fmtAUD(m.net_sales),delta(m.net_sales,a.net_sales)+' <span class="vs">MoM</span>')+
+    kpi("MER",m.mer.toFixed(2)+"x",delta(m.mer,a.mer)+' <span class="vs">MoM</span>');
+
+  // overview table
+  const rows=[
+    ["Meta spend",fmtAUD(m.meta_spend),fmtAUD(a.meta_spend),delta(m.meta_spend,a.meta_spend,true),fmtAUD(y.meta_spend),delta(m.meta_spend,y.meta_spend,true)],
+    ["Google spend",fmtAUD(m.google_spend),fmtAUD(a.google_spend),delta(m.google_spend,a.google_spend,true),fmtAUD(y.google_spend),delta(m.google_spend,y.google_spend,true)],
+    ["Total ad spend",fmtAUD(m.total_spend),fmtAUD(a.total_spend),delta(m.total_spend,a.total_spend,true),fmtAUD(y.total_spend),delta(m.total_spend,y.total_spend,true)],
+    ["Net sales",fmtAUD(m.net_sales),fmtAUD(a.net_sales),delta(m.net_sales,a.net_sales),fmtAUD(y.net_sales),delta(m.net_sales,y.net_sales)],
+    ["Orders",fmtNum(m.orders),fmtNum(a.orders),delta(m.orders,a.orders),fmtNum(y.orders),delta(m.orders,y.orders)],
+    ["AOV",fmtAUD2(m.aov),fmtAUD2(a.aov),delta(m.aov,a.aov),fmtAUD2(y.aov),delta(m.aov,y.aov)],
+    ["MER",m.mer.toFixed(2)+"x",a.mer.toFixed(2)+"x",delta(m.mer,a.mer),y.mer.toFixed(2)+"x",delta(m.mer,y.mer)],
+    ["Meta ROAS",m.meta_roas.toFixed(2)+"x",a.meta_roas.toFixed(2)+"x",delta(m.meta_roas,a.meta_roas),y.meta_roas.toFixed(2)+"x",delta(m.meta_roas,y.meta_roas)],
+  ];
+  document.getElementById("ov-table").innerHTML='<table><thead><tr><th>Metric</th><th>May 2026</th>'+
+    '<th>Apr 2026</th><th>MoM</th><th>May 2025</th><th>YoY</th></tr></thead><tbody>'+
+    rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td></tr>').join("")+'</tbody></table>';
+
+  // trend
+  const dn=d.daily_net,mx=Math.max(...dn.map(x=>x[1]));
+  document.getElementById("trend").innerHTML=dn.map(x=>'<div class="bar" style="height:'+(x[1]/mx*100)+'%" data-t="'+x[0].slice(5)+": "+fmtAUD(x[1])+'"></div>').join("");
+  document.getElementById("trend-x").innerHTML="<span>1 May</span><span>8</span><span>15</span><span>22</span><span>31 May</span>";
+
+  // website funnel + AOV
+  const f=d.funnel,fm=f.may26,fa=f.apr26,fy=f.may25;
+  const steps=[
+    ["Visitors","visitors",m=>fmtNum(m.visitors),null],
+    ["Added to cart","atc",m=>fmtNum(m.atc),m=>m.atc/m.sessions],
+    ["Reached checkout","checkout",m=>fmtNum(m.checkout),m=>m.checkout/m.sessions],
+    ["Completed checkout","completed",m=>fmtNum(m.completed),m=>m.completed/m.sessions],
+  ];
+  document.getElementById("ov-funnel").innerHTML=steps.map(s=>{
+    const rate=s[3]?pct(s[3](fm)):pct(fm.completed/fm.visitors*0+ (s[1]==="visitors"?null:0));
+    const rl=s[3]?'<div class="sr">'+pct(s[3](fm))+' of sessions</div>':'<div class="sr">'+fmtNum(fm.sessions)+' sessions</div>';
+    const chg=delta(s[1]==="visitors"?fm.visitors:fm[s[1]], s[1]==="visitors"?fa.visitors:fa[s[1]]);
+    return '<div class="step"><div class="sn">'+s[0]+'</div><div class="sv">'+s[2](fm)+'</div>'+rl+
+      '<div class="sc">'+chg+' <span class="vs" style="color:var(--mut)">MoM</span></div></div>';
+  }).join("");
+  const fr=(lab,getv,fmt,inv=false,cls="")=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+lab+'</td><td>'+fmt(getv(fm))+'</td><td>'+fmt(getv(fa))+
+    '</td><td>'+delta(getv(fm),getv(fa),inv)+'</td><td>'+fmt(getv(fy))+'</td><td>'+delta(getv(fm),getv(fy),inv)+'</td></tr>';
+  document.getElementById("ov-funnel-table").innerHTML='<table><thead><tr><th>Step</th><th>May 2026</th><th>Apr 2026</th><th>MoM</th><th>May 2025</th><th>YoY</th></tr></thead><tbody>'+
+    fr("Visitors",x=>x.visitors,fmtNum)+
+    fr("Sessions",x=>x.sessions,fmtNum)+
+    fr("Added to cart",x=>x.atc,fmtNum)+
+    fr("Reached checkout",x=>x.checkout,fmtNum)+
+    fr("Completed checkout",x=>x.completed,fmtNum)+
+    fr("Conversion rate",x=>x.cr,pct2,false,"tot")+
+    '<tr><td>Average order value</td><td>'+fmtAUD2(m.aov)+'</td><td>'+fmtAUD2(a.aov)+'</td><td>'+delta(m.aov,a.aov)+'</td><td>'+fmtAUD2(y.aov)+'</td><td>'+delta(m.aov,y.aov)+'</td></tr>'+
+    '</tbody></table>';
+
+  document.getElementById("ci-perf").innerHTML='<h4>Performance summary</h4>'+ins("performance_summary");
+  document.getElementById("ci-upcoming").innerHTML='<h4 style="color:#3b62c4">📅 Upcoming</h4>'+ins("upcoming");
+
+  // new vs returning
+  const s=d.shopify;
+  document.getElementById("nvr-stats").innerHTML=
+    '<div class="s"><div class="n">'+s.may26.new+'</div><div class="l">New customers (May 2026)</div></div>'+
+    '<div class="s"><div class="n">+'+Math.round((s.may26.new/s.may25.new-1)*100)+'%</div><div class="l">New customers YoY (vs '+s.may25.new+' in May 2025)</div></div>'+
+    '<div class="s"><div class="n">'+pct(s.may26.new_rate)+'</div><div class="l">New-customer share (was '+pct(s.may25.new_rate)+' YoY)</div></div>';
+  const periods=[["May 2026","may26"],["Apr 2026","apr26"],["May 2025","may25"]];
+  document.getElementById("nvr-bars").innerHTML=periods.map(([lab,k])=>{
+    const p=s[k],tot=p.customers,nw=p.new/tot*100,rt=p.returning/tot*100;
+    return '<div class="nvr-row"><div class="lab"><span>'+lab+'</span><span class="mini">'+tot+' buyers</span></div>'+
+      '<div class="nvr-track"><div class="nvr-new" style="width:'+nw+'%">'+p.new+' new ('+nw.toFixed(0)+'%)</div>'+
+      '<div class="nvr-ret" style="width:'+rt+'%">'+p.returning+' returning</div></div></div>';
+  }).join("");
+  document.getElementById("ci-nvr").innerHTML='<h4>What this means</h4>'+ins("new_vs_returning");
+
+  // country
+  window._costate={k:"net_sales",dir:"desc"};
+  renderCountry();
+  document.getElementById("ci-country-body").innerHTML=ins("country");
+
+  // insights
+  document.getElementById("ci-vslm").innerHTML=ins("vs_last_month");
+  document.getElementById("ci-vsly").innerHTML=ins("vs_last_year");
+
+  // email
+  const ec=d.email_compare,em=ec.may26,ea=ec.apr26,ey=ec.may25;
+  document.getElementById("em-kpis").innerHTML=
+    kpi("Email revenue",fmtAUD(em.total_rev),delta(em.total_rev,ea.total_rev)+' <span class="vs">MoM</span>')+
+    kpi("Revenue / email sent","$"+em.rpe.toFixed(2),delta(em.rpe,ea.rpe)+' <span class="vs">MoM</span>')+
+    kpi("Avg open rate",pct(em.open_rate),delta(em.open_rate,ea.open_rate)+' <span class="vs">MoM</span>')+
+    kpi("Avg click rate",pct2(em.click_rate),delta(em.click_rate,ea.click_rate)+' <span class="vs">MoM</span>');
+  const erow=(lab,fn,fmt,inv=false,cls="")=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+lab+'</td><td>'+fmt(fn(em))+'</td><td>'+fmt(fn(ea))+'</td><td>'+
+    delta(fn(em),fn(ea),inv)+'</td><td>'+fmt(fn(ey))+'</td><td>'+delta(fn(em),fn(ey),inv)+'</td></tr>';
+  const sub=s=>'<tr style="color:var(--mut)"><td style="padding-left:22px">'+s.l+'</td><td>'+fmtAUD(s.fn(em))+
+    '</td><td>'+fmtAUD(s.fn(ea))+'</td><td>'+delta(s.fn(em),s.fn(ea))+'</td><td>'+fmtAUD(s.fn(ey))+'</td><td>'+delta(s.fn(em),s.fn(ey))+'</td></tr>';
+  document.getElementById("em-compare").innerHTML='<table><thead><tr><th>Metric</th><th>May 2026</th>'+
+    '<th>Apr 2026</th><th>MoM</th><th>May 2025</th><th>YoY</th></tr></thead><tbody>'+
+    erow("Emails sent",x=>x.total_sent,fmtNum,true)+
+    erow("Email revenue",x=>x.total_rev,fmtAUD)+
+    sub({l:"— Campaigns",fn:x=>x.campaign_rev})+
+    sub({l:"— Flows (automations)",fn:x=>x.flow_rev})+
+    erow("Revenue / email sent",x=>x.rpe,n=>"$"+n.toFixed(2),false,"tot")+
+    erow("Avg open rate",x=>x.open_rate,pct)+
+    erow("Avg click rate",x=>x.click_rate,pct2)+
+    '</tbody></table>';
+  const er=d.email_repeat,erTot=er.reduce((s,r)=>s+r.revenue,0);
+  document.getElementById("em-repeat").innerHTML='<table><thead><tr><th>Stage</th><th>Audience</th><th>Recipients</th>'+
+    '<th>Orders</th><th>Revenue</th><th>Rev / recipient</th></tr></thead><tbody>'+
+    er.map(r=>'<tr><td><strong>'+r.stage+'</strong></td><td>'+r.desc+'</td><td>'+fmtNum(r.recipients)+'</td><td>'+
+      r.conversions+'</td><td>'+fmtAUD(r.revenue)+'</td><td>'+fmtAUD2(r.revenue/r.recipients)+'</td></tr>').join("")+
+    '</tbody></table><div class="mini" style="margin-top:8px">Benchmark: overall email revenue per send this month was <strong>$'+em.rpe.toFixed(2)+'</strong>.</div>';
+
+  // SMS
+  const sc=d.sms_compare,sm=sc.may26,sa=sc.apr26,sy=sc.may25;
+  document.getElementById("sms-kpis").innerHTML=
+    kpi("SMS revenue",fmtAUD(sm.total_rev),delta(sm.total_rev,sa.total_rev)+' <span class="vs">MoM</span>')+
+    kpi("Revenue / SMS sent","$"+sm.rps.toFixed(2),delta(sm.rps,sa.rps)+' <span class="vs">MoM</span>')+
+    kpi("SMS sent",fmtNum(sm.total_sent),delta(sm.total_sent,sa.total_sent,true)+' <span class="vs">MoM</span>')+
+    kpi("SMS campaigns",sm.campaigns_sent,'<span class="vs">in May</span>');
+  const sr=(lab,getv,fmt,inv=false,cls="")=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+lab+'</td><td>'+fmt(getv(sm))+'</td><td>'+fmt(getv(sa))+
+    '</td><td>'+delta(getv(sm),getv(sa),inv)+'</td><td>'+fmt(getv(sy))+'</td><td>'+delta(getv(sm),getv(sy),inv)+'</td></tr>';
+  const ssub=(l,fn)=>'<tr style="color:var(--mut)"><td style="padding-left:22px">'+l+'</td><td>'+fmtAUD(fn(sm))+
+    '</td><td>'+fmtAUD(fn(sa))+'</td><td>'+delta(fn(sm),fn(sa))+'</td><td>'+fmtAUD(fn(sy))+'</td><td>'+delta(fn(sm),fn(sy))+'</td></tr>';
+  document.getElementById("sms-compare").innerHTML='<table><thead><tr><th>Metric</th><th>May 2026</th><th>Apr 2026</th><th>MoM</th><th>May 2025</th><th>YoY</th></tr></thead><tbody>'+
+    sr("SMS sent",x=>x.total_sent,fmtNum,true)+
+    sr("SMS revenue",x=>x.total_rev,fmtAUD)+
+    ssub("— Campaigns",x=>x.campaign_rev)+
+    ssub("— Flows (automations)",x=>x.flow_rev)+
+    sr("Revenue / SMS sent",x=>x.rps,n=>"$"+n.toFixed(2),false,"tot")+
+    '</tbody></table>';
+  document.getElementById("ci-email").innerHTML='<h4>Email &amp; SMS read</h4>'+ins("email_sms");
+
+  // meta
+  const mc=d.meta_creative,mm=d.meta;
+  document.getElementById("meta-kpis").innerHTML=
+    kpi("Meta spend",fmtAUD(mm.may26.spend),delta(mm.may26.spend,mm.apr26.spend,true)+' <span class="vs">MoM</span>')+
+    kpi("Meta revenue",fmtAUD(mm.may26.revenue),'<span class="vs">attributed</span>')+
+    kpi("Account ROAS",mm.may26.roas.toFixed(2)+"x",delta(mm.may26.roas,mm.apr26.roas)+' <span class="vs">MoM</span>')+
+    kpi("Purchases",fmtNum(mm.may26.purchases),'<span class="vs">Meta pixel</span>');
+  window._crstate={funnel:"all",sort:"roas"};
+  renderCreatives();
+  document.getElementById("ci-meta").innerHTML='<h4>Creative read</h4>'+ins("meta_ads");
+
+  // mothers day
+  const md_=d.mothers_day;
+  document.getElementById("mday-sub").textContent=md_.dates+" · "+md_.channels_note;
+  document.getElementById("mday-kpis").innerHTML=
+    kpi("Net sales",fmtAUD(md_.shopify_net),'<span class="vs">Shopify, '+md_.dates+'</span>')+
+    kpi("Orders",fmtNum(md_.orders),'<span class="vs">AOV '+fmtAUD2(md_.aov)+'</span>')+
+    kpi("Email revenue",fmtAUD(md_.email_rev),'<span class="vs">'+fmtNum(md_.email_sends)+' sends</span>')+
+    kpi("SMS revenue",fmtAUD(md_.sms_rev),'<span class="vs">'+fmtNum(md_.sms_sends)+' sends</span>');
+  const mr=md_.email_campaigns.concat(md_.sms_campaigns);
+  document.getElementById("mday-table").innerHTML='<table><thead><tr><th>Send</th><th>Channel</th><th>Sends</th><th>Click</th><th>Revenue</th></tr></thead><tbody>'+
+    mr.map(c=>'<tr><td>'+c.name+'</td><td>'+(c.channel==="sms"?"SMS":"Email")+'</td><td>'+fmtNum(c.recipients)+'</td><td>'+pct2(c.click_rate)+'</td><td>'+fmtAUD(c.revenue)+'</td></tr>').join("")+
+    '<tr class="tot"><td>Total owned-channel attributed</td><td></td><td></td><td></td><td>'+fmtAUD(md_.klaviyo_attributed)+'</td></tr></tbody></table>';
+  document.getElementById("ci-mday").innerHTML='<h4>Mother’s Day read</h4>'+ins("mothers_day");
+
+  // wins / opps
+  document.getElementById("ci-wins").innerHTML=ins("wins");
+  document.getElementById("ci-opps").innerHTML=ins("opportunities");
+
+  renderTests();
+}
+
+function renderCreatives(){
+  const st=window._crstate;
+  const all=(DATA.meta_creative.creatives)||[];
+  let list=[];
+  const minSpend=st.funnel==="mof"?100:500;          // TOF/combined min $500, MOF (retargeting) min $100
+  all.forEach(c=>{
+    const m=st.funnel==="all"?c.combined:(st.funnel==="tof"?c.tof:c.mof);
+    if(!m) return;                                    // didn't run in this funnel
+    if((m.spend||0)<minSpend) return;                 // below spend threshold
+    list.push({c:c,m:m});
+  });
+  list.sort((x,y)=>((y.m[st.sort]||0)-(x.m[st.sort]||0)));
+  document.getElementById("cr-count").textContent=list.length+" creatives";
+  document.getElementById("cr-grid").innerHTML=list.map(o=>{
+    const c=o.c,m=o.m,top=(m.roas||0)>=7;
+    const fmt=(c.format||"image").toUpperCase();
+    const fcls=c.format==="video"?"b-vid":c.format==="flex"?"b-flex":"b-img";
+    let tags='';
+    if(c.is_tof)tags+='<span class="bdg b-tof">TOF</span>';
+    if(c.is_mof)tags+='<span class="bdg b-mof">MOF</span>';
+    const thumb=c.thumbnail_url?'<img src="'+c.thumbnail_url+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=cr-ph>'+c.display_id+'</div>\'">':'<div class="cr-ph">'+c.display_id+'</div>';
+    return '<div class="cr-card'+(top?' top':'')+'"><div class="cr-thumb">'+thumb+'</div><div class="cr-b">'+
+      '<div class="cr-h"><span class="cr-id">'+c.display_id+'</span><div class="badges">'+
+      (top?'<span class="bdg b-top">★ Top</span>':'')+'<span class="bdg '+fcls+'">'+fmt+'</span>'+tags+'</div></div>'+
+      '<div class="cr-desc">'+(c.cr_desc||"")+'</div>'+
+      '<div class="cr-stats">'+
+      '<div class="st"><div class="sl">Spend</div><div class="sv">'+fmtAUD(m.spend)+'</div></div>'+
+      '<div class="st"><div class="sl">Revenue</div><div class="sv">'+fmtAUD(m.revenue)+'</div></div>'+
+      '<div class="st"><div class="sl">ROAS</div><div class="sv'+(top?' green':'')+'">'+(m.roas!=null?m.roas.toFixed(2)+"x":"—")+'</div></div>'+
+      '<div class="st"><div class="sl">Purchases</div><div class="sv">'+(m.purchases!=null?m.purchases:"—")+'</div></div>'+
+      '<div class="st"><div class="sl">CTR link</div><div class="sv">'+(m.ctr_link!=null?pct2(m.ctr_link):"—")+'</div></div>'+
+      '<div class="st"><div class="sl">CPA</div><div class="sv">'+(m.cpurchase!=null?fmtAUD(m.cpurchase):"—")+'</div></div>'+
+      '</div></div></div>';
+  }).join("");
+}
+
+function renderCountry(){
+  if(!COUNTRY||!COUNTRY.rows){document.getElementById("country-table").innerHTML='<div class="mini">Country data pending.</div>';return;}
+  const st=window._costate;
+  const rows=COUNTRY.rows.slice().sort((a,b)=>{
+    let av=a[st.k],bv=b[st.k];
+    if(st.k==="country"){return st.dir==="desc"?(""+bv).localeCompare(av):(""+av).localeCompare(bv);}
+    av=(av==null?-Infinity:av);bv=(bv==null?-Infinity:bv);
+    return st.dir==="desc"?bv-av:av-bv;
+  });
+  const cols=[["country","Country"],["meta_spend","Meta"],["google_spend","Google"],["total_spend","Paid spend"],["net_sales","Net sales"],["orders","Orders"],["mer","MER"]];
+  const ar=k=>st.k===k?'<span class="ar">'+(st.dir==="desc"?"▼":"▲")+'</span>':'';
+  const head='<tr>'+cols.map(c=>'<th class="sortable" data-k="'+c[0]+'">'+c[1]+ar(c[0])+'</th>').join("")+'</tr>';
+  const cell=(r)=>'<td>'+r.country+'</td><td>'+fmtAUD(r.meta_spend)+'</td><td>'+fmtAUD(r.google_spend)+'</td><td>'+
+    fmtAUD(r.total_spend)+'</td><td>'+fmtAUD(r.net_sales)+'</td><td>'+fmtNum(r.orders)+'</td><td>'+(r.mer!=null?r.mer.toFixed(2)+"x":"—")+'</td>';
+  const t=COUNTRY.totals||{};
+  const totrow=t.net_sales?'<tr class="tot"><td>All countries</td><td>'+fmtAUD(t.meta_spend)+'</td><td>'+fmtAUD(t.google_spend)+'</td><td>'+
+    fmtAUD(t.total_paid_spend)+'</td><td>'+fmtAUD(t.net_sales)+'</td><td>'+fmtNum(t.orders)+'</td><td>'+(t.mer!=null?t.mer.toFixed(2)+"x":"—")+'</td></tr>':'';
+  document.getElementById("country-table").innerHTML='<table><thead>'+head+'</thead><tbody>'+
+    rows.map(r=>'<tr>'+cell(r)+'</tr>').join("")+totrow+'</tbody></table>';
+  document.querySelectorAll('#country-table th.sortable').forEach(th=>th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(window._costate.k===k){window._costate.dir=window._costate.dir==="desc"?"asc":"desc";}
+    else{window._costate.k=k;window._costate.dir=k==="country"?"asc":"desc";}
+    renderCountry();
+  }));
+}
+
+function sigBadge(p){
+  if(p==null) return '';
+  return (p>=0.95||p<=0.05)?'<span class="sig sig-y">Significant</span>':'<span class="sig sig-n">Not yet sig.</span>';
+}
+function upCls(v){return v&&v.indexOf("+")===0?"up":(v&&v.indexOf("-")===0?"down":"flat");}
+function renderTests(){
+  const map={"in-progress":["Live","st-prog"],"completed-win":["Winner","st-win"],
+    "completed-flat":["Concluded — flat","st-flat"],"completed-loss":["Concluded — control won","st-flat"],
+    "rolled-out":["Rolled out","st-win"],"paused":["Concluded","st-flat"],"upcoming":["Just launched","st-up"]};
+  const sh=(img,lab,pip,pcls,note)=>{
+    const fallback='<span>'+(note||"(screenshot pending)")+'</span>';
+    const body=img?'<img src="'+img+'" loading="lazy" onclick="window.open(this.src)" onerror="this.parentNode.innerHTML=\''+(note||"(screenshot pending)").replace(/'/g,"")+'\'">':fallback;
+    return '<div class="shotwrap"><div class="shotlab">'+lab+' <span class="pip '+pcls+'">'+pip+'</span></div><div class="shot">'+body+'</div></div>';
+  };
+  const bdtab=(title,obj,segs)=>'<div class="bd"><h5>'+title+'</h5><table><thead><tr><th>Segment</th>'+
+    '<th>RPV vs control</th><th>Sig.</th></tr></thead><tbody>'+
+    segs.map(k=>{const seg=obj[k];if(!seg)return "";const up=seg.rpv_uplift;
+      return '<tr><td>'+k.charAt(0).toUpperCase()+k.slice(1)+'</td><td class="'+upCls(up)+'">'+up+'</td><td>'+sigBadge(seg.p2bc)+'</td></tr>';}).join("")+
+    '</tbody></table></div>';
+  document.getElementById("tests-list").innerHTML=IGEMS.tests.map(t=>{
+    const tg=map[t.status]||["",""];
+    let h='<div class="test"><div class="th"><span class="tn">'+t.name+'</span><span class="st-tag '+tg[1]+'">'+tg[0]+'</span></div>';
+    h+='<div class="where">'+(t.page||"")+(t.running_since?' · running since '+t.running_since:'')+'</div>';
+    if(t.what)h+='<div class="what">'+t.what+'</div>';
+    if(t.control_img_desktop||t.variant_img_desktop)
+      h+='<div class="shots">'+sh(t.control_img_desktop,t.control_label||"Control","Control","pip-ctrl",t.control_note)+
+        sh(t.variant_img_desktop,t.variant_label||"Variant","Variant","pip-var",t.variant_note)+'</div>'+
+        '<div class="shotcap">Full-page captures — scroll within each frame to see the whole page, or click to open full size.</div>';
+    if(t.overview){const o=t.overview;
+      h+='<div class="ov-strip">'+
+        '<div class="ovp"><div class="l">Control — RPV</div><div class="v">'+o.control.rpv+' <small style="color:var(--mut)">· '+o.control.cr+' CR</small></div></div>'+
+        '<div class="ovp"><div class="l">'+(o.winner.name||"Variant")+' — RPV</div><div class="v">'+o.winner.rpv+' <small class="'+upCls(o.winner.rpv_uplift)+'">'+o.winner.rpv_uplift+'</small></div></div>'+
+        '<div class="ovp"><div class="l">Significance</div><div class="v" style="font-size:13px;padding-top:5px">'+sigBadge(o.winner.p2bc)+'</div></div>'+
+        '<div class="ovp"><div class="l">Est. monthly impact</div><div class="v" style="font-size:17px">'+o.est_monthly_impact+
+          '</div><div style="font-size:10px;color:var(--mut);font-weight:600;margin-top:2px">Intelligems projected</div></div>'+
+        '</div>';}
+    if(t.device||t.visitor){h+='<div class="bd-grid">';
+      if(t.device)h+=bdtab("By device",t.device,["mobile","desktop"]);
+      if(t.visitor)h+=bdtab("By visitor",t.visitor,["new","returning"]);
+      h+='</div>';}
+    if(t.read)h+='<div class="read"><b>Our read:</b> '+t.read+'</div>';
+    return h+'</div>';
+  }).join("");
+}
+
+render();
+// If served over http(s), live-load the editable files so edits show without rebuild.
+if(location.protocol!=="file:"){
+  Promise.allSettled([
+    fetch("data.json").then(r=>r.json()).then(j=>Object.assign(DATA,j)),
+    fetch("intelligems.json").then(r=>r.json()).then(j=>{IGEMS=j;}),
+    fetch("country.json").then(r=>r.json()).then(j=>{COUNTRY=j;}).catch(()=>{}),
+    fetch("insights.md").then(r=>r.text()).then(t=>{
+      const sx={};let c=null,b=[];t.split("\n").forEach(l=>{const m=l.match(/^##\s+(\w+)\s*$/);
+        if(m){if(c)sx[c]=b.join("\n").trim();c=m[1];b=[];}else if(c!=null)b.push(l);});if(c)sx[c]=b.join("\n").trim();
+      Object.assign(INSIGHTS,sx);})
+  ]).then(render);
+}
+// controls
+document.getElementById("f-funnel").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON")return;
+  document.querySelectorAll("#f-funnel button").forEach(b=>b.classList.remove("active"));e.target.classList.add("active");
+  window._crstate.funnel=e.target.dataset.v;renderCreatives();});
+document.getElementById("f-sort").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON")return;
+  document.querySelectorAll("#f-sort button").forEach(b=>b.classList.remove("active"));e.target.classList.add("active");
+  window._crstate.sort=e.target.dataset.v;renderCreatives();});
+</script>
+</body>
+</html>
