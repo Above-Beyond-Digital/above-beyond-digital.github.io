@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiki Clubhouse · Client Portal</title>
+<style>
+  :root { --pink:#F067A6; --turq:#5CC4B7; --ink:#111; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:'Montserrat','Avenir Next',-apple-system,sans-serif; background:#0d0d0d; color:#fff; min-height:100vh; }
+  .ribbon { height:8px; background:linear-gradient(90deg, var(--pink) 50%, var(--turq) 50%); }
+  header { padding:46px 24px 26px; text-align:center; }
+  .dot { width:18px; height:18px; border-radius:50%; background:var(--pink); display:inline-block; margin-right:10px; vertical-align:middle; }
+  h1 { font-weight:900; text-transform:uppercase; letter-spacing:.06em; font-size:clamp(1.5rem,4vw,2.4rem); display:inline; vertical-align:middle; }
+  .sub { color:#aaa; margin-top:10px; font-size:.95rem; }
+  main { max-width:760px; margin:0 auto; padding:18px 24px 80px; display:grid; gap:18px; }
+  a.tile { display:block; background:#171717; border:1px solid #2a2a2a; border-radius:14px; padding:26px 24px; text-decoration:none; color:#fff; transition:border-color .15s, transform .15s; }
+  a.tile:hover { border-color:var(--turq); transform:translateY(-2px); }
+  .tile h2 { font-size:1.15rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+  .tile h2 span { color:var(--turq); }
+  .tile p { color:#999; margin-top:8px; font-size:.92rem; line-height:1.5; }
+  .tag { display:inline-block; margin-top:14px; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--pink); border:1px solid var(--pink); border-radius:999px; padding:4px 12px; }
+  .soon { opacity:.45; pointer-events:none; }
+  footer { text-align:center; color:#555; font-size:.78rem; padding:30px; }
+</style>
+</head>
+<body>
+<div class="ribbon"></div>
+<header>
+  <span class="dot"></span><h1>Kiki Clubhouse</h1>
+  <div class="sub">Client portal · Above and Beyond Digital</div>
+</header>
+<main>
+  <a class="tile" href="social/review.html">
+    <h2>Social Content <span>Review</span></h2>
+    <p>Review, rate and approve upcoming Facebook and Instagram posts. Drag posts on the calendar to reschedule. Changes save live.</p>
+    <span class="tag">Live dashboard</span>
+  </a>
+  <a class="tile soon" href="#">
+    <h2>Performance <span>Reports</span></h2>
+    <p>Monthly social and event performance reporting.</p>
+    <span class="tag">Coming soon</span>
+  </a>
+</main>
+<footer>One password unlocks every page in this portal. Tick "keep me signed in" to skip the prompt next time.</footer>
+</body>
+</html>

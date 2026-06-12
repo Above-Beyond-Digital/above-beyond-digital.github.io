@@ -24,6 +24,7 @@ if (!MASTER_SECRET) {
 // Key is the portal root path. Add new portals here as needed.
 const PORTAL_GROUPS = [
   'clients/mn/portal',
+  'clients/kiki/portal',
 ];
 
 function portalKey(relPath) {

@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<!--
+  Kiki Kiki Clubhouse — Social Media Review & Approval Dashboard (v4, local)
+  Data (manifest.json + CONTENT-PLAN.md captions/hashtags + SCHEDULE-RECUT.md slots)
+  is BAKED IN below, so this opens directly with file://.
+  Just double-click the file, or for best image loading run a local server in this folder:
+      python3 -m http.server
+  then open  http://localhost:8000/dashboard.html
+  Your edits live in your browser (localStorage). Use Backup -> Export/Copy to save all edits as JSON.
+  Read-only on all assets — this file never modifies any image, spec, or the renderer.
+
+  v4 changes (12/06/2026, UX overhaul):
+   1. New branded header: pink/turq split ribbon, LIVE SYNC badge, quiet Backup menu, search, help popover.
+   2. Compact cards (one shared editor used by grid + edit modal); Approve as the primary button.
+   3. Post titles (short human names) shown beside every P-code.
+   4. Calendar thumbnails larger + readable; published P11 shown read-only; click a chip to edit; past posts layer.
+   5. Search across code/title/pillar/caption/hashtags/status.
+   6. Parked status + bottom shelf — parked posts leave the slot flow (dates recompute around them).
+   7. Floating general-feedback panel.
+   8. localStorage v4 key with automatic migration from the v3 snapshot (your live edits are preserved).
+
+  v4.1 changes (12/06/2026, client feedback round):
+   1. Search hardened (Enter/Escape, render guarded so one bad post can't break it).
+   2. Card head zone fixed height — every gallery starts at the same y (title clamps, tags single-line).
+   3. Feedback FAB raised z-index, hidden only behind the open modal/lightbox.
+   4. Sync indicator: auto-retry once after 2s, success clears the failed state, tooltip shows the HTTP error.
+   5. Variant auto-reject syncs BOTH rows with retry + reconciles on load.
+   6. More menu: single "Set to draft"; "Mark published" tooltip; new "Publish now".
+   7. Alternate cover selection ("Use this cover" in strip + lightbox) → design_attrs.cover_choice.
+   8. Sibling switcher in the modal (View P1 / View P1B); A/B badge on calendar chips.
+   9. Calendar chips full-colour; status by border + tiny status tag (only search dims).
+  10. Per-post Instagram collaborators + Tag people (chips, datalist bank), synced to queue columns.
+  11. New 19-slot schedule re-cut; LS key bumped to v4_1 (migrates v4 forward, overrides only schedule/time).
+
+  v4.2 changes (12/06/2026, surgical fixes):
+   1. Calendar drag-drop fixed: chip thumbnails set draggable=false so the chip (not the
+      native image drag) is the sole drag source; drop handler hardened (null dataTransfer
+      guard + recovers the dragged id from dataTransfer if calDragId was cleared mid-render).
+      List-card thumbnails also draggable=false for parity. No drag JS logic otherwise changed.
+   2. General-feedback FAB + panel removed entirely (feedback now comes via another channel):
+      button, panel, CSS, handlers, renderFeedbackList and the dormant kiki_general_feedback
+      POST path all deleted — no dead listeners. state.__generalFeedback is still initialised
+      and still exported (read-compatible) so any existing entries survive in Export JSON.
+   3. P10 gallery rebaked from manifest: cover re-rendered (cover gets ?v=2 to bust image cache,
+      harmless on file://); IMG_1009 removed from slides (it became the cover background), so
+      the gallery is now cover + 4 slides = 5 frames ("1 / 5").
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiki · Social Review · June to August 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Montserrat (brand). Must fail silently offline — system fallback stack below. -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" onerror="/* offline: system fonts */">
+<style>
+  :root{
+    --pink:#F067A6; --turq:#5CC4B7; --pink-deep:#C84B86; --turq-deep:#3FA89A;
+    --black:#000; --white:#fff;
+    --ink:#16161a; --muted:#6b6b73; --line:#e7e7ec; --bg:#faf7f9;
+    --draft:#9a9aa3; --needs:#e8915b; --approved:#5CC4B7; --published:#F067A6;
+    --rejected:#8a8a93; --parked:#5b6470; /* distinct muted slate */
+    --head:'Montserrat',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.45;}
+  a{color:var(--pink)}
+
+  /* ===== Header ===== */
+  header{position:sticky;top:0;z-index:50;background:var(--black);color:var(--white);
+    box-shadow:0 2px 14px rgba(0,0,0,.18)}
+  /* pink/turq split top ribbon (brand signature) */
+  .ribbon{height:6px;background:linear-gradient(90deg,var(--pink) 0 50%,var(--turq) 50% 100%)}
+  .h-inner{padding:14px 22px;display:flex;flex-direction:column;gap:11px}
+  .h-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .brand .dot{width:14px;height:14px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 4px rgba(240,103,166,.25);flex:none}
+  .brand h1{font-family:var(--head);font-size:16px;margin:0;font-weight:900;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap}
+  .brand .sub{font-size:11.5px;color:#bdbdc7;margin-top:2px}
+  .h-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+  .livesync{font-size:11px;font-weight:800;letter-spacing:.3px;padding:5px 10px;border-radius:999px;
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;text-transform:uppercase}
+  .livesync.on{background:rgba(92,196,183,.16);color:var(--turq);border:1px solid rgba(92,196,183,.5)}
+  .livesync.off{background:#1d1d22;color:#9a9aa3;border:1px solid #2a2a31}
+
+  /* quiet backup menu */
+  .menu{position:relative}
+  .menu-btn{font:inherit;font-size:12px;font-weight:700;background:#1d1d22;color:#cfcfd6;border:1px solid #2a2a31;
+    border-radius:8px;padding:7px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .menu-btn:hover{border-color:#3a3a42}
+  .menu-pop{position:absolute;right:0;top:calc(100% + 6px);background:#1d1d22;border:1px solid #2a2a31;
+    border-radius:10px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:60}
+  .menu-pop.on{display:block}
+  .menu-pop button{display:block;width:100%;text-align:left;font:inherit;font-size:13px;color:#e6e6ee;
+    background:none;border:0;border-radius:6px;padding:8px 10px;cursor:pointer}
+  .menu-pop button:hover{background:#2a2a31}
+
+  .tabs{display:flex;gap:6px}
+  .tab{font-family:var(--head);font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    padding:8px 18px;border-radius:999px;cursor:pointer;
+    background:#1d1d22;color:#cfcfd6;border:1px solid #2a2a31;user-select:none}
+  .tab.active{background:var(--pink);color:#fff;border-color:var(--pink)}
+
+  .search-wrap{position:relative;flex:1;min-width:180px;max-width:340px}
+  .search-wrap input{width:100%;font:inherit;font-size:13px;padding:8px 30px 8px 12px;border-radius:999px;
+    border:1px solid #2a2a31;background:#1d1d22;color:#fff}
+  .search-wrap input::placeholder{color:#8a8a93}
+  .search-wrap .clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:0;
+    color:#9a9aa3;font-size:16px;cursor:pointer;display:none;line-height:1}
+  .search-wrap .clr.on{display:block}
+
+  /* help popover */
+  .help-btn{width:30px;height:30px;border-radius:50%;border:1px solid #2a2a31;background:#1d1d22;color:#cfcfd6;
+    font-weight:800;font-size:14px;cursor:pointer;flex:none}
+  .help-btn:hover{border-color:var(--pink);color:#fff}
+  .help-pop{position:absolute;right:22px;top:96px;z-index:70;max-width:380px;background:#fff;color:var(--ink);
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,.28);
+    font-size:12.5px;line-height:1.5;display:none}
+  .help-pop.on{display:block}
+  .help-pop h3{margin:0 0 6px;font-family:var(--head);font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+  .help-pop ul{margin:6px 0 0;padding-left:18px}
+  .help-pop li{margin:3px 0}
+
+  /* status pills with colour swatches (legend baked in) */
+  .stats{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:700;padding:6px 11px;border-radius:999px;background:#1d1d22;color:#fff;
+    display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:1px solid #2a2a31;user-select:none}
+  .pill.active{outline:2px solid var(--pink)}
+  .pill .c{font-weight:900}
+  .swatch{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+  .btn{font:inherit;font-size:13px;font-weight:800;border:0;border-radius:8px;padding:9px 15px;cursor:pointer;
+    font-family:var(--head);text-transform:uppercase;letter-spacing:.3px}
+  /* primary button: hard offset shadow */
+  .btn-turq{background:var(--turq);color:#06342f;box-shadow:4px 4px 0 0 var(--turq-deep)}
+  .btn-turq:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 0 var(--turq-deep)}
+  .btn-pink{background:var(--pink);color:#fff;box-shadow:4px 4px 0 0 var(--pink-deep)}
+  .btn-needs{background:#fff;color:var(--needs);border:2px solid var(--needs)}
+  .btn-needs:hover{background:#fff6ef}
+  .btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+
+  main{max-width:1180px;margin:0 auto;padding:22px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+
+  /* ===== Parked shelf ===== */
+  .shelf{margin-top:30px;border-top:2px dashed var(--line);padding-top:18px}
+  .shelf h2{font-family:var(--head);font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--parked);margin:0 0 12px}
+  .shelf .grid{opacity:.96}
+
+  /* ===== Card ===== */
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card.st-approved{border-color:var(--approved)}
+  .card.st-needs-changes{border-color:var(--needs)}
+  .card.st-published{border-color:var(--published)}
+  .card.st-rejected{border-color:#c2c2cb;opacity:.82}
+  .card.st-parked{border-color:var(--parked);opacity:.9}
+  /* Fixed-height head zone so every gallery starts at the same y, regardless
+     of how many pillar/format/type tags a post has (bug 2). */
+  .card-head{padding:11px 13px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    border-bottom:1px solid var(--line);height:108px;overflow:hidden}
+  .head-l{min-width:0;display:flex;flex-direction:column;flex:1;min-height:0}
+  .head-line1{display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0}
+  .seqno{font-family:var(--head);font-size:11px;font-weight:800;color:#fff;background:var(--black);border-radius:6px;padding:3px 7px;flex:none}
+  .pid{font-family:var(--head);font-weight:900;font-size:14px;flex:none}
+  /* title clamps to one line with ellipsis (full text in title tooltip) */
+  .ptitle{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;display:block}
+  .vbadge{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:5px;
+    background:#efe3f4;color:#8a3a9a;border:1px solid #d9b9e4;flex:none}
+  .abbadge{font-size:9px;font-weight:800;letter-spacing:.4px;padding:1px 5px;border-radius:4px;
+    background:#fde7f1;color:#b23c7a;border:1px solid #f3b8d4;flex:none}
+  /* single-line meta row: tags clip with overflow, stars stay inline at end */
+  .meta-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;margin-top:auto;min-width:0;height:22px}
+  .tags{display:flex;gap:5px;flex-wrap:nowrap;overflow:hidden;min-width:0;flex:1;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  .tag{flex:none}
+  .rating-mini{flex:none;display:inline-flex;align-items:center;gap:5px}
+  .tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+  .tag.pillar{background:rgba(92,196,183,.14);border-color:rgba(92,196,183,.4);color:#2c7d72}
+  .tag.format{background:rgba(240,103,166,.12);border-color:rgba(240,103,166,.35);color:#b23c7a}
+  .tag.type{background:#f1f1f4;color:#555}
+  .tag.event{background:#fff5d6;border-color:#f0d98a;color:#8a6a00}
+  .head-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
+
+  /* mini inline stars */
+  .stars{display:inline-flex;gap:2px}
+  .stars button{font:inherit;font-size:17px;line-height:1;background:none;border:0;cursor:pointer;color:#d9d9e0;padding:0;transition:color .12s,transform .12s}
+  .stars button:hover{transform:scale(1.14)}
+  .stars button.on{color:#f3b13b}
+  .rclear{font-size:10px;font-weight:700;color:var(--muted);background:none;border:0;cursor:pointer;text-decoration:underline}
+  .rlabel{font-size:10px;color:var(--muted);font-weight:700}
+
+  /* Gallery */
+  .gallery{position:relative;background:#0d0d10;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .gallery img{width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:0;
+    width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .nav:hover{background:var(--pink)}
+  .nav.prev{left:8px}.nav.next{right:8px}
+  .dots{position:absolute;bottom:8px;left:0;right:0;display:flex;gap:6px;justify-content:center}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);display:block}
+  .dots i.on{background:var(--pink)}
+  .counter{position:absolute;top:8px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+  .altstrip{position:absolute;left:8px;bottom:8px;display:flex;gap:7px;align-items:flex-end;max-width:calc(100% - 16px);flex-wrap:wrap}
+  .altwrap{display:flex;flex-direction:column;gap:3px;align-items:center}
+  .altstrip img{width:40px;height:50px;object-fit:cover;border-radius:5px;border:2px solid rgba(255,255,255,.6);cursor:zoom-in;background:#0d0d10}
+  .altstrip img.chosen{border-color:var(--turq);box-shadow:0 0 0 2px var(--turq)}
+  .usecover{font:inherit;font-size:9px;font-weight:800;letter-spacing:.2px;text-transform:uppercase;
+    background:rgba(0,0,0,.62);color:#fff;border:0;border-radius:5px;padding:2px 5px;cursor:pointer;white-space:nowrap}
+  .usecover:hover{background:var(--turq);color:#06342f}
+  .altbadge{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:6px;
+    background:rgba(92,196,183,.92);color:#06342f;font-size:10px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.3px;padding:3px 8px;border-radius:6px}
+  .altbadge .revertcover{font:inherit;font-size:9px;font-weight:800;background:#06342f;color:#fff;border:0;
+    border-radius:4px;padding:2px 5px;cursor:pointer}
+
+  .body{padding:12px 13px;display:flex;flex-direction:column;gap:10px}
+  label.fld{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);display:block;margin-bottom:4px}
+  select,textarea,input[type=date],input[type=time]{font:inherit;font-size:13px;width:100%;border:1px solid var(--line);
+    border-radius:8px;padding:8px;background:#fff;color:var(--ink);resize:vertical}
+  textarea{min-height:80px;line-height:1.4}
+  textarea.cap{min-height:130px}
+  textarea.small{min-height:54px}
+
+  /* action row */
+  .actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .actions .btn{padding:8px 13px;font-size:12px}
+  .more-wrap{position:relative}
+  .more-pop{position:absolute;left:0;bottom:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:6px;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,.18);display:none;z-index:40}
+  .more-pop.on{display:block}
+  .more-pop button{display:block;width:100%;text-align:left;font:inherit;font-size:13px;color:var(--ink);
+    background:none;border:0;border-radius:6px;padding:8px 10px;cursor:pointer}
+  .more-pop button:hover{background:#f3f3f7}
+  .more-pop button:disabled{color:#c2c2cb;cursor:not-allowed}
+
+  /* one-line schedule, expands */
+  .schedline{font-size:12px}
+  .schedline summary{cursor:pointer;color:var(--muted);font-weight:700;list-style:none;display:flex;align-items:center;gap:6px}
+  .schedline summary::-webkit-details-marker{display:none}
+  .schedline summary::before{content:"\1F4C5";}
+  .schedline[open] summary{margin-bottom:8px}
+  .sched{display:grid;grid-template-columns:1fr 110px;gap:8px}
+
+  .stchip{font-family:var(--head);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:4px 8px;border-radius:6px;color:#fff;white-space:nowrap}
+  .chip-draft{background:var(--draft)}
+  .chip-needs-changes{background:var(--needs)}
+  .chip-approved{background:var(--approved)}
+  .chip-published{background:var(--published)}
+  .chip-rejected{background:var(--rejected)}
+  .chip-parked{background:var(--parked)}
+
+  .vlink{font-size:11px;font-weight:700;background:#f6edfa;border:1px dashed #c79ad6;border-radius:8px;padding:7px 10px;color:#7a2f8c}
+  .parkbanner{font-size:11px;font-weight:700;background:#eef0f3;border:1px dashed var(--parked);border-radius:8px;padding:7px 10px;color:var(--parked)}
+  .note{font-size:12px;background:#fff8fb;border:1px dashed var(--pink);border-radius:8px;padding:8px 10px;color:#8a3a66}
+  .saved{font-size:11px;color:var(--turq);font-weight:700;opacity:0;transition:opacity .2s}
+  .saved.show{opacity:1}
+
+  details.coll{font-size:12px;background:#f7f7fa;border:1px solid var(--line);border-radius:8px;padding:0}
+  details.coll summary{cursor:pointer;font-weight:700;color:var(--muted);padding:8px 10px;list-style:none}
+  details.coll summary::-webkit-details-marker{display:none}
+  details.coll summary::before{content:"\25B8 ";color:var(--muted)}
+  details.coll[open] summary::before{content:"\25BE "}
+  details.coll .cbody{padding:0 10px 10px;display:flex;flex-direction:column;gap:8px}
+  .tagfield{display:flex;flex-direction:column;gap:5px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#2c7d72;
+    background:rgba(92,196,183,.14);border:1px solid rgba(92,196,183,.45);border-radius:999px;padding:3px 8px}
+  .chip-tag .chiprm{background:none;border:0;color:#2c7d72;font-size:13px;line-height:1;cursor:pointer;padding:0 0 0 2px}
+  .chip-tag .chiprm:hover{color:#a52828}
+  .tagin{font-size:12.5px}
+  .finefont{font-size:10.5px;color:var(--muted);line-height:1.4;font-style:italic}
+  .cap-preview{font-weight:400;color:var(--ink);opacity:.7;font-size:11.5px}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+
+  /* ===== Calendar tab (month grid) ===== */
+  .calwrap{display:flex;flex-direction:column;gap:30px}
+  .cal-help{font-size:12.5px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+  .month{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);min-width:760px}
+  .month-scroll{overflow-x:auto}
+  .month h2{font-family:var(--head);margin:0;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;padding:13px 16px;background:var(--black);color:#fff}
+  .dow{display:grid;grid-template-columns:repeat(7,1fr);background:#f1f1f4;border-bottom:1px solid var(--line)}
+  .dow span{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);text-align:center;padding:8px 0}
+  .weeks{display:grid;grid-template-columns:repeat(7,1fr)}
+  .daycell{min-height:190px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:5px 6px;
+    display:flex;flex-direction:column;gap:5px;background:#fff}
+  .daycell:nth-child(7n){border-right:0}
+  .daycell.empty{background:#fafafd}
+  .daycell.drop{background:#eafaf7;box-shadow:inset 0 0 0 2px var(--turq)}
+  .daycell .dn{font-size:11px;font-weight:700;color:var(--muted)}
+  .calposts{display:flex;flex-wrap:wrap;gap:6px}
+  .calpost{position:relative;width:104px;background:#fff;border:1px solid var(--line);
+    border-radius:8px;overflow:hidden;cursor:pointer;user-select:none}
+  .calpost[draggable="true"]{cursor:grab}
+  .calpost.locked{cursor:pointer;border-style:dashed}
+  .calpost.dragging{opacity:.4}
+  .calpost img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#0d0d10}
+  .calpost .cmeta{padding:3px 5px;line-height:1.2}
+  .calpost .cmeta b{font-size:10.5px;font-weight:800;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .calpost .cmeta small{font-size:9px;color:var(--muted)}
+  .calpost .lk{position:absolute;top:3px;right:4px;font-size:11px;text-shadow:0 0 3px #fff}
+  /* status by border colour only — all thumbnails full colour (bug 9) */
+  .calpost{border-width:2px}
+  .calpost.st-needs-changes{border-color:var(--needs)}
+  .calpost.st-approved{border-color:var(--approved)}
+  .calpost.st-published{border-color:var(--published)}
+  .calpost.st-draft{border-color:var(--draft)}
+  .calpost.published-chip{cursor:default}
+  /* tiny status tag under the title */
+  .calstatus{display:block;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;
+    margin-top:1px;padding:1px 4px;border-radius:3px;color:#fff;width:max-content;max-width:100%}
+  .calstatus.s-approved{background:var(--approved)}
+  .calstatus.s-needs-changes{background:var(--needs)}
+  .calstatus.s-published{background:var(--published)}
+  .calstatus.s-draft{background:var(--draft)}
+  /* A/B badge on chips that have a sibling variant */
+  .calab{position:absolute;top:3px;left:4px;font-size:8px;font-weight:800;letter-spacing:.3px;
+    background:#fde7f1;color:#b23c7a;border:1px solid #f3b8d4;border-radius:4px;padding:0 3px;text-shadow:none}
+  /* past (history) chips: ~60% size, muted */
+  .calpost.past{width:62px;opacity:.62;filter:saturate(.45)}
+  .calpost.past .cmeta b{font-size:9px}
+  .calpost.past .pasttag{position:absolute;top:2px;left:3px;font-size:7.5px;font-weight:800;text-transform:uppercase;
+    background:rgba(0,0,0,.55);color:#fff;padding:1px 4px;border-radius:4px}
+  /* search dimming */
+  .calpost.dim{opacity:.22}
+  .calpost.match{box-shadow:0 0 0 2px var(--pink)}
+
+  /* ===== Edit modal ===== */
+  .modal{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);display:none;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto}
+  .modal.on{display:flex}
+  .modal-box{background:var(--bg);width:100%;max-width:520px;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .modal-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--black);color:#fff}
+  .modal-bar h3{font-family:var(--head);margin:0;font-size:14px;text-transform:uppercase;letter-spacing:.4px}
+  .modal-bar .mclose{background:rgba(255,255,255,.12);color:#fff;border:0;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1}
+  .modal-content{padding:0}
+  .modal-content .card{border:0;border-radius:0;box-shadow:none}
+  .vswitcher{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;background:#f6edfa;
+    border-bottom:1px solid var(--line);font-size:12px;font-weight:700;color:#7a2f8c}
+  .vswitch{font:inherit;font-size:12px;font-weight:800;background:#fff;color:#7a2f8c;border:1px solid #d9b9e4;
+    border-radius:8px;padding:6px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .vswitch.on{background:#7a2f8c;color:#fff;border-color:#7a2f8c}
+  .vsw-st{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:1px 5px;border-radius:4px;color:#fff;background:var(--draft)}
+  .vsw-st.s-approved{background:var(--approved)} .vsw-st.s-needs-changes{background:var(--needs)}
+  .vsw-st.s-rejected{background:var(--rejected)} .vsw-st.s-published{background:var(--published)} .vsw-st.s-parked{background:var(--parked)}
+
+  /* ===== Lightbox (above modal) ===== */
+  .lightbox{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.88);display:none;
+    align-items:center;justify-content:center;padding:30px}
+  .lightbox.on{display:flex}
+  .lightbox img{max-width:96vw;max-height:92vh;object-fit:contain;border-radius:6px;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+  .lightbox .lbclose{position:absolute;top:16px;right:20px;background:rgba(255,255,255,.12);color:#fff;border:0;
+    width:42px;height:42px;border-radius:50%;font-size:24px;cursor:pointer;line-height:1}
+  .lightbox .lbnav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);color:#fff;border:0;
+    width:48px;height:48px;border-radius:50%;font-size:26px;cursor:pointer}
+  .lightbox .lbnav.prev{left:20px}.lightbox .lbnav.next{right:20px}
+  .lightbox .lbcap{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#fff;font-size:12px;font-weight:700;opacity:.85;padding:0 40px}
+  .lightbox .lbusecover{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+    font:inherit;font-family:var(--head);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;
+    background:var(--turq);color:#06342f;border:0;border-radius:8px;padding:10px 18px;cursor:pointer;box-shadow:4px 4px 0 0 var(--turq-deep)}
+
+  /* Drag affordances */
+  .draghandle{font-size:15px;color:var(--muted);cursor:grab;line-height:1;user-select:none}
+  .draghandle.locked{cursor:not-allowed}
+  .card.dragging{opacity:.45}
+  .card.dropbefore{box-shadow:0 -3px 0 0 var(--pink), 0 1px 3px rgba(0,0,0,.04)}
+  .card.locked{border-style:dashed}
+
+  /* sync dot */
+  .sync{font-size:10px;font-weight:800;padding:3px 7px;border-radius:6px;display:inline-flex;
+    align-items:center;gap:5px;white-space:nowrap}
+  .sync.pending{background:#fff3d6;color:#8a6a00}
+  .sync.ok{background:rgba(92,196,183,.18);color:#2c7d72}
+  .sync.failed{background:#fde2e2;color:#a52828}
+  .sync .syncretry{font:inherit;font-size:10px;font-weight:800;background:#a52828;color:#fff;border:0;
+    border-radius:4px;padding:2px 6px;cursor:pointer}
+
+  .hide{display:none !important}
+
+  @media(max-width:430px){
+    .h-inner{padding:12px 14px}
+    .search-wrap{max-width:none;order:3;flex-basis:100%}
+    .brand h1{font-size:14px;white-space:normal}
+    main{padding:14px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="ribbon"></div>
+  <div class="h-inner">
+    <!-- Row 1: brand + live sync + backup -->
+    <div class="h-row">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <h1>KIKI CLUBHOUSE · SOCIAL REVIEW</h1>
+          <div class="sub">June to August 2026 · 3 posts per week · review, rate, approve</div>
+        </div>
+      </div>
+      <div class="h-right">
+        <span id="livesync" class="livesync off">LIVE SYNC ✗ local only</span>
+        <div class="menu">
+          <button class="menu-btn" id="backupBtn">Backup ▾</button>
+          <div class="menu-pop" id="backupPop">
+            <button id="exportBtn">Export JSON</button>
+            <button id="copyBtn">Copy to clipboard</button>
+            <button id="resetBtn">Reset my edits</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row 2: tabs + search + help -->
+    <div class="h-row">
+      <div class="tabs">
+        <div class="tab active" data-tab="posts">Posts</div>
+        <div class="tab" data-tab="calendar">Calendar</div>
+      </div>
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Search posts (code, title, pillar, caption…)" autocomplete="off">
+        <button class="clr" id="searchClr" title="Clear search">&times;</button>
+      </div>
+      <button class="help-btn" id="helpBtn" title="How this works">?</button>
+    </div>
+    <!-- Row 3: status pills (with colour swatches = legend) -->
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="help-pop" id="helpPop">
+  <h3>How this works</h3>
+  <ul>
+    <li>Review, rate (stars) and set a status on each post. Approve is the green button; other statuses are under <b>More</b>.</li>
+    <li>Approving one variant of a pair (P1 / P1B) automatically rejects the other. Only the approved one holds the slot.</li>
+    <li>Drag a card by its handle, or drag a calendar thumbnail, to reschedule. The lock icon means a pinned anniversary date that cannot move.</li>
+    <li><b>Park</b> a post to take it off the schedule for now: the dates after it shift up to fill the gap. Unpark to restore its place.</li>
+    <li>Click any image to view it full size. Click a calendar thumbnail to open the full editor.</li>
+    <li>Search filters the Posts tab and highlights matches on the calendar. Drag reordering is paused while searching or filtering.</li>
+    <li>Edits save to your browser instantly. Backup ▾ exports a JSON copy.</li>
+  </ul>
+</div>
+
+<main>
+  <div id="view-posts">
+    <div class="grid" id="grid"></div>
+    <div class="shelf hide" id="parkedShelf">
+      <h2>Parked — off the schedule</h2>
+      <div class="grid" id="parkedGrid"></div>
+    </div>
+  </div>
+  <div id="view-calendar" class="hide">
+    <div class="calwrap">
+      <div class="cal-help">Each scheduled post shows as its image on its day. Drag a thumbnail to any other day to reschedule it (the date changes, the time stays the same). Click a thumbnail to open the full editor. Posts with a lock icon are pinned to a real-world anniversary and cannot be moved. Smaller faded chips are past posts already published.</div>
+      <div id="months"></div>
+    </div>
+  </div>
+</main>
+<footer>Kiki Kiki Clubhouse · local review tool · edits stored in your browser · Australian English</footer>
+
+<!-- Edit modal -->
+<div class="modal" id="editModal">
+  <div class="modal-box">
+    <div class="modal-bar">
+      <h3 id="modalTitle">Edit post</h3>
+      <button class="mclose" id="modalClose" title="Close (Esc)">&times;</button>
+    </div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<!-- Username autocomplete bank (collaborators + tags) -->
+<datalist id="tagbank"></datalist>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lbclose" id="lbClose" title="Close (Esc)">&times;</button>
+  <button class="lbnav prev" id="lbPrev" title="Previous">&#8249;</button>
+  <button class="lbnav next" id="lbNext" title="Next">&#8250;</button>
+  <img id="lbImg" src="" alt="full size image">
+  <button class="lbusecover" id="lbUseCover" style="display:none">Use this cover</button>
+  <div class="lbcap" id="lbCap"></div>
+</div>
+
+<script>window.KIKI_SUPABASE_CFG = {url: "https://irddtuhvxzfknrnkykgn.supabase.co", anonKey: "sb_publishable_SoUsPXCRHp8gDG5rzB1nNA__vhqWTKX"};</script>
+<script>
+/* ============================================================
+   SUPABASE WRITE-BACK CONFIG  (dormant until configured)
+   ------------------------------------------------------------
+   Leave BOTH strings empty for local-only mode (localStorage +
+   Export JSON). Fill BOTH (or via dashboard-config.local.js) to
+   turn on fire-and-forget writes on every change.
+   NEVER commit a real key here — keep both empty in the repo.
+   ============================================================ */
+const SUPABASE_CFG = { url: "", anonKey: "" };
+if (window.KIKI_SUPABASE_CFG) Object.assign(SUPABASE_CFG, window.KIKI_SUPABASE_CFG);
+const SB_ON = () => !!(SUPABASE_CFG.url && SUPABASE_CFG.anonKey);
+const SB_MONTH = "2026-06";
+
+/* Posts pinned to a real-world anniversary — excluded from reorder/park. */
+const LOCKED_IDS = ["P7","P15"];
+const isLocked = id => LOCKED_IDS.includes(id);
+
+/* ============================================================
+   BAKED DATA — manifest.json (asset truth) merged with
+   CONTENT-PLAN.md captions/hashtags + the client's 12/06 review
+   (statuses, feedback, ACTIONED notes, ratings) + SCHEDULE-RECUT.md
+   slots. v4 adds short human `title`s, closing-card slides and the
+   P1B alternates array (per the rebuilt manifest).
+   ============================================================ */
+const POSTS = [
+ {id:"P11",title:"The name story",pillar:"vision",format:"single",type:"photo",status:"published",
+  cover:"post11/p11_photo_cover_turq.png",slides:[],
+  alts:["post11/p11_photo_cover.png","post11/photo/social/01_him_alex.jpg","post11/p11_founder.png"],
+  event:"",schedule:"2026-06-11",time:"19:00",feedback:"",imageFeedback:"",
+  note:"PUBLISHED (turquoise version chosen) — FB + IG, 11 Jun. Not on the schedule grid.",
+  caption:`I had the idea for Kiki long before I had the name.
+
+For years I'd loved the Scissor Sisters song "Let's Have a Kiki", and from the song I'd always assumed a kiki was a kind of after-party. A keep-the-night-going, back-to-someone's-place sort of thing.
+
+Then, on holiday with my partner Alex (who helps me run Kiki), a friend put us straight. The word comes from Black queer and ballroom culture, and it means something quieter and better than I'd thought: close friends getting together to properly talk. To share stories, swap a bit of gossip, actually catch up. The opposite of a big anonymous night out.
+
+And there it was. The whole thing I'd been trying to build, sitting in a word I'd been getting slightly wrong for years. A room of close friends. Real conversation. Friendships made on purpose.
+
+So we borrowed the name, with respect to where it comes from, and we've been trying to live up to it ever since.
+
+— Liam, founder`,
+  hashtags:"#KikiClubhouse #QueerSydney #ChosenFamily #BallroomCulture #QueerHistory"},
+
+ {id:"P1",title:"Making friends as an adult",pillar:"educational",format:"carousel",type:"designed",status:"needs-changes",
+  variant_group:"P1",variant_of:null,variant_label:"Variant A",
+  cover:"post3/p3_cover.png",slides:["post3/p3_t1.png","post3/p3_t2.png","post3/p3_t3.png","post3/p3_t4.png","post3/p3_t5.png","post3/p1_closing.png"],
+  alts:[],event:"",feedback:"",
+  imageFeedback:"I love this image but we use it on quite a few posts in this batch and don't want repitition. Given this post is not about young people and old people coming together, intergenerational friendships, maybe we should just have some older people in their forties or fifties. But do it as an alternate copy and keep this original one because it's quite good as it is, though. We could change one of the other photos.",
+  note:"ACTIONED 12/06: original cover kept (Liam likes it). The alternate cover is now its own P1B variant card so each can be approved or rejected independently. Approving one variant rejects the other. Closing follow-CTA card added as final slide.",
+  caption:`You don't age out of wanting to make friends. You just age out of the built-in ways you used to meet them. School, share houses, the one bar everyone ended up at.
+
+So here's what actually helps. Five things, swipe through. None of it is complicated. Most of it is just showing up more than once.`,
+  hashtags:"#KikiClubhouse #MakingFriendsAsAnAdult #FriendshipTips #QueerSydney #ChosenFamily"},
+
+ {id:"P1B",title:"Making friends (alt cover)",pillar:"educational",format:"carousel",type:"designed",status:"needs-changes",
+  variant_group:"P1",variant_of:"P1",variant_label:"Variant B",
+  cover:"post3/p3_cover_alt.png",slides:["post3/p3_t1.png","post3/p3_t2.png","post3/p3_t3.png","post3/p3_t4.png","post3/p3_t5.png","post3/p1_closing.png"],
+  alts:["post3/p1b_alt2.png","post3/p1b_alt3.png"],event:"",feedback:"",
+  imageFeedback:"Alternate cover (40s/50s pair) to resolve the lead-photo repetition with P13. Same carousel slides as Variant A. Two more outdoor/natural-light options with Kiki branding in frame are attached as alternates for you to pick from.",
+  note:"ACTIONED Round 3 (12/06): cover re-authored to match P1 exactly (3-line, turquoise DIFFERENT, pink pill). Primary cover stays the IMG_1257 pair. alternates[] = p1b_alt2 (IMG_1234, two 40s/50s men, triangle roundel) + p1b_alt3 (IMG_1268, four men beside the KiKi CLUBHOUSE sign). Competing variant of P1.",
+  caption:`You don't age out of wanting to make friends. You just age out of the built-in ways you used to meet them. School, share houses, the one bar everyone ended up at.
+
+So here's what actually helps. Five things, swipe through. None of it is complicated. Most of it is just showing up more than once.`,
+  hashtags:"#KikiClubhouse #MakingFriendsAsAnAdult #FriendshipTips #QueerSydney #ChosenFamily"},
+
+ {id:"P4",title:"Calendar invite friendship",pillar:"relatable",format:"single",type:"designed",status:"approved",
+  cover:"post4/p4_schedule.png",slides:[],alts:[],event:"",note:"",
+  caption:`Somewhere after 30, friendship stopped being a thing that just happened in hallways and share-house kitchens. Now it's a calendar invite, a "still good for Thursday?", a reschedule, and then a reschedule of the reschedule.
+
+We're not complaining. We're just saying: the person who finally gets the date in the diary is the one holding the whole friendship together. That's real work, and it usually goes unthanked.
+
+(Or you let us handle the scheduling. That part's our whole thing.)`,
+  hashtags:"#KikiClubhouse #MakingFriendsAsAnAdult #AdultFriendship #QueerSydney #FindYourPeople"},
+
+ {id:"P2",title:"Where chosen family began",pillar:"tribute",format:"single",type:"designed",status:"approved",
+  cover:"post2/p2_ballroom.png",slides:[],alts:[],event:"",note:"",
+  caption:`Chosen family didn't start as a phrase on a tote bag. It started in the ballroom houses of Black and Latinx queer New York, where a house mother took in the kids the world had turned out, fed them, and taught them how to move through a city that wanted them gone.
+
+The houses competed on the floor at the balls. Off it, they were something closer to home: shelter, safety, a name to belong to when your own had been taken away.
+
+The words so many of us use now were built there, under real stakes, by people who rarely get the credit.
+
+If chosen family means something to you, it's worth knowing whose hands made it.`,
+  hashtags:"#KikiClubhouse #BallroomCulture #HouseBallroom #QueerHistory #ChosenFamily"},
+
+ {id:"P3",title:"A good room full of great people",pillar:"community",format:"carousel",type:"photo",status:"approved",
+  cover:"post3/p3_community_cover.png",
+  slides:["post3/social/01_IMG_1029.jpg","post3/social/02_IMG_1066.jpg","post3/social/03_IMG_1274.jpg","post3/social/04_IMG_1270.jpg"],
+  alts:[],event:"Autumn Kiki Mar 2026",feedback:"",imageFeedback:"",note:"",
+  caption:`Somewhere between the first awkward hello and the second drink, a Kiki afternoon turns into this.
+
+People who arrived not knowing many faces, leaning into conversations like they've been having them for years. No agenda. No performance. Just a good room full of great people.
+
+Swipe through. This is the whole pitch, honestly.
+
+Tag someone you'd want to be with in the photo next time.`,
+  hashtags:"#KikiClubhouse #QueerSydney #SydneyEvents #QueerJoy #ChosenFamily"},
+
+ {id:"P5",title:"Picked on purpose",pillar:"vision",format:"single",type:"designed",status:"approved",
+  cover:"post5/p5_chosenfamily.png",slides:[],alts:[],event:"",feedback:"",rating:5,
+  imageFeedback:"I love this design, this is a really good example of how to utilise the brand elements as a feature in a way that is refined and makes it easy to read. 5 stars.",
+  note:"Liam's 5-star exemplar — the reference for refined brand-element use.",
+  caption:`You don't age out of needing people who pick you on purpose.
+
+The ones who text first. Who remember the thing you mentioned once. Who'd notice if you went quiet for a week.
+
+That's harder to build at 40 than it was at 20, and nobody warns you. So we made somewhere it happens on purpose. Real people, low stakes.
+
+Come find yours. 🩷`,
+  hashtags:"#KikiClubhouse #ChosenFamily #FindYourPeople #QueerSydney #FoundFamily"},
+
+ {id:"P7",title:"Stonewall",pillar:"tribute",format:"single",type:"designed",status:"approved",
+  cover:"post7/p7_stonewall.png",slides:[],alts:[],event:"",
+  note:"Date-locked: Stonewall anniversary, 28 Jun.",
+  caption:`In the early hours of 28 June 1969, police raided the Stonewall Inn in New York, the way they routinely raided queer bars. This time the people inside didn't scatter. They fought back, and kept fighting for days.
+
+The ones who started it had the most to risk and the least to lose: trans women of colour, drag queens, butch lesbians, homeless queer kids. Marsha P. Johnson and Sylvia Rivera were part of that world, and spent the rest of their lives looking after the people the movement kept forgetting.
+
+The first Pride wasn't a party. It was an anniversary march, one year on, for the people who'd refused to scatter.
+
+Everything traces back to that night. The marches, the movement, the very first Sydney Mardi Gras in 1978. Us, here, now.
+
+We mark our own day in March. But this one belongs to all of us. Today, we're just remembering them.`,
+  hashtags:"#KikiClubhouse #Stonewall #QueerHistory #MarshaPJohnson #OnThisGayDay"},
+
+ {id:"P9",title:"The science of friendship",pillar:"educational",format:"carousel",type:"designed",status:"needs-changes",
+  cover:"post9/p9_cover.png",slides:["post9/p9_t1.png","post9/p9_t2.png","post9/p9_t3.png","post9/p9_closing.png"],
+  alts:[],event:"",feedback:"",
+  imageFeedback:"Needs a better cover photo that better aligns to the copy and carousel cards. What the post is about.",
+  note:"ACTIONED 12/06: cover photo swapped to IMG_1264 (two ~40s friends, arm round shoulder) so the lead image matches the carousel. Closing follow-CTA card added as final slide.",
+  caption:`Why is it so much harder to make friends at 40 than at 20? It isn't you.
+
+The research is almost annoyingly simple. Friendship isn't built on chemistry or good intentions. It's built on hours. Repeated time, same place, same people. Proximity does the work that "we should catch up" keeps promising to.
+
+At 20 you had that by default: school, share houses, the same bar every week. At 40 you have to build it on purpose.
+
+Swipe for the how.`,
+  hashtags:"#KikiClubhouse #MakingFriendsAsAnAdult #FriendshipTips #SocialConnection #QueerSydney"},
+
+ {id:"P8",title:"Two hours of real talk",pillar:"community",format:"single",type:"photo",status:"approved",
+  cover:"post8/social/01_IMG_1242.jpg",slides:[],alts:[],
+  event:"Autumn Kiki Mar 2026",feedback:"",imageFeedback:"",note:"",
+  caption:`This is what two hours of actual conversation looks like. Phones away. Nobody performing. Someone mid-story and everyone leaning in.
+
+This is the whole reason we do it.`,
+  hashtags:"#KikiClubhouse #QueerSydney #ChosenFamily #QueerJoy #RealConnection"},
+
+ {id:"P12",title:"We should hang out",pillar:"relatable",format:"single",type:"designed",status:"approved",
+  cover:"post12/p12_weshould.png",slides:[],alts:[],event:"",note:"",
+  caption:`Adult friendship: 10% actually hanging out, 90% "we should hang out."
+
+The "we should" is sincere every single time. The calendar just has other ideas. Work, the commute, the eternal Sunday admin, the sheer logistical miracle of three adults being free on the same evening.
+
+So consider this your sign to turn one "we should" into an actual plan this week. Small counts. A coffee counts.
+
+We're just here to make the picking-a-day part somebody else's problem.`,
+  hashtags:"#KikiClubhouse #AdultFriendship #MakingFriendsAsAnAdult #QueerSydney #FindYourPeople"},
+
+ {id:"P13",title:"The best table",pillar:"vision",format:"single",type:"designed",status:"needs-changes",
+  cover:"post13/p13_intergen.png",slides:[],alts:[],event:"",
+  feedback:"I updated the copy. I realised we don't actually know the people in these images' age, and so to specify 30 and 60 might offend them. They might not want to be labelled as such, so we've made it a little bit more non-specific to avoid any risk. Note that as a learning for the future.",
+  imageFeedback:"Can you change the on-image text to this: THE BEST TABLE AT KIKI ISN'T ALL THE SAME AGE.\n\nAlso make our logo about 30% smaller. Whenever the logo is next to image over the text like that, it should be smaller and more discreet to not clutter or pull focus from the text. You could even choose to leave the logo off if it works better, especially when the brand is already in the photo itself.",
+  note:"ACTIONED 12/06: on-image text now 'THE BEST TABLE AT KIKI ISN'T ALL THE SAME AGE.'; logo shrunk 30% (logo_scale 0.7) and made discreet. Caption updated to age-non-specific copy (Liam's edit).",
+  caption:`There's a particular kind of conversation that only happens when the ages at the table don't match.
+
+Someone who assumes they'll have nothing in common with a person a generation older. Someone older who assumes the same. Both about to be wrong.
+
+Put them in the same room and something clicks that no peer group ever quite gives you.
+
+Queer community has always stretched across generations. We just make sure the table's actually set for it.
+
+Come sit at it.`,
+  hashtags:"#KikiClubhouse #QueerCommunity #AllAges #IntergenerationalFriendship #QueerSydney"},
+
+ {id:"P14",title:"Walking into the room",pillar:"educational",format:"carousel",type:"designed",status:"approved",
+  cover:"post14/p14_cover.png",
+  slides:["post14/p14_t1.png","post14/p14_t2.png","post14/p14_t3.png","post14/p14_t4.png","post14/p14_t5.png","post14/p14_t6.png","post14/p14_closing.png"],
+  alts:[],event:"",feedback:"",
+  imageFeedback:"This is the right place for this photo (you have repeated the same or very similar on previous posts but we're removing and replacing with others.)",
+  note:"Closing follow-CTA card added as final slide.",
+  caption:`Walking into a room full of people you don't know is, objectively, a strange thing to make yourself do. Your nervous system treats it like a genuine threat. Everyone's does, including the people who look completely fine.
+
+The good news is that it's a skill, not a personality trait, which means a few small tricks make it easier. Swipe through for the ones that actually work.
+
+And if the room in question happens to be a Kiki one: we promise the hardest part is the doorway. After that, we've got you.`,
+  hashtags:"#KikiClubhouse #MakingFriendsAsAnAdult #FriendshipTips #QueerSydney #FindYourPeople"},
+
+ {id:"P10",title:"Arrive alone, leave a group",pillar:"community",format:"carousel",type:"photo",status:"needs-changes",
+  cover:"post10/p10_cover.png?v=2",
+  slides:["post10/social/01_IMG_1248.jpg","post10/social/03_IMG_1057.jpg","post10/social/04_IMG_1015.jpg","post10/social/05_IMG_1269.jpg"],
+  alts:[],event:"Autumn Kiki Mar 2026",feedback:"",
+  imageFeedback:"Images 3 and 5 have peoples faces cut off or cut in half and need to be changed. It looks like they're landscape photos that have been cropped. Most photos we take, we take both a landscape and portrait version so you could choose the portrait equivalent. Apart from that they're good photos though.\nI am also wondering if the first photo is the best choice, I think using photo 2 in first position would work better because you see people's faces and it shows a diverse group. Where the current photo 1 you can't actually see people's faces. It does show it being busy which is good.",
+  note:"ACTIONED 12/06 (round 4): cover re-rendered on the IMG_1009 background (the originally requested photo, KiKi sign behind) with the full 'MOST PEOPLE DO.' line turquoise. IMG_1009 removed from the slides so the cover photo never repeats inside the carousel — gallery is now the cover + 4 slides (5 frames).",
+  caption:`The thing people worry about most before their first Kiki: "will I know anyone?"
+
+Usually, no. That's rather the point. Most people arrive on their own and leave with a couple of numbers and a reason to come back.
+
+These are some of those people. They didn't arrive as a group. They sort of became one.
+
+See you at the next one.`,
+  hashtags:"#KikiClubhouse #QueerSydney #FindYourPeople #SydneyLGBT #ChosenFamily"},
+
+ {id:"P6",title:"Looking after our own",pillar:"tribute",format:"single",type:"designed",status:"approved",
+  cover:"post6/p6_aids_broad.png",slides:[],alts:[],event:"",note:"",
+  caption:`During the worst years of the AIDS crisis, when hospitals hesitated and some families stayed away, this community looked after its own.
+
+Gay men nursed their friends and partners and buried them with a dignity the world wouldn't give. Lesbians showed up as carers, nurses and next of kin, often for people they barely knew. Trans women and drag performers ran the fundraisers, kept people housed, kept people fed.
+
+It was a whole web of people quietly deciding that nobody would face it alone.
+
+This community has always known how to look after its own. These are some of the people who proved it.`,
+  hashtags:"#KikiClubhouse #QueerHistory #AIDSMemorial #LGBTQCommunity #QueerSydney"},
+
+ {id:"P17",title:"By design, not by chance",pillar:"community",format:"single",type:"photo",status:"needs-changes",
+  cover:"post17/social/01_IMG_1280.jpg",slides:[],alts:[],event:"Autumn Kiki Mar 2026",feedback:"",
+  imageFeedback:"This image is repeated and should be changed. Great image though can be used elsewhere. Given this is one about icebreaker games and event design this would be a really good one to show one of the real fun photos of people playing jenga looking like they're having a great time. For example p3 photo 2 - it's ok to repeat this because it's not the grid/primary photo from p3 and there's quite a bit of time between them anyway.",
+  note:"ACTIONED 12/06: replaced the repeated trio photo with a genuine jenga shot (IMG_1280 — two people mid-game, thumbs up, Kiki sign behind).",
+  caption:`Most social events leave the talking to chance. We don't, and that's the whole point.
+
+There are name tags, so nobody's three drinks in still nodding along trying to remember a name. There's an ice-breaker game, and Kiki Kickstarters on the tables, so when a chat runs dry there's always a question to reach for. None of it is forced. It's the difference between hoping a room comes together and actually helping it.
+
+Turns out the kindest thing you can do at a friendship event is take the awkward bit off everyone's plate.
+
+That's the design.`,
+  hashtags:"#KikiClubhouse #QueerSydney #MakingFriendsAsAnAdult #SydneyEvents #FindYourPeople"},
+
+ {id:"P16",title:"Friendships built to last",pillar:"vision",format:"single",type:"designed",status:"needs-changes",
+  cover:"post16/p16_lifetime.png",slides:[],alts:[],event:"",feedback:"",
+  imageFeedback:"Can you try removing our logo from the bottom corner there. Similar to p13 - it's too big and close to the text in this instance. But give you have the pink triangle in the top corner, try putting the plain white version of the logo inside the pink triangle.",
+  note:"ACTIONED 12/06: bottom-corner logo removed; plain white logo now seated inside the pink top-right triangle. Natural home for the Village waitlist CTA once it exists.",
+  caption:`Nobody tells you adult friendship is something you build. It stops accumulating on its own. You choose it, and keep choosing it.
+
+Here's the part that makes it worth the effort: the people you find now are the ones still around decades from now. The standing Sunday catch-up that's still standing in thirty years. The friend who was there for the good years and the hard ones.
+
+We're not in this for one fun afternoon. We're building the kind of friendships that are still here in thirty years.
+
+Come find your people.`,
+  hashtags:"#KikiClubhouse #ChosenFamily #FindYourPeople #QueerSydney #FriendsOver40"},
+
+ {id:"P18",title:"Group chat reality",pillar:"relatable",format:"single",type:"designed",status:"approved",
+  cover:"post18/p18_groupchat.png",slides:[],alts:[],event:"",note:"",
+  caption:`Six people. One group chat. A combined zero plans actually in the calendar.
+
+It's not for lack of love. Everyone's keen. Everyone's just keen on a different day, and "next week" has somehow been next week since autumn.
+
+If you've ever scrolled up to find a plan that never happened, this one's for you. So we did the bit the group chat can't: picked a day, booked the place, put it in the calendar. All you have to do is show up.`,
+  hashtags:"#KikiClubhouse #AdultFriendship #MakingFriendsAsAnAdult #QueerSydney #FindYourPeople"},
+
+ {id:"P15",title:"Friendship Day",pillar:"community",format:"carousel",type:"photo",status:"approved",
+  cover:"post15/p15_cover.png",
+  slides:["post15/social/01_IMG_0996.jpg","post15/social/02_IMG_1258.jpg","post15/social/03_IMG_1262.jpg","post15/social/04_IMG_1090.jpg"],
+  alts:[],event:"Autumn Kiki Mar 2026",feedback:"",imageFeedback:"",
+  note:"Date-locked: International Friendship Day (UN date), 30 Jul.",
+  caption:`Today is International Friendship Day, and honestly, about time friendship got its own.
+
+So here's to the friends you make in a room full of strangers on a Saturday. The ones you didn't have a year ago and can't picture the week without now.
+
+Swipe through for a few of ours. Then go message yours. 🩷`,
+  hashtags:"#InternationalFriendshipDay #KikiClubhouse #QueerSydney #ChosenFamily #FindYourPeople"},
+
+ {id:"P19",title:"The Blood Sisters",pillar:"tribute",format:"single",type:"designed",status:"approved",
+  cover:"post19/p19_lesbians_aids.png",slides:[],alts:[],event:"",note:"",
+  caption:`When the AIDS crisis was at its worst, a lot of the people who showed up for gay men were lesbians.
+
+They weren't the ones the virus was hitting hardest. They came anyway. They nursed friends and strangers, sat at bedsides as next of kin, and when gay and bi men were barred from giving blood, they rolled up their own sleeves. In San Diego in 1983, a group called the Blood Sisters organised drive after drive to do exactly that.
+
+It's one of the great quiet acts of solidarity in our history.`,
+  hashtags:"#KikiClubhouse #QueerHistory #LesbianHistory #AIDSMemorial #QueerSydney"},
+
+ {id:"P20",title:"Allowed to want more",pillar:"vision",format:"single",type:"designed",status:"needs-changes",
+  cover:"post20/p20_foundervision.png",slides:[],alts:[],event:"",feedback:"",
+  imageFeedback:"Not the best photo, someone's face it cutoff. not the best smiles. Choose another. Logo needs to be smaller here, placed elsewhere or removed.",
+  note:"ACTIONED 12/06: photo replaced with IMG_1233 (four intact faces, eyes open, genuine smiles); logo shrunk 30% and made discreet.",
+  caption:`A quiet thing we believe.
+
+You're allowed to want more friends at 45. You're allowed to find it hard. And you're allowed to do something deliberate about it instead of waiting for it to happen on its own.
+
+That last part is the entire reason Kiki exists. No grand philosophy. Just a standing invitation.
+
+The door's open whenever you're ready.`,
+  hashtags:"#KikiClubhouse #ChosenFamily #FindYourPeople #QueerSydney #RealConnection"}
+];
+
+const byId = id => POSTS.find(p=>p.id===id);
+
+/* ============================================================
+   SLOTS — authoritative 3/week schedule from SCHEDULE-RECUT.md
+   ============================================================ */
+/* v4.1 re-cut (client 12/06): evenings dominate, mornings ok, no midday,
+   no Wed/Sat, similar topics spread. 19 slots. P1 (rejected variant) and
+   P11 (published) hold no slot. P1B leads the P1 group slot. */
+const SLOTS = [
+ {date:"2026-06-16",time:"18:30",members:["P1B","P1"]},
+ {date:"2026-06-18",time:"19:15",members:["P3"]},
+ {date:"2026-06-21",time:"18:00",members:["P2"]},
+ {date:"2026-06-23",time:"07:45",members:["P5"]},
+ {date:"2026-06-25",time:"18:45",members:["P8"]},
+ {date:"2026-06-28",time:"19:00",members:["P7"]},
+ {date:"2026-06-30",time:"17:45",members:["P4"]},
+ {date:"2026-07-02",time:"08:15",members:["P13"]},
+ {date:"2026-07-05",time:"18:30",members:["P10"]},
+ {date:"2026-07-07",time:"18:45",members:["P9"]},
+ {date:"2026-07-10",time:"17:50",members:["P6"]},
+ {date:"2026-07-13",time:"08:15",members:["P17"]},
+ {date:"2026-07-16",time:"18:15",members:["P12"]},
+ {date:"2026-07-19",time:"19:00",members:["P14"]},
+ {date:"2026-07-21",time:"17:30",members:["P16"]},
+ {date:"2026-07-24",time:"08:00",members:["P19"]},
+ {date:"2026-07-27",time:"18:30",members:["P20"]},
+ {date:"2026-07-30",time:"08:00",members:["P15"]},
+ {date:"2026-08-02",time:"18:45",members:["P18"]}
+];
+
+const SLOT_PRIMARY = SLOTS.map(s=>s.members[0]);
+const ALL_SLOTTED = SLOTS.flatMap(s=>s.members);
+const UNSLOTTED = POSTS.map(p=>p.id).filter(id=>!ALL_SLOTTED.includes(id));
+
+const VARIANT_GROUPS = {};
+POSTS.forEach(p=>{ if(p.variant_group){ (VARIANT_GROUPS[p.variant_group] ||= []).push(p.id); } });
+const variantSiblings = id => {
+  const p = byId(id);
+  if(!p || !p.variant_group) return [];
+  return VARIANT_GROUPS[p.variant_group].filter(x=>x!==id);
+};
+const hasSibling = id => variantSiblings(id).length>0;
+
+/* ============================================================
+   STATE (localStorage) — v4 key with migration from v3
+   ============================================================ */
+const LS_KEY = "kiki_review_2026-06_v4_1";
+const LS_KEY_V4 = "kiki_review_2026-06_v4";
+const LS_KEY_V3 = "kiki_review_2026-06_v3recut";
+const STATUSES = ["draft","needs-changes","approved","rejected","published","parked"];
+let state = {};
+function loadState(){
+  let raw = null;
+  let migratedFromV4 = false;
+  try{ raw = localStorage.getItem(LS_KEY); }catch(e){}
+  if(raw===null){
+    // migrate forward from v4 (then v3) — Liam's live edits MUST NOT be lost.
+    try{
+      const v4 = localStorage.getItem(LS_KEY_V4);
+      if(v4!==null){ raw = v4; migratedFromV4 = true; }
+      else {
+        const v3 = localStorage.getItem(LS_KEY_V3);
+        if(v3!==null){ raw = v3; migratedFromV4 = true; }
+      }
+    }catch(e){}
+  }
+  try{ state = JSON.parse(raw) || {}; }catch(e){ state = {}; }
+  if(!state.__order || !Array.isArray(state.__order)) initOrder();
+  if(!Array.isArray(state.__generalFeedback)) state.__generalFeedback = [];
+  if(!state.__tagBank || !Array.isArray(state.__tagBank)) state.__tagBank = [];
+  ensureOrderIntegrity();
+  if(migratedFromV4){
+    // v4 -> v4.1: keep ALL of Liam's edits (status/rating/caption/feedback/
+    // collaborators/tags), override ONLY schedule + time + order to the new slots.
+    overrideSchedulesToNewSlots();
+  }
+  seedTagBankFromState();
+  reconcileVariantState();   // bug 5: fix any sibling that should be rejected
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+/* v4.1 migration: reset slot order + force each post's schedule/time to the
+   new SLOTS, without touching any other per-post field. */
+function overrideSchedulesToNewSlots(){
+  state.__order = SLOT_PRIMARY.filter(id=>!isLocked(id));
+  SLOTS.forEach(slot=>{
+    slot.members.forEach(mid=>{
+      if(!state[mid]) return;            // unedited posts derive fresh from baked slot
+      if(isLocked(mid)){ state[mid].schedule = slot.date; state[mid].time = slot.time; return; }
+      if(state[mid].status==='parked') return;  // parked posts stay off-schedule
+      state[mid].schedule = slot.date;
+      state[mid].time = slot.time;
+    });
+  });
+}
+function bakedSchedule(id){
+  for(let i=0;i<SLOTS.length;i++){ if(SLOTS[i].members.includes(id)) return {date:SLOTS[i].date,time:SLOTS[i].time}; }
+  const p = byId(id);
+  return {date:p.schedule||"", time:p.time||"19:00"};
+}
+function postState(id){
+  const p = byId(id);
+  if(!state[id]){
+    const bs = bakedSchedule(id);
+    state[id] = {status:p.status, caption:p.caption, hashtags:p.hashtags,
+      schedule:bs.date, time:bs.time,
+      feedback:p.feedback||"", imageFeedback:p.imageFeedback||"",
+      rating:(p.rating!=null?p.rating:0),
+      collaborators:(p.collaborators||[]).slice(),
+      userTags:(p.user_tags||[]).slice(),
+      coverChoice:(p.cover_choice||"")};
+  } else {
+    const s = state[id];
+    if(s.rating===undefined) s.rating = (p.rating!=null?p.rating:0);
+    if(!Array.isArray(s.collaborators)) s.collaborators = (p.collaborators||[]).slice();
+    if(!Array.isArray(s.userTags)) s.userTags = (p.user_tags||[]).slice();
+    if(s.coverChoice===undefined) s.coverChoice = (p.cover_choice||"");
+  }
+  return state[id];
+}
+/* The cover filename currently in use (chosen alternate or original). */
+function effectiveCover(id){
+  const p = byId(id); const s = postState(id);
+  if(s.coverChoice && s.coverChoice!==p.cover) return s.coverChoice;
+  return p.cover;
+}
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+
+const isParked = id => postState(id).status==='parked';
+
+/* ===== Tag / collaborator bank (autocomplete source) ===== */
+function tagBank(){ return (state.__tagBank ||= []); }
+function bankAdd(name){
+  const n = String(name||'').trim().replace(/^@+/,'');
+  if(!n) return;
+  const bank = tagBank();
+  if(!bank.some(x=>x.toLowerCase()===n.toLowerCase())){ bank.push(n); save(); }
+}
+function seedTagBankFromState(){
+  // seed from baked data + any migrated edits, deduped
+  const add = arr => (arr||[]).forEach(bankAdd);
+  POSTS.forEach(p=>{ add(p.collaborators); add(p.user_tags); });
+  Object.keys(state).forEach(k=>{
+    if(k.startsWith('__')) return;
+    const s = state[k]; if(!s) return;
+    add(s.collaborators); add(s.userTags);
+  });
+}
+
+/* Bug 5: reconcile variant state on load. If the approved variant's sibling
+   is not locally rejected, fix local state (and re-sync the sibling). */
+function reconcileVariantState(){
+  Object.keys(VARIANT_GROUPS).forEach(grp=>{
+    const members = VARIANT_GROUPS[grp];
+    const approved = members.find(m=>postState(m).status==='approved');
+    if(!approved) return;
+    members.forEach(m=>{
+      if(m!==approved && postState(m).status!=='rejected'){
+        postState(m).status = 'rejected';
+        // sbSync is defined later; guard for call-time only
+        if(typeof sbSync==='function') sbSync(m, true);
+      }
+    });
+  });
+}
+
+/* ============================================================
+   SLOT ENGINE
+   ============================================================ */
+function initOrder(){
+  state.__order = SLOT_PRIMARY.filter(id=>!isLocked(id));
+}
+function ensureOrderIntegrity(){
+  const movable = SLOT_PRIMARY.filter(id=>!isLocked(id));
+  state.__order = (state.__order||[]).filter(id=>movable.includes(id));
+  movable.forEach(id=>{ if(!state.__order.includes(id)) state.__order.push(id); });
+}
+/* Is the slot-position represented by this primary fully parked (vacates slot)?
+   A position vacates only when ALL its members are parked (a single parked
+   variant just lets its sibling keep the slot). */
+function positionParked(primaryId){
+  const grp = byId(primaryId).variant_group;
+  const members = grp ? VARIANT_GROUPS[grp] : [primaryId];
+  return members.every(m=>isParked(m));
+}
+/* The primary id occupying each slot index. Locked pinned in place.
+   Parked positions are pulled OUT of the movable flow (without touching
+   state.__order, so unparking restores position); their slot becomes null
+   and trailing nulls stay null. */
+function orderedSlotPrimaries(){
+  const out = new Array(SLOTS.length).fill(null);
+  SLOT_PRIMARY.forEach((id,i)=>{ if(isLocked(id)) out[i]=id; });
+  // movable flow = __order minus parked positions
+  const flow = state.__order.filter(id=>!positionParked(id));
+  let mi = 0;
+  for(let s=0;s<out.length;s++){
+    if(out[s]!==null) continue;          // locked already placed
+    out[s] = (mi < flow.length) ? flow[mi++] : null;
+  }
+  return out;
+}
+function liveMemberForPrimary(primaryId){
+  if(primaryId==null) return null;
+  const grp = byId(primaryId).variant_group;
+  if(!grp) return primaryId;
+  const members = VARIANT_GROUPS[grp];
+  const approved = members.find(m=>postState(m).status==='approved');
+  return approved || primaryId;
+}
+function scheduledIds(){ return orderedSlotPrimaries().map(liveMemberForPrimary).filter(Boolean); }
+
+function applySlotSchedules(){
+  const prim = orderedSlotPrimaries();
+  prim.forEach((primId,slotIdx)=>{
+    if(primId==null) return;            // guard: empty (parked-vacated) slot
+    const slot = SLOTS[slotIdx];
+    if(!slot) return;
+    const grp = byId(primId).variant_group;
+    const members = grp ? VARIANT_GROUPS[grp] : [primId];
+    members.forEach(mid=>{
+      if(isLocked(mid) || isParked(mid)) return;
+      const st = postState(mid);
+      if(st.schedule!==slot.date || st.time!==slot.time){
+        st.schedule = slot.date; st.time = slot.time;
+        sbSync(mid);
+      }
+    });
+  });
+  save();
+}
+function reorderBefore(movePrim, targetPrim){
+  if(isLocked(movePrim)) return;
+  const arr = state.__order.slice();
+  const fi = arr.indexOf(movePrim);
+  if(fi<0) return;
+  arr.splice(fi,1);
+  let ti = (targetPrim && !isLocked(targetPrim)) ? arr.indexOf(targetPrim) : arr.length;
+  if(ti<0) ti = arr.length;
+  arr.splice(ti,0,movePrim);
+  state.__order = arr;
+  applySlotSchedules();
+}
+function primaryOf(id){
+  const p = byId(id); if(!p) return id;
+  if(p.variant_group){
+    // The group's slot-holder is whichever member leads a SLOTS entry
+    // (e.g. P1B leads the P1 group slot), not simply the first by POSTS order.
+    const members = VARIANT_GROUPS[p.variant_group];
+    return members.find(m=>SLOT_PRIMARY.includes(m)) || members[0];
+  }
+  return id;
+}
+
+/* ============================================================
+   STATUS — single entry point. Handles variant + park side effects.
+   ============================================================ */
+function setStatus(id, status){
+  if(isLocked(id) && status==='parked') return;   // locked cannot park
+  const st = postState(id);
+  const prev = st.status;
+  st.status = status;
+
+  if(status==='parked'){
+    // parking clears the schedule + nulls scheduled_time in DB
+    st.schedule = ""; st.time = "";
+  } else if(prev==='parked'){
+    // unparking: schedule will be re-derived from the slot below
+  }
+
+  applyVariantRule(id);
+  // recompute the slot flow (parking removes / unparking restores position)
+  applySlotSchedules();
+  save();
+  sbSync(id, true);
+  render(); buildCalendar();
+  // refresh modal if open on this post
+  if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
+}
+
+/* Publish now (item 6): set schedule+time to now (AEST), status approved.
+   setStatus then syncs scheduled_time + status together. */
+function nowAEST(){
+  // AEST = UTC+10 (no DST handling — matches the +10:00 used in sbBody).
+  const d = new Date(Date.now() + 10*3600*1000);
+  const date = d.toISOString().slice(0,10);
+  const time = d.toISOString().slice(11,16);
+  return {date, time};
+}
+function publishNow(id){
+  if(isLocked(id)){
+    if(!confirm('This post is pinned to an anniversary date. Publish now anyway and move it off that date?')) return;
+  }
+  if(!confirm('Schedules this post to publish on the next publisher run, within about 15 minutes once the publisher is live. Continue?')) return;
+  // approve first (variant rule + slot recompute), then force the now-time so
+  // applySlotSchedules can't put the slot date back, and re-sync both fields.
+  setStatus(id, 'approved');
+  const st = postState(id);
+  const n = nowAEST();
+  st.schedule = n.date; st.time = n.time;
+  save();
+  sbSync(id, true);          // PATCH scheduled_time(now) + status(approved)
+  render(); buildCalendar();
+  if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
+}
+
+/* Alternate cover selection (bug/feature 7). filename==='' reverts to original. */
+function setCover(id, filename){
+  const p = byId(id); const st = postState(id);
+  st.coverChoice = (filename && filename!==p.cover) ? filename : "";
+  save();
+  sbSync(id, true);            // PATCH design_attrs {cover_choice}
+  render(); buildCalendar();
+  if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
+}
+
+function applyVariantRule(changedId){
+  const sibs = variantSiblings(changedId);
+  if(!sibs.length) return;
+  if(postState(changedId).status==='approved'){
+    sibs.forEach(sib=>{
+      if(postState(sib).status!=='rejected'){
+        postState(sib).status='rejected';
+        sbSync(sib, true);
+      }
+    });
+  }
+}
+
+/* ============================================================
+   SUPABASE WRITE-BACK  (fire-and-forget, localStorage stays truth)
+   ============================================================ */
+const sbTimers = {};
+const sbState  = {};
+const sbError  = {};   // last HTTP status / error text per post (bug 4 tooltip)
+const sbRetried = {};  // whether we've already auto-retried once after a failure
+const sbSeq    = {};   // monotonic request id per post — only the latest result wins
+
+function sbBody(id){
+  const s = postState(id);
+  const statusMap = {"needs-changes":"needs_changes","approved":"approved",
+                     "rejected":"rejected","parked":"parked","published":"published","draft":"draft"};
+  const cap = (s.caption||"") + "\n\n" + (s.hashtags||"");
+  let scheduled = null;
+  if(s.status!=='parked' && s.schedule){
+    const t = (s.time && /^\d{2}:\d{2}$/.test(s.time)) ? s.time : "19:00";
+    scheduled = `${s.schedule}T${t}:00+10:00`;
+  }
+  const p = byId(id);
+  const body = {
+    status: statusMap[s.status] || s.status,
+    title: p.title || "",
+    rating: (s.rating||0),
+    approval_notes: s.feedback || "",
+    image_feedback: s.imageFeedback || "",
+    caption: cap,
+    scheduled_time: scheduled,   // null when parked
+    collaborators: (s.collaborators||[]),   // jsonb array
+    user_tags: (s.userTags||[])             // jsonb array
+  };
+  // cover choice merges into design_attrs (read-modify-write from baked base)
+  if(s.coverChoice){
+    const base = (p.design_attrs && typeof p.design_attrs==='object') ? p.design_attrs : {};
+    body.design_attrs = Object.assign({}, base, { cover_choice: s.coverChoice });
+  }
+  return body;
+}
+function setSyncIndicator(id){
+  document.querySelectorAll('.sync[data-syncid="'+id+'"]').forEach(el=>{
+    const st = sbState[id];
+    if(!SB_ON()){ el.style.display='none'; return; }
+    el.style.display='inline-flex';
+    if(st==='pending'){ el.className='sync pending'; el.dataset.syncid=id; el.removeAttribute('title'); el.innerHTML='&#10227; pending'; }
+    else if(st==='failed'){
+      el.className='sync failed'; el.dataset.syncid=id;
+      el.title = 'Sync failed: ' + (sbError[id] || 'unknown error') + ' — click retry';
+      el.innerHTML='&#9888; failed <button type="button" class="syncretry" data-id="'+id+'" title="'+esc(sbError[id]||'')+'">retry</button>';
+    }
+    else if(st==='synced'){ el.className='sync ok'; el.dataset.syncid=id; el.removeAttribute('title'); el.innerHTML='&#10003; synced'; }
+    else { el.style.display='none'; }
+  });
+}
+async function sbPush(id, isAutoRetry){
+  if(!SB_ON()) return;
+  const seq = (sbSeq[id] = (sbSeq[id]||0) + 1);   // newest request wins
+  sbState[id]='pending'; setSyncIndicator(id);
+  const url = SUPABASE_CFG.url.replace(/\/+$/,'') +
+    `/rest/v1/kiki_content_queue?month=eq.${encodeURIComponent(SB_MONTH)}&post_code=eq.${encodeURIComponent(id)}`;
+  let errText = '';
+  try{
+    const res = await fetch(url, {
+      method:'PATCH',
+      headers:{
+        'apikey': SUPABASE_CFG.anonKey,
+        'Authorization': 'Bearer '+SUPABASE_CFG.anonKey,
+        'Content-Type':'application/json',
+        'Prefer':'return=minimal'
+      },
+      body: JSON.stringify(sbBody(id))
+    });
+    if(!res.ok){
+      let detail = '';
+      try{ detail = (await res.text()||'').slice(0,140); }catch(_){}
+      throw new Error('HTTP '+res.status+(res.statusText?(' '+res.statusText):'')+(detail?(' — '+detail):''));
+    }
+    if(seq!==sbSeq[id]) return;     // a newer request superseded this one
+    // success clears any prior failed state for this post (bug 4)
+    sbState[id]='synced'; sbError[id]=''; sbRetried[id]=false;
+  }catch(e){
+    if(seq!==sbSeq[id]) return;     // superseded — ignore stale failure
+    errText = e.message || String(e);
+    sbError[id] = errText;
+    // auto-retry once after 2s (bug 4); only the latest failure schedules it
+    if(!isAutoRetry && !sbRetried[id]){
+      sbRetried[id] = true;
+      sbState[id]='pending'; setSyncIndicator(id);
+      clearTimeout(sbTimers['retry-'+id]);
+      sbTimers['retry-'+id] = setTimeout(()=>{ sbPush(id, true); }, 2000);
+      return;
+    }
+    sbState[id]='failed';
+  }
+  setSyncIndicator(id);
+}
+function sbSync(id, immediate){
+  if(!SB_ON()) return;
+  clearTimeout(sbTimers[id]);
+  clearTimeout(sbTimers['retry-'+id]);
+  sbRetried[id] = false;   // fresh change gets a fresh auto-retry budget
+  if(immediate){ sbPush(id); return; }
+  sbState[id]='pending'; setSyncIndicator(id);
+  sbTimers[id] = setTimeout(()=>sbPush(id), 800);
+}
+
+/* ============================================================
+   RENDER helpers
+   ============================================================ */
+let activeFilter = null;
+let activeTab = 'posts';
+let searchQuery = '';
+const grid = document.getElementById('grid');
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function parseISO(iso){ const d = new Date(iso+'T00:00:00'); return isNaN(d)?null:d; }
+
+const filterActive = () => !!activeFilter || !!searchQuery;
+
+function postMatches(id){
+  if(!searchQuery) return true;
+  const q = searchQuery.toLowerCase();
+  const p = byId(id); const s = postState(id);
+  return [p.id,p.title,p.pillar,p.format,p.type,s.status,s.caption,s.hashtags]
+    .some(v=>String(v||'').toLowerCase().includes(q));
+}
+
+/* Posts tab order: scheduled (slot order), then parked + off-slot variants,
+   then unslotted (published). Parked posts are excluded from the main grid
+   and shown on the shelf instead. */
+function postsTabOrder(){
+  const prim = orderedSlotPrimaries();
+  const out = [];
+  prim.forEach(primId=>{
+    if(primId==null) return;
+    const grp = byId(primId).variant_group;
+    if(grp){ VARIANT_GROUPS[grp].forEach(m=>out.push(m)); }
+    else out.push(primId);
+  });
+  POSTS.forEach(p=>{ if(!out.includes(p.id)) out.push(p.id); });
+  return out;
+}
+
+function buildStats(){
+  const counts = {draft:0,"needs-changes":0,approved:0,rejected:0,published:0,parked:0};
+  POSTS.forEach(p=>{ const s=postState(p.id).status; if(counts[s]!=null) counts[s]++; });
+  const el = document.getElementById('stats');
+  const swatchVar = {draft:'--draft','needs-changes':'--needs',approved:'--approved',rejected:'--rejected',published:'--published',parked:'--parked'};
+  el.innerHTML =
+    `<span class="pill ${activeFilter===null?'active':''}" data-f="all"><span class="c">${POSTS.length}</span> all</span>` +
+    STATUSES.map(s=>`<span class="pill ${activeFilter===s?'active':''}" data-f="${s}"><span class="swatch" style="background:var(${swatchVar[s]})"></span><span class="c">${counts[s]}</span> ${s}</span>`).join('');
+  el.querySelectorAll('.pill').forEach(pill=>{
+    pill.onclick = ()=>{
+      const f = pill.dataset.f;
+      activeFilter = (f==='all') ? null : (activeFilter===f ? null : f);
+      render();
+    };
+  });
+}
+
+function galleryHTML(p, scope){
+  const st = postState(p.id);
+  const cover = effectiveCover(p.id);
+  const usingAlt = !!(st.coverChoice && st.coverChoice!==p.cover);
+  const imgs = [cover, ...p.slides].filter(Boolean);
+  const multi = imgs.length > 1;
+  const nav = multi ? `
+      <button class="nav prev" data-d="-1">&#8249;</button>
+      <button class="nav next" data-d="1">&#8250;</button>
+      <div class="counter">1 / ${imgs.length}</div>
+      <div class="dots">${imgs.map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div>` : '';
+  const readOnly = (st.status==='published');
+  // alternates strip — each gets a "Use this cover" affordance (bug 7)
+  const altStrip = (p.alts && p.alts.length) ? `<div class="altstrip">${p.alts.map(a=>`
+      <div class="altwrap">
+        <img class="lbtrigger altimg${st.coverChoice===a?' chosen':''}" src="${esc(a)}" data-src="${esc(a)}" title="alternate image" loading="lazy">
+        ${readOnly?'':`<button type="button" class="usecover" data-id="${p.id}" data-cover="${esc(a)}" title="Use this image as the cover">${st.coverChoice===a?'✓ cover':'Use cover'}</button>`}
+      </div>`).join('')}</div>` : '';
+  const altBadge = usingAlt
+    ? `<div class="altbadge">Using alternate cover${readOnly?'':` <button type="button" class="revertcover" data-id="${p.id}">Revert to original</button>`}</div>`
+    : '';
+  return `<div class="gallery" data-imgs='${esc(JSON.stringify(imgs))}' data-pid="${p.id}">
+      <img draggable="false" src="${esc(imgs[0])}" alt="${p.id} image" loading="lazy">
+      ${nav}${altStrip}${altBadge}
+    </div>`;
+}
+
+function hasHistory(p){
+  const st = postState(p.id);
+  return !!(p.note || st.feedback || st.imageFeedback);
+}
+
+/* ============================================================
+   SHARED EDITOR — used by both the grid card and the edit modal.
+   ctx.scope = 'grid' | 'modal'. All ids are root-scoped (no global
+   getElementById('foo-'+id)); wiring fns take a root element.
+   ============================================================ */
+function postEditorHTML(p, ctx){
+  const scope = ctx.scope;
+  const st = postState(p.id);
+  const locked = isLocked(p.id);
+  const grp = byId(p.id).variant_group;
+  const parked = st.status==='parked';
+  const readOnly = (st.status==='published') || ctx.readOnly;
+
+  const slotPrim = primaryOf(p.id);
+  const slotNo = orderedSlotPrimaries().indexOf(slotPrim)+1;
+  const slotLabel = parked ? 'parked' : (slotNo>0 ? `#${slotNo}` : 'off-grid');
+
+  const dragMark = (scope==='grid' && !readOnly && !parked) ? (locked
+    ? `<span class="draghandle locked" title="Date-locked anniversary, cannot be reordered">🔒</span>`
+    : `<span class="draghandle" title="Drag to reorder">⠿</span>`) : '';
+
+  const vBadge = grp ? `<span class="vbadge">${esc(p.variant_label||'Variant')}</span>` : '';
+
+  // mini stars (inline in meta row)
+  const stars = `<span class="rating-mini" data-rid="${p.id}">
+      <span class="stars" data-id="${p.id}">${[1,2,3,4,5].map(n=>`<button type="button" data-n="${n}" class="${n<=st.rating?'on':''}" ${readOnly?'disabled':''} title="${n} star${n>1?'s':''}">★</button>`).join('')}</span>
+      <span class="rlabel">${st.rating?st.rating+'/5':''}</span>
+      ${st.rating&&!readOnly?`<button type="button" class="rclear" data-id="${p.id}">clear</button>`:''}
+    </span>`;
+
+  const eventTag = p.event ? `<span class="tag event">${esc(p.event)}</span>` : '';
+
+  // action row
+  let actionRow = '';
+  if(!readOnly){
+    // 'draft' and 'approved' are NOT generated here: approve has its own button,
+    // and draft is a single explicit "Set to draft" entry (no duplicate — bug 6).
+    const moreOpts = STATUSES.filter(s=>s!=='approved' && s!=='draft').map(s=>{
+      let label = s, dis='', extra='';
+      if(s==='needs-changes') label='Needs changes';
+      else if(s==='rejected') label='Reject';
+      else if(s==='parked'){ label='Park'; if(locked) dis='disabled'; }
+      else if(s==='published'){ label='Mark published'; extra='title="Use this only for posts you have already published manually."'; }
+      return `<button type="button" data-act-status="${s}" data-id="${p.id}" ${dis} ${extra}>${label}</button>`;
+    }).join('');
+    actionRow = `<div class="actions">
+        <button class="btn btn-turq" type="button" data-act-status="approved" data-id="${p.id}">✓ Approve</button>
+        <button class="btn btn-needs" type="button" data-act-status="needs-changes" data-id="${p.id}">Needs changes</button>
+        <div class="more-wrap">
+          <button class="btn btn-ghost more-btn" type="button">More ▾</button>
+          <div class="more-pop">
+            ${moreOpts}
+            <button type="button" data-act-status="unapprove" data-id="${p.id}">Set to draft</button>
+            <button type="button" class="publishnow" data-id="${p.id}" title="Schedule to publish on the next publisher run">Publish now</button>
+          </div>
+        </div>
+        <span class="saved">saved ✓</span>
+      </div>`;
+  }
+
+  // one-line schedule, expands
+  const schedBlock = parked
+    ? `<div class="parkbanner">Parked — off the schedule. Unpark to restore its place in the queue.</div>`
+    : `<details class="schedline">
+        <summary>${st.schedule?fmtSched(st.schedule,st.time):'Set a date'}${locked?' · locked':''}</summary>
+        <div class="sched">
+          <div><label class="fld">Scheduled date</label><input type="date" data-id="${p.id}" data-k="schedule" value="${esc(st.schedule)}" ${locked||readOnly?'disabled':''}></div>
+          <div><label class="fld">Time</label><input type="time" data-id="${p.id}" data-k="time" value="${esc(st.time)}" ${readOnly?'disabled':''}></div>
+        </div>
+      </details>`;
+
+  // variant banner
+  let vBanner = '';
+  if(grp){
+    const sibs = variantSiblings(p.id);
+    const sibStates = sibs.map(s=>`${s} is ${postState(s).status}`).join(', ');
+    vBanner = `<div class="vlink">Competing variant (group ${grp}). Approving this one automatically rejects the other.${sibs.length?` ${esc(sibStates)}.`:''}</div>`;
+  }
+
+  const noteHTML = p.note ? `<div class="note">📌 ${esc(p.note)}</div>` : '';
+  const fbCount = (st.feedback?1:0)+(st.imageFeedback?1:0)+(p.note?1:0);
+  const capPreview = esc((st.caption||'').replace(/\s+/g,' ').slice(0,70))+((st.caption||'').length>70?'…':'');
+
+  const captionBlock = `<details class="coll" ${readOnly?'':'open'}>
+      <summary>Caption <span class="cap-preview">${capPreview}</span></summary>
+      <div class="cbody"><textarea class="cap" data-id="${p.id}" data-k="caption" ${readOnly?'disabled':''}>${esc(st.caption)}</textarea></div>
+    </details>`;
+  const hashBlock = `<details class="coll">
+      <summary>Hashtags</summary>
+      <div class="cbody"><textarea class="small" data-id="${p.id}" data-k="hashtags" ${readOnly?'disabled':''}>${esc(st.hashtags)}</textarea></div>
+    </details>`;
+  const fbBlock = `<details class="coll">
+      <summary>Feedback &amp; history (${fbCount})</summary>
+      <div class="cbody">
+        ${noteHTML}
+        <div><label class="fld">Copy feedback</label><textarea class="small" data-id="${p.id}" data-k="feedback" placeholder="Change requests on the copy" ${readOnly?'disabled':''}>${esc(st.feedback)}</textarea></div>
+        <div><label class="fld">Image feedback</label><textarea class="small" data-id="${p.id}" data-k="imageFeedback" placeholder="Change requests on the image(s)" ${readOnly?'disabled':''}>${esc(st.imageFeedback)}</textarea></div>
+      </div>
+    </details>`;
+
+  const collabCount = (st.collaborators||[]).length, tagCount = (st.userTags||[]).length;
+  const tagBlock = `<details class="coll">
+      <summary>Tagging &amp; collaborators (${collabCount+tagCount})</summary>
+      <div class="cbody">
+        <div class="tagfield" data-id="${p.id}" data-field="collaborators" data-max="3">
+          <label class="fld">Instagram collaborators (up to 3)</label>
+          <div class="chips">${chipsHTML(st.collaborators, readOnly)}</div>
+          ${readOnly?'':`<input type="text" class="tagin" list="tagbank" placeholder="Add a username, Enter to add" autocomplete="off">`}
+        </div>
+        <div class="tagfield" data-id="${p.id}" data-field="userTags" data-max="0">
+          <label class="fld">Tag people</label>
+          <div class="chips">${chipsHTML(st.userTags, readOnly)}</div>
+          ${readOnly?'':`<input type="text" class="tagin" list="tagbank" placeholder="Add a username, Enter to add" autocomplete="off">`}
+        </div>
+        <div class="finefont">Collaborator invites apply to Instagram only; Facebook does not support tagging via the publishing API.</div>
+      </div>
+    </details>`;
+
+  return `<div class="card st-${st.status}${locked?' locked':''}" data-card-id="${p.id}">
+    <div class="card-head">
+      <div class="head-l">
+        <div class="head-line1">
+          ${dragMark}
+          <span class="seqno">${slotLabel}</span><span class="pid">${p.id}</span>${vBadge}
+        </div>
+        <div class="head-line1" style="margin-top:3px;flex-wrap:nowrap"><span class="ptitle" title="${esc(p.title||'')}">${esc(p.title||'')}</span></div>
+        <div class="meta-row">
+          <span class="tags">
+            <span class="tag pillar">${esc(p.pillar)}</span>
+            <span class="tag format">${esc(p.format)}</span>
+            <span class="tag type">${esc(p.type)}</span>
+            ${eventTag}
+          </span>
+          ${stars}
+        </div>
+      </div>
+      <div class="head-r">
+        <span class="stchip chip-${st.status}">${st.status}</span>
+        <span class="sync" data-syncid="${p.id}" style="display:none"></span>
+      </div>
+    </div>
+    ${galleryHTML(p, scope)}
+    <div class="body">
+      ${vBanner}
+      ${actionRow}
+      ${schedBlock}
+      ${captionBlock}
+      ${hashBlock}
+      ${fbBlock}
+      ${tagBlock}
+    </div>
+  </div>`;
+}
+function chipsHTML(arr, readOnly){
+  return (arr||[]).map(name=>`<span class="chip-tag">@${esc(name)}${readOnly?'':`<button type="button" class="chiprm" data-name="${esc(name)}" title="Remove">&times;</button>`}</span>`).join('');
+}
+
+function fmtSched(date,time){
+  const d = parseISO(date); if(!d) return 'Set a date';
+  return `${DOW[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]}${time?' · '+time:''}`;
+}
+
+/* ============================================================
+   WIRING — all scoped to a root element.
+   ============================================================ */
+function wireGalleries(root){
+  root.querySelectorAll('.gallery').forEach(g=>{
+    let imgs; try{ imgs = JSON.parse(g.dataset.imgs); }catch(_){ imgs=[]; }
+    if(imgs.length<=1) return;
+    const imgEl = g.querySelector('img');
+    const ctr = g.querySelector('.counter');
+    const dots = g.querySelector('.dots');
+    let cur = 0;
+    function show(n){
+      cur = (n+imgs.length)%imgs.length;
+      imgEl.src = imgs[cur]; imgEl.dataset.src = imgs[cur];
+      if(ctr) ctr.textContent = (cur+1)+' / '+imgs.length;
+      if(dots) [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+    }
+    const prev = g.querySelector('.nav.prev'), next = g.querySelector('.nav.next');
+    if(prev) prev.onclick = e=>{ e.stopPropagation(); show(cur-1); };
+    if(next) next.onclick = e=>{ e.stopPropagation(); show(cur+1); };
+  });
+}
+
+function flashSaved(root, id){
+  const card = root.querySelector('.card[data-card-id="'+id+'"]') || root;
+  const el = card.querySelector('.saved');
+  if(!el) return;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>el.classList.remove('show'),900);
+}
+
+function wireInputs(root){
+  root.querySelectorAll('[data-id][data-k]').forEach(inp=>{
+    const ev = (inp.tagName==='SELECT'||inp.type==='date'||inp.type==='time') ? 'change' : 'input';
+    inp.addEventListener(ev, ()=>{
+      const {id,k} = inp.dataset;
+      postState(id)[k] = inp.value;
+      save();
+      flashSaved(root, id);
+      const immediate = (inp.tagName==='SELECT'||inp.type==='date'||inp.type==='time');
+      sbSync(id, immediate);
+      if(k==='schedule'||k==='time'){ buildCalendar(); }
+    });
+  });
+}
+
+function wireRatings(root){
+  root.querySelectorAll('.stars').forEach(starsEl=>{
+    const id = starsEl.dataset.id;
+    const btns = [...starsEl.querySelectorAll('button')];
+    if(btns.some(b=>b.disabled)) return;
+    const wrap = starsEl.closest('.rating-mini');
+    const label = wrap.querySelector('.rlabel');
+    const paint = v => btns.forEach(b=>b.classList.toggle('on', +b.dataset.n <= v));
+    starsEl.addEventListener('mouseover', e=>{ if(e.target.dataset.n) paint(+e.target.dataset.n); });
+    starsEl.addEventListener('mouseleave', ()=> paint(postState(id).rating));
+    btns.forEach(b=>{
+      b.onclick = ()=>{
+        const v = +b.dataset.n;
+        postState(id).rating = v; save(); flashSaved(root, id); sbSync(id, true);
+        paint(v); if(label) label.textContent = v+'/5';
+        render(); if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) syncModalStarsOnly(id);
+      };
+    });
+  });
+  root.querySelectorAll('.rclear').forEach(c=>{
+    c.onclick = ()=>{
+      const id = c.dataset.id;
+      postState(id).rating = 0; save(); flashSaved(root, id); sbSync(id, true);
+      render();
+    };
+  });
+}
+function syncModalStarsOnly(id){ /* modal re-renders on status only; ratings re-render grid */ }
+
+function wireActions(root){
+  root.querySelectorAll('[data-act-status]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = btn.dataset.id;
+      let s = btn.dataset.actStatus;
+      if(s==='unapprove') s='draft';
+      setStatus(id, s);
+    };
+  });
+  root.querySelectorAll('.publishnow').forEach(btn=>{
+    btn.onclick = ()=>{ publishNow(btn.dataset.id); };
+  });
+  // More dropdown toggles
+  root.querySelectorAll('.more-btn').forEach(b=>{
+    b.onclick = e=>{
+      e.stopPropagation();
+      const pop = b.nextElementSibling;
+      const wasOn = pop.classList.contains('on');
+      document.querySelectorAll('.more-pop.on').forEach(p=>p.classList.remove('on'));
+      if(!wasOn) pop.classList.add('on');
+    };
+  });
+}
+
+function wireCoverButtons(root){
+  root.querySelectorAll('.usecover').forEach(b=>{
+    b.onclick = e=>{ e.stopPropagation(); setCover(b.dataset.id, b.dataset.cover); };
+  });
+  root.querySelectorAll('.revertcover').forEach(b=>{
+    b.onclick = e=>{ e.stopPropagation(); setCover(b.dataset.id, ''); };
+  });
+}
+
+function refreshTagBank(){
+  const dl = document.getElementById('tagbank');
+  if(!dl) return;
+  dl.innerHTML = tagBank().slice().sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()))
+    .map(n=>`<option value="${esc(n)}">`).join('');
+}
+function wireTagChips(root){
+  root.querySelectorAll('.tagfield').forEach(field=>{
+    const id = field.dataset.id;
+    const key = field.dataset.field;       // 'collaborators' | 'userTags'
+    const max = +field.dataset.max || 0;   // 0 = unlimited
+    const input = field.querySelector('.tagin');
+    const commit = raw=>{
+      const name = String(raw||'').trim().replace(/^@+/,'').replace(/\s+/g,'');
+      if(!name) return;
+      const st = postState(id);
+      const list = (st[key] ||= []);
+      if(max && list.length>=max){ alert('Up to '+max+' '+(key==='collaborators'?'collaborators':'tags')+' only.'); return; }
+      if(list.some(x=>x.toLowerCase()===name.toLowerCase())) { if(input) input.value=''; return; }
+      list.push(name); bankAdd(name); save(); sbSync(id, true);
+      refreshTagBank();
+      if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
+      else render();
+    };
+    if(input){
+      input.addEventListener('keydown', e=>{
+        if(e.key==='Enter' || e.key===','){ e.preventDefault(); commit(input.value); }
+      });
+      // picking a datalist suggestion fires 'change'
+      input.addEventListener('change', ()=>{ if(input.value) commit(input.value); });
+      input.addEventListener('blur', ()=>{ if(input.value.trim()) commit(input.value); });
+    }
+    field.querySelectorAll('.chiprm').forEach(b=>{
+      b.onclick = e=>{
+        e.stopPropagation();
+        const st = postState(id);
+        st[key] = (st[key]||[]).filter(x=>x!==b.dataset.name);
+        save(); sbSync(id, true);
+        if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
+        else render();
+      };
+    });
+  });
+}
+
+function wireLightboxTriggers(root){
+  root.querySelectorAll('.gallery').forEach(g=>{
+    const img = g.querySelector('img');
+    if(!img) return;
+    let imgs; try{ imgs = JSON.parse(g.dataset.imgs); }catch(_){ imgs=[img.src]; }
+    img.onclick = ()=> openLightbox(img.getAttribute('src'), imgs);
+  });
+  root.querySelectorAll('.lbtrigger').forEach(img=>{
+    const altstrip = img.closest('.altstrip');
+    if(altstrip){
+      const wrap = altstrip.closest('.gallery');
+      const pid = wrap ? wrap.dataset.pid : null;
+      img.onclick = e=>{ e.stopPropagation(); openLightbox(img.dataset.src || img.getAttribute('src'), null, {coverFor:pid, file:img.dataset.src||img.getAttribute('src')}); };
+      return;
+    }
+    if(img.closest('.gallery')) return;
+    img.onclick = e=>{ e.stopPropagation(); openLightbox(img.dataset.src || img.getAttribute('src'), img.dataset.cap || null); };
+  });
+}
+
+/* ============================================================
+   RENDER — POSTS TAB
+   ============================================================ */
+function render(){
+  buildStats();
+  let order = postsTabOrder();
+  // parked posts go to the shelf; everything else in the main grid
+  let main = order.filter(id=>!isParked(id));
+  let parkedList = order.filter(id=>isParked(id));
+  if(activeFilter){
+    main = main.filter(id=>postState(id).status===activeFilter);
+    parkedList = parkedList.filter(id=>postState(id).status===activeFilter);
+  }
+  if(searchQuery){
+    main = main.filter(postMatches);
+    parkedList = parkedList.filter(postMatches);
+  }
+  const cardHTML = id=>{ try{ return postEditorHTML(byId(id),{scope:'grid'}); }
+    catch(err){ console.error('card render failed for '+id, err); return ''; } };
+  grid.innerHTML = main.map(cardHTML).join('');
+
+  const shelf = document.getElementById('parkedShelf');
+  const pgrid = document.getElementById('parkedGrid');
+  if(parkedList.length){
+    shelf.classList.remove('hide');
+    pgrid.innerHTML = parkedList.map(cardHTML).join('');
+  } else {
+    shelf.classList.add('hide'); pgrid.innerHTML='';
+  }
+
+  const postsRoot = document.getElementById('view-posts');
+  wireGalleries(postsRoot);
+  wireInputs(postsRoot);
+  wireRatings(postsRoot);
+  wireActions(postsRoot);
+  wireCoverButtons(postsRoot);
+  wireTagChips(postsRoot);
+  wireLightboxTriggers(postsRoot);
+  wireGridDnD();
+  POSTS.forEach(p=>setSyncIndicator(p.id));
+}
+
+/* ============================================================
+   LIST DRAG-DROP REORDER (Posts tab) — main grid only, when not
+   filtering/searching, on non-parked non-locked non-published cards.
+   ============================================================ */
+let gridDragId = null;
+function canDrag(id){
+  if(isLocked(id)) return false;
+  if(isParked(id)) return false;
+  const s = postState(id).status;
+  if(s==='published') return false;
+  return true;
+}
+function wireGridDnD(){
+  if(filterActive()) return;   // no reorder while searching/filtering
+  grid.querySelectorAll('.card').forEach(card=>{
+    const id = card.dataset.cardId;
+    const handle = card.querySelector('.draghandle');
+    if(canDrag(id)){
+      card.setAttribute('draggable','true');
+      card.addEventListener('dragstart', e=>{
+        if(e.target.closest('textarea,select,input,button,summary')){ e.preventDefault(); return; }
+        gridDragId = id; e.dataTransfer.effectAllowed='move';
+        try{ e.dataTransfer.setData('text/plain', id); }catch(_){}
+        card.classList.add('dragging');
+      });
+      card.addEventListener('dragend', ()=>{ card.classList.remove('dragging'); gridDragId=null;
+        grid.querySelectorAll('.card.dropbefore').forEach(c=>c.classList.remove('dropbefore')); });
+    } else {
+      card.setAttribute('draggable','false');
+      if(handle) handle.style.opacity='.35';
+    }
+    card.addEventListener('dragover', e=>{
+      if(!gridDragId || gridDragId===id) return;
+      e.preventDefault(); e.dataTransfer.dropEffect='move';
+      grid.querySelectorAll('.card.dropbefore').forEach(c=>{ if(c!==card) c.classList.remove('dropbefore'); });
+      card.classList.add('dropbefore');
+    });
+    card.addEventListener('dragleave', ()=> card.classList.remove('dropbefore'));
+    card.addEventListener('drop', e=>{
+      e.preventDefault(); card.classList.remove('dropbefore');
+      if(!gridDragId || gridDragId===id) return;
+      const movePrim = primaryOf(gridDragId);
+      let targetPrim = primaryOf(id);
+      if(isLocked(targetPrim)){
+        const prim = orderedSlotPrimaries(); const ti = prim.indexOf(targetPrim);
+        targetPrim = prim.slice(ti+1).find(x=>x&&!isLocked(x)) || null;
+      }
+      reorderBefore(movePrim, targetPrim);
+      render(); buildCalendar();
+    });
+  });
+}
+
+/* ============================================================
+   RENDER — CALENDAR TAB
+   ============================================================ */
+function calendarItems(){
+  return scheduledIds().map(id=>({id, st:postState(id), kind:'scheduled'}));
+}
+function monthsSpanned(items){
+  const dates = items.map(it=>it.st.schedule).filter(Boolean);
+  // always include published P11's month + history months are added later
+  POSTS.forEach(p=>{ if(postState(p.id).status==='published' && postState(p.id).schedule) dates.push(postState(p.id).schedule); });
+  const keys = [...new Set(dates.map(d=>d.slice(0,7)))].sort();
+  return keys;
+}
+let renderedMonthKeys = [];
+function buildCalendar(){
+  const host = document.getElementById('months');
+  const items = calendarItems();
+  // published posts shown read-only on their date
+  const published = POSTS.filter(p=>postState(p.id).status==='published' && postState(p.id).schedule)
+    .map(p=>({id:p.id, st:postState(p.id), kind:'published'}));
+  const all = items.concat(published);
+  const keys = monthsSpanned(items);
+  renderedMonthKeys = keys.slice();
+
+  const byDate = {};
+  all.forEach(it=>{ if(it.st.schedule){ (byDate[it.st.schedule] ||= []).push(it); } });
+
+  host.innerHTML = keys.map(key=>{
+    const [y,m] = key.split('-').map(Number);
+    const first = new Date(y, m-1, 1);
+    const daysInMonth = new Date(y, m, 0).getDate();
+    const startOffset = (first.getDay() + 6) % 7;
+    let cells = '';
+    for(let i=0;i<startOffset;i++) cells += `<div class="daycell empty"></div>`;
+    for(let d=1; d<=daysInMonth; d++){
+      const iso = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dayItems = byDate[iso] || [];
+      const chips = dayItems.map(it=>calChipHTML(it)).join('');
+      cells += `<div class="daycell" data-date="${iso}"><span class="dn">${d}</span><div class="calposts">${chips}</div></div>`;
+    }
+    return `<div class="month-scroll"><div class="month">
+        <h2>${MON[m-1]} ${y}</h2>
+        <div class="dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="weeks">${cells}</div>
+      </div></div>`;
+  }).join('');
+  applyCalendarSearch();
+  wireCalendarDnD();
+  wireCalendarClicks();
+  wireLightboxTriggers(host);
+}
+function calChipHTML(it){
+  const p = byId(it.id);
+  const locked = isLocked(it.id);
+  const cover = esc(effectiveCover(it.id));   // shows chosen alternate (bug 7)
+  const isPub = it.kind==='published';
+  const draggable = (!locked && !isPub);
+  const ab = hasSibling(it.id) ? `<span class="calab" title="A/B variant pair">A/B</span>` : '';
+  const statusTag = `<span class="calstatus s-${it.st.status}">${esc(it.st.status)}</span>`;
+  return `<div class="calpost st-${it.st.status}${locked?' locked':''}${isPub?' published-chip':''}" ${draggable?'draggable="true"':''} data-id="${it.id}" data-kind="${it.kind}" title="${esc(p.id+' · '+(p.title||'')+' · '+it.st.status+(locked?' · date-locked':'')+(isPub?' · published, read-only':''))}">
+      ${locked?'<span class="lk">🔒</span>':''}${ab}
+      <img class="lbtrigger" draggable="false" src="${cover}" data-src="${cover}" alt="${it.id}" loading="lazy">
+      <div class="cmeta"><b>${it.id} · ${esc(p.title||'')}</b><small>${isPub?'published':esc(it.st.time||'')}</small>${statusTag}</div>
+    </div>`;
+}
+
+let calDragId = null;
+let calDragMoved = false;
+function wireCalendarDnD(){
+  const host = document.getElementById('months');
+  host.querySelectorAll('.calpost[draggable="true"]').forEach(chip=>{
+    chip.addEventListener('dragstart', e=>{
+      if(filterActive()){ e.preventDefault(); return; }  // no reschedule while searching/filtering
+      calDragId = chip.dataset.id; calDragMoved = true;
+      if(e.dataTransfer){
+        e.dataTransfer.effectAllowed='move';
+        try{ e.dataTransfer.setData('text/plain', calDragId); }catch(_){}
+      }
+      chip.classList.add('dragging');
+    });
+    chip.addEventListener('dragend', ()=>{ chip.classList.remove('dragging'); calDragId=null;
+      setTimeout(()=>{ calDragMoved=false; },50); });
+  });
+  host.querySelectorAll('.daycell[data-date]').forEach(day=>{
+    // Allow drop while a calendar drag is in progress. We also accept the drag
+    // when calDragId is briefly unset (some engines fire dragover before our
+    // dragstart resolves) and recover the id from dataTransfer at drop time.
+    day.addEventListener('dragover', e=>{ if(calDragId!=null || (e.dataTransfer && [...e.dataTransfer.types].includes('text/plain'))){ e.preventDefault(); e.dataTransfer && (e.dataTransfer.dropEffect='move'); day.classList.add('drop'); } });
+    day.addEventListener('dragleave', e=>{ if(!day.contains(e.relatedTarget)) day.classList.remove('drop'); });
+    day.addEventListener('drop', e=>{
+      e.preventDefault(); day.classList.remove('drop');
+      let id = calDragId;
+      if(!id && e.dataTransfer){ try{ id = e.dataTransfer.getData('text/plain') || null; }catch(_){} }
+      if(!id || isLocked(id)) return;
+      const newDate = day.dataset.date;
+      const st = postState(id);
+      if(st.schedule!==newDate){
+        st.schedule = newDate;
+        save(); sbSync(id, true);
+        render(); buildCalendar();
+      }
+    });
+  });
+}
+/* Click a chip (not a drag, not the image) -> open edit modal. */
+function wireCalendarClicks(){
+  const host = document.getElementById('months');
+  host.querySelectorAll('.calpost').forEach(chip=>{
+    chip.addEventListener('click', e=>{
+      if(e.target.closest('.lbtrigger')) return;   // image opens lightbox
+      if(calDragMoved) return;                      // it was a drag, not a click
+      const id = chip.dataset.id;
+      openEditModal(id);
+    });
+  });
+}
+
+/* ============================================================
+   HISTORY LAYER — past published posts from kiki_post_history,
+   merged as small muted read-only chips. Fully silent on failure.
+   ============================================================ */
+async function loadHistoryLayer(){
+  if(!SB_ON()) return;
+  try{
+    const url = SUPABASE_CFG.url.replace(/\/+$/,'') +
+      '/rest/v1/kiki_post_history?select=image_url,caption,published_at&order=published_at.desc&limit=120';
+    const res = await fetch(url, { headers:{ 'apikey':SUPABASE_CFG.anonKey, 'Authorization':'Bearer '+SUPABASE_CFG.anonKey } });
+    if(!res.ok) return;
+    const rows = await res.json();
+    if(!Array.isArray(rows) || !rows.length) return;
+    mergeHistoryChips(rows);
+  }catch(e){ /* offline / 404 — silent, zero UI change */ }
+}
+function mergeHistoryChips(rows){
+  // bound: only within already-rendered months, plus one prior month max
+  const allowed = new Set(renderedMonthKeys);
+  if(renderedMonthKeys.length){
+    const [y,m] = renderedMonthKeys[0].split('-').map(Number);
+    const prior = new Date(y, m-2, 1);
+    allowed.add(`${prior.getFullYear()}-${String(prior.getMonth()+1).padStart(2,'0')}`);
+  }
+  const host = document.getElementById('months');
+  rows.forEach(r=>{
+    if(!r.published_at || !r.image_url) return;
+    const iso = String(r.published_at).slice(0,10);
+    const key = iso.slice(0,7);
+    if(!allowed.has(key)) return;
+    const cell = host.querySelector('.daycell[data-date="'+iso+'"]');
+    if(!cell) return;
+    const wrap = cell.querySelector('.calposts');
+    if(!wrap) return;
+    const div = document.createElement('div');
+    div.className = 'calpost past';
+    div.innerHTML = `<span class="pasttag">past</span>
+      <img class="lbtrigger" src="${esc(r.image_url)}" data-src="${esc(r.image_url)}" data-cap="${esc(r.caption||'')}" alt="past post" loading="lazy">`;
+    wrap.appendChild(div);
+  });
+  wireLightboxTriggers(host);
+}
+
+/* ============================================================
+   EDIT MODAL
+   ============================================================ */
+let modalPostId = null;
+/* Sibling switcher (item 8): tabs to flip the modal between P1 / P1B. */
+function siblingSwitcherHTML(p){
+  if(!p.variant_group) return '';
+  const members = VARIANT_GROUPS[p.variant_group];
+  if(members.length<2) return '';
+  const tabs = members.map(m=>{
+    const ms = postState(m);
+    return `<button type="button" class="vswitch${m===p.id?' on':''}" data-vsel="${m}" title="${esc(byId(m).title||'')} · ${ms.status}">View ${m}<span class="vsw-st s-${ms.status}">${esc(ms.status)}</span></button>`;
+  }).join('');
+  return `<div class="vswitcher">Variant pair: ${tabs}</div>`;
+}
+function wireSiblingSwitcher(root){
+  root.querySelectorAll('.vswitch').forEach(b=>{
+    b.onclick = ()=>{ const sel = b.dataset.vsel; if(sel && sel!==modalPostId) openEditModal(sel); };
+  });
+}
+function openEditModal(id){
+  const p = byId(id); if(!p) return;
+  modalPostId = id;
+  const st = postState(id);
+  const readOnly = st.status==='published';
+  const modal = document.getElementById('editModal');
+  const content = document.getElementById('modalContent');
+  document.getElementById('modalTitle').textContent = `${p.id} · ${p.title||'Edit post'}`;
+  content.innerHTML = (siblingSwitcherHTML(p)) + postEditorHTML(p, {scope:'modal', readOnly});
+  wireGalleries(content);
+  wireInputs(content);
+  wireRatings(content);
+  wireActions(content);
+  wireCoverButtons(content);
+  wireTagChips(content);
+  wireSiblingSwitcher(content);
+  wireLightboxTriggers(content);
+  setSyncIndicator(id);
+  modal.classList.add('on');
+  document.body.classList.add('modal-open');
+}
+function closeEditModal(){
+  const modal = document.getElementById('editModal');
+  if(!modal.classList.contains('on')) return;
+  modal.classList.remove('on');
+  document.body.classList.remove('modal-open');
+  modalPostId = null;
+  render(); buildCalendar();   // grid reflects modal edits
+}
+document.getElementById('modalClose').onclick = closeEditModal;
+document.getElementById('editModal').addEventListener('click', e=>{ if(e.target.id==='editModal') closeEditModal(); });
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCap = document.getElementById('lbCap');
+let lbList = [];
+let lbIdx = 0;
+let lbSingleCap = '';
+let lbCover = null;   // {coverFor, file} when viewing an alternate
+const lbUseCover = document.getElementById('lbUseCover');
+function openLightbox(src, listOrCap, coverOpt){
+  if(Array.isArray(listOrCap) && listOrCap.length){
+    lbList = listOrCap; lbSingleCap='';
+  } else {
+    lbList = [src]; lbSingleCap = (typeof listOrCap==='string') ? listOrCap : '';
+  }
+  lbIdx = Math.max(0, lbList.indexOf(src));
+  lbCover = (coverOpt && coverOpt.coverFor) ? coverOpt : null;
+  showLightbox();
+  lb.classList.add('on');
+  document.body.classList.add('lightbox-open');
+}
+function showLightbox(){
+  lbImg.src = lbList[lbIdx];
+  lbCap.textContent = lbList.length>1 ? `${lbIdx+1} / ${lbList.length}` : (lbSingleCap||'');
+  document.getElementById('lbPrev').style.display = lbList.length>1?'':'none';
+  document.getElementById('lbNext').style.display = lbList.length>1?'':'none';
+  // "Use this cover" only when viewing a single alternate of an editable post
+  if(lbUseCover){
+    const show = !!(lbCover && lbCover.coverFor && postState(lbCover.coverFor).status!=='published');
+    lbUseCover.style.display = show ? '' : 'none';
+    if(show){ lbUseCover.textContent = (postState(lbCover.coverFor).coverChoice===lbCover.file) ? '✓ Current cover' : 'Use this cover'; }
+  }
+}
+if(lbUseCover) lbUseCover.onclick = e=>{
+  e.stopPropagation();
+  if(lbCover && lbCover.coverFor){ setCover(lbCover.coverFor, lbCover.file); closeLightbox(); }
+};
+function closeLightbox(){ lb.classList.remove('on'); lbImg.src=''; lbCover=null; if(lbUseCover) lbUseCover.style.display='none'; document.body.classList.remove('lightbox-open'); }
+document.getElementById('lbClose').onclick = closeLightbox;
+document.getElementById('lbPrev').onclick = e=>{ e.stopPropagation(); lbIdx=(lbIdx-1+lbList.length)%lbList.length; showLightbox(); };
+document.getElementById('lbNext').onclick = e=>{ e.stopPropagation(); lbIdx=(lbIdx+1)%lbList.length; showLightbox(); };
+lb.addEventListener('click', e=>{ if(e.target===lb) closeLightbox(); });
+
+/* Esc closes lightbox first, then modal */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    if(lb.classList.contains('on')){ closeLightbox(); return; }
+    if(document.getElementById('editModal').classList.contains('on')){ closeEditModal(); return; }
+    document.querySelectorAll('.more-pop.on,.menu-pop.on,.help-pop.on').forEach(p=>p.classList.remove('on'));
+  } else if(lb.classList.contains('on') && lbList.length>1){
+    if(e.key==='ArrowLeft'){ lbIdx=(lbIdx-1+lbList.length)%lbList.length; showLightbox(); }
+    else if(e.key==='ArrowRight'){ lbIdx=(lbIdx+1)%lbList.length; showLightbox(); }
+  }
+});
+
+/* ============================================================
+   CALENDAR SEARCH dimming
+   ============================================================ */
+function applyCalendarSearch(){
+  const host = document.getElementById('months');
+  host.querySelectorAll('.calpost').forEach(chip=>{
+    if(chip.classList.contains('past')) return;
+    chip.classList.remove('dim','match');
+    if(!searchQuery) return;
+    if(postMatches(chip.dataset.id)) chip.classList.add('match');
+    else chip.classList.add('dim');
+  });
+}
+
+/* ============================================================
+   SEARCH input (debounced 150ms)
+   ============================================================ */
+const searchEl = document.getElementById('search');
+const searchClr = document.getElementById('searchClr');
+let searchTimer = null;
+function runSearch(){
+  searchQuery = searchEl.value.trim();
+  searchClr.classList.toggle('on', !!searchQuery);
+  render();
+  applyCalendarSearch();   // calendar chips dim/highlight on either tab
+}
+if(searchEl){
+  // 'input' fires on every keystroke (incl. paste / clear); debounced render.
+  searchEl.addEventListener('input', ()=>{
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runSearch, 150);
+  });
+  // Enter / Escape act immediately for keyboard users.
+  searchEl.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ clearTimeout(searchTimer); runSearch(); }
+    else if(e.key==='Escape'){ searchEl.value=''; clearTimeout(searchTimer); runSearch(); }
+  });
+}
+if(searchClr) searchClr.onclick = ()=>{ searchEl.value=''; clearTimeout(searchTimer); runSearch(); searchEl.focus(); };
+
+/* ============================================================
+   TABS
+   ============================================================ */
+function switchTab(tab){
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.getElementById('view-posts').classList.toggle('hide', tab!=='posts');
+  document.getElementById('view-calendar').classList.toggle('hide', tab!=='calendar');
+  if(tab==='calendar'){ buildCalendar(); loadHistoryLayer(); }
+}
+document.querySelectorAll('.tab').forEach(t=>{ t.onclick = ()=>switchTab(t.dataset.tab); });
+
+/* ============================================================
+   HEADER menus / popovers
+   ============================================================ */
+const backupBtn = document.getElementById('backupBtn');
+const backupPop = document.getElementById('backupPop');
+backupBtn.onclick = e=>{ e.stopPropagation(); backupPop.classList.toggle('on'); };
+const helpBtn = document.getElementById('helpBtn');
+const helpPop = document.getElementById('helpPop');
+helpBtn.onclick = e=>{ e.stopPropagation(); helpPop.classList.toggle('on'); };
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.menu')) backupPop.classList.remove('on');
+  if(!e.target.closest('#helpBtn,#helpPop')) helpPop.classList.remove('on');
+  if(!e.target.closest('.more-wrap')) document.querySelectorAll('.more-pop.on').forEach(p=>p.classList.remove('on'));
+});
+
+/* ============================================================
+   EXPORT
+   ============================================================ */
+function buildExport(){
+  return {
+    project:"kiki-kiki-clubhouse",
+    cycle:"2026-06",
+    version:"v4.1",
+    exportedAt:new Date().toISOString(),
+    tagBank: (state.__tagBank||[]).slice(),
+    generalFeedback: (state.__generalFeedback||[]).map(e=>({text:e.text, at:e.at})),
+    posts: postsTabOrder().map((id)=>{
+      const p = byId(id); const s = postState(id);
+      const slotPrim = primaryOf(id);
+      const slotNo = orderedSlotPrimaries().indexOf(slotPrim)+1;
+      const live = (slotNo>0) ? (liveMemberForPrimary(slotPrim)===id) : false;
+      return {id:p.id, title:p.title||"", slot:(slotNo>0?slotNo:null), occupiesSlot:live,
+        variant_group:p.variant_group||null, locked:isLocked(p.id), parked:s.status==='parked',
+        pillar:p.pillar, format:p.format, type:p.type,
+        status:s.status, rating:(s.rating||0), schedule:s.schedule, time:s.time,
+        caption:s.caption, hashtags:s.hashtags,
+        feedback:s.feedback, imageFeedback:s.imageFeedback,
+        coverChoice:s.coverChoice||"", cover:effectiveCover(id),
+        collaborators:(s.collaborators||[]), userTags:(s.userTags||[])};
+    })
+  };
+}
+document.getElementById('exportBtn').onclick = ()=>{
+  const blob = new Blob([JSON.stringify(buildExport(),null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'kiki-review-2026-06-edits.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  backupPop.classList.remove('on');
+};
+document.getElementById('copyBtn').onclick = async ()=>{
+  const txt = JSON.stringify(buildExport(),null,2);
+  try{ await navigator.clipboard.writeText(txt); alert('Edits copied to clipboard.'); }
+  catch(e){ window.prompt('Copy the JSON below:', txt); }
+  backupPop.classList.remove('on');
+};
+document.getElementById('resetBtn').onclick = ()=>{
+  if(confirm('Reset all your edits back to the baked-in plan? This clears your local changes, including reordering, parking and general feedback.')){
+    try{ localStorage.removeItem(LS_KEY); }catch(e){}
+    // fresh baked v4.1 plan — do NOT migrate old v4/v3 edits back in
+    state = {__order:null, __generalFeedback:[], __tagBank:[]};
+    initOrder();
+    seedTagBankFromState();
+    reconcileVariantState();
+    save();
+    applySlotSchedules(); refreshTagBank(); render(); buildCalendar();
+  }
+  backupPop.classList.remove('on');
+};
+
+/* Retry failed Supabase syncs (post-level) */
+document.body.addEventListener('click', e=>{
+  const btn = e.target.closest('.syncretry');
+  if(btn && btn.dataset.id){ sbPush(btn.dataset.id); }
+});
+
+/* ============================================================
+   LIVE SYNC badge + footer mode
+   ============================================================ */
+function setLiveSync(){
+  const el = document.getElementById('livesync');
+  if(SB_ON()){ el.className='livesync on'; el.textContent='LIVE SYNC ✓'; }
+  else { el.className='livesync off'; el.textContent='LIVE SYNC ✗ local only'; }
+}
+function setFooterMode(){
+  const f = document.querySelector('footer');
+  const tag = SB_ON()
+    ? 'Supabase sync active: changes mirror to kiki_content_queue'
+    : 'Local mode: Supabase sync not configured';
+  f.innerHTML = 'Kiki Kiki Clubhouse · local review tool · edits stored in your browser · Australian English<br><span style="opacity:.8">'+tag+'</span>';
+}
+
+/* INIT */
+loadState();
+applySlotSchedules();
+refreshTagBank();
+setLiveSync();
+render();
+buildCalendar();
+loadHistoryLayer();
+setFooterMode();
+</script>
+</body>
+</html>
