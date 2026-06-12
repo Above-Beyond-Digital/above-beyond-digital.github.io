@@ -377,6 +377,20 @@
   .sync .syncretry{font:inherit;font-size:10px;font-weight:800;background:#a52828;color:#fff;border:0;
     border-radius:4px;padding:2px 6px;cursor:pointer}
 
+  /* manual-date (explicit override) markers */
+  .datemanual{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:#7a2f8c;
+    background:#f6edfa;border:1px solid #d9b9e4;border-radius:6px;padding:1px 6px;display:inline-flex;align-items:center;gap:4px}
+  .datemanual .clearoverride{font:inherit;font-size:13px;line-height:1;font-weight:800;color:#7a2f8c;background:none;border:0;
+    cursor:pointer;padding:0 0 0 2px}
+  .datemanual .clearoverride:hover{color:#a52828}
+  .calmanual{position:absolute;bottom:23px;right:4px;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.2px;
+    background:rgba(122,47,140,.92);color:#fff;border-radius:4px;padding:1px 4px;text-shadow:none}
+
+  /* header "synced from server" tick */
+  .sbhydrated{font-size:11px;font-weight:800;letter-spacing:.3px;padding:5px 9px;border-radius:999px;white-space:nowrap;
+    display:none;align-items:center;gap:5px;background:rgba(92,196,183,.16);color:var(--turq);border:1px solid rgba(92,196,183,.5)}
+  .sbhydrated.on{display:inline-flex}
+
   .hide{display:none !important}
 
   @media(max-width:430px){
@@ -402,6 +416,7 @@
       </div>
       <div class="h-right">
         <span id="livesync" class="livesync off">LIVE SYNC ✗ local only</span>
+        <span id="sbHydrated" class="sbhydrated" title="Latest statuses and dates were loaded from the live publishing queue">✓ synced from server</span>
         <div class="menu">
           <button class="menu-btn" id="backupBtn">Backup ▾</button>
           <div class="menu-pop" id="backupPop">
@@ -877,13 +892,15 @@ function postState(id){
       rating:(p.rating!=null?p.rating:0),
       collaborators:(p.collaborators||[]).slice(),
       userTags:(p.user_tags||[]).slice(),
-      coverChoice:(p.cover_choice||"")};
+      coverChoice:(p.cover_choice||""),
+      dateOverride:false};
   } else {
     const s = state[id];
     if(s.rating===undefined) s.rating = (p.rating!=null?p.rating:0);
     if(!Array.isArray(s.collaborators)) s.collaborators = (p.collaborators||[]).slice();
     if(!Array.isArray(s.userTags)) s.userTags = (p.user_tags||[]).slice();
     if(s.coverChoice===undefined) s.coverChoice = (p.cover_choice||"");
+    if(s.dateOverride===undefined) s.dateOverride = false;
   }
   return state[id];
 }
@@ -989,6 +1006,10 @@ function applySlotSchedules(){
     members.forEach(mid=>{
       if(isLocked(mid) || isParked(mid)) return;
       const st = postState(mid);
+      // FIX 2: an explicit date override (calendar drag / manual date edit)
+      // is the post's own truth. It keeps occupying this slot position for
+      // ordering, but the slot engine must NOT recompute its date/time.
+      if(st.dateOverride) return;
       if(st.schedule!==slot.date || st.time!==slot.time){
         st.schedule = slot.date; st.time = slot.time;
         sbSync(mid);
@@ -996,6 +1017,36 @@ function applySlotSchedules(){
     });
   });
   save();
+}
+/* The computed slot date+time for a post if it were NOT overridden. Used
+   to decide whether a hydrated server date is an override, and to restore a
+   post to its slot when the user clears the override. */
+function computedSlotSchedule(id){
+  const prim = orderedSlotPrimaries();
+  for(let slotIdx=0; slotIdx<prim.length; slotIdx++){
+    const primId = prim[slotIdx];
+    if(primId==null) continue;
+    const grp = byId(primId).variant_group;
+    const members = grp ? VARIANT_GROUPS[grp] : [primId];
+    if(members.includes(id)){
+      const slot = SLOTS[slotIdx];
+      if(slot) return {date:slot.date, time:slot.time};
+    }
+  }
+  const bs = bakedSchedule(id);
+  return {date:bs.date, time:bs.time};
+}
+/* Clear an explicit date override: post returns to its computed slot
+   date/time and re-syncs. */
+function clearDateOverride(id){
+  const st = postState(id);
+  st.dateOverride = false;
+  const cs = computedSlotSchedule(id);
+  st.schedule = cs.date; st.time = cs.time;
+  save();
+  sbSync(id, true);
+  render(); buildCalendar();
+  if(modalPostId===id && document.getElementById('editModal').classList.contains('on')) openEditModal(id);
 }
 function reorderBefore(movePrim, targetPrim){
   if(isLocked(movePrim)) return;
@@ -1030,10 +1081,11 @@ function setStatus(id, status){
   st.status = status;
 
   if(status==='parked'){
-    // parking clears the schedule + nulls scheduled_time in DB
-    st.schedule = ""; st.time = "";
+    // parking clears the schedule + nulls scheduled_time in DB, and drops any
+    // explicit date override (a parked post has no date to override)
+    st.schedule = ""; st.time = ""; st.dateOverride = false;
   } else if(prev==='parked'){
-    // unparking: schedule will be re-derived from the slot below
+    // unparking: schedule re-derived from the slot below (override already off)
   }
 
   applyVariantRule(id);
@@ -1066,6 +1118,7 @@ function publishNow(id){
   const st = postState(id);
   const n = nowAEST();
   st.schedule = n.date; st.time = n.time;
+  st.dateOverride = true;    // FIX 2: publish-now time is explicit, never recomputed
   save();
   sbSync(id, true);          // PATCH scheduled_time(now) + status(approved)
   render(); buildCalendar();
@@ -1198,6 +1251,98 @@ function sbSync(id, immediate){
   if(immediate){ sbPush(id); return; }
   sbState[id]='pending'; setSyncIndicator(id);
   sbTimers[id] = setTimeout(()=>sbPush(id), 800);
+}
+
+/* ============================================================
+   FIX 1: HYDRATE FROM SUPABASE (server is the source of truth)
+   The publishing queue (kiki_content_queue) is what actually goes
+   live, so on load we GET it and let it win over baked + localStorage.
+   Any failure (offline, file://, 404) is silent; local state stands.
+   ============================================================ */
+/* DB status -> UI status. needs_changes -> needs-changes; the rest map
+   straight across (approved/parked/published/rejected/draft), and the
+   intake-only pending_review is shown as draft. */
+const DB_STATUS_TO_UI = {
+  needs_changes:"needs-changes", "needs-changes":"needs-changes",
+  approved:"approved", parked:"parked", published:"published",
+  rejected:"rejected", draft:"draft", pending_review:"draft", pending:"draft"
+};
+/* DB stores caption + "\n\n" + hashtags. Split on the LAST "\n\n#" block:
+   text before = caption, the "#"-block after = hashtags. No block -> all caption. */
+function splitCaptionHashtags(full){
+  const s = String(full==null?"":full);
+  const idx = s.lastIndexOf("\n\n#");
+  if(idx<0) return {caption:s, hashtags:""};
+  return {caption:s.slice(0,idx), hashtags:s.slice(idx+2)};   // +2 drops the "\n\n", keeps "#..."
+}
+/* A scheduled_time string ("...T HH:MM:SS +offset") -> AEST date + HH:MM.
+   The whole pipeline uses a fixed +10:00, so we read the wall-clock parts of
+   a +10 timestamp directly (no Date()/local-timezone drift). If the offset is
+   not +10 we convert to +10. */
+function scheduledToAEST(ts){
+  if(!ts) return null;
+  const str = String(ts);
+  const m = str.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::\d{2})?(?:\.\d+)?(Z|[+\-]\d{2}:?\d{2})?$/);
+  if(!m) return null;
+  const off = m[6];
+  if(!off || off==="+10:00" || off==="+1000"){
+    return {date:`${m[1]}-${m[2]}-${m[3]}`, time:`${m[4]}:${m[5]}`};
+  }
+  // different offset (incl. Z) -> shift to +10:00 via UTC
+  const utc = Date.parse(str);
+  if(isNaN(utc)) return {date:`${m[1]}-${m[2]}-${m[3]}`, time:`${m[4]}:${m[5]}`};
+  const d = new Date(utc + 10*3600*1000);
+  return {date:d.toISOString().slice(0,10), time:d.toISOString().slice(11,16)};
+}
+async function hydrateFromSupabase(){
+  if(!SB_ON()) return false;
+  let rows;
+  try{
+    const url = SUPABASE_CFG.url.replace(/\/+$/,'') +
+      `/rest/v1/kiki_content_queue?month=eq.${encodeURIComponent(SB_MONTH)}` +
+      `&select=post_code,status,rating,scheduled_time,approval_notes,image_feedback,caption,title`;
+    const res = await fetch(url, { headers:{ 'apikey':SUPABASE_CFG.anonKey, 'Authorization':'Bearer '+SUPABASE_CFG.anonKey } });
+    if(!res.ok) return false;
+    rows = await res.json();
+    if(!Array.isArray(rows)) return false;
+  }catch(e){ return false; }   // offline / file:// / network: silent fallback
+  let merged = 0;
+  rows.forEach(r=>{
+    const id = r && r.post_code;
+    if(!id || !byId(id)) return;     // ignore unknown post_codes
+    const st = postState(id);        // ensures the slot is set up first
+    // status (server wins)
+    if(r.status!=null && DB_STATUS_TO_UI[r.status]) st.status = DB_STATUS_TO_UI[r.status];
+    // rating / notes / image feedback
+    if(r.rating!=null && !isNaN(+r.rating)) st.rating = +r.rating;
+    if(r.approval_notes!=null) st.feedback = String(r.approval_notes);
+    if(r.image_feedback!=null) st.imageFeedback = String(r.image_feedback);
+    // caption + hashtags (split the combined DB value)
+    if(r.caption!=null){
+      const sp = splitCaptionHashtags(r.caption);
+      st.caption = sp.caption;
+      if(sp.hashtags) st.hashtags = sp.hashtags;
+    }
+    // scheduled_time -> AEST date+time, and detect server-side moves as overrides
+    if(st.status==='parked'){
+      st.schedule = ""; st.time = ""; st.dateOverride = false;
+    } else if(r.scheduled_time){
+      const aest = scheduledToAEST(r.scheduled_time);
+      if(aest){
+        st.schedule = aest.date; st.time = aest.time;
+        // if the server date differs from this post's computed slot date+time,
+        // it was moved deliberately -> mark as an override so it survives reloads
+        const cs = computedSlotSchedule(id);
+        st.dateOverride = (aest.date!==cs.date || aest.time!==cs.time);
+      }
+    }
+    merged++;
+  });
+  if(merged){
+    reconcileVariantState();   // server statuses may change which variant is approved
+    save();                    // persist merged (server-truth) state to localStorage
+  }
+  return merged>0;
 }
 
 /* ============================================================
@@ -1350,10 +1495,13 @@ function postEditorHTML(p, ctx){
   }
 
   // one-line schedule, expands
+  const overrideMark = (st.dateOverride && !locked && !readOnly)
+    ? ` <span class="datemanual" title="This date was set by hand and is held against the auto-schedule">manual date <button type="button" class="clearoverride" data-id="${p.id}" title="Clear manual date and return this post to its computed slot date">×</button></span>`
+    : (st.dateOverride ? ` <span class="datemanual">manual date</span>` : '');
   const schedBlock = parked
     ? `<div class="parkbanner">Parked — off the schedule. Unpark to restore its place in the queue.</div>`
     : `<details class="schedline">
-        <summary>${st.schedule?fmtSched(st.schedule,st.time):'Set a date'}${locked?' · locked':''}</summary>
+        <summary>${st.schedule?fmtSched(st.schedule,st.time):'Set a date'}${locked?' · locked':''}${overrideMark}</summary>
         <div class="sched">
           <div><label class="fld">Scheduled date</label><input type="date" data-id="${p.id}" data-k="schedule" value="${esc(st.schedule)}" ${locked||readOnly?'disabled':''}></div>
           <div><label class="fld">Time</label><input type="time" data-id="${p.id}" data-k="time" value="${esc(st.time)}" ${readOnly?'disabled':''}></div>
@@ -1489,11 +1637,20 @@ function wireInputs(root){
     inp.addEventListener(ev, ()=>{
       const {id,k} = inp.dataset;
       postState(id)[k] = inp.value;
+      // FIX 2: editing the date/time on a card or modal is an explicit move,
+      // so the slot engine must not recompute it on the next pass/reload.
+      if(k==='schedule'||k==='time'){ postState(id).dateOverride = true; }
       save();
       flashSaved(root, id);
       const immediate = (inp.tagName==='SELECT'||inp.type==='date'||inp.type==='time');
       sbSync(id, immediate);
-      if(k==='schedule'||k==='time'){ buildCalendar(); }
+      if(k==='schedule'||k==='time'){
+        // re-render so the "manual date" override marker appears/updates;
+        // if the modal is open on this post, refresh it instead of the grid.
+        if(modalPostId===id && document.getElementById('editModal').classList.contains('on')){
+          buildCalendar(); openEditModal(id);
+        } else { render(); buildCalendar(); }
+      }
     });
   });
 }
@@ -1538,6 +1695,10 @@ function wireActions(root){
   });
   root.querySelectorAll('.publishnow').forEach(btn=>{
     btn.onclick = ()=>{ publishNow(btn.dataset.id); };
+  });
+  // FIX 2: clear an explicit date override -> back to computed slot date
+  root.querySelectorAll('.clearoverride').forEach(btn=>{
+    btn.onclick = e=>{ e.stopPropagation(); e.preventDefault(); clearDateOverride(btn.dataset.id); };
   });
   // More dropdown toggles
   root.querySelectorAll('.more-btn').forEach(b=>{
@@ -1778,9 +1939,10 @@ function calChipHTML(it){
   const isPub = it.kind==='published';
   const draggable = (!locked && !isPub);
   const ab = hasSibling(it.id) ? `<span class="calab" title="A/B variant pair">A/B</span>` : '';
+  const manual = (!isPub && it.st.dateOverride) ? `<span class="calmanual" title="Manually placed date (held against the auto-schedule)">manual</span>` : '';
   const statusTag = `<span class="calstatus s-${it.st.status}">${esc(it.st.status)}</span>`;
   return `<div class="calpost st-${it.st.status}${locked?' locked':''}${isPub?' published-chip':''}" ${draggable?'draggable="true"':''} data-id="${it.id}" data-kind="${it.kind}" title="${esc(p.id+' · '+(p.title||'')+' · '+it.st.status+(locked?' · date-locked':'')+(isPub?' · published, read-only':''))}">
-      ${locked?'<span class="lk">🔒</span>':''}${ab}
+      ${locked?'<span class="lk">🔒</span>':''}${ab}${manual}
       <img class="lbtrigger" draggable="false" src="${cover}" data-src="${cover}" alt="${it.id}" loading="lazy">
       <div class="cmeta"><b>${it.id} · ${esc(p.title||'')}</b><small>${isPub?'published':esc(it.st.time||'')}</small>${statusTag}</div>
     </div>`;
@@ -1818,6 +1980,7 @@ function wireCalendarDnD(){
       const st = postState(id);
       if(st.schedule!==newDate){
         st.schedule = newDate;
+        st.dateOverride = true;   // FIX 2: a calendar drag is an explicit move
         save(); sbSync(id, true);
         render(); buildCalendar();
       }
@@ -2134,15 +2297,33 @@ function setFooterMode(){
   f.innerHTML = 'Kiki Kiki Clubhouse · local review tool · edits stored in your browser · Australian English<br><span style="opacity:.8">'+tag+'</span>';
 }
 
-/* INIT */
-loadState();
-applySlotSchedules();
-refreshTagBank();
-setLiveSync();
-render();
-buildCalendar();
-loadHistoryLayer();
-setFooterMode();
+/* INIT
+   Merge order: baked data -> localStorage (loadState) -> Supabase (hydrate).
+   applySlotSchedules() must run AFTER hydration so a server-side date move
+   (marked dateOverride) is not stomped by the slot engine on first paint. */
+async function init(){
+  loadState();
+  setLiveSync();
+  setFooterMode();
+  refreshTagBank();
+  // first paint from local state (instant + offline-safe)
+  applySlotSchedules();
+  render();
+  buildCalendar();
+  // then hydrate from the publishing queue (server wins); silent on failure
+  let hydrated = false;
+  try{ hydrated = await hydrateFromSupabase(); }catch(e){ hydrated = false; }
+  if(hydrated){
+    const tick = document.getElementById('sbHydrated');
+    if(tick) tick.classList.add('on');
+    applySlotSchedules();   // re-apply respecting hydrated overrides
+    refreshTagBank();
+    render();
+    buildCalendar();
+  }
+  loadHistoryLayer();
+}
+init();
 </script>
 </body>
 </html>
