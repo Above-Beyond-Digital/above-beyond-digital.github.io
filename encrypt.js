@@ -25,6 +25,7 @@ if (!MASTER_SECRET) {
 const PORTAL_GROUPS = [
   'clients/mn/portal',
   'clients/kiki/portal',
+  'internal/portal',
 ];
 
 function portalKey(relPath) {
