@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Meta Build Spec — Pre-sale — Maria Nicola CIJ26</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--pink:#EF6693;--charcoal:#222;--bg:#F8F8F8;--surface:#fff;--border:#E0E0E0;--muted:#888}
+  body{background:var(--bg);color:var(--charcoal);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
+  .header{background:var(--charcoal);color:#fff;padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .header-logo{font-size:18px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .header-logo span{color:var(--pink)}
+  .header-divider{width:1px;height:22px;background:rgba(255,255,255,.2)}
+  .header-sub{font-size:13px;color:rgba(255,255,255,.6)}
+  .back{margin-left:auto;color:var(--pink);text-decoration:none;font-size:13px;font-weight:600}
+  .doc{max-width:860px;margin:0 auto;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-top:32px;margin-bottom:32px}
+  .doc-owner{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);background:rgba(239,102,147,.1);padding:3px 10px;border-radius:20px;margin-bottom:24px}
+  .doc h1{font-size:28px;line-height:1.25;margin:8px 0 20px;color:var(--charcoal)}
+  .doc h2{font-size:21px;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--pink)}
+  .doc h3{font-size:17px;margin:24px 0 8px}
+  .doc h4{font-size:15px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .doc p{margin:0 0 14px}
+  .doc ul,.doc ol{margin:0 0 14px 24px}
+  .doc li{margin:4px 0}
+  .doc a{color:var(--pink)}
+  .doc code{background:#f2f2f2;padding:2px 6px;border-radius:4px;font-size:13px}
+  .doc pre{background:#f2f2f2;padding:16px;border-radius:8px;overflow-x:auto;margin:0 0 14px}
+  .doc pre code{background:none;padding:0}
+  .doc blockquote{border-left:3px solid var(--pink);padding:4px 0 4px 16px;margin:0 0 14px;color:#555;background:rgba(239,102,147,.04)}
+  .doc table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:13.5px}
+  .doc th,.doc td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+  .doc th{background:var(--charcoal);color:#fff;font-weight:600}
+  .doc tr:nth-child(even){background:#fafafa}
+  .doc hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+  .footer{max-width:860px;margin:0 auto 48px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;padding:0 40px}
+  @media(max-width:640px){.header{padding:16px 20px;flex-wrap:wrap}.doc{padding:24px;margin:16px;border-radius:8px}.footer{padding:0 20px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">Maria <span>Nicola</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Christmas in July 2026</div>
+  <a class="back" href="../cij26.html">← All CIJ26 assets</a>
+</div>
+<div class="doc">
+  <div class="doc-owner">Meta setup</div>
+  <h1>CIJ26 — Pre-sale Meta Build Spec (List-Building)</h1>
+<p><strong>Client:</strong> Maria Nicola · <strong>Sale:</strong> Christmas in July 2026 · <strong>Code:</strong> <code>CIJ26</code>
+<strong>Channel:</strong> Meta Ads · <strong>Account:</strong> <code>act_369051939</code> (AUD, timezone Australia/Sydney)
+<strong>Owner:</strong> Jess (build paused, scheduled OFF) → Jess turns on · <strong>Status:</strong> PLANNING SPEC — build to disk only, do NOT touch the live account
+<strong>Phase:</strong> Pre-sale list-building · <strong>Window: 10–17 Jul 2026 (~1 week)</strong></p>
+<blockquote>
+<p>Australian English. Never fabricate metrics. Structure follows <a href="../../../SALE-CAMPAIGN-SOP.md">MN Sale Campaign SOP</a> §2 (pre-sale) and Master Brief §4.1.</p>
+</blockquote>
+<hr>
+<h2>0. Date / budget — and the one conflict to flag</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value used</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pre-sale window</td>
+<td><strong>10–17 Jul 2026 (~1 week, ~8 days)</strong></td>
+<td>Master Brief §0, §7, §8 (PRIMARY)</td>
+</tr>
+<tr>
+<td>Pre-sale daily</td>
+<td><strong>$600/day (~$4,800 total)</strong></td>
+<td>Master Brief §4.1, §8 (PRIMARY)</td>
+</tr>
+</tbody></table>
+<p><strong>⚠️ CONFLICT — flagged, not silently resolved <code>[CONFIRM]</code>:</strong></p>
+<ul>
+<li><code>00-budget-recommendation.md</code> §2 says pre-sale <strong>11–17 Jul</strong> at <strong><del>$700/day (</del>$4,900)</strong>.</li>
+<li><code>00-Christmas in July 2026 (CIJ26) - MASTER BRIEF.md</code> §0/§7/§8 says pre-sale <strong>10–17 Jul</strong> at <strong>$600/day (~$4,800)</strong>.</li>
+<li><strong>Per instruction, the MASTER BRIEF wins: 10 Jul start, $600/day.</strong> Liam to confirm which is correct before launch. <code>[CONFIRM]</code></li>
+</ul>
+<p><strong>SOP guardrails honoured (SOP §2):</strong></p>
+<ul>
+<li>~1-week burst, <strong>not</strong> 2 weeks (MN10&#39;s 14-day window let CPL climb ~7× — <code>00-budget-recommendation.md</code> §1).</li>
+<li><strong>Reach objective KILLED</strong> (MN10 Reach: $629 → 8 leads, $78 CPL — SOP §2).</li>
+<li><strong>Engaged-heavy</strong>, not pure cold (holdouts/engaged are the pre-sale subscribers — SOP §2).</li>
+<li><strong>Push SMS signups</strong> (SMS-heavy lists drive stronger launches — SOP §2).</li>
+<li><strong>Landing page rebuilt first</strong> is a hard prerequisite (1.66% → target ~15%+ capture — SOP §2; LP due live + QA&#39;d 15 Jun, Master Brief §7).</li>
+<li>Pre-sale is a <strong>separate campaign</strong> from the sale — never mix lead/purchase-opt with sale-purchase (SOP §2, §37).</li>
+</ul>
+<hr>
+<h2>1. Structure overview</h2>
+<p>Two test campaigns + one ATC drop (Master Brief §4.1). Both lead-opt and purchase-opt run as <strong>separate campaigns</strong> so we can judge on <strong>cost-per-acquired-customer</strong>, not CPL (SOP §2 / Master Brief §4.6).</p>
+<table>
+<thead>
+<tr>
+<th>Campaign</th>
+<th>Objective</th>
+<th>Budget type</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Campaign 1 — Leads</strong></td>
+<td>LEAD</td>
+<td>ABO (per ad set)</td>
+<td>Cheap signups; test LP vs Meta Instant Form as the destination</td>
+</tr>
+<tr>
+<td><strong>Campaign 2 — Purchase</strong></td>
+<td>SALES / PURCHASE</td>
+<td>ABO (per ad set)</td>
+<td>Higher-intent signups; also hosts the ATC drop</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Meta <strong>Instant Forms require the LEAD objective</strong> — they cannot sit on a Sales/Purchase campaign (Master Brief §4.1). So the LP-vs-form test lives <strong>inside Campaign 1</strong>; Campaign 2 drives to the LP only.</p>
+</blockquote>
+<p><strong>Budget allocation across the two campaigns <code>[CONFIRM]</code>:</strong> total $600/day. Recommended starting split — <strong>Campaign 1 (Leads) $360/day (60%)</strong>, <strong>Campaign 2 (Purchase) $240/day (40%)</strong> — lead-opt carries the volume test (two ad sets), purchase-opt is the higher-cost intent test. Adjust on early cost-per-acquired-customer signal after the hands-off window. (No prior split documented — <code>[CONFIRM]</code> with Jess/Liam.)</p>
+<p><strong>Audience base for ALL pre-sale ad sets:</strong> women, W40+, AU+NZ (per LOCKED FACTS / SOP target customer). Geo <code>AUS+NZ+HK+SG</code> for cold saved audiences (matches the live saved-audience build); warm/engaged retargeting is list-bound so geo follows the source list.</p>
+<hr>
+<h2>2. Campaign 1 — LEADS (LP vs Instant Form test)</h2>
+<p><strong>Objective:</strong> LEAD · <strong>Budget type:</strong> ABO · <strong>Daily:</strong> <del>$360/day total <code>[CONFIRM]</code> (</del>$180/ad set)
+<strong>Optimisation event:</strong> Leads · <strong>Attribution:</strong> account default (7-day click / 1-day view)</p>
+<p><strong>Naming (filled in — pre-sale gets NO 🌲; 🌲 marks SALE campaigns only, SOP §0 / CLAUDE.md):</strong></p>
+<pre><code>Campaign:  20260710 | AB-XX | TOF+MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE LEAD-OPT | LEAD | ABO
+  Ad set A: 20260710 | AB-XX | MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE LEAD-OPT LP | LEAD | ENGAGED
+  Ad set B: 20260710 | AB-XX | MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE LEAD-OPT INSTANT-FORM | LEAD | ENGAGED
+</code></pre>
+<blockquote>
+<p><code>AB-XX</code> = sequential campaign number — Jess assigns from the account at build. Source tags <code>LEAD-OPT</code> / <code>INSTANT-FORM</code> are REQUIRED in the names so the dynamic UTM (§5) reports by source (Master Brief §4.5).</p>
+</blockquote>
+<h3>Ad set A — LP destination (engaged-heavy)</h3>
+<ul>
+<li><strong>Destination:</strong> <strong>[VIP SIGN-UP URL — CONFIRM]</strong> (single VIP signup LP, live + QA&#39;d 15 Jun — Master Brief §6; shared with Campaign 2). URL filled once Mark&#39;s LP rebuild is live (~15 Jun) — Master Brief §9.</li>
+<li><strong>Audience (engaged-heavy, LONG lookback only — SOP retargeting rule, never 14/60d):</strong><ul>
+<li>Engaged FB 365D <code>6106762263138</code></li>
+<li>Engaged IG 365D <code>6106762363938</code></li>
+<li>Engaged FB 180D <code>6106762258738</code></li>
+<li>Engaged IG 180D <code>6106762355538</code></li>
+<li>VV50% 180D <code>6260062838538</code></li>
+<li>Site Visitors 180D <code>6223342083538</code></li>
+<li>(combine as one OR&#39;d custom-audience inclusion set)</li>
+</ul>
+</li>
+<li><strong>Exclusions:</strong> Klaviyo Entire Email List <code>6107035302938</code> + SMS Campaign List <code>6284033643938</code> (already subscribed — no point paying to re-acquire a signup). Do NOT exclude past purchasers here — they can still opt into VIP. <code>[CONFIRM exclusion logic with Jess]</code></li>
+<li><strong>Demographic narrowing:</strong> Women, 40+, located AU+NZ.</li>
+<li><strong>Placements:</strong> Advantage+ placements (automatic). Do NOT hand-restrict — pre-sale leads cheaply across placements.</li>
+</ul>
+<h3>Ad set B — Meta Instant Form destination</h3>
+<ul>
+<li><strong>Destination:</strong> Meta Instant Form (on-platform, no LP). Form fields: email + phone (SMS opt-in). <code>[CONFIRM form ID — build in account]</code></li>
+<li><strong>Audience:</strong> same engaged-heavy inclusion set + exclusions as Ad set A.</li>
+<li><strong>Demographic / placements:</strong> same as Ad set A.</li>
+<li><strong>Note:</strong> Instant-form leads arrive via the Meta lead-ads integration and are tagged separately at source (Master Brief §4.5). Klaviyo→lead sync <code>[CONFIRM connector live]</code>.</li>
+</ul>
+<hr>
+<h2>3. Campaign 2 — PURCHASE (higher-intent + ATC drop)</h2>
+<p><strong>Objective:</strong> SALES / PURCHASE · <strong>Budget type:</strong> ABO · <strong>Daily:</strong> ~$240/day total <code>[CONFIRM]</code>
+<strong>Optimisation event:</strong> Purchase (or ATC for the ATC drop ad set — see below) · <strong>Destination:</strong> VIP signup LP only.</p>
+<p><strong>Naming (filled in):</strong></p>
+<pre><code>Campaign:  20260710 | AB-XX | TOF+MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE PURCH-OPT | PURCHASE | ABO
+  Ad set A: 20260710 | AB-XX | MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE PURCH-OPT | PURCHASE | ENGAGED
+  Ad set B: 20260715 | AB-XX | MOF | AUS+NZ+HK+SG | CIJ26 PRE-SALE ATC | PURCHASE | SHORT-WARM
+</code></pre>
+<h3>Ad set A — Purchase-opt signups</h3>
+<ul>
+<li><strong>Destination:</strong> <strong>[VIP SIGN-UP URL — CONFIRM]</strong> (same LP as Campaign 1 — Master Brief §4.1/§6).</li>
+<li><strong>Audience:</strong> same engaged-heavy inclusion set as Campaign 1 Ad set A (long lookback). Purchase optimisation finds the higher-intent subset.</li>
+<li><strong>Exclusions:</strong> existing subscribers (<code>6107035302938</code>, <code>6284033643938</code>) <code>[CONFIRM]</code>.</li>
+<li><strong>Demographic / placements:</strong> Women 40+, AU+NZ; Advantage+ placements.</li>
+</ul>
+<h3>Ad set B — ATC drop (Master Brief §4.1, §3.5)</h3>
+<ul>
+<li><strong>Launch:</strong> <strong>3 days before VIP</strong> = starts <strong>~15 Jul</strong> (VIP 18 Jul). Runs to launch.</li>
+<li><strong>Why inside Campaign 2 (not a new campaign):</strong> keeps the same purchase objective and pixel/learning intact — a separate ATC-objective campaign fragments the pixel (Master Brief §4.1).</li>
+<li><strong>Message:</strong> &quot;Load your cart now, the sale drops [date]&quot; → feeds the launch-day ATC trigger (§3.5 Klaviyo, in the VIP list spec).</li>
+<li><strong>Audience — recent SHORT-window warm ONLY</strong> (this is the ONE deliberate exception to the long-lookback rule — Master Brief §4.1 explicitly wants 7–14 day site visitors/ATC/engagers so the cart genuinely reflects pre-sale browse intent):<ul>
+<li><strong>Build needed:</strong> short-window 7–14d site-visitor / ATC / engager custom audience — <strong>no live audience ID for this short window exists; create before launch.</strong> <code>[CONFIRM — build 7–14d audience]</code></li>
+<li>Do NOT use the 180/365D engager IDs here — they are too broad for a &quot;your cart is waiting&quot; message.</li>
+</ul>
+</li>
+<li><strong>Exclusions:</strong> existing purchasers in-window <code>[CONFIRM]</code>.</li>
+<li><strong>Destination:</strong> VIP signup LP.</li>
+</ul>
+<hr>
+<h2>4. Exclusions summary (all pre-sale)</h2>
+<table>
+<thead>
+<tr>
+<th>Ad set</th>
+<th>Include</th>
+<th>Exclude</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1-A (LP lead)</td>
+<td>Engaged 180/365D set</td>
+<td>Email list <code>6107035302938</code>, SMS list <code>6284033643938</code> <code>[CONFIRM]</code></td>
+</tr>
+<tr>
+<td>C1-B (Instant Form)</td>
+<td>Engaged 180/365D set</td>
+<td>as above</td>
+</tr>
+<tr>
+<td>C2-A (purchase)</td>
+<td>Engaged 180/365D set</td>
+<td>as above</td>
+</tr>
+<tr>
+<td>C2-B (ATC)</td>
+<td><strong>NEW 7–14d short-warm</strong> <code>[BUILD]</code></td>
+<td>recent purchasers <code>[CONFIRM]</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>No PPS / past-purchaser ad sets in pre-sale — past purchasers are already known, there is nothing to sign up for (Master Brief §4.4). PPS only enters at the SALE phase.</p>
+</blockquote>
+<hr>
+<h2>5. Tracking — dynamic UTM template (set at AD level on EVERY pre-sale ad)</h2>
+<p>Per Master Brief §4.5 — UTMs auto-populate from the campaign/adset/ad <strong>names</strong>, so the work is correct naming, not hand-built UTMs.</p>
+<p><strong>Ad-level URL parameters (paste verbatim into the ad&#39;s &quot;URL parameters&quot; field):</strong></p>
+<pre><code>utm_source={{site_source_name}}_{{placement}}&amp;utm_medium=paidsocial&amp;utm_campaign={{campaign.name}}&amp;utm_id={{campaign.id}}&amp;utm_content={{ad.name}}_{{ad.id}}&amp;utm_term={{adset.name}}_{{adset.id}}
+</code></pre>
+<ul>
+<li>Because the names carry <code>LEAD-OPT</code>, <code>PURCH-OPT</code>, <code>INSTANT-FORM</code>, <code>ATC</code>, those source tags flow straight into reporting via <code>utm_campaign</code> / <code>utm_term</code>.</li>
+<li>Instant-form leads (C1-B) bypass the LP, so their source is tagged at the form/integration level instead of via page UTM.</li>
+</ul>
+<hr>
+<h2>6. Klaviyo hidden-field source capture (the link to downstream measurement)</h2>
+<p>This is what lets us judge <strong>cost-per-acquired-customer per campaign</strong> (Master Brief §6, §4.6). Full build is in <a href="../klaviyo/cij26-vip-list-spec.md"><code>../klaviyo/cij26-vip-list-spec.md</code></a>. Meta-side requirements:</p>
+<ol>
+<li>Every Meta pre-sale ad&#39;s link carries the dynamic <code>utm_campaign</code> (e.g. resolves to <code>…CIJ26 PRE-SALE LEAD-OPT…</code>).</li>
+<li>The VIP LP must <strong>preserve the <code>?utm_…</code> query string</strong> through to the embedded Klaviyo form (no redirect that strips it — Mark&#39;s job, Master Brief §6).</li>
+<li>The Klaviyo form reads <code>utm_campaign</code> (and optionally <code>utm_content</code>) <strong>live off the URL</strong> and writes it to profile property <strong><code>CIJ26 Signup Source</code></strong> — NOT a fixed value.</li>
+<li>When that profile later buys, Klaviyo already knows the originating campaign → we divide each campaign&#39;s spend by the buyers it produced.</li>
+</ol>
+<blockquote>
+<p><strong>Hard dependency:</strong> form + UTM capture tested end-to-end before pre-sale (Master Brief §6, §7 — due 15 Jun). Instant-form arm is tracked separately via the lead-ads integration.</p>
+</blockquote>
+<hr>
+<h2>7. Creative &amp; LP readiness (gate — must be done before launch)</h2>
+<ul>
+<li><strong>Creative ready:</strong> pre-sale statics (teaser + offer), 1 reel, 1 Maria tease video, Sparkle graphic, pre-sale ATC static — all due/approved <strong>15 Jun</strong> (Master Brief §2). No campaign goes live without approved creative loaded.</li>
+<li><strong>Final LP live + QA&#39;d:</strong> <strong>15 Jun</strong>, single VIP-signup CTA (email + SMS opt-in), UTM capture tested (Master Brief §6, §7). <strong>[VIP SIGN-UP URL — CONFIRM]</strong> filled at that point.</li>
+<li>Copy pools: cold + warm pre-sale copy in <a href="../copy/ad-copy-presale.md"><code>../copy/ad-copy-presale.md</code></a> (Master Brief §4.4). <strong>No PPS pool in pre-sale.</strong></li>
+<li>Build campaigns <strong>paused, scheduled OFF</strong>; Jess checks → Jess turns on (Master Brief §7).</li>
+</ul>
+<hr>
+<h2>8. Measurement</h2>
+<p><strong>Primary metric: cost-per-acquired-customer (NOT CPL).</strong> We want the cell that produces the cheapest <em>buyer</em>, not the cheapest <em>signup</em> (SOP §2 / Master Brief §4.6, §4.1).</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>How</th>
+<th>Benchmark</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cost-per-acquired-customer</strong> (per campaign + per source)</td>
+<td>Klaviyo <code>CIJ26 Signup Source</code> ties signup → later purchase; divide each campaign&#39;s spend by buyers it produced</td>
+<td>No clean prior-year cohort benchmark exists (Klaviyo couldn&#39;t tie cohort→sale historically — SOP §2). Establish this sale as the baseline. <code>[CONFIRM]</code></td>
+</tr>
+<tr>
+<td><strong>CPL (secondary, directional only)</strong></td>
+<td>Meta leads / spend, by campaign + source</td>
+<td>CIJ24 lead-opt held <strong>$5.72</strong> (7-day burst, 17.3% LP capture); MN10 purchase-opt <strong>$16.24</strong> (14-day, 1.66% LP) — <code>00-budget-recommendation.md</code> §1. Target: beat MN10&#39;s 464 signups; with fixed LP + engaged focus, projection ~<strong>700–900+ signups at CPL ~$6–10</strong> (<code>00-budget-recommendation.md</code> §2 — labelled projection, not a guarantee)</td>
+</tr>
+<tr>
+<td>Signup volume</td>
+<td>Klaviyo new VIP-list adds + Meta instant-form leads</td>
+<td>beat MN10&#39;s 464</td>
+</tr>
+<tr>
+<td>LP capture rate</td>
+<td>GA4 page conversion</td>
+<td>target ~15%+ (2024 page hit 17.3%) — <code>00-budget-recommendation.md</code> §1</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Judge lead-opt vs purchase-opt on cost-per-acquired-customer after the data lands — do NOT pick the winner on CPL alone (lead-opt always wins CPL but may produce lower-intent signups — SOP §2).</p>
+</blockquote>
+<hr>
+<h2>9. Open items / unknowns</h2>
+<ul>
+<li><code>[CONFIRM]</code> <strong>Date/budget conflict:</strong> Master Brief 10 Jul / $600/day vs budget-rec 11 Jul / $700/day — using Master Brief per instruction; Liam to confirm.</li>
+<li><code>[CONFIRM]</code> <strong>[VIP SIGN-UP URL]</strong> — fill once Mark&#39;s LP is live (~15 Jun).</li>
+<li><code>[CONFIRM]</code> Per-campaign budget split (Leads vs Purchase) — recommended 60/40, no prior documented.</li>
+<li><code>[BUILD + CONFIRM]</code> 7–14d short-window warm audience for the ATC drop — no live ID exists; create before ~15 Jul.</li>
+<li><code>[CONFIRM]</code> Subscriber exclusion logic (exclude email/SMS lists from lead ad sets) with Jess.</li>
+<li><code>[CONFIRM]</code> Meta Instant Form ID + Klaviyo lead-sync connector live.</li>
+<li><code>[CONFIRM]</code> <code>AB-XX</code> campaign numbers — Jess assigns at build from the live account.</li>
+<li>No live CIJ-specific pre-sale list audience exists yet — the VIP segment must be built in Klaviyo and pushed to a Meta custom audience before launch (see VIP list spec, deliverable 3).</li>
+</ul>
+<p><em>Sources: SALE-CAMPAIGN-SOP.md; 00-MASTER BRIEF (§0/§4/§6/§7/§8); 00-budget-recommendation.md (§1/§2); CLAUDE.md (naming, target customer). Audience IDs from LOCKED FACTS. No fabricated metrics — projections labelled, unknowns tagged.</em></p>
+
+</div>
+<div class="footer"><span>Above &amp; Beyond Digital — Confidential</span><span>CIJ26 · DRAFT</span></div>
+</body>
+</html>

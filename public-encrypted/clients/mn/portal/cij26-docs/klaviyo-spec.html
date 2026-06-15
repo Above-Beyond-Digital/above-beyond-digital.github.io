@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Klaviyo VIP List Spec — Maria Nicola CIJ26</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--pink:#EF6693;--charcoal:#222;--bg:#F8F8F8;--surface:#fff;--border:#E0E0E0;--muted:#888}
+  body{background:var(--bg);color:var(--charcoal);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
+  .header{background:var(--charcoal);color:#fff;padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .header-logo{font-size:18px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .header-logo span{color:var(--pink)}
+  .header-divider{width:1px;height:22px;background:rgba(255,255,255,.2)}
+  .header-sub{font-size:13px;color:rgba(255,255,255,.6)}
+  .back{margin-left:auto;color:var(--pink);text-decoration:none;font-size:13px;font-weight:600}
+  .doc{max-width:860px;margin:0 auto;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-top:32px;margin-bottom:32px}
+  .doc-owner{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);background:rgba(239,102,147,.1);padding:3px 10px;border-radius:20px;margin-bottom:24px}
+  .doc h1{font-size:28px;line-height:1.25;margin:8px 0 20px;color:var(--charcoal)}
+  .doc h2{font-size:21px;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--pink)}
+  .doc h3{font-size:17px;margin:24px 0 8px}
+  .doc h4{font-size:15px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .doc p{margin:0 0 14px}
+  .doc ul,.doc ol{margin:0 0 14px 24px}
+  .doc li{margin:4px 0}
+  .doc a{color:var(--pink)}
+  .doc code{background:#f2f2f2;padding:2px 6px;border-radius:4px;font-size:13px}
+  .doc pre{background:#f2f2f2;padding:16px;border-radius:8px;overflow-x:auto;margin:0 0 14px}
+  .doc pre code{background:none;padding:0}
+  .doc blockquote{border-left:3px solid var(--pink);padding:4px 0 4px 16px;margin:0 0 14px;color:#555;background:rgba(239,102,147,.04)}
+  .doc table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:13.5px}
+  .doc th,.doc td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+  .doc th{background:var(--charcoal);color:#fff;font-weight:600}
+  .doc tr:nth-child(even){background:#fafafa}
+  .doc hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+  .footer{max-width:860px;margin:0 auto 48px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;padding:0 40px}
+  @media(max-width:640px){.header{padding:16px 20px;flex-wrap:wrap}.doc{padding:24px;margin:16px;border-radius:8px}.footer{padding:0 20px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">Maria <span>Nicola</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Christmas in July 2026</div>
+  <a class="back" href="../cij26.html">← All CIJ26 assets</a>
+</div>
+<div class="doc">
+  <div class="doc-owner">Email setup</div>
+  <h1>CIJ26 — Klaviyo VIP / Pre-sale List Spec</h1>
+<p><strong>Client:</strong> Maria Nicola · <strong>Sale:</strong> Christmas in July 2026 · <strong>Code:</strong> <code>CIJ26</code>
+<strong>Channel:</strong> Klaviyo (email + SMS) · <strong>Owner:</strong> Marla (builds + tests form) → hands to Mark (embed + UTM survival)
+<strong>Status:</strong> PLANNING SPEC — build to disk only, do NOT touch the live Klaviyo account
+<strong>Purpose:</strong> the CIJ26 pre-sale VIP signup list — capture, source tracking, SMS opt-in, and the Klaviyo→Meta custom-audience handoff.</p>
+<blockquote>
+<p>Australian English. Never fabricate metrics. Mirrors Master Brief §3 (Email &amp; SMS) and §6 (build dependency). Pre-sale window <strong>10–17 Jul 2026</strong> (Master Brief §0; conflict with budget-rec 11 Jul flagged in the Meta pre-sale spec — Master Brief wins).</p>
+</blockquote>
+<hr>
+<h2>1. The VIP list / segment</h2>
+<p><strong>Goal:</strong> capture Sisters who opt in during pre-sale so they get VIP early access on <strong>Sat 18 Jul 8am AEST</strong> (code <code>XMASJULY26</code>) before the public sale (19 Jul). 2024&#39;s early-access popup drove ~10× the normal SMS signup rate (Master Brief §3.7) — model on that.</p>
+<p><strong>Build (Marla):</strong></p>
+<ul>
+<li><strong>Klaviyo list:</strong> <code>CIJ26 VIP Early Access</code> (the master opt-in list the popup/form/LP feed). Name carries <code>CIJ26</code> (SOP §0 — code in every asset).</li>
+<li>Profiles entering this list trigger the <strong>pre-sale flow</strong> (welcome + &quot;you&#39;re on the VIP list, early access 18 Jul&quot;).</li>
+</ul>
+<p><strong>Segment definitions (for sends + the Meta handoff):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Definition</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>CIJ26 VIP — All signups</code></td>
+<td>In list <code>CIJ26 VIP Early Access</code></td>
+<td>Master VIP audience; Meta custom-audience handoff (§5)</td>
+</tr>
+<tr>
+<td><code>CIJ26 VIP — SMS consented</code></td>
+<td>In VIP list AND consented to SMS marketing</td>
+<td>VIP SMS at 18 Jul 8am; ATC trigger SMS half (§4)</td>
+</tr>
+<tr>
+<td><code>CIJ26 VIP — Email only</code></td>
+<td>In VIP list AND NOT SMS-consented</td>
+<td>Email 1 &quot;sign up to SMS to go first&quot;; ATC trigger email half</td>
+</tr>
+<tr>
+<td><code>CIJ26 ATC pre-sale — not purchased</code></td>
+<td>Added to cart during pre-sale window AND not placed an order</td>
+<td>Launch-day ATC trigger (§4)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>[CONFIRM]</code> exact Klaviyo predicate for &quot;added to cart in pre-sale&quot; — recommend <code>Added to Cart</code> (or <code>Checkout Started</code>) since 10 Jul AND zero <code>Placed Order</code> since 10 Jul. Marla to confirm the metric name in this account.</p>
+</blockquote>
+<hr>
+<h2>2. Signup form fields</h2>
+<p>Per Master Brief §6 — ONE VIP signup LP, one Klaviyo form embedded on it (Mark embeds; Master Brief §6). Both Meta pre-sale campaigns (lead-opt + purchase-opt) drive to the SAME page.</p>
+<p><strong>Visible fields:</strong></p>
+<ul>
+<li><strong>Email</strong> (required).</li>
+<li><strong>Phone / SMS opt-in</strong> (the push — SOP §2 / Master Brief §3.4 &quot;push SMS opt-in hard in pre-sale&quot;). Explicit SMS marketing consent checkbox with required AU consent language <code>[CONFIRM consent copy with Marla — AU SMS compliance]</code>.</li>
+<li>Primary CTA = VIP signup, <strong>email capture WITH SMS opt-in</strong> (not SMS-only) — Master Brief §6. Single clear CTA, minimal friction.</li>
+</ul>
+<p><strong>Hidden field (the measurement link — §3):</strong></p>
+<ul>
+<li><code>CIJ26 Signup Source</code> — written from the live URL <code>utm_campaign</code> (see §3).</li>
+</ul>
+<hr>
+<h2>3. Hidden field — <code>CIJ26 Signup Source</code> from UTM (the measurement link)</h2>
+<p>This is what lets Meta judge <strong>cost-per-acquired-customer per campaign</strong> (Master Brief §6, §4.6). Read the full plain-English explainer in Master Brief §6.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Every Meta pre-sale ad link carries a <strong>dynamic <code>utm_campaign</code></strong> that auto-fills from the campaign name (e.g. resolves to <code>…CIJ26 PRE-SALE LEAD-OPT…</code> / <code>…PURCH-OPT…</code>) — set at ad level (Meta pre-sale spec §5).</li>
+<li>The Klaviyo form has a <strong>hidden field</strong> mapped to <strong>read <code>utm_campaign</code> (and optionally <code>utm_content</code>) LIVE off the page URL</strong> and write it to profile property <strong><code>CIJ26 Signup Source</code></strong>.</li>
+<li><strong>Must be read live from the URL — NOT a fixed value</strong> typed into the form (a fixed value can&#39;t tell the two campaigns apart). Master Brief §6.</li>
+<li>Later, when that profile buys, Klaviyo already knows the originating campaign → Meta reporting divides each campaign&#39;s spend by the buyers it produced.</li>
+</ol>
+<p><strong>Marla&#39;s steps (Master Brief §6):</strong></p>
+<ol>
+<li>Build the VIP signup form in Klaviyo.</li>
+<li>Add the hidden field → capture <code>utm_campaign</code> (optionally <code>utm_content</code>) → write to profile property <code>CIJ26 Signup Source</code>.</li>
+<li>Test: open the form via a link with <code>?utm_campaign=test123</code>, submit, confirm the profile shows <code>CIJ26 Signup Source = test123</code>.</li>
+</ol>
+<p><strong>Mark&#39;s steps (Master Brief §6):</strong></p>
+<ol>
+<li>Embed Marla&#39;s Klaviyo form on the rebuilt LP.</li>
+<li>Ensure the page <strong>keeps the <code>?utm_…</code> query string intact</strong> through to the form (no redirect that strips it).</li>
+<li>Test end-to-end with a real tagged link before pre-sale goes live.</li>
+</ol>
+<blockquote>
+<p><strong>Worked example (Master Brief §6):</strong> lead-opt ad link → <code>…/vip-access?utm_campaign=CIJ26-LEAD-OPT…</code> → Sister signs up → profile gets <code>CIJ26 Signup Source = CIJ26-LEAD-OPT</code> → she buys later → sale report counts that purchase under lead-opt. Same for purch-opt and the instant form.</p>
+<p><strong>Instant-form arm (Meta C1 ad set B):</strong> signups come via the Meta lead-ads integration and are tagged separately at source — they do NOT pass through this LP/hidden-field path (Master Brief §4.5). <code>[CONFIRM Klaviyo↔Meta lead-ads connector is live]</code>.</p>
+</blockquote>
+<hr>
+<h2>4. SMS opt-in confirmation auto-flow + ATC launch trigger</h2>
+<p><strong>Reference copy:</strong> <a href="../copy/email-sms-copy.md"><code>../copy/email-sms-copy.md</code></a> for all wording. All sends named with the <code>CIJ26</code> token (SOP §0 / Master Brief §3).</p>
+<h3>4.1 Pre-sale / SMS opt-in confirmation flow</h3>
+<ul>
+<li>On joining <code>CIJ26 VIP Early Access</code> → trigger a <strong>pre-sale confirmation flow</strong>: &quot;You&#39;re on the VIP list — early access lands Sat 18 Jul, you go first.&quot; If SMS-consented, confirm SMS subscription; if email-only, include the &quot;sign up to SMS to go first on 18 Jul&quot; nudge (mirrors Email 1, Master Brief §3.1).</li>
+<li><strong>Push SMS opt-in hard</strong> throughout pre-sale (SOP §2 / Master Brief §3.4).</li>
+</ul>
+<h3>4.2 Add-to-cart launch trigger (Master Brief §3.5 — NEW)</h3>
+<p>Turns pre-sale browsers into launch-day buyers. Segment <code>CIJ26 ATC pre-sale — not purchased</code>, split by SMS status:</p>
+<table>
+<thead>
+<tr>
+<th>Half</th>
+<th>Fires</th>
+<th>Channel / code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SMS-consented</strong></td>
+<td><strong>Sat 18 Jul</strong> (VIP day)</td>
+<td>SMS, include code <code>XMASJULY26</code></td>
+</tr>
+<tr>
+<td><strong>Email-only</strong></td>
+<td><strong>Sun 19 Jul</strong> (public)</td>
+<td>Email, auto-discount, no code</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Build as a <strong>wait-until flow OR two scheduled segment-sends</strong> — either works; pick one at build (Master Brief §3.5).</li>
+<li><strong>CRITICAL EXCLUSION:</strong> these pre-sale ATC profiles <strong>must be EXCLUDED from the standard full-price abandoned-cart flow</strong> for the pre-sale→launch window — otherwise they get the normal full-price &quot;you left something behind&quot; message clashing with the sale launch (Master Brief §3.5, §6 QA). Return them to normal flows after the sale.</li>
+<li>Fed by the Meta <strong>ATC drop</strong> ad set (Meta C2 ad set B, ~15 Jul, short-window warm — Meta pre-sale spec §3).</li>
+</ul>
+<hr>
+<h2>5. Klaviyo → Meta custom-audience handoff</h2>
+<p><strong>⚠️ NO LIVE CIJ-SPECIFIC PRE-SALE LIST AUDIENCE EXISTS YET.</strong> None of the confirmed live audience IDs is a CIJ26 presale segment — they are all-time/180/365D lists, purchasers, engagers, and saved audiences. <strong>The CIJ26 presale Klaviyo segment must be built and pushed to a Meta custom audience before launch</strong> (this is deliverable 3 of this build).</p>
+<p><strong>Handoff steps:</strong></p>
+<ol>
+<li>Build the <code>CIJ26 VIP — All signups</code> segment in Klaviyo (§1).</li>
+<li>Sync it to Meta as a <strong>new custom audience</strong> named <code>CIJ26 VIP Early Access</code> via the Klaviyo↔Meta integration (or scheduled CSV push) <code>[CONFIRM integration live + sync cadence]</code>.</li>
+<li>Use it in Meta for <strong>VIP-day suppression and warm targeting</strong>: e.g. once the sale is live, exclude/segment VIP signups appropriately, and feed them into the warm sale ad set if desired. <code>[CONFIRM how Jess wants to use it — warm targeting vs suppression]</code></li>
+<li>Long-lookback rule still applies for any retargeting use (SOP — never 14/60d for sale retargeting).</li>
+</ol>
+<blockquote>
+<p>Allow sync lag — push the audience and confirm it has populated in Meta <strong>before</strong> the 18/19 Jul launch, not on the day.</p>
+</blockquote>
+<hr>
+<h2>6. §3.4 reactivation / suppression note (segmentation discipline)</h2>
+<p>Per Master Brief §3.4 — <strong>go WIDE on the list, but tailor per segment; the reactivation segment does NOT get every send.</strong> (List: Email 16,069 · SMS-consented ~7,543.)</p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Size</th>
+<th>Sends</th>
+<th>Tailoring</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Core</strong> — Engaged buyers 180d (~3,935) + Engaged non-buyers 180d (~3,252)</td>
+<td>~7,187</td>
+<td>Full cadence</td>
+<td>Standard sale; treat-yourself / start your journey (non-buyers) / add to collection (buyers)</td>
+</tr>
+<tr>
+<td><strong>Lapsing</strong></td>
+<td>~1,906</td>
+<td>Launch + mid-sale + last-chance (reduced)</td>
+<td>&quot;We miss you + 20%&quot; — warmer re-welcome</td>
+</tr>
+<tr>
+<td><strong>Reactivation</strong> — inactive / sunset-eligible</td>
+<td>~7,660</td>
+<td><strong>One re-engagement wave only</strong> (NOT every send) — e.g. launch + one last-chance</td>
+<td>Discount as the hook; &quot;it&#39;s been a while, here&#39;s 20%&quot;. <strong>Suppress true dead weight.</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Reactivation is nearly <strong>half the list</strong> and the single biggest reactivation lever — but it gets a <strong>light, tailored</strong> touch, not the full cadence. Suppress profiles that risk deliverability (sunset/dead weight) per Klaviyo best practice. <code>[CONFIRM exact sunset/suppression predicate with Marla.]</code></p>
+</blockquote>
+<p><strong>Related flow discipline (Master Brief §3.6):</strong> build sale versions of abandoned-cart / browse / welcome with time-based FOMO + SMS in-flow; pause any flow arm offering a competing/standard discount that would clash or stack with the 20% <code>[VERIFY exact flows in Klaviyo before pausing]</code>. Revert all at teardown (Master Brief §7).</p>
+<hr>
+<h2>7. Open items / unknowns</h2>
+<ul>
+<li><code>[CONFIRM]</code> Date conflict: Master Brief pre-sale starts <strong>10 Jul</strong> (used here) vs budget-rec <strong>11 Jul</strong> — Master Brief wins per instruction; Liam to confirm.</li>
+<li><code>[CONFIRM]</code> Klaviyo predicate for &quot;added to cart in pre-sale, not purchased&quot; (metric name in this account).</li>
+<li><code>[CONFIRM]</code> AU SMS marketing consent copy on the form (compliance).</li>
+<li><code>[CONFIRM]</code> Klaviyo↔Meta custom-audience integration live + sync cadence/lag.</li>
+<li><code>[CONFIRM]</code> Klaviyo↔Meta lead-ads connector live (for the instant-form arm).</li>
+<li><code>[CONFIRM]</code> How Jess wants to use the synced VIP audience in Meta (warm targeting vs suppression).</li>
+<li><code>[CONFIRM]</code> Reactivation sunset/suppression predicate + which competing flow arms to pause (<code>[VERIFY]</code>).</li>
+<li><strong>No live CIJ26 presale audience exists</strong> — must be built in Klaviyo and pushed to Meta before launch (deliverable 3, §5).</li>
+<li><strong>[VIP SIGN-UP URL — CONFIRM]</strong> — the single LP both pre-sale Meta campaigns drive to; filled once Mark&#39;s LP is live (~15 Jun, Master Brief §6/§9).</li>
+</ul>
+<p><em>Sources: 00-MASTER BRIEF (§0/§3/§6/§7); SALE-CAMPAIGN-SOP.md (§0/§2); copy/email-sms-copy.md (referenced). List/segment sizes quoted from Master Brief §3.4. No fabricated metrics — all unknowns tagged.</em></p>
+
+</div>
+<div class="footer"><span>Above &amp; Beyond Digital — Confidential</span><span>CIJ26 · DRAFT</span></div>
+</body>
+</html>

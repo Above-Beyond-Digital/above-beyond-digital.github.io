@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Meta Build Spec — Sale — Maria Nicola CIJ26</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--pink:#EF6693;--charcoal:#222;--bg:#F8F8F8;--surface:#fff;--border:#E0E0E0;--muted:#888}
+  body{background:var(--bg);color:var(--charcoal);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
+  .header{background:var(--charcoal);color:#fff;padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .header-logo{font-size:18px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .header-logo span{color:var(--pink)}
+  .header-divider{width:1px;height:22px;background:rgba(255,255,255,.2)}
+  .header-sub{font-size:13px;color:rgba(255,255,255,.6)}
+  .back{margin-left:auto;color:var(--pink);text-decoration:none;font-size:13px;font-weight:600}
+  .doc{max-width:860px;margin:0 auto;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-top:32px;margin-bottom:32px}
+  .doc-owner{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);background:rgba(239,102,147,.1);padding:3px 10px;border-radius:20px;margin-bottom:24px}
+  .doc h1{font-size:28px;line-height:1.25;margin:8px 0 20px;color:var(--charcoal)}
+  .doc h2{font-size:21px;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--pink)}
+  .doc h3{font-size:17px;margin:24px 0 8px}
+  .doc h4{font-size:15px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .doc p{margin:0 0 14px}
+  .doc ul,.doc ol{margin:0 0 14px 24px}
+  .doc li{margin:4px 0}
+  .doc a{color:var(--pink)}
+  .doc code{background:#f2f2f2;padding:2px 6px;border-radius:4px;font-size:13px}
+  .doc pre{background:#f2f2f2;padding:16px;border-radius:8px;overflow-x:auto;margin:0 0 14px}
+  .doc pre code{background:none;padding:0}
+  .doc blockquote{border-left:3px solid var(--pink);padding:4px 0 4px 16px;margin:0 0 14px;color:#555;background:rgba(239,102,147,.04)}
+  .doc table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:13.5px}
+  .doc th,.doc td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+  .doc th{background:var(--charcoal);color:#fff;font-weight:600}
+  .doc tr:nth-child(even){background:#fafafa}
+  .doc hr{border:0;border-top:1px solid var(--border);margin:28px 0}
+  .footer{max-width:860px;margin:0 auto 48px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;padding:0 40px}
+  @media(max-width:640px){.header{padding:16px 20px;flex-wrap:wrap}.doc{padding:24px;margin:16px;border-radius:8px}.footer{padding:0 20px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">Maria <span>Nicola</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Christmas in July 2026</div>
+  <a class="back" href="../cij26.html">← All CIJ26 assets</a>
+</div>
+<div class="doc">
+  <div class="doc-owner">Meta setup</div>
+  <h1>CIJ26 — Main Sale Meta Build Spec</h1>
+<p><strong>Client:</strong> Maria Nicola · <strong>Sale:</strong> Christmas in July 2026 · <strong>Code:</strong> <code>CIJ26</code>
+<strong>Channel:</strong> Meta Ads · <strong>Account:</strong> <code>act_369051939</code> (AUD, timezone Australia/Sydney)
+<strong>Owner:</strong> Jess (build paused, scheduled OFF) → Jess turns on · <strong>Status:</strong> PLANNING SPEC — build to disk only, do NOT touch the live account
+<strong>Phase:</strong> Main sale <strong>19–31 Jul 2026</strong> + last-chance refresh <strong>29–31 Jul</strong> (into existing ad sets)</p>
+<blockquote>
+<p>Australian English. Never fabricate metrics. Structure follows <a href="../../../SALE-CAMPAIGN-SOP.md">MN Sale Campaign SOP</a> §1, §3–§6 and Master Brief §4.2. The <code>🌲</code> emoji marks CIJ SALE campaigns (CLAUDE.md / SOP §0).</p>
+</blockquote>
+<hr>
+<h2>0. Dates, offer, budget</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VIP launch (SMS/email only — <strong>NO paid MOF</strong>)</td>
+<td><strong>Sat 18 Jul, 8am AEST</strong></td>
+<td>Master Brief §0; SOP §3</td>
+</tr>
+<tr>
+<td>Public sale (paid live)</td>
+<td><strong>Sun 19 Jul 8am – Fri 31 Jul 11:59pm AEST</strong></td>
+<td>Master Brief §0</td>
+</tr>
+<tr>
+<td>Last-chance refresh</td>
+<td><strong>29–31 Jul</strong> (into existing ad sets)</td>
+<td>Master Brief §0, §4.2</td>
+</tr>
+<tr>
+<td>Offer</td>
+<td><strong>20% OFF*</strong> (excl. Beginner Bundles, Gift Cards, Flash Sale items)</td>
+<td>LOCKED FACTS / Master Brief §1</td>
+</tr>
+<tr>
+<td>VIP code</td>
+<td><code>XMASJULY26</code> (18 Jul 8am–19 Jul 7:59am AEST) — checkout only, not in paid</td>
+<td>Master Brief §1</td>
+</tr>
+<tr>
+<td>Public discount</td>
+<td>automatic &quot;Christmas in July&quot;, no code (19–31 Jul)</td>
+<td>Master Brief §1</td>
+</tr>
+</tbody></table>
+<p><strong>Budget (Master Brief §4.2, §8 / <code>00-budget-recommendation.md</code> §2):</strong></p>
+<ul>
+<li><strong>Total account daily: $3,500–$4,000/day</strong> (reallocatable between sale + evergreen).</li>
+<li><strong>Sale campaigns daily: $1,500–$2,000/day</strong> (the deliberate sale spend).</li>
+<li><strong>Evergreen BAU: ~$2,000/day</strong> (keep running).</li>
+<li><strong>Split within sale campaigns — <code>60 / 25 / 15</code> (acquisition-first):</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Share</th>
+<th>Of ~$1,500–2,000/day</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cold TOF — ASC</td>
+<td><strong>60%</strong></td>
+<td>~$900–$1,200/day</td>
+</tr>
+<tr>
+<td>MOF/warm — ABO</td>
+<td><strong>25%</strong></td>
+<td>~$375–$500/day</td>
+</tr>
+<tr>
+<td>BOF/PPS — ABO (capped)</td>
+<td><strong>15%</strong></td>
+<td>~$225–$300/day</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>All daily figures from <code>00-budget-recommendation.md</code> §2 + Master Brief §4.2/§8. The 60/25/15 is the recommended split; final daily set within the $1,500–2,000 band at build <code>[CONFIRM exact daily with Liam/Jess]</code>.</p>
+</blockquote>
+<hr>
+<h2>1. Structure (exact SOP §1 / Master Brief §4.2)</h2>
+<p>Two sale campaigns. Warm + PPS sit in <strong>one campaign as two ad sets</strong> (ABO).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Campaign</th>
+<th>Budget type</th>
+<th>Share</th>
+<th>Audience</th>
+<th>Exclusions</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1</strong></td>
+<td><strong>COLD TOF — ASC Sale</strong></td>
+<td>CBO (ASC requires it)</td>
+<td><strong>60%</strong></td>
+<td>Broad / Advantage+</td>
+<td><strong>EXCLUDE PAST PURCHASERS ONLY — NOT engaged</strong></td>
+<td>New-customer acquisition (#1 goal)</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Warm + PPS Sale</strong></td>
+<td><strong>ABO</strong></td>
+<td><strong>40%</strong></td>
+<td>A: MOF/warm engaged · B: PPS</td>
+<td>A excludes past purchasers; B none</td>
+<td>Reactivate warm + tell buyers the sale is on</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Evergreen</strong></td>
+<td>unchanged</td>
+<td>—</td>
+<td>as always</td>
+<td>as always</td>
+<td><strong>BAU — UNCHANGED. Do NOT add sale creative to evergreen cold.</strong></td>
+</tr>
+</tbody></table>
+<p><strong>Why this split (SOP §1 evidence):</strong> ASC is the strongest cold engine (Easter25 cold ASC 6.45× vs manual 2.2×) and is CBO-only, so cold lives alone. Warm as ABO = deliberate engaged-vs-PPS control (CBO starves small high-ROAS ad sets — the 29× BOF stuck at $2,031 in MN10). Sale creative in evergreen <em>cold</em> hurt every time (MN10 4.17× vs dedicated 7.28×) — keep it out.</p>
+<hr>
+<h2>2. Campaign 1 — COLD TOF · ASC Sale 🌲</h2>
+<p><strong>Objective:</strong> Sales (Advantage+ Shopping / ASC) · <strong>Budget type:</strong> CBO (ASC requires it) · <strong>Share:</strong> 60% (~$900–$1,200/day)
+<strong>Audience:</strong> Broad / Advantage+ (let ASC find new buyers).</p>
+<p><strong>Naming (filled in — 🌲 marks the SALE campaign; SOP §0 / CLAUDE.md format <code>YYYYMMDD | AB-[XX] | [FUNNEL] | [GEO] | [OFFER/AUDIENCE] | [OBJECTIVE] | [SETTINGS]</code>):</strong></p>
+<pre><code>Campaign: 20260719 🌲 | AB-XX | TOF | WW | CIJ26 20% OFF | ASC | CBO
+  Ad set:  20260719 🌲 | AB-XX | TOF | WW | CIJ26 20% OFF BROAD | ASC | ADVANTAGE+
+</code></pre>
+<blockquote>
+<p>Geo <code>WW</code> per LOCKED FACTS (cold ASC runs broad/worldwide; ASC self-optimises geo). Use <code>AUS+NZ+HK+SG</code> instead only if Jess wants to fence ASC to core markets <code>[CONFIRM geo with Jess]</code>. <code>AB-XX</code> = Jess assigns at build.</p>
+</blockquote>
+<p><strong>Exclusions — PAST PURCHASERS ONLY (SOP §1, §7 — do NOT also exclude engaged; over-constraining ASC throttles delivery):</strong></p>
+<ul>
+<li>PUR all-time <code>6107035122938</code></li>
+<li>PUR 2+ all-time <code>6107035107738</code></li>
+<li>(engaged audiences are NOT excluded — engaged bleeding into cold is fine; the controlled engaged buy is the MOF ad set)</li>
+</ul>
+<p><strong>Demographic:</strong> broad — let ASC optimise; W40+ skew via creative, not hard age caps (ASC prefers room). <code>[CONFIRM whether to apply any age floor]</code>
+<strong>Placements:</strong> Advantage+ (automatic).
+<strong>Creative:</strong> new cold sale statics/video + evergreen video winners with CIJ overlay (see §6). Cold copy pool <a href="../copy/ad-copy-sale.md"><code>../copy/ad-copy-sale.md</code></a> (sale cold).</p>
+<hr>
+<h2>3. Campaign 2 — Warm + PPS Sale 🌲 (ABO, two ad sets)</h2>
+<p><strong>Objective:</strong> Sales/Purchase · <strong>Budget type:</strong> ABO (separate budget per ad set) · <strong>Share:</strong> 40%</p>
+<p><strong>Naming (filled in):</strong></p>
+<pre><code>Campaign: 20260719 🌲 | AB-XX | MOF+BOF | AUS+NZ+HK+SG | CIJ26 20% OFF WARM+PPS | PURCHASE | ABO
+  Ad set A: 20260719 🌲 | AB-XX | MOF | AUS+NZ+HK+SG | CIJ26 20% OFF WARM ENGAGED | PURCHASE | ABO
+  Ad set B: 20260719 🌲 | AB-XX | BOF | AUS+NZ+HK+SG | CIJ26 20% OFF PPS | PURCHASE | ABO-CAPPED
+</code></pre>
+<h3>Ad set A — MOF / warm (25%, ~$375–$500/day)</h3>
+<p><strong>Audience (engaged — LONG lookback only, 180/365D; SOP retargeting rule, never 14/60d):</strong></p>
+<ul>
+<li>Engaged FB 365D <code>6106762263138</code></li>
+<li>Engaged IG 365D <code>6106762363938</code></li>
+<li>Engaged FB 180D <code>6106762258738</code></li>
+<li>Engaged IG 180D <code>6106762355538</code></li>
+<li>VV50% 180D <code>6260062838538</code></li>
+<li>Site Visitors 180D <code>6223342083538</code></li>
+<li>ATC 180D <code>6106752423938</code></li>
+<li>IC 180D <code>6106752680738</code></li>
+<li>Klaviyo Entire Email List <code>6107035302938</code> (lapsed/engaged subscribers) — <code>[CONFIRM include vs reserve for PPS]</code></li>
+<li>(OR&#39;d together as one warm inclusion set)</li>
+</ul>
+<p><strong>Exclusions (SOP §1 — warm A excludes past purchasers; do NOT exclude in-sale buyers):</strong></p>
+<ul>
+<li>PUR all-time <code>6107035122938</code></li>
+<li>PUR 2+ all-time <code>6107035107738</code></li>
+<li>(PPS lives in Ad set B; keeping them out of A avoids double-serving)</li>
+</ul>
+<p><strong>Demographic:</strong> Women 40+, AU+NZ. <strong>Placements:</strong> Advantage+.
+<strong>Creative:</strong> 2–3 variants at launch (small lists fatigue fast, freq 11–13 — SOP §5). Warm+PPS shared sale-led copy pool, angle variants (a) complete-your-set/belonging, (b) &quot;your 20% is here&quot;, (c) optional gifting test — <a href="../copy/ad-copy-sale.md"><code>../copy/ad-copy-sale.md</code></a> (sale warm+PPS).</p>
+<h3>Ad set B — PPS / past purchasers (15%, CAPPED, ~$225–$300/day)</h3>
+<p><strong>Audience (past purchasers + lists/PPS — long lookback):</strong></p>
+<ul>
+<li>PUR all-time <code>6107035122938</code></li>
+<li>PUR 2+ all-time <code>6107035107738</code></li>
+<li>PUR last 180d <code>6106754271338</code></li>
+<li>PPS PUR Pixel 180D <code>6239504398338</code></li>
+<li>SMS Campaign List <code>6284033643938</code></li>
+<li>Klaviyo Entire Email List <code>6107035302938</code> <code>[CONFIRM placement — A or B]</code></li>
+</ul>
+<p><strong>Exclusions:</strong> none (do NOT exclude in-sale buyers — MN buyers repeat-purchase within a sale; SOP §1, §7).
+<strong>Cap (SOP §4 / Master Brief §4.2–§4.3):</strong> hold at ~15%; PPS ROAS is inflated by the email/SMS/Sparkle Sisterhood/organic halo (non-incremental) — serve the sale, don&#39;t over-fund. Watch frequency even at 15%.
+<strong>Demographic:</strong> Women 40+, AU+NZ. <strong>Placements:</strong> Advantage+.
+<strong>Creative:</strong> shares the warm+PPS sale-led pool; 2–3 variants.</p>
+<hr>
+<h2>4. Evergreen — UNCHANGED (explicit)</h2>
+<ul>
+<li>Evergreen continues as <strong>BAU at ~$2,000/day</strong> (Master Brief §4.2, §8).</li>
+<li><strong>Do NOT add sale creative to the evergreen COLD campaign</strong> (SOP §1, §7; Master Brief §4.2). Sale creative in evergreen cold underperformed dedicated every time (MN10 4.17× vs 7.28×) and dragged BAU down.</li>
+<li>Keep evergreen warm (esp PPS) running — do NOT pause it (SOP §7).</li>
+<li>No new ad sets, no renaming, no 🌲 on evergreen. Leave it alone.</li>
+</ul>
+<hr>
+<h2>5. Launch sequence (SOP §3 / Master Brief §7)</h2>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Sat 18 Jul, 8am AEST (VIP day)</strong></td>
+<td><strong>SMS + email ONLY. NO paid MOF on VIP day.</strong> Both paid sale campaigns stay OFF. (SOP §3, §7)</td>
+</tr>
+<tr>
+<td><strong>Sun 19 Jul, 8am AEST (public launch)</strong></td>
+<td><strong>Cold ASC (Campaign 1) AND Warm+PPS (Campaign 2) both go live together</strong> → both enter learning together (SOP §3).</td>
+</tr>
+<tr>
+<td>19–21 Jul</td>
+<td>Hands-off (learning) — see pacing §7.</td>
+</tr>
+<tr>
+<td>~29 Jul (≈2/3 through)</td>
+<td>Last-chance creative refresh drops INTO existing ad sets (§6).</td>
+</tr>
+<tr>
+<td>Fri 31 Jul 11:59pm</td>
+<td>Sale ends — scheduled OFF; teardown (Master Brief §7).</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Warm converts fast (clear learning ~1–2 days); cold ASC takes a few days — broad/Advantage+ helps it learn quickly (SOP §3).</p>
+</blockquote>
+<hr>
+<h2>6. Creative pacing (SOP §5 / Master Brief §4.2)</h2>
+<ul>
+<li><strong>Warm/PPS:</strong> launch with <strong>2–3 creative variants</strong> (small lists fatigue fast, freq 11–13).</li>
+<li><strong>Cold:</strong> new cold sale statics/video + <strong>3 best evergreen-winning videos</strong> overlaid with the CIJ sale message, run rolling alongside new creative (Jess picks the 3 — Master Brief §2, §4.2).</li>
+<li><strong>Last-chance refresh at ~2/3 through the sale (~29 Jul):</strong> the main refresh + urgency angle, covering cold + broad. <strong>Repurpose the best-performing main-sale creatives with last-chance copy swapped in</strong> — <strong>NO new campaign, NO new ad sets; drops into the EXISTING sale ad sets</strong> (SOP §5; Master Brief §4.2). Add an earlier warm refresh only if warm frequency passes ~6–7 before the last-chance drop (SOP §5).</li>
+<li>Base all sale creative on proven evergreen winners + CIJ 2024 top performers (SOP §5; Master Brief §2 — MN10 anniversary is NOT a direct comp).</li>
+</ul>
+<hr>
+<h2>7. Pacing (SOP §4 / Master Brief §4.3)</h2>
+<ol>
+<li><strong>Hands-off the first ~3 days</strong> (19–21 Jul) — let ad sets exit learning. Don&#39;t ruin learnings. (Can turn off clearly non-performing creatives in the first few days — Master Brief §4.3.)</li>
+<li>After that, <strong>reallocate in ≤20% steps</strong> — bigger jumps re-trigger learning even on a stable ad set.</li>
+<li>Move budget to where ROAS holds <strong>with frequency in check</strong>. Don&#39;t starve TOF — it feeds the rest.</li>
+<li><strong>PPS ROAS is inflated by the email/SMS halo</strong> — don&#39;t over-shift to PPS; keep the cap.</li>
+<li><strong>Protect cold acquisition budget</strong> — don&#39;t let warm cannibalise it (the reason cold is its own campaign).</li>
+<li>Budget is reallocatable between the sale campaigns and evergreen during the sale based on performance (SOP §4).</li>
+</ol>
+<hr>
+<h2>8. Tracking — dynamic UTM (set at AD level on every sale ad)</h2>
+<p>Per Master Brief §4.5 — same template as pre-sale; names carry <code>CIJ26</code> + funnel tag so UTMs auto-populate.</p>
+<pre><code>utm_source={{site_source_name}}_{{placement}}&amp;utm_medium=paidsocial&amp;utm_campaign={{campaign.name}}&amp;utm_id={{campaign.id}}&amp;utm_content={{ad.name}}_{{ad.id}}&amp;utm_term={{adset.name}}_{{adset.id}}
+</code></pre>
+<p>Every campaign/adset/ad name includes <code>CIJ26</code> + funnel tag (TOF / MOF / BOF). 🌲 on sale campaigns.</p>
+<hr>
+<h2>9. Measurement (SOP §6 / Master Brief §4.6)</h2>
+<ul>
+<li><strong>Cold ASC judged on new-customer CPA + new-customer VOLUME — NOT in-platform ROAS.</strong> Acquisition = first-purchase economics; blended ROAS looks low (~1.5–2.5×) by design. Pull new-vs-returning from <strong>Shopify</strong>; divide TOF spend by new customers (SOP §6).</li>
+<li><strong>Whole sale judged on blended MER</strong> = Shopify net sales ÷ total spend — <strong>NOT in-platform ROAS.</strong> The <strong>17 Mar 2026 Meta attribution change made in-platform ROAS click-only (understated)</strong> (SOP §6; Master Brief §4.6).</li>
+<li><strong>Live sale dashboard tracks:</strong> new-cust CPA + count (benchmark = <strong>prior-year CIJ 2024 new-cust CPA — <code>[to compute live in the dashboard]</code>, not fabricated here</strong>), MER, spend pacing, warm vs cold split, plus pre-sale cost-per-acquired-customer by source (SOP §6; Master Brief §4.6).</li>
+<li><strong>Benchmark to beat:</strong> CIJ 2024 revenue <strong>+10%</strong> at equal-or-better MER (Master Brief §0/§1). Context figures: CIJ24 $197k Meta-attr revenue / 5.38× blended / 10.5% new-cust; MN10 $283k / 5.76× / 7.4% (<code>00-budget-recommendation.md</code> §1 — context, not targets). Projection ~$365k–$375k net sales at MER ~7.0 (<code>00-budget-recommendation.md</code> §2/§3 — <strong>labelled projection, not a guarantee</strong>).</li>
+</ul>
+<hr>
+<h2>10. Open items / unknowns</h2>
+<ul>
+<li><code>[CONFIRM]</code> Exact daily within the $1,500–2,000/day sale band, and the precise per-ad-set dollar figures (60/25/15).</li>
+<li><code>[CONFIRM]</code> Cold ASC geo — <code>WW</code> (recommended) vs <code>AUS+NZ+HK+SG</code>.</li>
+<li><code>[CONFIRM]</code> Whether to apply any age floor on ASC (recommend none — let ASC optimise).</li>
+<li><code>[CONFIRM]</code> Klaviyo Entire Email List <code>6107035302938</code> placement — warm A vs PPS B (avoid double-counting).</li>
+<li><code>[CONFIRM]</code> <code>AB-XX</code> campaign numbers — Jess assigns at build.</li>
+<li><code>[to compute live]</code> Prior-year CIJ 2024 new-customer CPA benchmark — pulled in the dashboard, not fabricated here.</li>
+<li>Build all sale campaigns <strong>paused, scheduled OFF</strong>; Jess checks → Jess turns on (Master Brief §7).</li>
+</ul>
+<p><em>Sources: SALE-CAMPAIGN-SOP.md (§0–§7); 00-MASTER BRIEF (§0/§1/§2/§4/§7/§8); 00-budget-recommendation.md (§1/§2/§3); CLAUDE.md (naming, 🌲, target customer). Audience IDs from LOCKED FACTS. No fabricated metrics — projections labelled, benchmarks marked to-compute-live.</em></p>
+
+</div>
+<div class="footer"><span>Above &amp; Beyond Digital — Confidential</span><span>CIJ26 · DRAFT</span></div>
+</body>
+</html>

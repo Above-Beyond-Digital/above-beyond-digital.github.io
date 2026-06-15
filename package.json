@@ -6,6 +6,7 @@
     "encrypt": "node encrypt.js"
   },
   "dependencies": {
+    "marked": "^18.0.5",
     "staticrypt": "^3.4.0"
   }
 }
