@@ -52,15 +52,15 @@
 <strong>Status:</strong> PLANNING SPEC — build to disk only, do NOT touch the live Klaviyo account
 <strong>Purpose:</strong> the CIJ26 pre-sale VIP signup list — capture, source tracking, SMS opt-in, and the Klaviyo→Meta custom-audience handoff.</p>
 <blockquote>
-<p>Australian English. Never fabricate metrics. Mirrors Master Brief §3 (Email &amp; SMS) and §6 (build dependency). Pre-sale window <strong>10–17 Jul 2026</strong> (Master Brief §0; conflict with budget-rec 11 Jul flagged in the Meta pre-sale spec — Master Brief wins).</p>
+<p>Australian English. Never fabricate metrics. Mirrors Master Brief §3 (Email &amp; SMS) and §6 (build dependency). Pre-sale window <strong>10–16 Jul 2026</strong> (Master Brief §0; conflict with budget-rec 11 Jul flagged in the Meta pre-sale spec — Master Brief wins).</p>
 </blockquote>
 <hr>
 <h2>1. The VIP list / segment</h2>
-<p><strong>Goal:</strong> capture Sisters who opt in during pre-sale so they get VIP early access on <strong>Sat 18 Jul 8am AEST</strong> (code <code>XMASJULY26</code>) before the public sale (19 Jul). 2024&#39;s early-access popup drove ~10× the normal SMS signup rate (Master Brief §3.7) — model on that.</p>
+<p><strong>Goal:</strong> capture Sisters who opt in during pre-sale so they get VIP early access on <strong>Fri 17 Jul 8am AEST</strong> (code <code>XMASJULY26</code>) before the public sale (18 Jul). 2024&#39;s early-access popup drove ~10× the normal SMS signup rate (Master Brief §3.7) — model on that.</p>
 <p><strong>Build (Marla):</strong></p>
 <ul>
 <li><strong>Klaviyo list:</strong> <code>CIJ26 VIP Early Access</code> (the master opt-in list the popup/form/LP feed). Name carries <code>CIJ26</code> (SOP §0 — code in every asset).</li>
-<li>Profiles entering this list trigger the <strong>pre-sale flow</strong> (welcome + &quot;you&#39;re on the VIP list, early access 18 Jul&quot;).</li>
+<li>Profiles entering this list trigger the <strong>pre-sale flow</strong> (welcome + &quot;you&#39;re on the VIP list, early access 17 Jul&quot;).</li>
 </ul>
 <p><strong>Segment definitions (for sends + the Meta handoff):</strong></p>
 <table>
@@ -79,7 +79,7 @@
 <tr>
 <td><code>CIJ26 VIP — SMS consented</code></td>
 <td>In VIP list AND consented to SMS marketing</td>
-<td>VIP SMS at 18 Jul 8am; ATC trigger SMS half (§4)</td>
+<td>VIP SMS at 17 Jul 8am; ATC trigger SMS half (§4)</td>
 </tr>
 <tr>
 <td><code>CIJ26 VIP — Email only</code></td>
@@ -139,7 +139,7 @@
 <p><strong>Reference copy:</strong> <a href="../copy/email-sms-copy.md"><code>../copy/email-sms-copy.md</code></a> for all wording. All sends named with the <code>CIJ26</code> token (SOP §0 / Master Brief §3).</p>
 <h3>4.1 Pre-sale / SMS opt-in confirmation flow</h3>
 <ul>
-<li>On joining <code>CIJ26 VIP Early Access</code> → trigger a <strong>pre-sale confirmation flow</strong>: &quot;You&#39;re on the VIP list — early access lands Sat 18 Jul, you go first.&quot; If SMS-consented, confirm SMS subscription; if email-only, include the &quot;sign up to SMS to go first on 18 Jul&quot; nudge (mirrors Email 1, Master Brief §3.1).</li>
+<li>On joining <code>CIJ26 VIP Early Access</code> → trigger a <strong>pre-sale confirmation flow</strong>: &quot;You&#39;re on the VIP list — early access lands Fri 17 Jul, you go first.&quot; If SMS-consented, confirm SMS subscription; if email-only, include the &quot;sign up to SMS to go first on 17 Jul&quot; nudge (mirrors Email 1, Master Brief §3.1).</li>
 <li><strong>Push SMS opt-in hard</strong> throughout pre-sale (SOP §2 / Master Brief §3.4).</li>
 </ul>
 <h3>4.2 Add-to-cart launch trigger (Master Brief §3.5 — NEW)</h3>
@@ -154,19 +154,19 @@
 </thead>
 <tbody><tr>
 <td><strong>SMS-consented</strong></td>
-<td><strong>Sat 18 Jul</strong> (VIP day)</td>
+<td><strong>Fri 17 Jul</strong> (VIP day)</td>
 <td>SMS, include code <code>XMASJULY26</code></td>
 </tr>
 <tr>
 <td><strong>Email-only</strong></td>
-<td><strong>Sun 19 Jul</strong> (public)</td>
+<td><strong>Sat 18 Jul</strong> (public)</td>
 <td>Email, auto-discount, no code</td>
 </tr>
 </tbody></table>
 <ul>
 <li>Build as a <strong>wait-until flow OR two scheduled segment-sends</strong> — either works; pick one at build (Master Brief §3.5).</li>
 <li><strong>CRITICAL EXCLUSION:</strong> these pre-sale ATC profiles <strong>must be EXCLUDED from the standard full-price abandoned-cart flow</strong> for the pre-sale→launch window — otherwise they get the normal full-price &quot;you left something behind&quot; message clashing with the sale launch (Master Brief §3.5, §6 QA). Return them to normal flows after the sale.</li>
-<li>Fed by the Meta <strong>ATC drop</strong> ad set (Meta C2 ad set B, ~15 Jul, short-window warm — Meta pre-sale spec §3).</li>
+<li>Fed by the Meta <strong>ATC drop</strong> ad set (Meta C2 ad set B, ~14 Jul, short-window warm — Meta pre-sale spec §3).</li>
 </ul>
 <hr>
 <h2>5. Klaviyo → Meta custom-audience handoff</h2>
@@ -179,7 +179,7 @@
 <li>Long-lookback rule still applies for any retargeting use (SOP — never 14/60d for sale retargeting).</li>
 </ol>
 <blockquote>
-<p>Allow sync lag — push the audience and confirm it has populated in Meta <strong>before</strong> the 18/19 Jul launch, not on the day.</p>
+<p>Allow sync lag — push the audience and confirm it has populated in Meta <strong>before</strong> the 17/18 Jul launch, not on the day.</p>
 </blockquote>
 <hr>
 <h2>6. §3.4 reactivation / suppression note (segmentation discipline)</h2>
