@@ -103,6 +103,39 @@
   .lockup .l-year{color:var(--gold);}
   .lockup-note{margin-top:22px;font-size:13px;color:var(--ink-soft);}
 
+  /* ---- v2: SALE + discount are the dominant elements ---- */
+  .lockup .l-name{
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    font-size:clamp(20px,3vw,32px);letter-spacing:.03em;line-height:1;
+    color:var(--charcoal);text-transform:uppercase;margin-top:4px;
+  }
+  .lockup .l-name .in{color:var(--pink);}
+  .lockup .l-sale{
+    font-family:'Montserrat',sans-serif;font-weight:800;
+    font-size:clamp(66px,12vw,128px);line-height:.88;letter-spacing:.01em;
+    text-transform:uppercase;color:var(--charcoal);margin-top:8px;
+  }
+  .lockup .l-offer{
+    display:inline-block;margin-top:16px;
+    background:var(--pink);color:#fff;
+    font-family:'Montserrat',sans-serif;font-weight:800;
+    font-size:clamp(28px,5vw,52px);line-height:1;letter-spacing:.01em;
+    padding:12px 30px;border-radius:999px;text-transform:uppercase;
+  }
+  /* reversed mini lockups */
+  .lv .mini-name{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;line-height:1;opacity:.92;}
+  .lv .mini-name .in{color:var(--pink);}
+  .lv .mini-sale{font-family:'Montserrat',sans-serif;font-weight:800;font-size:30px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;margin-top:5px;}
+  .lv .mini-off{color:var(--pink);}
+  .lv.dark .mini-name,.lv.pink .mini-name{color:rgba(255,255,255,.85);}
+  .lv.dark .mini-sale,.lv.pink .mini-sale{color:#fff;}
+  .lv.pink .mini-name .in,.lv.pink .mini-off{color:var(--gold-soft);}
+  /* email header sale block */
+  .email-hd .eh-name{font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--charcoal);}
+  .email-hd .eh-name .in{color:var(--pink);}
+  .email-hd .eh-sale{font-family:'Montserrat',sans-serif;font-weight:800;font-size:30px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:var(--charcoal);margin-top:3px;}
+  .email-hd .eh-sale .off{color:var(--pink);}
+
   .lockup-variants{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px;}
   .lv{border:1px solid var(--line);border-radius:14px;padding:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;text-align:center;}
   .lv.dark{background:var(--charcoal);}
@@ -189,12 +222,13 @@
     color:var(--ink-soft);background:rgba(255,255,255,.78);border-radius:8px;padding:7px 10px;margin:12px;line-height:1.35;max-width:62%;
   }
   .ad-hero .badge-mini{
-    position:absolute;top:14px;right:14px;width:78px;height:78px;border-radius:50%;
-    background:#fff;border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(201,162,75,.12);
+    position:absolute;top:14px;right:14px;width:108px;height:108px;border-radius:50%;
+    background:#fff;border:2px solid var(--gold);box-shadow:0 0 0 5px rgba(201,162,75,.14);
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
   }
-  .ad-hero .badge-mini .m-n{font-family:'Montserrat',sans-serif;font-weight:800;font-size:23px;color:var(--pink);line-height:.85;}
-  .ad-hero .badge-mini .m-o{font-family:'Montserrat',sans-serif;font-weight:700;font-size:9px;letter-spacing:.18em;color:var(--charcoal);}
+  .ad-hero .badge-mini .m-n{font-family:'Montserrat',sans-serif;font-weight:800;font-size:36px;color:var(--pink);line-height:.82;}
+  .ad-hero .badge-mini .m-o{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;color:var(--charcoal);}
+  .ad-hero .badge-mini .m-s{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);line-height:1;}
   .ad-foot{padding:14px 20px 20px;}
   .ad-foot .ad-eyebrow{font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);}
   .ad-foot h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;line-height:1.04;letter-spacing:-.01em;margin:5px 0 4px;}
@@ -246,11 +280,12 @@
   .home-bn p{font-size:14px;color:var(--ink-soft);max-width:46ch;}
   .home-bn .hb-cta{display:inline-block;margin-top:14px;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;padding:11px 24px;border-radius:999px;}
   .home-bn .hb-badge{
-    width:120px;height:120px;border-radius:50%;background:#fff;border:2px solid var(--gold);
-    box-shadow:0 0 0 6px rgba(201,162,75,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:0 0 auto;
+    width:168px;height:168px;border-radius:50%;background:#fff;border:2px solid var(--gold);
+    box-shadow:0 0 0 7px rgba(201,162,75,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:0 0 auto;
   }
-  .home-bn .hb-badge .n{font-family:'Montserrat',sans-serif;font-weight:800;font-size:34px;color:var(--pink);line-height:.85;}
-  .home-bn .hb-badge .o{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;color:var(--charcoal);}
+  .home-bn .hb-badge .s{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);line-height:1;}
+  .home-bn .hb-badge .n{font-family:'Montserrat',sans-serif;font-weight:800;font-size:50px;color:var(--pink);line-height:.82;}
+  .home-bn .hb-badge .o{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;letter-spacing:.16em;color:var(--charcoal);}
 
   /* ---------- 6. Art direction note ---------- */
   .ad-note-panel{background:var(--charcoal);color:#fff;}
@@ -289,7 +324,7 @@
   <div class="holly"></div>
   <div class="cover-meta">
     <span class="brandmark">Maria Nicola</span>
-    <span class="doc-tag">Key Visual Concept · v1 · For Sign-off</span>
+    <span class="doc-tag">Key Visual Concept · v2 · For Sign-off</span>
   </div>
   <h1>Christmas in July 2026 — the look every asset will follow.</h1>
   <p class="lede">One cohesive key visual for the CIJ26 sale, so every touchpoint feels like the same warm, festive moment. Festive warmth via tasteful Christmas accents, not winter clichés. The 10 Way Necklace™ stays the hero throughout. This is a brand guide to adapt, not a rigid template. Use it as a guideline to keep the sale consistent, but bring your own creativity within it.</p>
@@ -300,29 +335,32 @@
   <!-- ============ 1. LOCKUP ============ -->
   <section class="panel">
     <div class="eyebrow">01 — The Lockup</div>
-    <h2>Christmas in July wordmark</h2>
-    <p class="sub">Set in Montserrat. The "in July" sits in MN Pink as the warm, mid-year twist, with a single fine gold rule and a tiny gold sprig as the only festive accent. Calm, celebratory, unmistakably Maria Nicola.</p>
+    <h2>Christmas in July Sale wordmark</h2>
+    <p class="sub">Set in Montserrat. The wordmark always reads "Christmas in July <b>Sale</b>" — and "Sale" plus the "20% Off*" are the largest, most prominent elements, sitting below the smaller campaign name. The "in July" sits in MN Pink as the warm, mid-year twist, with a tiny gold sprig as the only festive accent. Loud on the offer, still calm and unmistakably Maria Nicola — never a garish starburst.</p>
     <div class="divider-mini"></div>
 
     <div class="lockup-stage">
       <div class="lockup">
         <div class="sprig">&#10043; &#8226; &#10043;</div>
-        <div class="l-script">A little gift to yourself</div>
-        <div class="l-main">Christmas<br><span class="in">in July</span></div>
-        <div class="l-rule"><span class="l-year">2026</span></div>
+        <div class="l-name">Christmas <span class="in">in July</span></div>
+        <div class="l-sale">Sale</div>
+        <div class="l-offer">20% Off*</div>
+        <div class="l-rule"><span>A little gift to yourself</span><span class="l-year">2026</span></div>
       </div>
-      <div class="lockup-note">Primary lockup — for blush and white backgrounds. Headline never exceeds the wordmark in weight; the necklace stays hero.</div>
+      <div class="lockup-note">Primary lockup — for blush and white backgrounds. <b>"Sale" and "20% Off*" are the largest, loudest elements;</b> the campaign name sits quietly above them. On product ads the necklace still stays hero (see &sect;04).</div>
     </div>
 
     <div class="lockup-variants">
       <div class="lv dark">
         <div class="mini-sprig" style="color:var(--gold-soft)">&#10043; &#8226; &#10043;</div>
-        <div class="mini-lock">Christmas <span class="in">in July</span></div>
+        <div class="mini-name">Christmas <span class="in">in July</span></div>
+        <div class="mini-sale">Sale <span class="mini-off">20% Off*</span></div>
         <div class="lvcap">Reversed — on charcoal</div>
       </div>
       <div class="lv pink">
         <div class="mini-sprig" style="color:var(--gold-soft)">&#10043; &#8226; &#10043;</div>
-        <div class="mini-lock">Christmas <span class="in">in July</span></div>
+        <div class="mini-name">Christmas <span class="in">in July</span></div>
+        <div class="mini-sale">Sale <span class="mini-off">20% Off*</span></div>
         <div class="lvcap">Reversed — on MN Pink</div>
       </div>
     </div>
@@ -401,11 +439,11 @@
           <span class="ad-sprig">&#10043; &#8226; &#10043;</span>
         </div>
         <div class="ad-hero">
-          <div class="badge-mini"><span class="m-o" style="color:var(--gold);font-size:16px;font-weight:800;">Sale</span><span class="m-n">20%</span><span class="m-o">Off*</span></div>
+          <div class="badge-mini"><span class="m-s">Sale</span><span class="m-n">20%</span><span class="m-o">Off*</span></div>
           <div class="img-cap">IMAGE AREA · Warm lifestyle close-up — 10 Way Necklace™ on skin, real woman 45-65, natural light, magnetic click moment</div>
         </div>
         <div class="ad-foot">
-          <div class="ad-eyebrow">&#10043; Christmas in July</div>
+          <div class="ad-eyebrow">&#10043; Christmas in July Sale</div>
           <h3>One necklace. <span class="pk">Ten ways to sparkle.</span></h3>
           <div class="proof">20% off* this July. Magnets on, confidence up.</div>
           <span class="ad-cta">Shop the 10 Way Necklace™</span>
@@ -438,10 +476,10 @@
         <span class="eh-brand">Maria Nicola</span>
         <div class="eh-lock">
           <div class="eh-sprig">&#10043; &#8226; &#10043;</div>
-          <div class="eh-main">Christmas <span class="in">in July</span></div>
-          <div class="eh-sub">A little gift to yourself</div>
+          <div class="eh-name">Christmas <span class="in">in July</span></div>
+          <div class="eh-sale">Sale <span class="off">20% Off*</span></div>
         </div>
-        <span class="eh-pill">20% off*</span>
+        <span class="eh-pill">A little gift to yourself</span>
       </div>
     </div>
 
@@ -449,12 +487,12 @@
       <div class="cap">Homepage banner strip</div>
       <div class="home-bn">
         <div class="hb-copy">
-          <div class="hb-eyebrow">&#10043; Christmas in July 2026</div>
+          <div class="hb-eyebrow">&#10043; Christmas in July Sale &middot; 2026</div>
           <h3>Wear it your way, <span class="in">this July.</span></h3>
           <p>One necklace, ten gorgeous styles, packed into a pouch the size of a sunglasses case. 20% off* for a little while.</p>
           <span class="hb-cta">Shop the 10 Way Necklace™</span>
         </div>
-        <div class="hb-badge"><span class="o" style="color:var(--gold);font-size:22px;font-weight:800;">Sale</span><span class="n">20%</span><span class="o">Off*</span></div>
+        <div class="hb-badge"><span class="s">Sale</span><span class="n">20%</span><span class="o">Off*</span></div>
       </div>
     </div>
 
@@ -475,7 +513,7 @@
           <li>Gold, and green very sparingly, as small accents (no red)</li>
           <li>Real women 45-65, jewellery on skin, natural light</li>
           <li>Tasteful round Sale 20% Off* seal, never a starburst</li>
-          <li>Sale and 20% Off* read louder than the Christmas in July lockup</li>
+          <li><b>"Sale" + the discount % are the single most prominent element on every asset — larger and louder than the campaign name and the headline</b></li>
           <li>10 Way Necklace™ with ™ on every instance</li>
         </ul>
       </div>
@@ -492,7 +530,7 @@
     </div>
   </section>
 
-  <p class="footer">Maria Nicola · Christmas in July 2026 (CIJ26) · Key Visual Concept v1 · Above and Beyond Digital · For client sign-off</p>
+  <p class="footer">Maria Nicola · Christmas in July 2026 (CIJ26) · Key Visual Concept v2 · Above and Beyond Digital · For client sign-off</p>
 
 </div>
 
