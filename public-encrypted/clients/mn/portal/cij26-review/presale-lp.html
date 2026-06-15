@@ -6,9 +6,10 @@
   This is a design and copy reference draft only. The live landing page is
   Mark's rebuild in Shopify. Use this to review look, layout and copy.
 
-  PRE-SALE PHASE = TEASE ONLY. The 20% off* offer is NOT shown anywhere here
-  (it stays secret until VIP day, 18 Jul). Job of this page: build the VIP /
-  SMS list so Sisters go first on Sat 18 July.
+  PRE-SALE PHASE = OFFER REVEALED. The 20% off* IS shown, as the incentive to
+  sign up. Job of this page: build the VIP / SMS list so Sisters shop the
+  20% off* first on Sat 18 July, a full day before the public. Exclusion
+  footnote present near the offer.
 
   Placeholders to keep (do not invent): [VIP SIGN-UP URL — CONFIRM]
   Image areas are styled blush/pink placeholder blocks with captions — final
@@ -70,8 +71,11 @@
   .lockup{text-align:left;position:relative;z-index:2;}
   .lockup .sprig{font-size:16px;color:var(--green);letter-spacing:.5em;opacity:.85;}
   .lockup .l-script{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:var(--pink);line-height:1;margin:8px 0 4px;}
-  .lockup .l-main{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(40px,6.4vw,68px);letter-spacing:.01em;line-height:.96;color:var(--charcoal);text-transform:uppercase;}
+  .lockup .l-main{font-family:'Montserrat',sans-serif;font-weight:700;font-size:clamp(24px,3.4vw,38px);letter-spacing:.02em;line-height:1;color:var(--charcoal);text-transform:uppercase;}
   .lockup .l-main .in{color:var(--pink);}
+  .lockup .l-saleword{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(46px,7vw,76px);line-height:.9;letter-spacing:.01em;text-transform:uppercase;color:var(--charcoal);margin-top:8px;}
+  .lockup .l-offer{display:inline-block;margin-top:14px;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(28px,4.4vw,48px);line-height:1;letter-spacing:.01em;padding:11px 28px;border-radius:999px;text-transform:uppercase;}
+  .hero-fine{font-size:11.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
   .lockup .l-rule{display:flex;align-items:center;gap:14px;margin-top:14px;color:var(--ink-soft);font-family:'Montserrat',sans-serif;font-weight:600;font-size:13px;letter-spacing:.34em;text-transform:uppercase;}
   .lockup .l-rule:after{content:"";flex:0 0 auto;width:46px;height:1px;background:var(--gold);}
   .lockup .l-year{color:var(--gold);}
@@ -195,14 +199,17 @@
       <div class="lockup">
         <div class="sprig">&#10043; &#8226; &#10043;</div>
         <div class="l-script">A little gift to yourself</div>
-        <div class="l-main">Christmas<br><span class="in">in July</span></div>
+        <div class="l-main">Christmas <span class="in">in July</span></div>
+        <div class="l-saleword">Sale</div>
+        <div class="l-offer">20% Off*</div>
         <div class="l-rule"><span class="l-year">2026</span></div>
-        <p class="hero-lede"><strong>Something gorgeous is coming this July.</strong> And our Sparkle Sisters get to see it first.</p>
-        <p class="hero-sub">Sign up to SMS and you will go first on Saturday 18 July, a full day before everyone else. No spoilers, lovely. Just your spot saved at the very front of the queue.</p>
+        <p class="hero-lede"><strong>This July, your favourites are 20% off*.</strong> And our Sparkle Sisters shop it first.</p>
+        <p class="hero-sub">Sign up to SMS and you will shop the 20% off* on Saturday 18 July, a full day before everyone else. Just your spot saved at the very front of the queue.</p>
         <div class="hero-cta-row">
           <a class="btn-pink" href="#join">Join the VIP List</a>
           <span class="hero-microproof">4.9&#9733; from 7,500+ reviews</span>
         </div>
+        <p class="hero-fine">*Excludes Beginner Bundles, Gift Cards and Flash Sale items.</p>
       </div>
       <div class="img-ph">
         <div class="img-cap">IMAGE AREA · Warm lifestyle portrait, real woman 45-65 wearing the 10 Way Necklace&trade;, natural light, soft blush styling, joyful first-look feeling</div>
@@ -219,14 +226,14 @@
         <span class="sprig">&#10043; &#8226; &#10043;</span>
         <div class="eyebrow">VIP Early Access</div>
         <h2>Be first through the door, <span class="pk">this July.</span></h2>
-        <p>I have set something up just for our Sisters. The lovely ones who sign up to my SMS list go first, a full day before the world. Pop your number below and I will send you a little message the moment it opens on Saturday 18 July.</p>
-        <p style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold-soft);">Stay close, lovely. Something divine is on its way.</p>
+        <p>My Christmas in July Sale is 20% off*, and the lovely ones who sign up to my SMS list shop it first, a full day before the world. Pop your number below and I will send you a little message the moment your early access opens on Saturday 18 July.</p>
+        <p style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold-soft);">Stay close, lovely. Your 20% off* is nearly here.</p>
       </div>
 
       <!-- Signup form mockup (non-functional design reference) -->
       <form class="form-card" action="[VIP SIGN-UP URL — CONFIRM]" method="post" onsubmit="return false;">
         <h3>Join the VIP List</h3>
-        <p class="fc-sub">Go first on 18 July, before everyone else.</p>
+        <p class="fc-sub">Shop the 20% off* on 18 July, before everyone else.</p>
 
         <div class="field">
           <label for="vip-email">Email address</label>
@@ -312,8 +319,9 @@
   <div class="wrap">
     <span class="sprig">&#10043; &#8226; &#10043;</span>
     <h2>Want in, <span class="in">lovely?</span></h2>
-    <p>Sign up to SMS and you will be first in line on 18 July. Something gorgeous is on its way.</p>
+    <p>Sign up to SMS and you will shop the 20% off* on 18 July, a full day before everyone else.</p>
     <a class="btn-pink" href="#join">Join the VIP List</a>
+    <p style="font-size:11.5px;color:var(--ink-soft);margin-top:16px;font-style:italic;">*Excludes Beginner Bundles, Gift Cards and Flash Sale items.</p>
   </div>
 </section>
 
