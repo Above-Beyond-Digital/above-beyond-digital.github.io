@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eurolux Easylight, Brand Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Questrial&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#3BB5AC; --teal-dark:#0B9389; --teal-deep:#1C5551;
+    --red:#E32402; --ink:#1D1C1C; --bg:#FFFFFF; --bg-soft:#FAFAFA;
+    --muted:#9F9F9E; --teal-tint:rgba(59,181,172,.12); --teal-tint-2:rgba(59,181,172,.22);
+    --line:#ECECEC; --shadow:0 4px 24px rgba(28,85,81,.08); --shadow-lg:0 12px 40px rgba(28,85,81,.14);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:74px}
+  body{font-family:"Questrial",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink);background:var(--bg-soft);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,.h{font-family:"Archivo",Arial,sans-serif;line-height:1.15;letter-spacing:-.01em}
+  a{color:var(--teal-dark);text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0;scroll-margin-top:74px}
+  section:nth-of-type(even){background:var(--bg)}
+  .eyebrow{font-family:"Archivo";font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+    font-size:12px;color:var(--teal-dark);margin-bottom:14px}
+  .sec-title{font-size:clamp(26px,3.4vw,40px);font-weight:700;margin-bottom:10px;color:var(--ink)}
+  .sec-intro{color:#555;max-width:820px;margin-bottom:36px;font-size:17px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:var(--teal-dark);
+    transition:background .3s,box-shadow .3s,backdrop-filter .3s}
+  nav.scrolled{background:rgba(11,147,137,.86);backdrop-filter:blur(10px);box-shadow:0 2px 16px rgba(0,0,0,.16)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;
+    justify-content:space-between;gap:18px}
+  .nav-brand{font-family:"Archivo";font-weight:700;color:#fff;font-size:18px;letter-spacing:-.01em;white-space:nowrap}
+  .nav-brand span{opacity:.7;font-weight:400;font-size:13px}
+  .nav-links{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+  .nav-links a{color:rgba(255,255,255,.86);font-size:13.5px;padding:7px 11px;border-radius:9px;
+    transition:background .2s,color .2s;white-space:nowrap}
+  .nav-links a:hover{background:rgba(255,255,255,.16);color:#fff}
+
+  /* HERO */
+  .hero{background:linear-gradient(150deg,var(--teal) 0%,var(--teal-dark) 55%,var(--teal-deep) 100%);
+    color:#fff;padding:64px 0 72px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);border-radius:50%}
+  .hero-logo{background:#fff;display:inline-flex;padding:14px 20px;border-radius:14px;
+    box-shadow:var(--shadow-lg);margin-bottom:28px}
+  .hero-logo img{height:42px;display:block}
+  .hero h1{font-size:clamp(40px,6.4vw,78px);font-weight:700;letter-spacing:-.02em;line-height:1}
+  .hero .tag{display:inline-block;font-family:"Archivo";font-weight:600;text-transform:uppercase;
+    letter-spacing:.16em;font-size:12px;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:30px;margin-bottom:22px}
+  .hero .lede{font-size:clamp(18px,2.4vw,25px);max-width:780px;margin:22px 0 8px;color:rgba(255,255,255,.95)}
+  .hero .sub{font-size:15px;color:rgba(255,255,255,.8);max-width:720px;margin-bottom:30px}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:2}
+  .stat-chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+    border-radius:14px;padding:12px 18px;backdrop-filter:blur(4px)}
+  .stat-chip b{font-family:"Archivo";font-weight:700;font-size:22px;display:block;line-height:1.1}
+  .stat-chip span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.82)}
+
+  /* CARDS / GRID */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .card h3{font-size:19px;margin-bottom:10px}
+  .card h4{font-size:12px;color:var(--teal-dark);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.05em}
+
+  /* PILLS */
+  .pill{display:inline-block;background:var(--teal-tint);color:var(--teal-dark);font-family:"Archivo";
+    font-weight:600;font-size:12.5px;padding:5px 12px;border-radius:30px;margin:3px 4px 3px 0}
+  .pill.solid{background:var(--teal-dark);color:#fff}
+  .pill.red{background:rgba(227,36,2,.1);color:var(--red)}
+  .pill.ghost{background:#fff;border:1px solid var(--line);color:#555}
+
+  /* POSITIONING */
+  .pos-row{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .pos-row:last-child{border-bottom:none}
+  .pos-key{font-family:"Archivo";font-weight:700;color:var(--teal-dark);min-width:90px;font-size:14px;
+    text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+  .pos-val{flex:1;font-size:16.5px}
+  .promise-card{background:linear-gradient(135deg,var(--teal-tint),rgba(59,181,172,.04));
+    border:1px solid var(--teal-tint-2)}
+  .promise-card .lbl{font-family:"Archivo";font-weight:700;font-size:12px;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--teal-dark)}
+
+  /* PILLARS */
+  .pillar-card{position:relative;overflow:hidden}
+  .pillar-card .axis{font-family:"Archivo";font-weight:700;font-size:11px;text-transform:uppercase;
+    letter-spacing:.1em;color:#fff;background:var(--teal-dark);padding:4px 11px;border-radius:20px;display:inline-block;margin-bottom:12px}
+  .pillar-card .pnum{font-family:"Archivo";font-weight:700;font-size:46px;color:var(--teal-tint-2);line-height:1;position:absolute;top:18px;right:22px}
+  .pillar-card h3{font-size:23px;margin-bottom:8px}
+  .pillar-card .ess{font-size:15px;color:#555;margin-bottom:14px}
+  .pillar-card .ladder{font-family:"Archivo";font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+  /* MARKETS TABLE */
+  .mkt-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+  table.mkt{border-collapse:collapse;width:100%;min-width:680px;font-size:14.5px}
+  table.mkt th,table.mkt td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
+  table.mkt thead th{background:var(--teal-deep);color:#fff;font-family:"Archivo";font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+  table.mkt tbody tr:last-child td{border-bottom:none}
+  table.mkt .brandname{font-family:"Archivo";font-weight:700;font-size:16px;color:var(--ink)}
+  table.mkt code{background:var(--bg-soft);padding:2px 7px;border-radius:6px;font-size:12.5px;color:#555}
+  .mkt-flag{font-size:18px;margin-right:8px}
+
+  /* DON'TS */
+  .donts{background:linear-gradient(135deg,rgba(227,36,2,.05),rgba(227,36,2,.02));
+    border:1.5px solid rgba(227,36,2,.25);border-radius:var(--radius);padding:30px 32px;box-shadow:var(--shadow)}
+  .donts .top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .donts .top .bang{font-size:26px}
+  .donts .top h3{font-size:22px;color:var(--red)}
+  .donts .hardrule{background:var(--red);color:#fff;border-radius:14px;padding:18px 22px;margin:18px 0 22px;font-size:16px;font-weight:600}
+  .donts .hardrule b{font-family:"Archivo";display:block;font-size:13px;text-transform:uppercase;letter-spacing:.1em;opacity:.85;margin-bottom:6px}
+  .dont-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .dont-item{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:#444}
+  .dont-item .x{color:var(--red);font-weight:700;font-family:"Archivo"}
+  .dont-item b{color:var(--ink)}
+
+  /* SWATCHES */
+  .sw{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff}
+  .sw .chip{height:84px}
+  .sw .meta{padding:12px 14px}
+  .sw .meta b{font-family:"Archivo";display:block;font-size:14px}
+  .sw .meta code{font-size:12.5px;color:#666}
+  .sw .meta span{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
+
+  /* HOOKS */
+  .hook-card{position:relative;overflow:hidden}
+  .hook-card .views{display:inline-block;font-family:"Archivo";font-weight:700;background:var(--red);
+    color:#fff;font-size:12.5px;padding:4px 12px;border-radius:30px;margin-bottom:12px}
+  .hook-card .views.teal{background:var(--teal-dark)}
+  .hook-card p{font-size:15px;color:#444}
+
+  /* ANGLES */
+  .angle-card .atag{font-family:"Archivo";font-weight:700;font-size:13px;color:#fff;background:var(--teal-dark);
+    padding:4px 12px;border-radius:8px;letter-spacing:.02em;display:inline-block}
+  .angle-card .pmap{font-family:"Archivo";font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:10px}
+  .angle-card .promise{font-size:15.5px;font-weight:400;margin:10px 0 12px}
+  .quote-mini{border-left:3px solid var(--teal);padding:8px 0 8px 14px;font-style:italic;color:#555;
+    font-size:14px;margin:12px 0}
+  .quote-mini .en{display:block;font-style:normal;color:var(--muted);font-size:12.5px;margin-top:3px}
+
+  /* WEDGES */
+  .wedge{background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
+  .wedge h4{font-family:"Archivo";font-size:15px;margin-bottom:4px}
+  .wedge .weak{font-size:13.5px;color:#777;margin:8px 0}
+  .wedge .win{font-size:14.5px;color:var(--teal-deep);font-weight:600}
+  .wedge .win::before{content:"→ ";color:var(--teal)}
+
+  /* VOICE OF CUSTOMER */
+  .voc{columns:3;column-gap:20px}
+  .voc .q{break-inside:avoid;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px 20px;margin-bottom:20px;box-shadow:var(--shadow);position:relative}
+  .voc .q::before{content:"\201C";font-family:"Archivo";font-weight:700;color:var(--teal-tint-2);
+    font-size:70px;line-height:.6;position:absolute;top:18px;left:14px;z-index:0}
+  .voc .q .t{position:relative;z-index:1;font-size:16px;color:var(--ink);margin-bottom:8px}
+  .voc .q .en{font-size:13px;color:var(--muted);font-style:italic}
+  .voc .q .lab{font-family:"Archivo";font-weight:600;font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.1em;margin-top:12px;display:inline-block;padding:3px 9px;border-radius:20px}
+  .lab.praise{background:var(--teal-tint);color:var(--teal-dark)}
+  .lab.pain{background:rgba(227,36,2,.08);color:var(--red)}
+  .lab.trust{background:rgba(28,85,81,.1);color:var(--teal-deep)}
+
+  /* VOICE PILLARS + TONE */
+  .voice-pillar{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .voice-pillar:last-child{border-bottom:none}
+  .voice-pillar .vn{font-family:"Archivo";font-weight:700;font-size:24px;color:var(--teal);min-width:34px}
+  .voice-pillar b{font-family:"Archivo";font-size:16px}
+  .voice-pillar p{font-size:14.5px;color:#555;margin-top:2px}
+  .dodont{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  .dodont .col h4{font-family:"Archivo";font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .dodont .do h4{color:var(--teal-dark)} .dodont .dont h4{color:var(--red)}
+  .dodont ul{list-style:none} .dodont li{font-size:14px;color:#444;padding:5px 0 5px 22px;position:relative}
+  .dodont .do li::before{content:"\2713";position:absolute;left:0;color:var(--teal-dark);font-weight:700}
+  .dodont .dont li::before{content:"\2717";position:absolute;left:0;color:var(--red);font-weight:700}
+
+  /* WORD BANK */
+  .wb-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .wb h4{font-family:"Archivo";font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+  .wb.use h4{color:var(--teal-dark)} .wb.never h4{color:var(--red)}
+  .wbterm{display:inline-flex;flex-direction:column;background:var(--teal-tint);border-radius:12px;padding:8px 13px;margin:4px 5px 4px 0}
+  .wbterm b{font-family:"Archivo";font-size:13.5px;color:var(--teal-dark)}
+  .wbterm span{font-size:11.5px;color:#777}
+  .wbterm.no{background:rgba(227,36,2,.08)} .wbterm.no b{color:var(--red)}
+
+  /* PAINS */
+  .pain-list{counter-reset:p}
+  .pain-item{display:flex;gap:18px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+  .pain-item:last-child{border-bottom:none}
+  .pain-rank{counter-increment:p;font-family:"Archivo";font-weight:700;font-size:26px;color:var(--teal);
+    min-width:46px;line-height:1}
+  .pain-rank::before{content:counter(p,decimal-leading-zero)}
+  .pain-body b{font-family:"Archivo";font-size:16.5px}
+  .pain-body .cue{display:block;font-style:italic;color:#666;font-size:14px;margin-top:3px}
+  .pain-body .cue .en{color:var(--muted);font-style:normal}
+  .pain-item.hot .pain-rank{color:var(--red)}
+
+  /* PERSONAS */
+  .persona-card{display:flex;flex-direction:column}
+  .persona-card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px}
+  .persona-card .nm{font-family:"Archivo";font-weight:700;font-size:20px}
+  .persona-card .age{font-size:12.5px;color:var(--muted);font-family:"Archivo"}
+  .persona-card .ev{font-size:10px;font-family:"Archivo";font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;padding:4px 9px;border-radius:20px;white-space:nowrap}
+  .ev.strong{background:var(--teal-dark);color:#fff}
+  .ev.medium{background:var(--teal-tint);color:var(--teal-dark)}
+  .persona-card .snap{font-size:14.5px;color:#444;margin:10px 0 14px}
+  .persona-card .steer{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px}
+  .persona-card .steer b{color:var(--teal-dark);font-family:"Archivo"}
+
+  /* MATRIX */
+  .matrix-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+  table.matrix{border-collapse:collapse;width:100%;min-width:920px;font-size:12.5px}
+  table.matrix th,table.matrix td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table.matrix thead th{background:var(--teal-deep);color:#fff;font-family:"Archivo";font-weight:600;
+    font-size:12px;padding:12px 8px;border-bottom:none;text-align:left}
+  table.matrix tbody th{font-family:"Archivo";font-weight:700;font-size:12.5px;
+    background:var(--bg-soft);white-space:nowrap;padding-left:14px}
+  table.matrix td{font-size:11.8px;color:#444;line-height:1.45}
+  td.lead{background:var(--teal-tint);border-left:3px solid var(--teal-dark)}
+  td .lbl{font-family:"Archivo";font-weight:700;font-size:9.5px;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:3px}
+  td.support{background:#fff}
+  td.support .lbl{color:var(--muted)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin:18px 0 6px;font-size:13px}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .legend i{width:18px;height:18px;border-radius:5px;display:inline-block}
+  .tag-examples{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .tag-examples code{background:var(--ink);color:#fff;font-family:"Archivo";font-size:12.5px;
+    padding:7px 13px;border-radius:8px}
+
+  /* HOW-TO-READ CALLOUT */
+  .howread{background:var(--teal-tint);border:1px solid var(--teal-tint-2);border-left:4px solid var(--teal);
+    border-radius:var(--radius);padding:20px 24px;margin-bottom:30px;box-shadow:var(--shadow)}
+  .howread b.lead{font-family:"Archivo";font-weight:700;color:var(--teal-deep);font-size:14px;
+    text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:8px}
+  .howread p{font-size:15px;color:#444;margin:0 0 8px}
+  .howread p:last-child{margin-bottom:0}
+  .howread .spine{color:var(--red);font-weight:700;font-style:normal}
+
+  /* USE-CASES */
+  .uc-grid{display:flex;flex-wrap:wrap;gap:12px}
+  .uc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;
+    display:flex;align-items:center;gap:11px;box-shadow:var(--shadow);transition:transform .2s}
+  .uc:hover{transform:translateY(-2px)}
+  .uc .ico{width:34px;height:34px;border-radius:10px;background:var(--teal-tint);display:flex;
+    align-items:center;justify-content:center;font-size:18px}
+  .uc b{font-family:"Archivo";font-size:14px}
+  .uc.pending{border-style:dashed;border-color:rgba(227,36,2,.4);background:rgba(227,36,2,.03)}
+  .uc.pending .ico{background:rgba(227,36,2,.1)}
+  .uc-note{margin-top:18px;font-size:13.5px;color:var(--muted);font-style:italic}
+
+  /* DEMAND KEYWORDS */
+  .kw-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+  table.kw{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  table.kw th,table.kw td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line)}
+  table.kw thead th{background:var(--teal-deep);color:#fff;font-family:"Archivo";font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  table.kw tbody tr:last-child td{border-bottom:none}
+  table.kw .de{font-family:"Archivo";font-weight:700;color:var(--ink)}
+  table.kw .en{color:#666}
+  table.kw .intent{font-size:11.5px}
+  .intent .pill{margin:0}
+
+  /* FOOTER */
+  footer{background:var(--teal-deep);color:rgba(255,255,255,.8);padding:40px 0;font-size:13.5px}
+  footer b{color:#fff;font-family:"Archivo"}
+
+  /* FAQ */
+  .faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:var(--shadow)}
+  .faq-item h4{font-family:"Archivo";font-size:16px;margin-bottom:6px;color:var(--teal-deep)}
+  .faq-item p{font-size:14.5px;color:#444}
+  .faq-item p .de{font-family:"Archivo";color:var(--teal-dark);font-size:13.5px}
+
+  @media(max-width:880px){
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .voc{columns:1}
+    .wb-grid,.dont-grid,.dodont{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Eurolux Easylight <span>· Brand Playbook</span></div>
+    <div class="nav-links">
+      <a href="#hero">Overview</a>
+      <a href="#markets">Markets</a>
+      <a href="#donts">Don'ts</a>
+      <a href="#dna">Brand DNA</a>
+      <a href="#voice">Voice</a>
+      <a href="#visual">Visual</a>
+      <a href="#audiences">Audiences</a>
+      <a href="#angles">Angles</a>
+      <a href="#hooks">Hooks</a>
+      <a href="#matrix">Matrix</a>
+      <a href="#demand">Demand</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-logo"><img src="assets/logo-primary.png" alt="easyLIGHT"></div>
+    <div class="tag">Brand Playbook · German-made streak-free squeegee</div>
+    <h1>The simple, effortless<br>streak-free squeegee.</h1>
+    <p class="lede">The German squeegee that gives perfectly streak-free glass in seconds, windows, mirrors, shower screens, car glass and more, with no technique needed.</p>
+    <p class="sub">One playbook for the whole team and the client, across every market. Built from the 91-minute founder onboarding call, the full product catalogue, 610+ real social comments (422 customer-voice + 188 competitor/market) and 32 competitor videos, plus competitor and review analysis. Sell the result, not the tool.</p>
+    <div class="chips">
+      <div class="stat-chip"><b>3</b><span>Brand pillars</span></div>
+      <div class="stat-chip"><b>7</b><span>Creative angles</span></div>
+      <div class="stat-chip"><b>5</b><span>Audiences</span></div>
+      <div class="stat-chip"><b>610+</b><span>Comments mined</span></div>
+      <div class="stat-chip"><b>3</b><span>Markets</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- MARKETS -->
+<section id="markets">
+  <div class="wrap">
+    <div class="eyebrow">01 · Markets &amp; naming</div>
+    <h2 class="sec-title">One product. A different name in each market.</h2>
+    <p class="sec-intro">Same German-made squeegee system everywhere, but it goes to market under a different name per country. Get this right on every brief, every asset, every line of copy. <b>The brand voice, pillars and angles in this playbook are shared across all markets;</b> only the name, website and language change.</p>
+    <div class="mkt-scroll">
+      <table class="mkt">
+        <thead><tr><th>Market</th><th>Company / Brand</th><th>Product name</th><th>Website</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="mkt-flag">🇩🇪</span><b>Germany / DACH</b></td>
+            <td class="brandname">easyLIGHT</td>
+            <td><span class="brandname">easyLIGHT</span></td>
+            <td><code>streifenfrei.com</code></td>
+            <td><span class="pill solid">Launching first</span></td>
+          </tr>
+          <tr>
+            <td><span class="mkt-flag">🇦🇺</span><b>Australia</b></td>
+            <td class="brandname">Eurolux <span style="font-weight:400;color:#888;font-size:13px">(company, also sells other products)</span></td>
+            <td><span class="brandname">AquaBlade</span></td>
+            <td><code>eurolux-australia.com.au</code></td>
+            <td><span class="pill ghost">Planned</span></td>
+          </tr>
+          <tr>
+            <td><span class="mkt-flag">🇳🇿</span><b>New Zealand</b></td>
+            <td class="brandname">, </td>
+            <td><span class="brandname">AquaBlade</span></td>
+            <td><code>aquablade.co.nz</code></td>
+            <td><span class="pill ghost">Live site, work TBC</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="uc-note">In Germany the brand and product are <b>easyLIGHT</b>; the website is currently streifenfrei.com. In Australia &amp; New Zealand the product is <b>AquaBlade</b> (Eurolux is the client company). See the Don'ts below for the critical naming rule.</p>
+  </div>
+</section>
+
+<!-- DON'TS -->
+<section id="donts">
+  <div class="wrap">
+    <div class="eyebrow">02 · Brand don'ts, read before any creative</div>
+    <h2 class="sec-title">The hard rules.</h2>
+    <p class="sec-intro">These are non-negotiable for everyone touching copy, design, video or assets. When in doubt, ask before you publish.</p>
+    <div class="donts">
+      <div class="top"><span class="bang">🚨</span><h3>The one rule that can't be broken</h3></div>
+      <div class="hardrule">
+        <b>Europe / DACH trademark</b>
+        "AquaBlade" is a third-party registered trademark in Europe. It must <u>NEVER</u> appear in any German / European marketing, not in copy, not in on-screen text, not in a video background, not in a filename or alt-text, not anywhere. In Europe the brand is <b>easyLIGHT</b> and the website is <b>streifenfrei.com</b>. "AquaBlade" is fine in Australia &amp; New Zealand only.
+      </div>
+      <div class="dont-grid">
+        <div class="dont-item"><span class="x">✕</span><div><b>Never name a competitor.</b> Knock by feature/category only, gently, "electric window vacs", "robotic window cleaners", "a stiff squeegee". (Founder rule + §6 UWG.)</div></div>
+        <div class="dont-item"><span class="x">✕</span><div><b>No eco / green claims.</b> No "umweltfreundlich", "nachhaltig", "plastikfrei", unsubstantiated under EU Green Claims.</div></div>
+        <div class="dont-item"><span class="x">✕</span><div><b>Don't lead the spec sheet.</b> Lead the felt result (streak-free, dry, effortless, seconds), "I'm selling them a clean window."</div></div>
+        <div class="dont-item"><span class="x">✕</span><div><b>No unsourced stats.</b> Never publish "1–2 returns in 500" or "15–20% on normal squeegees" (founder memory, no data).</div></div>
+        <div class="dont-item"><span class="x">✕</span><div><b>No em dashes (—).</b> Use commas, full stops, ellipses or colons instead.</div></div>
+        <div class="dont-item"><span class="x">✕</span><div><b>Surfaces, confirm first.</b> Stay within the verified surface list. <b>Tiles &amp; solar panels are NOT yet confirmed</b>, do not claim until the client says yes.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DNA -->
+<section id="dna">
+  <div class="wrap">
+    <div class="eyebrow">03 · Brand DNA</div>
+    <h2 class="sec-title">Positioning, promise &amp; the three pillars.</h2>
+    <p class="sec-intro">Who the brand is and what it stands for, durable, market-agnostic. Everything downstream (angles, hooks, copy) ladders back to these three pillars.</p>
+
+    <div class="grid g2" style="margin-bottom:32px">
+      <div class="card">
+        <h4 style="margin-top:0">Positioning statement</h4>
+        <div class="pos-row"><div class="pos-key">For</div><div class="pos-val">People who hate cleaning windows, house-proud owners and renters who just want a clean home. "People don't like window cleaning. We push the easiness."</div></div>
+        <div class="pos-row"><div class="pos-key">Who need</div><div class="pos-val">A streak-free result without learning a technique, buying a gadget, or mopping up drips.</div></div>
+        <div class="pos-row"><div class="pos-key">It is</div><div class="pos-val">The simple, effortless German squeegee that gives perfectly streak-free glass in seconds, windows, mirrors, shower screens, car glass and more, with no technique needed.</div></div>
+        <div class="pos-row"><div class="pos-key">Unlike</div><div class="pos-val"><ul style="margin:0;padding-left:18px">
+          <li><b>Electric window vacs:</b> a battery to charge, a motor, a tank to empty, and they can't finish the bottom edge.</li>
+          <li><b>Robot cleaners:</b> leave four uncleaned corners and only do big flat panes.</li>
+          <li><b>Pro squeegees:</b> need a technique most people don't have.</li>
+          <li><b>Basic, cheap squeegees:</b> drip and leak everywhere and leave side streaks.</li>
+        </ul></div></div>
+        <div class="pos-row"><div class="pos-key">Because</div><div class="pos-val">Its <b>patented</b> side pressure plates pull water out the sides, so no water, and no streak, escapes the edges. A genuine mechanism copycats legally can't replicate.</div></div>
+      </div>
+      <div class="card promise-card">
+        <span class="lbl">The brand promise</span>
+        <h3 style="font-size:24px;margin:12px 0 18px">Streak-free glass in one pass, no technique, no drips, no gadget.</h3>
+        <h4>Functional</h4>
+        <p style="font-size:15.5px;color:#444">A perfectly streak-free pane in seconds, on every glass surface, that anyone in the house can achieve first try.</p>
+        <h4>Emotional</h4>
+        <p style="font-size:15.5px;color:#444">The dreaded chore finally feels easy, even satisfying. "I'm excited to clean a window."</p>
+        <div style="margin-top:18px">
+          <span class="pill">Streak-free, every pass</span>
+          <span class="pill">No skill required</span>
+          <span class="pill">Patented German original</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:6px">The three brand pillars</h3>
+    <p class="sec-intro" style="margin-bottom:22px">Three different axes, <b>outcome · ease · trust</b>, which map to the customer's three buying questions: <em>Will it work? Is it easy? Can I trust it?</em> Each pillar is an umbrella; the creative angles ladder underneath it.</p>
+    <div class="grid g3">
+      <div class="card pillar-card">
+        <span class="pnum">01</span>
+        <span class="axis">Outcome</span>
+        <h3>Flawless Finish</h3>
+        <p class="ess">Does it deliver a perfect result? Streak-free, drip-free, on every surface, every time. <em>"streifenfrei"</em> is the German word for the result they can't get, and our web address. Own it.</p>
+        <div class="ladder">Angles under it</div>
+        <span class="pill">StreakFree</span><span class="pill">NoDrips</span><span class="pill">EveryGlass</span>
+      </div>
+      <div class="card pillar-card">
+        <span class="pnum">02</span>
+        <span class="axis">Ease</span>
+        <h3>Effortlessly Simple</h3>
+        <p class="ess">How easy is it to get that result? No skill, no special angle, no battery, no faff. The sidebars do the technique for you, anyone gets it right first try.</p>
+        <div class="ladder">Angles under it</div>
+        <span class="pill">NoTechnique</span><span class="pill">NoGadget</span>
+      </div>
+      <div class="card pillar-card">
+        <span class="pnum">03</span>
+        <span class="axis">Trust</span>
+        <h3>The German Original</h3>
+        <p class="ess">Can you trust it? The patented, genuine German one, built to last, not a cheap copy that drips, streaks and dies within a year.</p>
+        <div class="ladder">Angles under it</div>
+        <span class="pill">Lasts</span><span class="pill">Patented</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND VOICE -->
+<section id="voice">
+  <div class="wrap">
+    <div class="eyebrow">04 · Brand voice</div>
+    <h2 class="sec-title">How the brand sounds, and the words it lives by.</h2>
+    <p class="sec-intro">Tone is a real part of the brand: the calm, sincere, frank delivery the audience responds to ("This is how ads should be: informative, instructional, calm and polite."). <b>Note:</b> these describe how the brand <em>sounds</em>, not the product itself. A squeegee isn't "happy" or "frank"; the way we talk about it is.</p>
+
+    <div class="grid g2" style="margin-bottom:30px">
+      <div class="card">
+        <h4 style="margin-top:0">Voice pillars</h4>
+        <div class="voice-pillar"><div class="vn">1</div><div><b>The "happy squeegee."</b><p>Warm, light, never too serious, "we create happiness… not too serious, we can laugh about ourself." The brand doesn't take itself too seriously.</p></div></div>
+        <div class="voice-pillar"><div class="vn">2</div><div><b>Frank, German, calls-a-spade-a-spade.</b><p>Trustworthy through bluntness, "very German frankness." Honest claims, no hype, no overselling.</p></div></div>
+        <div class="voice-pillar"><div class="vn">3</div><div><b>Sells the result, not the features.</b><p>"I'm selling them a clean window." Lead with the outcome, not the spec sheet. Non-pushy: "I hold back."</p></div></div>
+        <div class="voice-pillar"><div class="vn">4</div><div><b>Calm &amp; competent, the chill expert.</b><p>Unhurried, sincere, slightly-strict presenter energy. The tone itself is the proof; let the demo breathe.</p></div></div>
+        <div class="voice-pillar"><div class="vn">5</div><div><b>Simplicity over technology.</b><p>Anti-tech, back-to-simple. "Why overcomplicate something with such a simple effective solution?"</p></div></div>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Tone, do &amp; don't</h4>
+        <div class="dodont">
+          <div class="col do">
+            <h4>Do</h4>
+            <ul>
+              <li>Be calm, sincere, unhurried, let the demo do the work.</li>
+              <li>Be frank and honest; say plainly what it does (and doesn't).</li>
+              <li>Lead with the felt result: streak-free, dry, effortless, seconds.</li>
+              <li>Use gentle humour; the brand can laugh at itself.</li>
+              <li>Knock alternatives by feature only, gently.</li>
+            </ul>
+          </div>
+          <div class="col dont">
+            <h4>Don't</h4>
+            <ul>
+              <li>Use the EU trademark word "AquaBlade", ever.</li>
+              <li>Name or disparage any competitor.</li>
+              <li>Hype, oversell or use pushy hard-sell language.</li>
+              <li>Imply it dissolves grime, it squeegees soap off, doesn't wash.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:14px">Word-bank (German + English)</h3>
+    <div class="wb-grid" style="margin-bottom:34px">
+      <div class="wb use">
+        <h4>✓ Use, name the result &amp; the ease</h4>
+        <span class="wbterm"><b>streifenfrei</b><span>streak-free (the result + our name)</span></span>
+        <span class="wbterm"><b>Schlieren</b><span>streaks/smears, name the problem</span></span>
+        <span class="wbterm"><b>in einem Zug</b><span>in one pass</span></span>
+        <span class="wbterm"><b>kein Tropfen</b><span>not a drop</span></span>
+        <span class="wbterm"><b>keine Technik</b><span>no technique</span></span>
+        <span class="wbterm"><b>keine S-Bewegung</b><span>no S-motion</span></span>
+        <span class="wbterm"><b>kinderleicht</b><span>child's-play easy</span></span>
+        <span class="wbterm"><b>unkompliziert</b><span>uncomplicated</span></span>
+        <span class="wbterm"><b>Seitenleisten / Druckplatten</b><span>side bars / pressure plates</span></span>
+        <span class="wbterm"><b>patentiert</b><span>patented</span></span>
+        <span class="wbterm"><b>das deutsche Original</b><span>the German original</span></span>
+        <span class="wbterm"><b>bis ganz nach unten</b><span>all the way to the bottom</span></span>
+        <span class="wbterm"><b>jedes Glas</b><span>every glass</span></span>
+        <span class="wbterm"><b>einmal kaufen</b><span>buy once</span></span>
+        <span class="wbterm"><b>5 Jahre Garantie</b><span>5-year guarantee (+ statutory disclaimer)</span></span>
+      </div>
+      <div class="wb never">
+        <h4>✕ Never</h4>
+        <span class="wbterm no"><b>AquaBlade</b><span>banned EU trademark, never in DACH</span></span>
+        <span class="wbterm no"><b>competitor names</b><span>category/feature only, gently</span></span>
+        <span class="wbterm no"><b>umweltfreundlich / nachhaltig</b><span>eco/green, unsubstantiated</span></span>
+        <span class="wbterm no"><b>"8–10 Jahre Klinge"</b><span>overstates the blade (4–6 yr/side)</span></span>
+        <span class="wbterm no"><b>"1–2 von 500 Retouren"</b><span>unsourced stat</span></span>
+        <span class="wbterm no"><b>der/die/das Beste, Nr.1</b><span>superlatives (§5 UWG)</span></span>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:6px">Voice of customer</h3>
+    <p class="sec-intro" style="margin-bottom:22px">Real, unsolicited customer language from the brand's AU/NZ channels and the DE market. Two jobs here: <b>reuse the praise &amp; phrasing</b> in hooks and captions, and <b>build copy that answers the objections</b>, price, "just a normal squeegee", scam fear, head-on. Every pain below is a message waiting to be written. The FAQ at the foot of this playbook holds the substantive answers.</p>
+    <div class="voc">
+      <div class="q"><div class="t">such a calming ad</div><span class="lab praise">Tone · the conversion engine</span></div>
+      <div class="q"><div class="t">your chill dad way of speaking.. I'm sold</div><span class="lab praise">Tone</span></div>
+      <div class="q"><div class="t">It's so easy to use that my kids actually clean the windows now</div><span class="lab praise">Ease</span></div>
+      <div class="q"><div class="t">the best thing I have ever bought… no streaks ever</div><span class="lab praise">Result</span></div>
+      <div class="q"><div class="t">Es ist egal, was ich mache, es sind immer Schlieren. Ich hasse Fenster putzen.</div><div class="en">"Doesn't matter what I do, there are always streaks. I hate cleaning windows."</div><span class="lab pain">#1 pain</span></div>
+      <div class="q"><div class="t">ich kann einfach keine Fenster putzen 😅</div><div class="en">"I just can't clean windows."</div><span class="lab pain">Helplessness</span></div>
+      <div class="q"><div class="t">Been using it for almost a decade 👍</div><span class="lab trust">Durability</span></div>
+      <div class="q"><div class="t">I got scammed… now I don't trust</div><span class="lab trust">Counterfeit fear</span></div>
+      <div class="q"><div class="t">Almost €70 though! 😳</div><span class="lab pain">Price objection</span></div>
+      <div class="q"><div class="t">Does this work on glass shower doors too? / inside glass on the car?</div><span class="lab praise">Surface demand</span></div>
+      <div class="q"><div class="t">Take my money!</div><span class="lab praise">Buy intent</span></div>
+      <div class="q"><div class="t">It's literally a normal squeegee / gimmick</div><span class="lab pain">Differentiation gap</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISUAL DESIGN -->
+<section id="visual">
+  <div class="wrap">
+    <div class="eyebrow">05 · Visual design</div>
+    <h2 class="sec-title">The look &amp; feel.</h2>
+    <p class="sec-intro">Colours, type and imagery direction, taken from the live streifenfrei.com theme.</p>
+    <div class="grid g4" style="margin-bottom:28px">
+      <div class="sw"><div class="chip" style="background:#3BB5AC"></div><div class="meta"><b>Teal</b><code>#3BB5AC</code><span>Primary, brand accent, buttons</span></div></div>
+      <div class="sw"><div class="chip" style="background:#0B9389"></div><div class="meta"><b>Teal Dark</b><code>#0B9389</code><span>Headers, nav</span></div></div>
+      <div class="sw"><div class="chip" style="background:#1C5551"></div><div class="meta"><b>Teal Deep</b><code>#1C5551</code><span>Contrast backgrounds</span></div></div>
+      <div class="sw"><div class="chip" style="background:#E32402"></div><div class="meta"><b>Red</b><code>#E32402</code><span>CTA / sale highlight only</span></div></div>
+      <div class="sw"><div class="chip" style="background:#1D1C1C"></div><div class="meta"><b>Ink</b><code>#1D1C1C</code><span>Body text</span></div></div>
+      <div class="sw"><div class="chip" style="background:#9F9F9E"></div><div class="meta"><b>Grey</b><code>#9F9F9E</code><span>Muted / secondary</span></div></div>
+      <div class="sw"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="meta"><b>White</b><code>#FFFFFF</code><span>Base background</span></div></div>
+      <div class="sw"><div class="chip" style="background:linear-gradient(135deg,#3BB5AC,#1C5551)"></div><div class="meta"><b>Gradient</b><code>teal → deep</code><span>Hero / feature panels</span></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <h4 style="margin-top:0">Typography</h4>
+        <p style="font-family:'Archivo';font-weight:700;font-size:30px;margin:6px 0">Archivo, Headings</p>
+        <p style="font-size:13px;color:#777;margin-bottom:18px">Bold, tight, confident. Weights 400 / 600 / 700.</p>
+        <p style="font-size:22px;margin:6px 0">Questrial, Body copy</p>
+        <p style="font-size:13px;color:#777">Clean, calm, highly legible. The unhurried, frank tone in type form.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Imagery direction</h4>
+        <p style="font-size:15px;color:#444">Demo-led: real hands cleaning real glass; close-ups of the soap-disappearing, corner and blade-bend moments. Bright, clean, domestic settings. The frank, real, unhurried feel is the brand's signature, but test what performs.</p>
+        <h4>Logo</h4>
+        <p style="font-size:14px;color:#444">easyLIGHT wordmark (teal), the German brand. Website: streifenfrei.com.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCES -->
+<section id="audiences">
+  <div class="wrap">
+    <div class="eyebrow">06 · Audiences</div>
+    <h2 class="sec-title">Who we're talking to, and what hurts.</h2>
+    <p class="sec-intro">Five evidence-grounded, targetable personas for the DACH launch. Core demographic per founder: <b>40–60+ (down to ~30 edge), gender-neutral</b>, owner or renter (DE has high renters, same job-to-be-done). Pros are not a target.</p>
+    <p style="font-size:13.5px;color:var(--muted);font-style:italic;margin:-20px 0 28px">⚠ DE voice is currently inferred, most genuine customer comments are AU/NZ (DE TikTok was login-gated). Re-mine German voice once the campaign runs.</p>
+
+    <div class="grid g3" style="margin-bottom:40px">
+      <div class="card persona-card">
+        <div class="top"><div><div class="nm">House Proud</div><div class="age">40–65+ · med price-sensitivity</div></div><span class="ev strong">Strong</span></div>
+        <p class="snap">Wants a flawless home and takes pride in it. The result matters most, a perfect, drip-free pane.</p>
+        <div class="steer"><b>Primary Angles</b><div style="margin-top:8px"><span class="pill solid">StreakFree</span><span class="pill solid">NoDrips</span><span class="pill solid">EveryGlass</span></div></div>
+      </div>
+      <div class="card persona-card">
+        <div class="top"><div><div class="nm">Busy Parent</div><div class="age">30–45 · high price-sensitivity</div></div><span class="ev medium">Medium</span></div>
+        <p class="snap">Time-poor, wants it fast and foolproof, "so easy the kids do it." Quick spot-cleans of fingerprints &amp; mirror splatter.</p>
+        <div class="steer"><b>Primary Angles</b><div style="margin-top:8px"><span class="pill solid">StreakFree</span><span class="pill solid">NoTechnique</span></div></div>
+      </div>
+      <div class="card persona-card">
+        <div class="top"><div><div class="nm">Sceptic</div><div class="age">40–60 · med price-sensitivity</div></div><span class="ev medium">Medium</span></div>
+        <p class="snap">"It's just a normal squeegee." Needs proof of the mechanism, the genuine original, and value for money.</p>
+        <div class="steer"><b>Primary Angles</b><div style="margin-top:8px"><span class="pill solid">NoGadget</span><span class="pill solid">Patented</span><span class="pill solid">Lasts</span></div></div>
+      </div>
+      <div class="card persona-card">
+        <div class="top"><div><div class="nm">Older Independent</div><div class="age">55–70+ · med price-sensitivity</div></div><span class="ev strong">Strong</span></div>
+        <p class="snap">Wants to keep doing it themselves, no ladder, no strength, no tech to learn. Targetable by age.</p>
+        <div class="steer"><b>Primary Angles</b><div style="margin-top:8px"><span class="pill solid">NoTechnique</span><span class="pill solid">NoGadget</span><span class="pill solid">EveryGlass</span></div></div>
+      </div>
+      <div class="card persona-card">
+        <div class="top"><div><div class="nm">Vehicle Owner</div><div class="age">35–65 · med price-sensitivity</div></div><span class="ev medium">Medium</span></div>
+        <p class="snap">Caravans, boats, cars, the curved windscreen interior nobody else can reach. Targetable by interest.</p>
+        <div class="steer"><b>Primary Angles</b><div style="margin-top:8px"><span class="pill solid">EveryGlass</span><span class="pill solid">StreakFree</span><span class="pill solid">Lasts</span></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin-bottom:6px">Ranked pain stack</h3>
+    <p class="sec-intro" style="margin-bottom:20px">What the audience actually feels, ranked by how loudly &amp; often they say it. The top three are the emotional core, lead there.</p>
+    <div class="card pain-list">
+      <div class="pain-item hot"><div class="pain-rank"></div><div class="pain-body"><b>Chronic streaks, whatever they try</b><span class="cue">"es sind immer Schlieren" <span class="en">, there are always streaks</span></span></div></div>
+      <div class="pain-item hot"><div class="pain-rank"></div><div class="pain-body"><b>Helplessness, "I just can't do it"</b><span class="cue">"ich kann einfach keine Fenster putzen" <span class="en">, I just can't clean windows</span></span></div></div>
+      <div class="pain-item hot"><div class="pain-rank"></div><div class="pain-body"><b>Hating the chore / dread</b><span class="cue">"Ich hasse Fenster putzen" <span class="en">, I hate cleaning windows</span></span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Drips, water running onto the floor &amp; arm</b><span class="cue">"hate water running down the blade onto the floor"</span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Can't reach, the bottom edge, corners, high windows</b><span class="cue">"I need an extension for the outside of my glass balcony"</span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Sun anxiety, streaks the moment light hits</b><span class="cue">"nachts putzen und wegkommen, wenn die Sonne scheint" <span class="en">, clean at night, flee before the sun</span></span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Scam / counterfeit fear</b><span class="cue">"I got scammed… now I don't trust"</span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Price, "too expensive for a squeegee"</b><span class="cue">"Almost €70 though! 😳"</span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Gadget fatigue / battery anxiety</b><span class="cue">"do you have to charge after 20 mins of use?"</span></div></div>
+      <div class="pain-item"><div class="pain-rank"></div><div class="pain-body"><b>Microfibre fear, scratches/dulls glass</b><span class="cue">"Mikrofaser kratzt / macht matt" <span class="en">, microfibre scratches/dulls</span></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANGLES -->
+<section id="angles">
+  <div class="wrap">
+    <div class="eyebrow">07 · Creative angles</div>
+    <h2 class="sec-title">The 7 angles.</h2>
+    <div class="howread">
+      <b class="lead">How angles relate to pillars</b>
+      <p>A <b>brand pillar</b> is the durable territory (outcome, ease, trust). An <b>angle</b> is a single testable promise you build one ad around. Many angles ladder under one pillar.</p>
+      <p>Each angle is <b>persona-agnostic</b>: the same angle is dressed differently per audience (see the Matrix). Angle names are kept short so they drop straight into the ad naming convention.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card angle-card">
+        <span class="atag">StreakFree</span>
+        <div class="pmap">Pillar · Flawless Finish</div>
+        <p class="promise">Perfectly streak-free glass in one pass, no Schlieren left behind, every time.</p>
+        <div class="quote-mini">"makes cleaning windows so easy and no streaks ever."</div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">NoDrips</span>
+        <div class="pmap">Pillar · Flawless Finish</div>
+        <p class="promise">Water stays in the tank, nothing runs down the blade onto your floor, sleeve or sill.</p>
+        <div class="quote-mini">Overhead window, camera on the floor below, bone dry. "Kein Tropfen."<span class="en">"Not a drop."</span></div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">EveryGlass</span>
+        <div class="pmap">Pillar · Flawless Finish · <em>merges Reach + Versatile</em></div>
+        <p class="promise">One tool reaches every corner, the very bottom edge and high glass, and cleans every surface: windows, mirrors, shower screens, curved car glass, balcony glass.</p>
+        <div class="quote-mini">Blade-bend-to-floor: pushes water clean off the bottom edge. "Bis ganz nach unten."<span class="en">"All the way to the bottom."</span></div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">NoTechnique</span>
+        <div class="pmap">Pillar · Effortlessly Simple</div>
+        <p class="promise">No special angle, no skill, no pressure, the sidebars do the work, so anyone gets a streak-free finish.</p>
+        <div class="quote-mini">"It's so easy to use that my kids actually clean the windows now."</div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">NoGadget</span>
+        <div class="pmap">Pillar · Effortlessly Simple</div>
+        <p class="promise">No motor, no battery, no charging, no noise, no tank to empty, nothing to break, nothing to bin next year.</p>
+        <div class="quote-mini">"Kein Akku. Kein Motor. Kein Tank zum Ausleeren."<span class="en">"No battery. No motor. No tank to empty."</span></div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">Lasts</span>
+        <div class="pmap">Pillar · The German Original</div>
+        <p class="promise">Buy once, a reversible, replaceable blade (~4–6 years per side) and a 5-year guarantee mean a tiny cost per year, not a gadget you re-buy.</p>
+        <div class="quote-mini">"Been using it for almost a decade 👍"</div>
+      </div>
+      <div class="card angle-card">
+        <span class="atag">Patented</span>
+        <div class="pmap">Pillar · The German Original · <em>merges Patented + Original</em></div>
+        <p class="promise">Patented side pressure plates pull water out the sides, so no side streaks. It's how you spot the genuine German original: copies legally can't have the sidebars.</p>
+        <div class="quote-mini">"I bought one, it works fine but it has no pressure bars at the edges. How come?" <span class="en">, a fake without the sidebars</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;margin:42px 0 6px">Competitive wedges, why we win</h3>
+    <p class="sec-intro" style="margin-bottom:22px">We don't fight one named brand; we beat five product <em>categories</em> people already reach for. Always compare on feature/category only, never by name.</p>
+    <div class="grid g2">
+      <div class="wedge">
+        <h4>vs Electric window vacs <span style="font-weight:400;color:#999;font-size:12px">(primary substitute)</span></h4>
+        <p class="weak">Can't bend to finish the bottom edge · battery/charging anxiety · motor noise · a dirty tank to empty · breaks · e-waste.</p>
+        <p class="win">No battery, never dies mid-job, no tank, and it finishes the bottom edge a motor can't reach.</p>
+      </div>
+      <div class="wedge">
+        <h4>vs Robotic window cleaners</h4>
+        <p class="weak">Leaves four uncleaned corners ("the round can't get into the corner", their own reviewers admit it) · only big flat panes · slow, needs power.</p>
+        <p class="win">"A circle can't clean a square." Corner-to-corner, plus every small/odd glass a robot can't touch.</p>
+      </div>
+      <div class="wedge">
+        <h4>vs Standard / pro squeegees</h4>
+        <p class="weak">Need the "S-Technik" amateurs can't learn · drip · no sidebars → side streaks. (Pros won't switch, don't fight them; target the frustrated amateur.)</p>
+        <p class="win">No technique needed, the patented sidebars do it for you. No side streaks, no drips.</p>
+      </div>
+      <div class="wedge">
+        <h4>vs Cheap household methods</h4>
+        <p class="weak">Vinegar / Spiritus / Klarspüler folklore that mostly still streaks · microfibre "scratches/dulls glass" · sun panic.</p>
+        <p class="win">"Streifenfrei, every time, no magic recipe." Own the exact word that's their #1 wish.</p>
+      </div>
+      <div class="wedge" style="grid-column:1/-1">
+        <h4>vs Counterfeits &amp; copies</h4>
+        <p class="weak">Cheap Amazon look-alikes ride on our viral footage · identical in a thumbnail · drip, streak and die within a year.</p>
+        <p class="win">Legally can't have the patented sidebars, so a copy physically can't deliver the no-side-streak result. Be the unmistakable genuine German original.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOKS -->
+<section id="hooks">
+  <div class="wrap">
+    <div class="eyebrow">08 · Proven hooks</div>
+    <h2 class="sec-title">The scroll-stoppers.</h2>
+    <p class="sec-intro">Demonstrated, view-validated moments to build creative on, these are proven to stop the scroll. Use them as the opening 2 seconds.</p>
+    <div class="grid g4">
+      <div class="card hook-card">
+        <span class="views">42k views</span>
+        <h3 style="font-size:17px">Soap-disappearing</h3>
+        <p>Close-up: soap &amp; water sucked out the side by the sidebars. The founder's "could go viral" moment, the visible proof of the patented mechanism.</p>
+      </div>
+      <div class="card hook-card">
+        <span class="views">7M views</span>
+        <h3 style="font-size:17px">The corner-cut</h3>
+        <p>Top-left corner close-up move (Home Show TikTok). So good scammers copied this exact 2-second clip.</p>
+      </div>
+      <div class="card hook-card">
+        <span class="views teal">"Money moment"</span>
+        <h3 style="font-size:17px">Blade-bend-to-floor</h3>
+        <p>Bending the blade to push water off the very bottom edge of the glass, the thing a vac or stiff squeegee physically can't do.</p>
+      </div>
+      <div class="card hook-card">
+        <span class="views teal">Speed reframe</span>
+        <h3 style="font-size:17px">1 m² in 7 seconds</h3>
+        <p>"One square metre in seven seconds, as fast or faster than a pro squeegee." Counters the "looks slow" comment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATRIX -->
+<section id="matrix">
+  <div class="wrap">
+    <div class="eyebrow">09 · Messaging matrix</div>
+    <h2 class="sec-title">Persona × angle, example hooks.</h2>
+    <p class="sec-intro">The engine for creative diversity. <b>Every</b> persona × angle cell has a ready-to-shoot hook, that's how one product spawns dozens of distinct ads. <b>Lead</b> (highlighted) = the angle's strongest audience, build here first; <b>support</b> = a strong secondary beat. Working English drafts, translate to German downstream.</p>
+    <div class="legend">
+      <span><i style="background:var(--teal-tint);border-left:3px solid var(--teal-dark)"></i> Lead, build here first</span>
+      <span><i style="background:#fff;border:1px solid var(--line)"></i> Support, strong secondary</span>
+    </div>
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <thead>
+          <tr><th>Angle ↓ · Persona →</th><th>House Proud</th><th>Busy Parent</th><th>Sceptic</th><th>Older Independent</th><th>Vehicle Owner</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>StreakFree</th>
+            <td class="lead"><span class="lbl">Lead</span>"Still seeing smears after all that scrubbing?" One pull, zero streaks, every pane.</td>
+            <td class="lead"><span class="lbl">Lead</span>"No spray, no vinegar, no streaks." One pull and the window's done before the kids smudge it again.</td>
+            <td class="support"><span class="lbl">Support</span>"Watch the soap get pulled out the side. That's the bit that leaves the glass streak-free."</td>
+            <td class="support"><span class="lbl">Support</span>"Clear, streak-free windows with no scrubbing and no doing them twice."</td>
+            <td class="support"><span class="lbl">Support</span>"Sun hits the windscreen and you see every smear? Not after this. Streak-free on car glass too."</td>
+          </tr>
+          <tr>
+            <th>NoDrips</th>
+            <td class="lead"><span class="lbl">Lead</span>"Clean the big upstairs windows without a single drop on your floor, your sill or your sleeve."</td>
+            <td class="support"><span class="lbl">Support</span>"No puddle to mop up after. The water stays in the squeegee, not on your floor."</td>
+            <td class="support"><span class="lbl">Support</span>"Held it overhead, upside down, and not one drip. The tank holds every drop."</td>
+            <td class="support"><span class="lbl">Support</span>"No water down your arm, no wet floor to slip on. Stays clean and dry."</td>
+            <td class="support"><span class="lbl">Support</span>"Wipe the inside windscreen with nothing dripping onto your dash or seats."</td>
+          </tr>
+          <tr>
+            <th>EveryGlass</th>
+            <td class="lead"><span class="lbl">Lead</span>"One tool for every glass in the house, right down to the bottom edge a normal squeegee always leaves wet."</td>
+            <td class="support"><span class="lbl">Support</span>"Mirror, shower screen, glass door, windows. One tool, whole house, done before the school run."</td>
+            <td class="support"><span class="lbl">Support</span>"It bends to clear the very bottom edge. The one spot every other squeegee misses."</td>
+            <td class="lead"><span class="lbl">Lead</span>"Reach the high windows from the ground. No ladder, no wobble, no risk."</td>
+            <td class="lead"><span class="lbl">Lead</span>"Struggle to get the inside of your windscreen clean and streak-free? The blade follows the curve a flat squeegee can't."</td>
+          </tr>
+          <tr>
+            <th>NoTechnique</th>
+            <td class="support"><span class="lbl">Support</span>"No special angle, no S-motion, no skill. Just pull, and it's perfect first time."</td>
+            <td class="lead"><span class="lbl">Lead</span>"It's so easy the kids actually do the windows now. No skill, no technique, just pull."</td>
+            <td class="support"><span class="lbl">Support</span>"Forget learning the pro technique. The sidebars do the work, you just pull."</td>
+            <td class="lead"><span class="lbl">Lead</span>"No strength, no special wrist movement, nothing to learn. If you can wipe a table, you can do this."</td>
+            <td class="support"><span class="lbl">Support</span>"No awkward angles on the curved glass. It just glides and finishes streak-free."</td>
+          </tr>
+          <tr>
+            <th>NoGadget</th>
+            <td class="support"><span class="lbl">Support</span>"Nothing to charge, no motor to break, no tank to empty. Pick it up and clean."</td>
+            <td class="support"><span class="lbl">Support</span>"Nothing to charge and nothing that dies halfway through. Always ready when you've got five minutes."</td>
+            <td class="lead"><span class="lbl">Lead</span>"No battery, no motor, no tank. Nothing to break and bin next year. Just a blade that works."</td>
+            <td class="lead"><span class="lbl">Lead</span>"No buttons, no charging, no manual. Pick it up and go."</td>
+            <td class="support"><span class="lbl">Support</span>"No charging before you detail the car. Grab it and go, every time."</td>
+          </tr>
+          <tr>
+            <th>Lasts</th>
+            <td class="support"><span class="lbl">Support</span>"Buy it once. The blade flips and lasts years a side. The last window squeegee you'll buy."</td>
+            <td class="support"><span class="lbl">Support</span>"About 50 euros once, not 15 every year on cheap squeegees that streak and snap."</td>
+            <td class="lead"><span class="lbl">Lead</span>"Around 50 euros for a squeegee? The blade flips and lasts years a side, with a 5-year guarantee. That's a few euros a year, not the 15 you keep spending on cheap ones."</td>
+            <td class="support"><span class="lbl">Support</span>"Reversible, replaceable blade and a 5-year guarantee. Buy it once and you're sorted."</td>
+            <td class="support"><span class="lbl">Support</span>"Takes daily use and keeps going. Built for the garage, not the bin."</td>
+          </tr>
+          <tr>
+            <th>Patented</th>
+            <td class="support"><span class="lbl">Support</span>"The patented sidebars pull water out the sides. That's the secret to no streaks, and only the genuine one has them."</td>
+            <td class="support"><span class="lbl">Support</span>"The real German original, patented and guaranteed. Not a cheap copy that streaks."</td>
+            <td class="lead"><span class="lbl">Lead</span>"See those side bars? Patented. Copies legally can't have them, which is exactly why the cheap ones still streak."</td>
+            <td class="support"><span class="lbl">Support</span>"The genuine German original, patented and guaranteed. Not a look-alike that falls apart."</td>
+            <td class="support"><span class="lbl">Support</span>"The patented German tool, built to last on the car, the boat and the caravan."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- DEMAND -->
+<section id="demand">
+  <div class="wrap">
+    <div class="eyebrow">10 · Search demand</div>
+    <h2 class="sec-title">How big is the demand, and how validated?</h2>
+    <p class="sec-intro">Real monthly search volumes from Google (Germany), with English so the team knows each term. This sizes the problem and the category we're competing in. Note the seasonal peak: searches roughly triple in March (spring cleaning). The top block is our territory (the problem and the intent); the lower block is the substitute demand we're up against.</p>
+    <div class="kw-scroll" style="margin-bottom:14px">
+      <table class="kw">
+        <thead><tr><th>German keyword</th><th>English</th><th>Searches / mo (DE)</th><th>What it tells us</th></tr></thead>
+        <tbody>
+          <tr><td class="de">Fenster putzen</td><td class="en">cleaning windows (the chore)</td><td><b>22,200</b></td><td class="intent">The core job. Peaks ~60,500 in March.</td></tr>
+          <tr><td class="de">Schlieren</td><td class="en">streaks / smears (the pain)</td><td><b>5,400</b></td><td class="intent">Low competition. Name the problem with this.</td></tr>
+          <tr><td class="de">Fenster putzen ohne Streifen</td><td class="en">cleaning windows without streaks</td><td><b>3,600</b></td><td class="intent">The exact intent we answer. High value.</td></tr>
+          <tr><td class="de">Hausmittel Fenster putzen</td><td class="en">window-cleaning home remedies</td><td><b>320</b></td><td class="intent">The folk-recipe competitor we counter.</td></tr>
+          <tr><td class="de">streifenfrei</td><td class="en">streak-free (our word)</td><td><b>210</b></td><td class="intent">Low volume but low competition. Ours to own.</td></tr>
+          <tr><td class="de" style="color:#888">Fensterputzroboter</td><td class="en">window-cleaning robot</td><td><b>60,500</b></td><td class="intent"><span class="pill ghost">Substitute</span> Huge, peaks 110,000. Aspirational rival.</td></tr>
+          <tr><td class="de" style="color:#888">Fenstersauger</td><td class="en">electric window vac</td><td><b>8,100</b></td><td class="intent"><span class="pill ghost">Substitute</span> Primary rival. Negative kw + "unlike a vac".</td></tr>
+          <tr><td class="de" style="color:#888">Fensterwischer</td><td class="en">window squeegee / wiper</td><td><b>2,900</b></td><td class="intent"><span class="pill ghost">Category</span> The term for what we are.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="uc-note" style="margin-bottom:34px">Source: Google Ads average monthly searches, Germany, pulled 17/06/2026. Near-zero terms omitted (e.g. "Fensternasssauger" ~10/mo). The phrasing customers actually use sits in the Voice of Customer section above; this section is about validated search size.</p>
+
+    <h3 style="font-size:20px;margin-bottom:6px">Verified use-cases, every glass surface</h3>
+    <p class="sec-intro" style="margin-bottom:18px">Surfaces confirmed by the founder, the PDPs and customer comments. Stay within this list in copy.</p>
+    <div class="uc-grid">
+      <div class="uc"><div class="ico">🪟</div><b>Windows</b></div>
+      <div class="uc"><div class="ico">🪞</div><b>Mirrors</b></div>
+      <div class="uc"><div class="ico">🚿</div><b>Shower screens</b></div>
+      <div class="uc"><div class="ico">🍳</div><b>Glass splashbacks</b></div>
+      <div class="uc"><div class="ico">🚗</div><b>Car glass (curved interior)</b></div>
+      <div class="uc"><div class="ico">🏠</div><b>Balcony / balustrade glass</b></div>
+      <div class="uc"><div class="ico">🚪</div><b>Sliding / terrace doors</b></div>
+      <div class="uc"><div class="ico">🏊</div><b>Pool fences</b></div>
+      <div class="uc"><div class="ico">🚐</div><b>Boats / caravans / trucks</b></div>
+      <div class="uc"><div class="ico">🔥</div><b>Glass cooktops</b></div>
+      <div class="uc"><div class="ico">✨</div><b>Spot-clean (fingerprints, toothpaste, dog noses)</b></div>
+    </div>
+    <p class="uc-note">⚠ <b>Pending client confirmation, do NOT claim yet:</b> tiles, solar panels. (The founder didn't mention them on the call, but the rotation-joint PDP claims "ideal for solar panels", conflict to resolve. On the sign-off email.)</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">11 · FAQ &amp; brand facts</div>
+    <h2 class="sec-title">Everything the team should know.</h2>
+    <p class="sec-intro">The facts behind the product, the answers customers ask for and the objections they raise. Use these to brief creative and write objection-handling copy. A living section: add to it as we learn more.</p>
+    <div class="grid g2">
+      <div class="faq-item">
+        <h4>How long does it last?</h4>
+        <p>The blade lasts ~<b>4–6 years per side</b> and is reversible &amp; replaceable, so ~8–10 years of product life. Backed by a <b>5-year manufacturer guarantee</b>. (Owners report a decade of use.)</p>
+      </div>
+      <div class="faq-item">
+        <h4>What surfaces does it work on?</h4>
+        <p>Windows, mirrors, shower screens, glass splashbacks, car glass (incl. the curved inside windscreen), balcony/balustrade glass, sliding doors, pool fences, boats/caravans and glass cooktops. <em>Tiles &amp; solar panels, pending client confirmation.</em></p>
+      </div>
+      <div class="faq-item">
+        <h4>Is it really patented?</h4>
+        <p>Yes, the side pressure plates (sidebars) are patented. They pull water out the sides so no streak escapes the edges, and copies legally can't replicate them. It's how you spot the genuine original.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How is it different from a normal squeegee?</h4>
+        <p>A normal squeegee has no sidebars, so water escapes the sides and leaves streaks; it can't reach the bottom edge, and it drips. This one stops side streaks, bends to finish the bottom edge, and starts/stops mid-pane without marks.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How fast is it?</h4>
+        <p>The founder cleans about <b>1 square metre in 7 seconds</b>, but he's had years of practice, so treat that as the expert benchmark, not a typical first-timer's speed. It's genuinely fast; until we have timed evidence for a new user, don't state "7 seconds" as a guaranteed result in copy.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do you clean the squeegee itself?</h4>
+        <p>Warm water, or pop it in the dishwasher with the handle removed. The high-grade silicone blade doesn't dry out.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Where's it made?</h4>
+        <p>Germany, by Göttler GmbH in Bavaria. In DE we lead with <b>"patentiert"</b> over "Made in Germany" (Germans price-shop and respond more to the patent).</p>
+      </div>
+      <div class="faq-item">
+        <h4>Which set should a customer buy?</h4>
+        <p><b>Cleaning Set (€35):</b> entry and everyday use, small homes, renters, cars and spot-cleaning. <b>Blade + Telescopic (€40–50):</b> high or hard-to-reach windows, multi-storey homes, balconies. <b>Full Set (€70):</b> whole-home, house-proud, the complete kit. A premium bundle (~€85–90) is in development. <b>No confirmed hero SKU yet, to be tested;</b> treat the Full Set as the working hero until data says otherwise.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Does it work on a dirty window?</h4>
+        <p>It's a two-step job. First you wash the window to lift the dirt (water and detergent, plus however much scrubbing the grime needs; the pre-washer helps here). Then the squeegee clears that water and loosened dirt away in one streak-free pass. So it's the finishing tool, not a dirt-dissolver. (Client side-note: a genuinely dirty-window demo would show this off far better than clean glass; raised on the sign-off email.)</p>
+      </div>
+      <div class="faq-item">
+        <h4>What's the guarantee wording? (DE)</h4>
+        <p><span class="de">"5 Jahre Herstellergarantie. Ihre gesetzlichen Gewährleistungsrechte (2 Jahre) bleiben unberührt."</span><br>EN: 5-year manufacturer guarantee; your statutory 2-year warranty rights remain unaffected. Always pair this disclaimer with any guarantee claim.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Eurolux Easylight, Brand Playbook.</b> Cross-market canonical document. Markets: easyLIGHT (DE) · AquaBlade (AU/NZ).</p>
+    <p style="margin-top:8px">Built by Above and Beyond Digital from the founder onboarding call (02/06/2026), product catalogue, 610+ social comments, and competitor/review analysis. Sell the result, not the tool.</p>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20)});
+</script>
+</body>
+</html>
