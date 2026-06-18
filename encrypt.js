@@ -26,6 +26,7 @@ const PORTAL_GROUPS = [
   'clients/mn/portal',
   'clients/kiki/portal',
   'clients/elx/portal',
+  'clients/os/portal',
   'internal/portal',
 ];
 

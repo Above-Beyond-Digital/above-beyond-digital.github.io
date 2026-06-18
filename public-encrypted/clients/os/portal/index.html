@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ocean Sales Group — ABD Portal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954;
+      --aqua: #0FA3B1;
+      --charcoal: #1D1C1C;
+      --bg: #F5F9FA;
+      --surface: #FFFFFF;
+      --border: #DCE7EA;
+      --muted: #61777E;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(15,163,177,0.18);
+      border: 1px solid var(--aqua);
+      color: var(--aqua);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 40px 80px; }
+    .intro {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--aqua);
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 40px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .intro b { color: var(--navy); }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .report-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-card:hover { border-color: var(--aqua); box-shadow: 0 2px 12px rgba(15,163,177,0.14); }
+    .report-card.soon { opacity: 0.62; pointer-events: none; }
+    .report-card-icon { font-size: 24px; }
+    .report-card-title { font-size: 15px; font-weight: 700; color: var(--charcoal); }
+    .report-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .report-card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      background: rgba(15,163,177,0.12); color: var(--navy);
+    }
+    .tag.grey { background: rgba(29,28,28,0.07); color: var(--muted); }
+    .report-card-arrow {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--aqua); font-weight: 600;
+    }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">ABD Client Portal</div>
+  <div class="header-badge">Confidential</div>
+</div>
+
+<div class="page">
+
+  <div class="intro">
+    <b>Ocean Sales Group deliverables hub.</b> Reports, audits and campaign packs for Flat Stacks and
+    Steam Mop (USA and Canada) are published here as they go live. One password unlocks every page in
+    this portal, tick "Keep me signed in" and sub-pages open without re-entering it.
+  </div>
+
+  <div class="section-title">Reports</div>
+  <div class="reports-grid">
+    <div class="report-card soon">
+      <div class="report-card-icon">📊</div>
+      <div class="report-card-title">Monthly Performance Report</div>
+      <div class="report-card-desc">Cross-channel monthly report (Meta, WooCommerce, Omnisend) with MER, funnel, new vs returning, and creative performance, per market.</div>
+      <div class="report-card-meta">
+        <span class="tag">USA + Canada</span>
+        <span class="tag grey">Coming soon</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+  </div>
+
+  <div class="section-title">Meta Ads Audits</div>
+  <div class="reports-grid">
+    <div class="report-card soon">
+      <div class="report-card-icon">🔍</div>
+      <div class="report-card-title">Meta Ads Audit — Flat Stacks &amp; Steam Mop</div>
+      <div class="report-card-desc">12-month account audit per product per market: winners, budget allocation, angle performance, landing pages, consolidation restructure plan.</div>
+      <div class="report-card-meta">
+        <span class="tag">Product-scoped</span>
+        <span class="tag grey">Coming soon</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+  </div>
+
+  <div class="section-title">Campaigns</div>
+  <div class="reports-grid">
+    <div class="report-card soon">
+      <div class="report-card-icon">🎄</div>
+      <div class="report-card-title">Flat Stacks — Christmas in July 2026</div>
+      <div class="report-card-desc">Sale benchmark dashboard and campaign pack for the 23–29 July Flat Stacks sale, USA and Canada.</div>
+      <div class="report-card-meta">
+        <span class="tag">23–29 Jul</span>
+        <span class="tag grey">Coming soon</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page" style="padding-top: 0;">
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>oceansalesoffers.com</span>
+  </div>
+</div>
+
+</body>
+</html>
