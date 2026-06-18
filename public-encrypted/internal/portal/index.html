@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABD Internal — Reports</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #16202C;
+      --blue: #7badd6;
+      --amber: #f4b33e;
+      --bg: #F7F6F5;
+      --surface: #FFFFFF;
+      --border: #E0DEDC;
+      --muted: #6b7280;
+    }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--ink);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--amber); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(244,179,62,0.15);
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 40px 80px; }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .report-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-card:hover { border-color: var(--blue); box-shadow: 0 2px 12px rgba(123,173,214,0.18); }
+    .report-card-icon { font-size: 24px; }
+    .report-card-title { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .report-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .report-card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      background: rgba(123,173,214,0.15); color: #3f6f97;
+    }
+    .tag.grey { background: rgba(22,32,44,0.07); color: var(--muted); }
+    .report-card-arrow {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: #3f6f97; font-weight: 600;
+    }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Above &amp; <span>Beyond</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Internal Portal</div>
+  <div class="header-badge">Team Only</div>
+</div>
+
+<div class="page">
+
+  <div class="section-title">Cross-Client Reporting</div>
+  <div class="reports-grid">
+
+    <a href="pulse-dashboard.html" class="report-card">
+      <div class="report-card-icon">📡</div>
+      <div class="report-card-title">Multi-Client Daily Pulse</div>
+      <div class="report-card-desc">Cross-client daily glance — spend, revenue, MER vs target with RAG status, funnel waterfall and trend charts across all active clients.</div>
+      <div class="report-card-meta">
+        <span class="tag">All clients</span>
+        <span class="tag grey">Daily</span>
+      </div>
+      <div class="report-card-arrow">Open dashboard →</div>
+    </a>
+
+    <a href="creative-insights/2026-05/" class="report-card">
+      <div class="report-card-icon">🎨</div>
+      <div class="report-card-title">Creative Insights — May 2026</div>
+      <div class="report-card-desc">Multi-client Meta creative performance — baseline-relative grading, per-creative transcript and vision analysis, winners and fatigue signals.</div>
+      <div class="report-card-meta">
+        <span class="tag">May 2026</span>
+        <span class="tag grey">Meta creative</span>
+      </div>
+      <div class="report-card-arrow">Open report →</div>
+    </a>
+
+  </div>
+
+</div>
+
+<div class="page" style="padding-top: 0;">
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Internal, Confidential</span>
+    <span>aboveandbeyond.digital</span>
+  </div>
+</div>
+
+</body>
+</html>
