@@ -118,6 +118,10 @@
      max-width:600px media query, so the header strip stacks, a true responsive
      preview, not an approximation. */
   .unit.preview{grid-column:1/-1;}
+  /* All WIP/skeleton cards span the full grid width and stack one per row,
+     so bands 03+ sit in the same single-column margin as the previews above
+     (band 02 has no .grid wrapper, so it was already full-width). */
+  .grid>.unit{grid-column:1/-1;}
   .pcompare{display:flex;gap:26px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
   .pcol{display:flex;flex-direction:column;align-items:center;}
   .platlabel{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:11px;}
