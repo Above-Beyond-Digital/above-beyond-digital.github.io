@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLS Christmas in July — 2024 × 2025 Benchmark</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--green:#54AE33;--forest:#2E7D32;--grey:#54595F;--light:#f4f6f4;--line:#e3e7e3;
+        --warn:#b8860b;--warnbg:#fff8e6;--white:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Roboto,system-ui,sans-serif;color:var(--grey);background:var(--light);line-height:1.5}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 60px}
+  header{background:#2b2f2b;color:#fff;padding:34px 0}
+  header .wrap{display:flex;flex-direction:column;gap:6px}
+  header h1{font-size:26px;font-weight:700}
+  header .sub{opacity:.8;font-size:14px}
+  .badges{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:4px 11px;border-radius:20px;font-size:12px}
+  .badge.green{background:var(--green);border-color:var(--green)}
+  h2{font-size:19px;color:var(--forest);margin:38px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+  h3{font-size:14px;color:var(--grey);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.04em;opacity:.8}
+  .note{background:var(--warnbg);border:1px solid #ecd9a0;border-left:4px solid var(--warn);color:#6b5400;
+        padding:13px 16px;border-radius:6px;font-size:13.5px;margin-top:20px}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;
+        box-shadow:0 1px 3px rgba(0,0,0,.06);font-size:14px}
+  th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:#f0f3f0;font-weight:600}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px}
+  .card{background:#fff;border-radius:10px;padding:15px 17px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-top:3px solid var(--green)}
+  .card.ca{border-top-color:var(--forest)}
+  .card .label{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;opacity:.7;margin-bottom:9px}
+  .card .row{display:flex;justify-content:space-between;align-items:baseline;margin:3px 0}
+  .card .yr{font-size:12px;opacity:.6}
+  .card .v{font-size:18px;font-weight:700}
+  .card .v.b{color:var(--forest)}
+  .chart-box{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .takeaway{background:#fff;border-left:4px solid var(--green);border-radius:6px;padding:13px 17px;margin:11px 0;box-shadow:0 1px 3px rgba(0,0,0,.05);font-size:14px}
+  .takeaway b{color:var(--forest)}
+  .small{font-size:12.5px;opacity:.7;margin-top:6px}
+  .tag{display:inline-block;background:var(--green);color:#fff;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px}
+  .tag.grey{background:var(--grey)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Flat Stacks · Christmas in July — Benchmark</h1>
+    <div class="sub">2024 × 2025 · Shopify net sales (the sale) + sale-campaign Meta spend + Omnisend email revenue · built to inform CIJ 2026</div>
+    <div class="badges">
+      <span class="badge">Historical data</span>
+      <span class="badge green">USA · USD</span>
+      <span class="badge green">Canada · CAD</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="note">
+    <b>Data scope — the sale, not evergreen.</b> Revenue = <b>Shopify net sales</b> for the sale store (flatstacks.com / .ca), the only revenue that counts for the sale.
+    Ad spend = the <b>dedicated sale campaign only</b> (not account-wide, not evergreen). WooCommerce evergreen revenue is deliberately excluded — it runs on its own budget.
+    Meta-reported ROAS shown for context only (Meta under-attributes). Email = <b>Omnisend attributed revenue</b> (Analytics API, Shopify-store attribution), <b>2025-only</b>; it's gross last-touch order value (a different basis from net sales), not a clean % of the sale; opens MPP-inflated, read clicks.
+    Windows differ in length (2024 longer than 2025) — compare per-day + AOV, not raw totals. Manual Shopify figures (16/06/2026); future pulls via Shopify MCP/API.
+  </div>
+
+  <h2>1 · Sale overview</h2>
+  <table>
+    <tr><th>&nbsp;</th><th>US 2024</th><th>US 2025</th><th>CA 2024</th><th>CA 2025</th></tr>
+    <tr><td>Window</td><td>19–26 Jul (8d)</td><td>11–13 Jul (3d)</td><td>~Jul (peak 24–25)</td><td>18–20 Jul (3d)</td></tr>
+    <tr><td>Meta structure</td><td>Cold ASC + Warm</td><td>Warm-only + evergreen BAU</td><td>No paid</td><td>No paid</td></tr>
+    <tr><td>Offer</td><td>15–40% off (price-edit)</td><td>15–40% off</td><td>15–40% off</td><td>15–40% off</td></tr>
+    <tr><td>Email pre-sale tease</td><td>n/a (no Omnisend)</td><td>Yes (08 Jul)</td><td>n/a</td><td>Yes (14 Jul)</td></tr>
+  </table>
+  <p class="small">No pre-sale/VIP phase any year. 2026 locked 23–29 Jul (7-day) ≈ the 2024 shape.</p>
+
+  <h2>2 · USA — the sale <span class="tag">Shopify net · USD</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Net sales (Shopify)</div>
+      <div class="row"><span class="yr">2024</span><span class="v">$6,026.30</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">$2,764.90</span></div></div>
+    <div class="card"><div class="label">Orders</div>
+      <div class="row"><span class="yr">2024</span><span class="v">58</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">23</span></div></div>
+    <div class="card"><div class="label">AOV</div>
+      <div class="row"><span class="yr">2024</span><span class="v">$103.90</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">$120.21</span></div></div>
+    <div class="card"><div class="label">Sale Meta spend</div>
+      <div class="row"><span class="yr">2024</span><span class="v">$1,291.87</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">$585.90</span></div></div>
+    <div class="card"><div class="label">Sale MER</div>
+      <div class="row"><span class="yr">2024</span><span class="v">4.66×</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">4.72×</span></div></div>
+    <div class="card"><div class="label">Meta-rep ROAS <span class="small">(context)</span></div>
+      <div class="row"><span class="yr">2024</span><span class="v">2.63</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">2.29</span></div></div>
+  </div>
+  <p class="small">MER = Shopify net sales ÷ sale-campaign Meta spend. Consistent ~4.7× both years — healthy sale efficiency with moderate headroom to scale.</p>
+
+  <h2>3 · Canada — the sale <span class="tag grey">Shopify net · CAD · zero paid</span></h2>
+  <div class="cards">
+    <div class="card ca"><div class="label">Net sales (Shopify)</div>
+      <div class="row"><span class="yr">2024</span><span class="v">$2,998.95</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">$1,487.85</span></div></div>
+    <div class="card ca"><div class="label">Total sales</div>
+      <div class="row"><span class="yr">2024</span><span class="v">$3,372.71</span></div>
+      <div class="row"><span class="yr">2025</span><span class="v b">$1,671.63</span></div></div>
+    <div class="card ca"><div class="label">Paid media</div>
+      <div class="row"><span class="yr">both</span><span class="v b">$0</span></div></div>
+    <div class="card ca"><div class="label">Mix</div>
+      <div class="row"><span class="v b" style="font-size:14px">Bundle-led (Meal Prep / Family / Ovenware sets)</span></div></div>
+  </div>
+  <p class="small">CA earns on email + push alone. Bundles dominate the product mix.</p>
+
+  <h2>4 · Net sales vs sale spend + MER (USA)</h2>
+  <div class="chart-box"><canvas id="merChart" height="115"></canvas></div>
+  <p class="small">Daily breakdown not available from manual exports (period totals only) — would need the Shopify MCP/API.</p>
+
+  <h2>5 · Meta structure breakdown <span class="tag grey">Meta-reported</span></h2>
+  <table>
+    <tr><th>Year · campaign</th><th class="num">Spend</th><th class="num">Purch</th><th class="num">Value (Meta)</th><th class="num">ROAS</th><th class="num">CPA</th></tr>
+    <tr><td><b>2024</b> · Cold TOF / ASC</td><td class="num">$943.73</td><td class="num">15</td><td class="num">$1,637.03</td><td class="num">1.73</td><td class="num">$62.92</td></tr>
+    <tr><td><b>2024</b> · Warm MOF+BOF</td><td class="num">$348.14</td><td class="num">13</td><td class="num">$1,760.57</td><td class="num">5.06</td><td class="num">$26.78</td></tr>
+    <tr><td><b>2025</b> · Warm MOF+BOF</td><td class="num">$585.90</td><td class="num">11</td><td class="num">$1,342.08</td><td class="num">2.29</td><td class="num">$53.26</td></tr>
+    <tr><td><b>2025</b> · Evergreen ASC <span class="small">(BAU, not the sale)</span></td><td class="num">~$180/d</td><td class="num">—</td><td class="num">—</td><td class="num">3.95</td><td class="num">—</td></tr>
+  </table>
+  <p class="small">Meta-reported only. Both years' dedicated sale MER (Shopify) landed ~4.7× — 2024 (cold+warm) and 2025 (warm-only) were similarly efficient at the sale level.</p>
+
+  <h2>6 · Email — attributed revenue + engagement <span class="tag">Omnisend · 2025 only</span></h2>
+  <h3>Email/SMS attributed (Analytics API · Shopify store)</h3>
+  <div class="cards">
+    <div class="card"><div class="label">US 2025 · email/SMS attributed <span class="small">(11–13 Jul)</span></div>
+      <div class="row"><span class="yr">attributed rev</span><span class="v b">$1,397.87</span></div>
+      <div class="row"><span class="yr">campaign</span><span class="v" style="font-size:14px">$1,003.24</span></div>
+      <div class="row"><span class="yr">automation</span><span class="v" style="font-size:14px">$394.63</span></div>
+      <div class="row"><span class="yr">attributed orders</span><span class="v b" style="font-size:14px">10 of 23</span></div></div>
+    <div class="card ca"><div class="label">CA 2025 · email/SMS attributed <span class="small">(18–20 Jul)</span></div>
+      <div class="row"><span class="yr">attributed rev</span><span class="v b">$1,705.30</span></div>
+      <div class="row"><span class="yr">campaign</span><span class="v" style="font-size:14px">$1,195.71</span></div>
+      <div class="row"><span class="yr">automation</span><span class="v" style="font-size:14px">$509.59</span></div>
+      <div class="row"><span class="yr">attributed orders</span><span class="v b" style="font-size:14px">12</span></div></div>
+  </div>
+  <p class="small"><b>Read this as gross attributed revenue</b> — the order value credited to email/SMS as last touch, a different basis from Shopify <i>net</i> sales (which nets out discounts, returns and tax), so it is <b>not</b> a clean share of net sales. US: email/SMS was last-touch on 10 of 23 sale orders. CA: attributed revenue <b>exceeds</b> net sales — the CA sale was small and heavily discounted, so email effectively carried the whole sale. Omnisend tracks the Shopify store (not the Woo funnel). 2024 predates both Omnisend accounts; no SMS ran in 2025.</p>
+  <h3>Engagement</h3>
+  <div class="grid2">
+    <div class="chart-box"><h3>US 2025</h3>
+      <table>
+        <tr><th>Send</th><th class="num">Sent</th><th class="num">Clicks</th><th class="num">CTR</th></tr>
+        <tr><td>08 Jul · pre-sale tease</td><td class="num">3,002</td><td class="num">74</td><td class="num">2.47%</td></tr>
+        <tr><td>10 Jul · launch</td><td class="num">2,987</td><td class="num">52</td><td class="num">1.74%</td></tr>
+      </table></div>
+    <div class="chart-box"><h3>CA 2025</h3>
+      <table>
+        <tr><th>Send</th><th class="num">Sent</th><th class="num">Clicks</th><th class="num">CTR</th></tr>
+        <tr><td>14 Jul · pre-sale tease</td><td class="num">1,561</td><td class="num">37</td><td class="num">2.37%</td></tr>
+        <tr><td>17 Jul · launch</td><td class="num">1,561</td><td class="num">42</td><td class="num">2.69%</td></tr>
+      </table></div>
+  </div>
+  <p class="small">A pre-sale tease ("A Big Sale Is Coming This Friday") ran both markets — FLS reveals the offer by email even without a paid pre-sale phase. 2024 had no Omnisend.</p>
+
+  <h2>7 · Read-through for CIJ 2026</h2>
+  <div class="takeaway"><b>True sale MER ≈ 4.7×.</b> Shopify net ÷ sale-campaign spend was 4.66× (2024) and 4.72× (2025) — consistent and healthy. Moderate headroom to scale Meta; expect MER to compress as spend grows, so scale in steps and watch live.</div>
+  <div class="takeaway"><b>Size 2026 off 2024 (7-day shape).</b> 2024 = $6,026 net on $1,292 spend over 8 days (~$753 net/day, ~$161 spend/day). A 7-day 2026 at a higher daily spend should grow net sales proportionally while MER holds in the 4× range.</div>
+  <div class="takeaway"><b>AOV climbing</b> ($104→$120 US) and CA is bundle-led + higher value — lean 2026 creative + email into bundles.</div>
+  <div class="takeaway"><b>Canada earns on $0 paid</b> ($1.5–3k Shopify net). A light paid test is low-risk upside — resolve Bill 96 French compliance first.</div>
+  <div class="takeaway"><b>Keep the email pre-sale tease.</b> Both markets ran a "big sale Friday" reveal in 2025. No paid pre-sale, but the email heads-up is part of the FLS playbook.</div>
+  <div class="takeaway"><b>Email is a major sale driver.</b> On the Shopify sale, email/SMS was the attributed last-touch on <b>10 of 23 US orders</b>, and in CA attributed revenue <b>exceeded</b> total net sales — email effectively carried the whole (small) CA sale. That was email only; 2026 adds launch + final-hours SMS, so treat email/SMS as a core revenue channel, not an afterthought. CA over-indexes (high-AOV, zero-paid).</div>
+
+  <p class="small" style="margin-top:26px">Sources: Shopify Analytics (net sales, manual export 16/06/2026), Pipeboard Meta Ads (sale-campaign spend), Omnisend Analytics API (attributed revenue + engagement, pulled 22/06/2026). Revenue = Shopify net sales; WooCommerce evergreen excluded. Built by ABD — internal benchmark.</p>
+</div>
+
+<script>
+const GREEN='#54AE33',FOREST='#2E7D32',GREY='#54595F';
+const us={rev:[6026.30,2764.90],spend:[1291.87,585.90],mer:[4.66,4.72]};
+new Chart(document.getElementById('merChart'),{
+  type:'bar',
+  data:{labels:['2024','2025'],datasets:[
+    {label:'Shopify net sales ($)',data:us.rev,backgroundColor:GREEN,yAxisID:'y'},
+    {label:'Sale Meta spend ($)',data:us.spend,backgroundColor:GREY,yAxisID:'y'},
+    {label:'Sale MER (×)',data:us.mer,type:'line',borderColor:FOREST,backgroundColor:FOREST,yAxisID:'y1',tension:.3,pointRadius:5}
+  ]},
+  options:{responsive:true,scales:{
+    y:{position:'left',title:{display:true,text:'$'},ticks:{callback:v=>'$'+v.toLocaleString()}},
+    y1:{position:'right',title:{display:true,text:'MER ×'},grid:{drawOnChartArea:false},min:0,max:6}
+  }}
+});
+</script>
+</body>
+</html>

@@ -104,7 +104,7 @@ for (const rel of files) {
   fs.mkdirSync(outDir, { recursive: true });
 
   execSync(
-    `./node_modules/.bin/staticrypt "${src}" -p "${password}" -d "${outDir}" -s "${salt}" --remember 30 --short --config false` +
+    `node "${path.join('node_modules','staticrypt','cli','index.js')}" "${src}" -p "${password}" -d "${outDir}" -s "${salt}" --remember 30 --short --config false` +
     ` --template-color-primary "#0099FF"` +
     ` --template-color-secondary "#FFFFFF"` +
     ` --template-title "Above & Beyond Digital"` +
