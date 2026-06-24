@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks — Christmas in July 2026 — Campaign Hub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954;
+      --aqua: #0FA3B1;
+      --green: #54AE33;
+      --charcoal: #1D1C1C;
+      --bg: #F5F9FA;
+      --surface: #FFFFFF;
+      --border: #DCE7EA;
+      --muted: #61777E;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(84,174,51,0.18);
+      border: 1px solid var(--green);
+      color: #8BC34A;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 40px 80px; }
+    .crumb { margin-bottom: 24px; font-size: 12px; }
+    .crumb a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .crumb a:hover { text-decoration: underline; }
+    .crumb span { color: var(--muted); }
+    .intro {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 40px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .intro b { color: var(--navy); }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .report-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-card:hover { border-color: var(--aqua); box-shadow: 0 2px 12px rgba(15,163,177,0.14); }
+    .report-card.soon { opacity: 0.62; pointer-events: none; }
+    .report-card-icon { font-size: 24px; }
+    .report-card-title { font-size: 15px; font-weight: 700; color: var(--charcoal); }
+    .report-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .report-card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      background: rgba(15,163,177,0.12); color: var(--navy);
+    }
+    .tag.grey { background: rgba(29,28,28,0.07); color: var(--muted); }
+    .tag.live { background: rgba(84,174,51,0.14); color: #3C7D24; }
+    .report-card-arrow {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--aqua); font-weight: 600;
+    }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 24px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Flat Stacks &middot; Christmas in July 2026 🎄</div>
+  <div class="header-badge">Campaign Hub</div>
+</div>
+
+<div class="page">
+
+  <div class="crumb"><a href="../index.html">&larr; Ocean Sales portal</a> <span>/ Christmas in July 2026</span></div>
+
+  <div class="intro">
+    <b>Flat Stacks Christmas in July 2026 — campaign hub.</b> Everything for the 23–29 July sale (USA and Canada)
+    in one place: the historical performance benchmark, the key visual, and each asset as it goes live. Offer:
+    15% off site-wide, stacking on bundles for total savings up to 40%.
+  </div>
+
+  <div class="section-title">Performance</div>
+  <div class="reports-grid">
+    <a class="report-card" href="../reports/fls-cij26-benchmark.html">
+      <div class="report-card-icon">📊</div>
+      <div class="report-card-title">Sale Benchmark Dashboard</div>
+      <div class="report-card-desc">FLS Christmas in July 2024 × 2025: Shopify net sales (the sale), dedicated sale-campaign Meta spend, MER, and Omnisend email/SMS. The historical baseline to beat in 2026.</div>
+      <div class="report-card-meta">
+        <span class="tag">2024 × 2025</span>
+        <span class="tag live">Live</span>
+      </div>
+      <div class="report-card-arrow">Open dashboard &rarr;</div>
+    </a>
+  </div>
+
+  <div class="section-title">Creative</div>
+  <div class="reports-grid">
+    <a class="report-card" href="key-visual/cij26-key-visual-concept.html">
+      <div class="report-card-icon">🎨</div>
+      <div class="report-card-title">Key Visual — Concept Board</div>
+      <div class="report-card-desc">The look every CIJ26 asset follows: lockup, palette and type, offer badge, sample ad, email and banner, art direction, and the festive photography library. For sign-off.</div>
+      <div class="report-card-meta">
+        <span class="tag">v3 · FLS-native</span>
+        <span class="tag live">Live</span>
+      </div>
+      <div class="report-card-arrow">Open concept board &rarr;</div>
+    </a>
+    <div class="report-card soon">
+      <div class="report-card-icon">📝</div>
+      <div class="report-card-title">Creative Brief</div>
+      <div class="report-card-desc">Video-overlay and static creative brief — hero SKUs per market, angles, proof points and 9-asset scope.</div>
+      <div class="report-card-meta">
+        <span class="tag">USA + Canada</span>
+        <span class="tag grey">In review</span>
+      </div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+  </div>
+
+  <div class="section-title">Campaign Assets</div>
+  <div class="reports-grid">
+    <div class="report-card soon">
+      <div class="report-card-icon">✉️</div>
+      <div class="report-card-title">Email &amp; SMS Flow</div>
+      <div class="report-card-desc">Pre-sale list build, VIP early access, public launch and last-chance sends (Omnisend).</div>
+      <div class="report-card-meta"><span class="tag grey">Coming soon</span></div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+    <div class="report-card soon">
+      <div class="report-card-icon">🖼️</div>
+      <div class="report-card-title">Homepage Banner</div>
+      <div class="report-card-desc">Full-width site banner for the sale window, USA and Canada.</div>
+      <div class="report-card-meta"><span class="tag grey">Coming soon</span></div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+    <div class="report-card soon">
+      <div class="report-card-icon">🛬</div>
+      <div class="report-card-title">Landing Page</div>
+      <div class="report-card-desc">Sale landing / offer page on the CartFlows funnel.</div>
+      <div class="report-card-meta"><span class="tag grey">Coming soon</span></div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+    <div class="report-card soon">
+      <div class="report-card-icon">📱</div>
+      <div class="report-card-title">Meta Statics &amp; Overlays</div>
+      <div class="report-card-desc">Paid social statics and video overlays built from the key visual.</div>
+      <div class="report-card-meta"><span class="tag grey">Coming soon</span></div>
+      <div class="report-card-arrow">Coming soon</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page" style="padding-top: 0;">
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com · flatstacks.ca</span>
+  </div>
+</div>
+
+</body>
+</html>
