@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks CIJ26 — Creative Brief</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954;
+      --aqua: #0FA3B1;
+      --green: #54AE33;
+      --charcoal: #1D1C1C;
+      --bg: #F5F9FA;
+      --surface: #FFFFFF;
+      --border: #DCE7EA;
+      --muted: #61777E;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(84,174,51,0.18);
+      border: 1px solid var(--green);
+      color: #8BC34A;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 40px 80px; }
+    .crumb { margin-bottom: 24px; font-size: 12px; }
+    .crumb a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .crumb a:hover { text-decoration: underline; }
+    .crumb span { color: var(--muted); }
+
+    /* ---- prose content ---- */
+    .prose h1 {
+      font-size: 26px; font-weight: 800; color: var(--navy);
+      letter-spacing: -0.01em; line-height: 1.25; margin: 0 0 18px;
+    }
+    .prose h2 {
+      font-size: 19px; font-weight: 700; color: var(--navy);
+      margin: 40px 0 14px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .prose h3 {
+      font-size: 15px; font-weight: 700; color: var(--navy);
+      margin: 26px 0 10px;
+    }
+    .prose p { line-height: 1.65; margin: 0 0 14px; color: #2b3a40; }
+    .prose ul, .prose ol { margin: 0 0 16px; padding-left: 22px; }
+    .prose li { line-height: 1.6; margin-bottom: 7px; color: #2b3a40; }
+    .prose li::marker { color: var(--aqua); }
+    .prose ul ul, .prose ol ul { margin: 7px 0 0; }
+    .prose a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .prose a:hover { text-decoration: underline; }
+    .prose strong, .prose b { color: var(--navy); font-weight: 700; }
+    .prose em { font-style: italic; }
+    .prose code {
+      font-family: 'SF Mono', Consolas, 'Roboto Mono', monospace;
+      font-size: 12px; background: rgba(15,163,177,0.10);
+      color: var(--navy); padding: 1px 6px; border-radius: 5px;
+    }
+    .prose hr {
+      border: none; border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .prose blockquote {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 10px; padding: 14px 20px; margin: 0 0 18px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .prose blockquote p { margin: 0; }
+    .prose blockquote strong { color: var(--navy); }
+    .table-wrap { overflow-x: auto; margin: 0 0 22px; border-radius: 10px; }
+    .prose table {
+      border-collapse: collapse; width: 100%;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 12.5px; min-width: 480px;
+    }
+    .prose thead th {
+      background: var(--navy); color: #fff; text-align: left;
+      font-weight: 700; font-size: 11px; letter-spacing: 0.04em;
+      padding: 10px 14px; vertical-align: top;
+    }
+    .prose tbody td {
+      padding: 10px 14px; border-top: 1px solid var(--border);
+      vertical-align: top; line-height: 1.55; color: #2b3a40;
+    }
+    .prose tbody tr:nth-child(even) { background: var(--bg); }
+    .prose tbody td:first-child { white-space: nowrap; }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 24px 20px 60px; }
+      .prose h1 { font-size: 22px; }
+      .prose h2 { font-size: 17px; }
+      .footer { flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Flat Stacks &middot; Christmas in July 2026 🎄</div>
+  <div class="header-badge">Creative Brief</div>
+</div>
+
+<div class="page prose">
+
+  <div class="crumb"><a href="../../index.html">&larr; Ocean Sales portal</a> <span>/ </span><a href="../index.html">Christmas in July 2026</a> <span>/ Creative Brief</span></div>
+
+  <h1>FLS US &amp; CA - CIJ26 Sale - Creative Brief</h1>
+
+  <p><strong>IMPORTANT:</strong></p>
+  <ol>
+    <li><strong>Review the key visual / design guide before you start</strong> — this is the one to read. It holds the lockup, sale badge, palette and type, so this brief does NOT repeat them: <strong><a href="https://hub.aboveandbeyond.digital/clients/os/portal/cij26/key-visual/cij26-key-visual-concept.html">Key Visual</a></strong></li>
+    <li><strong>Past-performance dashboard</strong> — best-performing creative from past sales: <a href="https://hub.aboveandbeyond.digital/clients/os/portal/reports/fls-cij26-benchmark.html">Dashboard</a></li>
+    <li><strong>Master brief</strong> — full campaign context (handy, not essential): <a href="master-brief.html">Master brief</a></li>
+    <li><strong>Campaign token:</strong> <code>FLS26-CIJ</code> — every asset name carries it.</li>
+    <li><strong>Asset due dates:</strong> all creative built + into ClickUp by <strong>~09/07</strong> (2 weeks before the 23/07 launch).</li>
+  </ol>
+
+  <hr />
+
+  <h2>1. Campaign Summary</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Detail</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sale name</td><td>Christmas in July 2026</td></tr>
+        <tr><td>Internal code</td><td>CIJ26 (Must be included in all asset names)</td></tr>
+        <tr><td>Markets</td><td>USA &amp; Canada - same discount for both. Design creative that can be used for both.</td></tr>
+        <tr><td>Sale dates</td><td>23–29 Jul 2026 (both markets, same window)</td></tr>
+        <tr><td>Offer</td><td>15% off site-wide; stacks on already-discounted bundles for total savings <strong>up to 40%</strong></td></tr>
+        <tr><td>Headline claim</td><td><strong>"15–40% Off*"</strong></td></tr>
+        <tr><td>Asterisk footnote (must be included in ad copy but does not need to be on the creative itself)</td><td><em>*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</em></td></tr>
+        <tr><td>Offer mechanic</td><td>Price-edit (no discount code). Prices MUST revert to ordinary after 29 Jul.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <h2>2. Creative Approach</h2>
+
+  <p>Per the campaign config and master brief, the approach is a <strong>mix</strong>:</p>
+
+  <ul>
+    <li><strong>(a) Reuse</strong> — take the 3-5 best-performing evergreen FLS video winners and add a scrolling sale message across them. No client reshoot.
+      <ul>
+        <li>Jess to supply/confirm the best performing videos to use.</li>
+      </ul>
+    </li>
+    <li><strong>(b) New statics</strong> — build 4 new static ads, one per creative angle, specifically for the sale.</li>
+    <li><strong>(c) Last-chance</strong> — 2 urgency variants (repurpose top main-sale statics with last-chance copy overlay) deployed in the final days (27–29 Jul).</li>
+  </ul>
+
+  <hr />
+
+  <h2>3. Assets to build</h2>
+
+  <p><strong>The main thing we need from you is the on-image text for each asset — it's spelled out below.</strong> Specs: statics <strong>4:5 (1080×1350)</strong>, keep text in the centre <strong>1:1 safe zone</strong> (crops clean to square). Videos/reels <strong>9:16 (1080×1920)</strong>, text in the <strong>4:5 safe zone</strong>. On every offer asset, <strong>"15–40% Off*" is the largest element</strong>. Badge, lockup and colours come from the key visual — don't invent new ones.</p>
+
+  <h3>3a. Sale statics — 4, one per angle <em>(creative team)</em></h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Angle</th><th>Exact overlay text</th><th>Hero visual</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>S01</strong></td><td>Pure sale</td><td><strong>SALE 15–40% Off*</strong> <em>(dominant)</em> · <code>Christmas in July</code> · <code>Shop now — ends July 29</code></td><td>Christmas in July themed image (see key visual for inspriation)</td></tr>
+        <tr><td><strong>S02</strong></td><td>Bundle value</td><td><code>Kit out the whole kitchen for less</code> · <code>CHRISTMAS IN JULY SALE</code> · <code>15–40% Off*</code></td><td>Lead with a bundle or hero shot of containers in a kitchen</td></tr>
+        <tr><td><strong>S03</strong></td><td>Space-saving / pain-point</td><td><code>Half the space. All the storage.</code> · <code>CHRISTMAS IN JULY SALE</code> · <code>15–40% Off*</code></td><td>Containers collapsing flat, or a tidy drawer</td></tr>
+        <tr><td><strong>S04</strong></td><td>Reframe / declutter</td><td><code>Open your cupboard to beautiful organisation</code> · <code>CHRISTMAS IN JULY SALE</code> · <code>15–40% Off*</code></td><td>Messy mismatched tubs giving way to a calm cupboard</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Export each 4:5 master in <strong>1:1</strong> too (tight crop, no redesign). 9:16 versions of S01 + S02 if time permits.</p>
+
+  <h3>3b. Video overlays — reuse winners with a scrolling sale message <em>(creative team, after Jess confirms)</em></h3>
+
+  <p>Take the proven FLS videos below and add a <strong>scrolling sale message</strong> — a moving banner that runs across the top of the frame (or through the video) calling out the sale: <strong>CHRISTMAS IN JULY SALE · 15–40% OFF*</strong>. Don't restyle the video, just add the scrolling message. Source the master files from the Flat Stacks google drive. <strong>Jess to choose best versions and provide to creative team</strong>. Below are the ones suggested by Claude based on data from the ad account.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>CR</th><th>What it is</th><th>Angle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>CR2.6</strong></td><td>"Watch This Intro" — the strongest performer by a wide margin</td><td>Pain-point / intro</td></tr>
+        <tr><td><strong>CR34.0</strong></td><td>Courtney testimonial, cluttered cupboards</td><td>Testimonial</td></tr>
+        <tr><td><strong>CR243</strong></td><td>"No-Mess No-Stress kitchen" (Ciara reel)</td><td>Benefit / UGC</td></tr>
+        <tr><td><strong>CR317</strong></td><td>"Every Morning" UGC reel</td><td>Space-saving / UGC</td></tr>
+        <tr><td><strong>CR232</strong></td><td>"Messy Fridge No More"</td><td>Pain-point / IG hook</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>These are FLS's top-spending proven video winners. <strong>CR2.6 is the standout — definitely include it.</strong></p>
+
+  <blockquote><p><strong>Jess confirms the final list (and swaps any she'd rather use) before the team starts.</strong> In ClickUp this is a task on Jess, set as a dependency that blocks the video-overlay task.</p></blockquote>
+
+  <h3>3c. Last-chance statics — 2 <em>(creative team)</em></h3>
+
+  <p>Go live 27 Jul. Repurpose the top-performing main-sale static — swap in last-chance copy, no full rebuild.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Based on</th><th>Exact overlay text</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>LC01</strong></td><td>S01</td><td><code>Last chance: 15–40% Off* ends Wednesday.</code> · <code>CHRISTMAS IN JULY SALE</code></td></tr>
+        <tr><td><strong>LC02</strong></td><td>S03 (or top performer)</td><td><code>Same containers. Full price Thursday.</code> · <code>15–40% Off* · SALE ends Wednesday</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Total: 4 statics + 3-5 video overlays + 2 last-chance = 9-11 assets.</strong></p>
+
+  <hr />
+
+  <h2>4. Where to source images</h2>
+
+  <p>Start from the curated FLS image folders linked on the key visual. They're a guide, not a limit — if another image from the library suits the design better, use it.</p>
+
+  <ul>
+    <li><a href="https://drive.google.com/drive/folders/15npNtvexYuTzapuw4AaRioQAAtO1b98k">FLS image folder 1</a></li>
+    <li><a href="https://drive.google.com/drive/folders/1puveH9j-Gh7lCAdCn7L0mLq3jBckPS5N">FLS image folder 2</a></li>
+  </ul>
+
+  <p>The key visual also embeds specific hero shots with their own Drive links — grab those originals for the exact images shown on the guide.</p>
+
+  <p><strong>Feel (brief — the key visual is the real reference):</strong> white-dominant (~60%), clean studio product or warm-neutral organised-kitchen lifestyle, 2–3 container colours visible, natural/studio light. Avoid fake snow/tinsel/garish red-green — "Christmas in July" is the reason, not a heavy visual theme.</p>
+
+  <hr />
+
+  <h2>5. Copy format rules</h2>
+
+  <p>We supply the actual copy (see <a href="../copy/"><code>copy/</code></a>). If you set any on-image text:</p>
+
+  <ul>
+    <li><strong>No em dashes.</strong> <strong>US spelling</strong> (organized, color).</li>
+    <li><strong>ALL CAPS is fine for SALE and short callouts</strong> (e.g. SALE, 15–40% OFF). Avoid shouty full-sentence caps (HURRY! LIMITED TIME!!).</li>
+    <li>Sentence case for subtext, title case for headlines — both fine.</li>
+    <li><code>SALE 15–40% Off*</code> is the largest element on every offer asset.</li>
+  </ul>
+
+  <hr />
+
+  <h2>6. Compliance (creative team)</h2>
+
+  <ul>
+    <li>Put the <strong>asterisk</strong> on the offer claim on every offer asset (e.g. <code>15–40% Off*</code>). The full footnote text does NOT go on the creative — it sits in the ad copy.</li>
+    <li>Keep the wording to <strong>"15–40% Off*"</strong> or <strong>"up to 40%"</strong>. Do NOT write "40% off the bundles" — the 40% is total savings from stacking the 15% on already-discounted bundles, not 40% off each bundle.</li>
+  </ul>
+
+  <hr />
+
+  <h2>7. Naming Convention</h2>
+
+  <p>Every file carries <code>FLS26-CIJ</code>. Format: <code>FLS26-CIJ-[ASSET-ID]-[RATIO]-[MARKET].[ext]</code></p>
+
+  <ul>
+    <li><code>FLS26-CIJ-S01-4x5-US.jpg</code> · <code>FLS26-CIJ-V01-1x1-US-overlay.mp4</code> · <code>FLS26-CIJ-LC01-4x5-US.jpg</code></li>
+  </ul>
+
+  <hr />
+
+  <h2>8. Deadlines</h2>
+
+  <p>All creative built and into ClickUp <strong>2 weeks before launch</strong>. No due dates on a weekend.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Milestone</th><th>Date</th><th>Owner</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Jess confirms the reuse videos</td><td>by 02/07</td><td>Jess</td></tr>
+        <tr><td>All statics + video overlays built, into ClickUp for review</td><td>~09/07</td><td>Creative team</td></tr>
+        <tr><td>Creative approved + locked</td><td>~13–15/07</td><td>ABD</td></tr>
+        <tr><td><strong>LAUNCH</strong></td><td>23/07</td><td>All</td></tr>
+        <tr><td>Last-chance statics deployed</td><td>27/07</td><td>Creative / media buyer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com · flatstacks.ca</span>
+  </div>
+
+</div>
+
+</body>
+</html>

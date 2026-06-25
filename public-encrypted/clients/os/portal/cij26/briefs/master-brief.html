@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks CIJ26 — Master Brief</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954;
+      --aqua: #0FA3B1;
+      --green: #54AE33;
+      --charcoal: #1D1C1C;
+      --bg: #F5F9FA;
+      --surface: #FFFFFF;
+      --border: #DCE7EA;
+      --muted: #61777E;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(84,174,51,0.18);
+      border: 1px solid var(--green);
+      color: #8BC34A;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 40px 80px; }
+    .crumb { margin-bottom: 24px; font-size: 12px; }
+    .crumb a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .crumb a:hover { text-decoration: underline; }
+    .crumb span { color: var(--muted); }
+    .intro {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 40px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .intro b { color: var(--navy); }
+
+    /* ---- prose content ---- */
+    .prose h1 {
+      font-size: 26px; font-weight: 800; color: var(--navy);
+      letter-spacing: -0.01em; line-height: 1.25; margin: 0 0 18px;
+    }
+    .prose h2 {
+      font-size: 19px; font-weight: 700; color: var(--navy);
+      margin: 40px 0 14px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .prose h3 {
+      font-size: 15px; font-weight: 700; color: var(--navy);
+      margin: 26px 0 10px;
+    }
+    .prose p { line-height: 1.65; margin: 0 0 14px; color: #2b3a40; }
+    .prose ul, .prose ol { margin: 0 0 16px; padding-left: 22px; }
+    .prose li { line-height: 1.6; margin-bottom: 7px; color: #2b3a40; }
+    .prose li::marker { color: var(--aqua); }
+    .prose a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .prose a:hover { text-decoration: underline; }
+    .prose strong, .prose b { color: var(--navy); font-weight: 700; }
+    .prose em { font-style: italic; }
+    .prose code {
+      font-family: 'SF Mono', Consolas, 'Roboto Mono', monospace;
+      font-size: 12px; background: rgba(15,163,177,0.10);
+      color: var(--navy); padding: 1px 6px; border-radius: 5px;
+    }
+    .prose hr {
+      border: none; border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .prose blockquote {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 10px; padding: 14px 20px; margin: 0 0 18px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .prose blockquote p { margin: 0; }
+    .prose blockquote strong { color: var(--navy); }
+    .table-wrap { overflow-x: auto; margin: 0 0 22px; border-radius: 10px; }
+    .prose table {
+      border-collapse: collapse; width: 100%;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 12.5px; min-width: 480px;
+    }
+    .prose thead th {
+      background: var(--navy); color: #fff; text-align: left;
+      font-weight: 700; font-size: 11px; letter-spacing: 0.04em;
+      padding: 10px 14px; vertical-align: top;
+    }
+    .prose tbody td {
+      padding: 10px 14px; border-top: 1px solid var(--border);
+      vertical-align: top; line-height: 1.55; color: #2b3a40;
+    }
+    .prose tbody tr:nth-child(even) { background: var(--bg); }
+    .prose tbody td:first-child { white-space: nowrap; }
+    .prose table code { white-space: nowrap; }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 24px 20px 60px; }
+      .prose h1 { font-size: 22px; }
+      .prose h2 { font-size: 17px; }
+      .footer { flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Flat Stacks &middot; Christmas in July 2026 🎄</div>
+  <div class="header-badge">Master Brief</div>
+</div>
+
+<div class="page prose">
+
+  <div class="crumb"><a href="../../index.html">&larr; Ocean Sales portal</a> <span>/ </span><a href="../index.html">Christmas in July 2026</a> <span>/ Master Brief</span></div>
+
+  <h1>Flat Stacks — Christmas in July 2026 · Master Brief</h1>
+
+  <p><strong>Status:</strong> 🔒 Locked 23/06/2026 · operational source of truth for the team.</p>
+
+  <hr />
+
+  <h2>📊 PAST PERFORMANCE DASHBOARD - Review first</h2>
+  <p><strong>Dashboard (live, team):</strong> <a href="https://hub.aboveandbeyond.digital/clients/os/portal/reports/fls-cij26-benchmark.html">Past-performance benchmark 2024 × 2025</a>, published to the Ocean portal and opens with the team's existing Ocean portal password.</p>
+
+  <p><strong>The number to beat (the goal):</strong> we are out to do significantly better than last year, not just match it. Both markets run the full 7 days (2025 was a 3-day flash).</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Market (Shopify net)</th><th>2024</th><th>2025 (3d flash)</th><th>2026 goal (7d)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>US</strong></td><td>$6,026 (8d)</td><td>$2,765</td><td><strong>~$6,000+</strong> (close to 2024 on less spend) · hold MER 4.3–4.7</td></tr>
+        <tr><td><strong>CA</strong></td><td>$2,999</td><td>$1,488</td><td><strong>~$4,000+</strong> (about 2× 2025, beat 2024) · first paid test, so MER is a learning not a target</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul>
+    <li><strong>US</strong> has spent paid both years (MER 4.66 → 4.72). The lever is sustaining 2024's strong daily rate across a full 7 days while spending less.</li>
+    <li><strong>CA</strong> earned $1.5–3k on <strong>$0 paid</strong> both years, all from email/SMS. This year adds a light warm paid test plus SMS, so the goal is to beat 2024 and roughly double 2025 with a small spend behind the engaged list.</li>
+    <li><strong>Email/SMS</strong> drove ~43% of US sale orders and essentially all of CA's. 2026 adds SMS, which neither prior sale had, so the channel should out-perform both years in each market.</li>
+  </ul>
+
+  <hr />
+
+  <h2>CAMPAIGN OVERVIEW</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Detail</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Campaign Name</td><td>Christmas in July</td></tr>
+        <tr><td>Client</td><td>Flat Stacks USA &amp; CA (Ocean Sales Group)</td></tr>
+        <tr><td>Markets</td><td>USA (paid + email/SMS) · Canada (email/SMS + light warm paid test)</td></tr>
+        <tr><td>Event Type / Tier</td><td>Christmas in July / L1 (run as a 7-day sale, no pre-sale/VIP)</td></tr>
+        <tr><td>Sale Dates</td><td><strong>23/07/2026 – 29/07/2026</strong> (both markets, same window)</td></tr>
+        <tr><td>VIP / Pre-sale phase</td><td><strong>No.</strong> Email pre-sale tease only (~21/07)</td></tr>
+        <tr><td>Offer</td><td>15% off site-wide, stacking on already-discounted bundles for total savings up to 40%</td></tr>
+        <tr><td>Offer Mechanic</td><td><strong>Price-edit.</strong> Mark bulk-edits listed prices to the sale price (no checkout code). Prices MUST revert after 29/07.</td></tr>
+        <tr><td>Discount Code(s)</td><td>None (price-edit)</td></tr>
+        <tr><td>Primary Goal</td><td>Revenue plus new-customer acquisition (the cold ad set carries acquisition)</td></tr>
+        <tr><td>Meta Budget</td><td><strong>US $1,100 USD</strong> · <strong>CA $700 CAD</strong> (client approval required). Run as a daily budget, see Meta Ads.</td></tr>
+        <tr><td>Unique Sale Identifier</td><td><strong>CIJ26</strong> (must appear in every asset and campaign name for reporting)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Offer footnote (all offer-bearing assets):</strong> "<em>15% off site-wide including already-discounted bundles, for total savings up to 40%.</em>"</p>
+
+  <p>🚦 <strong>Compliance gates (before go-live):</strong> (1) Mark substantiates one real bundle reaching ~40% off the bona fide item RRP; (2) prices revert after 29/07; (3) the asterisk is clear and conspicuous everywhere.</p>
+
+  <hr />
+
+  <h2>MESSAGING DIRECTION</h2>
+
+  <p><strong>The angle for this sale:</strong> Christmas in July is a real reason to buy now: 15% off everything, and because it stacks on the bundles, savings reach up to 40%. Frame it as the moment to sort the cupboards out, finish the set, and get the clutter under control. The discount is the gift, not a hard sell. The only urgency is the genuine end date (29 July).</p>
+
+  <p><strong>Sale prominence:</strong> on every offer-bearing asset, "Sale" plus the discount (e.g. "15–40% Off*") is the single loudest element, louder than the "Christmas in July" lockup. On-brand pill or seal, never garish.</p>
+
+  <p><strong>Hooks.</strong> Cold leads with a pain point or benefit and weaves the sale in. Warm leads with the sale and weaves the pain point/benefits in. Lead on the problem solved (cupboard clutter, the mismatched-container chaos, wasted space) or the benefit (space back, less stress), not a product walkthrough. These are direction, not a script.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th>Cold (new customers, pain/benefit-led)</th><th>Warm (existing + engaged, sale-led)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Get your cupboard space back. Flat Stacks fold flat, so the clutter goes away when you are done. 15–40%* off for Christmas in July.</td><td>Your Christmas in July is here. 15% off everything, meaning total savings up to 40% off* the bundles. Decluttering your kitchen just got easy to say yes to.</td></tr>
+        <tr><td>2</td><td>No more avalanche of mismatched tubs and lost lids every time you open the cupboard. 15–40%* off this week.</td><td>Christmas in July is on. 15% off everything, meaning bundles up to 40%*. Calm your kitchen now.</td></tr>
+        <tr><td>3</td><td>One bundle replaces a whole drawer of odd containers. Build yours and save up to 40%* this week.</td><td>You already know how good they are. Here is 15–40%* off to add the pieces you keep meaning to.</td></tr>
+        <tr><td>4</td><td>Less clutter, less stress, more room in your kitchen. The storage that does it, 15–40%* off for Christmas in July.</td><td>The best-selling bundles are up to 40% off* for Christmas in July. This week only. Double your storage with Flat Stacks</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote><p>No em-dashes, no banned words, US spelling. Full copy lives in <code>copy/</code>.</p></blockquote>
+
+  <hr />
+
+  <h2>META ADS <em>(Media Buyer)</em></h2>
+
+  <p><strong>How we run it (ABD standard):</strong> daily budgets, then we move it up or down on performance. Cold has historically underperformed for FLS on sale, so this campaign is weighted heavily to retargeting and warm.</p>
+
+  <p><strong>Budget (daily, for sign-off, adjustable on performance):</strong></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Market</th><th>Day rate</th><th>~Window total</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>US</strong></td><td><strong>~$150/day</strong></td><td>~$1,100 over 7 days</td><td>Warm-led. Client approval required</td></tr>
+        <tr><td><strong>CA</strong></td><td><strong>~$100/day</strong></td><td>~$700 over 7 days</td><td>Warm-led test. Client approval required</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Structure (budget is low, so keep it simple): ONE campaign, ABO, two ad sets.</strong> Bulk of budget to warm.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Ad set</th><th>Share</th><th>Audience</th><th>Job</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Warm (MOF/BOF)</strong></td><td><strong>~65–70%</strong></td><td>Combined long-lookback retargeting: website / site visitors (long window), Facebook + Instagram engagers, video viewers, past purchasers (long window), and the email/SMS list. Exclude purchasers in the last 7–14 days.</td><td>The engine of the sale. Tell everyone who already knows us that the sale is on.</td></tr>
+        <tr><td><strong>Cold (TOF)</strong></td><td><strong>~30–35%</strong></td><td>Broad / Advantage+.</td><td>Acquisition. Lower priority given cold's weak sale history, kept lean.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul>
+    <li>If sale is outperforming evergreen funnel then shift the evergreen budget to the sale instead. <strong>Do NOT add sale creative to evergreen.</strong></li>
+    <li><strong>CA:</strong> warm-led flash on the same dates. Optional small cold sliver only if the warm set has headroom.</li>
+    <li><strong>Naming:</strong> Must include identifier: CIJ26</li>
+  </ul>
+
+  <p><strong>Build + submit (ABD standard for all deliverables):</strong> campaigns built and <strong>loaded into the ad account, paused/scheduled, and submitted for review ~2 weeks before launch (by ~09/07)</strong> so everything is sitting ready well ahead of go-live.</p>
+
+  <p><strong>Ad copy: 5 variants per pool (ABD standard).</strong></p>
+  <ul>
+    <li><strong>Cold (5):</strong> 1 strongly sale-led, the other 4 each lead with a different pain point or benefit with the sale woven in (reclaim cupboard space / end the mismatched-container chaos / bundle value / less clutter, less stress).</li>
+    <li><strong>Warm (5):</strong> Mostly sale-led with benefit / pain point woven in.</li>
+    <li><strong>Last chance (5):</strong> urgency refresh of the strongest performers.</li>
+  </ul>
+
+  <hr />
+
+  <h2>CREATIVE <em>(Designer)</em></h2>
+
+  <p><strong>IMPORTANT:</strong></p>
+  <ol>
+    <li>Review the key visual / brand guide for the sale: <a href="https://hub.aboveandbeyond.digital/clients/os/portal/cij26/key-visual/cij26-key-visual-concept.html">Concept board (live, portal)</a></li>
+    <li>Review the creative brief: <a href="creative-brief.html">creative brief</a></li>
+    <li><strong>No dedicated client sale video this round</strong>, so we reuse 3–5 winning evergreen videos with a scrolling sale overlay rather than filming new.</li>
+  </ol>
+
+  <p><strong>Creative deliverables (mix):</strong></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Asset</th><th>Qty</th><th>Spec</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reused winning videos + scrolling sale overlay</td><td>3-5</td><td>9:16 (4:5 safe) + 1:1</td><td>best evergreen performers</td></tr>
+        <tr><td>New sale statics (1 per angle)</td><td>4</td><td>4:5 (1:1 safe)</td><td>pure-sale / bundle / space-saving / value</td></tr>
+        <tr><td>Last-chance statics</td><td>2</td><td>4:5 (1:1 safe)</td><td>urgency variants of top main-sale</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <h2>EMAIL &amp; SMS <em>(Email Specialist — Omnisend, US + CA)</em></h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Send</th><th>Date / time</th><th>Channel</th><th>Audience</th><th>Subject direction</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Pre-sale tease + add-to-cart</td><td>21/07, 8am RTZ</td><td>Email</td><td>Full list</td><td>"The sale starts Thursday. Load your cart now so you are ready, our best-sellers sell out fast." (reveal the offer)</td></tr>
+        <tr><td>2</td><td>Launch</td><td>23/07, 8am RTZ</td><td>Email + <strong>SMS</strong></td><td>Full list</td><td>"Christmas in July is here. 15% off everything, bundles up to 40%*"</td></tr>
+        <tr><td>3</td><td>Last chance</td><td>27/07, 8am RTZ</td><td>Email</td><td>Non-purchasers</td><td>"Last chance, sale ends Wednesday"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul>
+    <li><strong>Send time:</strong> 8:00am Recipient Timezone (ABD standard slot). Brand tz America/Phoenix.</li>
+    <li><strong>2026 adds SMS</strong> (2025 had none).</li>
+  </ul>
+
+  <p><strong>Flows (build sale versions, do not just leave evergreen running):</strong></p>
+  <ul>
+    <li><strong>Build a sale-specific abandoned-cart / checkout flow</strong> carrying the 15–40% offer plus "ends Wednesday" urgency for the 23–29/07 window. Swap it in for the sale, revert to evergreen after 29/07. <em>(This is a new build, not just a pause.)</em></li>
+    <li>Pause any evergreen flow arm offering a competing or standalone discount that would clash with or stack on the sale.</li>
+  </ul>
+
+  <p><strong>Pop-up:</strong> Pause the standard welcome pop-up for the sale window** and send traffic straight to purchase, rather than rebuilding the welcome flow. Re-enable the pop-up after 29/07. No welcome-flow change needed.</p>
+
+  <hr />
+
+  <h2>GOOGLE ADS</h2>
+  <p><strong>N/A.</strong> Inactive for FLS, no deliverables.</p>
+
+  <hr />
+
+  <h2>WEBSITE &amp; TECH <em>(Web/Tech — Mark)</em></h2>
+  <ul>
+    <li><strong>Price-edit:</strong> bulk-edit listed prices to the sale price on the <strong>Shopify sale store</strong> (flatstacks.com / .ca) for 23–29/07. <strong>Schedule the revert</strong> to ordinary prices for 30/07 (compliance-critical).</li>
+    <li><strong>On-site:</strong> announcement timer bar ("Christmas in July, 15–40% off*") and homepage banner (desktop + mobile). No landing page (no pre-sale). (Pop-up handled by email, see above.)</li>
+    <li><strong>No discount code</strong> to set up (price-edit mechanic).</li>
+    <li><strong>QA on morning of 23/07:</strong> sale prices live, bundle prices stack correctly, asterisk/footnote visible on PDP + homepage, mobile check, analytics tracking intact.</li>
+  </ul>
+
+  <hr />
+
+  <h2>COPYWRITING <em>(Copywriter)</em></h2>
+  <ul>
+    <li><strong>Voice:</strong> confident, warm, direct, the friend who figured out the life hack. Not pushy, not corporate.</li>
+    <li><strong>Banned words:</strong> elevate, innovative, revolutionary, affordable, budget-friendly, multi-functional, solutions. <strong>No em-dashes.</strong> US spelling (organized, color).</li>
+    <li><strong>Deliverables:</strong> ad copy (<code>copy/ad-copy-sale.md</code>, <code>copy/ad-copy-lastchance.md</code>, 5 variants each pool), email/SMS (<code>copy/email-sms-copy.md</code>).</li>
+  </ul>
+
+  <hr />
+
+  <h2>MASTER SCHEDULE</h2>
+
+  <p>Today is <strong>23/06/2026</strong>. Launch is <strong>23/07</strong>. ABD standard: every deliverable is built, approved, and loaded <strong>two weeks before go-live</strong>, ready to fire.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Owner</th><th>Milestone</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Now (23/06)</td><td>Liam/Claude</td><td>Key visual <strong>SIGNED OFF ✓</strong>. Still needed: <code>design-system.css</code> + FLS vector logo (unblocks production creative).</td></tr>
+        <tr><td>ASAP</td><td>Mark / Lisha</td><td>Budget sign-off. 40% bundle substantiation + price-revert. (Blocks go-live.)</td></tr>
+        <tr><td>~30/06</td><td>Designer</td><td>Source best lifestyle/bundle photos into shared Drive (before creative build). See links at bottom of key visual.</td></tr>
+        <tr><td><strong>By 09/07</strong> (2 wks pre-launch)</td><td>ABD</td><td><strong>All deliverables built + into ClickUp for review:</strong> ad copy (3 pools × 5), creative (statics + video overlays), emails + SMS built in Omnisend, sale-specific abandoned-cart flow built, Meta campaign built + <strong>loaded in the ad account</strong> (paused/scheduled) + submitted for review.</td></tr>
+        <tr><td>~13–15/07</td><td>ABD / Mark</td><td>Final approvals + QA pass; price-edit plan ready and tested.</td></tr>
+        <tr><td>21/07</td><td>Email</td><td>Pre-sale tease + add-to-cart email (8am RTZ).</td></tr>
+        <tr><td>22/07</td><td>Web/Tech</td><td>Price-edit staged for 23rd; announcement bar + homepage banner live; pop-up paused.</td></tr>
+        <tr><td><strong>23/07</strong></td><td>All</td><td><strong>LAUNCH.</strong> Prices edited, ads live, launch email + SMS.</td></tr>
+        <tr><td>27/07</td><td>Email</td><td>Last-chance email.</td></tr>
+        <tr><td>29/07</td><td>All</td><td><strong>Sale ends 29/07, 11:59pm.</strong></td></tr>
+        <tr><td>30/07</td><td>Web/Tech + Email + Meta</td><td>Prices reverted, banner + bar removed, pop-up re-enabled, sale flow reverted, sale ad sets paused, evergreen back to BAU.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <h2>PRIOR YEAR BENCHMARKS (Shopify net sales)</h2>
+  <ul>
+    <li><strong>2024:</strong> $6,026.30 net · 58 orders · AOV $103.90 · $1,291.87 sale spend · MER 4.66 (8 days)</li>
+    <li><strong>2025:</strong> $2,764.90 net · 23 orders · AOV $120.21 · $585.90 sale spend · MER 4.72 (3 days)</li>
+    <li><strong>CA:</strong> 2024 $2,998.95 CAD · 2025 $1,487.85 CAD (both $0 paid)</li>
+    <li><strong>Learnings:</strong> AOV rising; bundles drive value; warm is efficient and cold carries acquisition; the email tease plus launch is the engagement spine.</li>
+  </ul>
+
+  <hr />
+
+  <h2>POST-SALE CHECKLIST (within 24–48h of 29/07)</h2>
+  <ul>
+    <li>[ ] Prices reverted to ordinary (compliance) · [ ] Homepage banner removed · [ ] Announcement bar removed · [ ] Pop-up re-enabled</li>
+    <li>[ ] Sale ad sets paused · [ ] Evergreen budget back to BAU · [ ] Omnisend flows reverted to evergreen</li>
+    <li>[ ] Performance review: Shopify net sales, sale MER, email/SMS, day-by-day vs 2024/2025, then store + feed the 2027 brief</li>
+  </ul>
+
+  <hr />
+
+  <h2>OPEN ITEMS / DECISIONS</h2>
+  <ol>
+    <li><strong>Mark: <em>get budget approval from Lisha</em></strong></li>
+    <li><strong>Future:</strong> Shopify net sales via MCP/API (manual export was a stopgap).</li>
+  </ol>
+
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com · flatstacks.ca</span>
+  </div>
+
+</div>
+
+</body>
+</html>
