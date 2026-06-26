@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks — CIJ26 — Meta Ad Copy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954; --aqua: #0FA3B1; --green: #54AE33; --charcoal: #1D1C1C;
+      --bg: #F5F9FA; --surface: #FFFFFF; --border: #DCE7EA; --muted: #61777E;
+      --draft-bg: #FFF6E5; --draft-bd: #E8A93B; --draft-tx: #8A5A00;
+    }
+    body { background: var(--bg); color: var(--charcoal); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; line-height: 1.55; min-height: 100vh; }
+    .header { background: var(--navy); color: #fff; padding: 24px 40px; display: flex; align-items: center; gap: 16px; }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge { margin-left: auto; background: rgba(84,174,51,0.18); border: 1px solid var(--green); color: #8BC34A; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+    .page { max-width: 880px; margin: 0 auto; padding: 32px 40px 80px; }
+    .crumb { margin-bottom: 20px; font-size: 12px; }
+    .crumb a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .crumb a:hover { text-decoration: underline; }
+    .crumb span { color: var(--muted); }
+    h1 { font-size: 24px; color: var(--navy); margin-bottom: 6px; }
+    .lede { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+    .draft { background: var(--draft-bg); border: 1px solid var(--draft-bd); border-left: 3px solid var(--draft-bd); color: var(--draft-tx); border-radius: 10px; padding: 14px 18px; margin-bottom: 26px; font-size: 13px; font-weight: 600; }
+    .offer { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 10px; padding: 16px 20px; margin-bottom: 36px; font-size: 13px; line-height: 1.6; }
+    .offer b { color: var(--navy); }
+    .pool { margin-bottom: 44px; }
+    .pool-title { font-size: 16px; font-weight: 700; color: var(--charcoal); padding-bottom: 10px; border-bottom: 2px solid var(--green); margin-bottom: 8px; }
+    .pool-title .em { color: var(--green); }
+    .meta { background: rgba(15,163,177,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin: 14px 0 22px; font-size: 12px; color: #334; }
+    .meta div { margin: 2px 0; }
+    .meta b { color: var(--navy); }
+    .meta .doctitle { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; color: var(--muted); }
+    .sub { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 26px 0 12px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+    .card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aqua); margin-bottom: 8px; }
+    .card p { margin: 0 0 10px; }
+    .card p:last-child { margin-bottom: 0; }
+    .fn { font-size: 11px; color: var(--muted); font-style: italic; }
+    ol.lines { margin: 0; padding-left: 20px; }
+    ol.lines li { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; margin-bottom: 8px; }
+    .footer { margin-top: 56px; border-top: 1px solid var(--border); padding-top: 20px; color: var(--muted); font-size: 11px; display: flex; justify-content: space-between; }
+    @media (max-width: 640px) { .header { padding: 20px; flex-wrap: wrap; } .page { padding: 24px 20px 60px; } }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Flat Stacks &middot; Christmas in July 2026 🎄</div>
+  <div class="header-badge">Meta Ad Copy</div>
+</div>
+
+<div class="page">
+
+  <div class="crumb"><a href="../index.html">&larr; CIJ26 campaign hub</a> <span>/ Meta Ad Copy</span></div>
+
+  <h1>Meta Ad Copy</h1>
+  <div class="lede">Cold (TOF), Warm (MOF/BOF) and Last-Chance primary text, headlines and descriptions. USA + Canada (US spelling both).</div>
+
+  <div class="draft">⚠️ AI-generated first draft — for internal review. Not final and not approved for use; copy decisions sit with ABD.</div>
+
+  <div class="offer">
+    <b>Offer:</b> 15% off site-wide, stacking on already-discounted bundles for total savings up to 40%. Rendered as <b>15–40% OFF*</b>. Sale window 23–29 July 2026.<br>
+    <span class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%. (Mandatory footnote on every offer-bearing variant.)</span>
+  </div>
+
+  <!-- ===================== COLD ===================== -->
+  <section class="pool">
+    <div class="pool-title"><span class="em">Cold Pool</span> — TOF (pain / benefit-led)</div>
+    <div class="meta">
+      <div class="doctitle">260624.1 - FLS US/CA - CIJ26 - TOF - Open the cupboard and nothing falls out - W-CLD</div>
+      <div><b>Persona:</b> Broad cold acquisition — core "organized kitchen" buyer (declutter / meal-prep / home-proud)</div>
+      <div><b>Awareness:</b> TOF (Cold) &nbsp;·&nbsp; <b>CTA:</b> Shop Now &nbsp;·&nbsp; <b>LP:</b> flatstacks.com (US) / flatstacks.ca (CA)</div>
+      <div><b>Angle:</b> Collapsible silicone storage that folds flat so the clutter disappears — now with a reason to buy: Christmas in July, 15–40% OFF*</div>
+    </div>
+
+    <div class="sub">Primary text</div>
+    <div class="card"><div class="card-label">Variant 1</div>
+      <p>Christmas in July is on, and your kitchen is invited.</p>
+      <p>For one week only, it is 15% off everything at Flat Stacks. Build a bundle and the savings stack up to 40% OFF*. The collapsible containers that fold flat when you are done, so your cupboard finally stays calm.</p>
+      <p>Sort the kitchen out while the sale is on. Ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 2</div>
+      <p>Open the cupboard, brace for the avalanche, lose another lid. Every single time.</p>
+      <p>Flat Stacks containers fold flat when they are empty, so the whole pile shrinks to a single tidy stack and stays that way. You get the shelf space back you forgot you had.</p>
+      <p>This week only, it is 15–40% OFF* for Christmas in July. Get your cupboard back. Ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 3</div>
+      <p>A drawer of mismatched tubs and orphan lids that never seem to match. Sound familiar?</p>
+      <p>Now picture opening that same drawer and seeing one neat, color-coded set that collapses flat between uses. That is the swap. One reviewer went from two full drawers of old containers down to one.</p>
+      <p>Make the swap during Christmas in July: 15–40% OFF* this week only, ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 4</div>
+      <p>One Flat Stacks bundle replaces a whole drawer of odd containers.</p>
+      <p>Color-coded sizes that nest together, fold flat when empty, and go from freezer to microwave to dishwasher. Build the bundle that fits your kitchen and the savings stack up to 40% OFF* for Christmas in July.</p>
+      <p>The most storage for the least space, on sale this week only. Ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 5</div>
+      <p>There is a small, quiet kind of calm in opening a cupboard and finding everything exactly where it should be.</p>
+      <p>No avalanche. No hunt for the matching lid. Just a tidy stack that folds flat when you are done and gives the space back. Less clutter, less stress, more room to actually cook.</p>
+      <p>Christmas in July is here, 15–40% OFF* this week only. A good week to make that calm yours.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+
+    <div class="sub">Headlines</div>
+    <ol class="lines">
+      <li>Christmas in July: 15–40% Off*</li>
+      <li>Get Your Cupboard Space Back</li>
+      <li>One Set. No More Container Chaos.</li>
+      <li>A Whole Drawer In One Bundle</li>
+      <li>Less Clutter, Less Stress</li>
+    </ol>
+
+    <div class="sub">Descriptions</div>
+    <ol class="lines">
+      <li>Collapsible silicone storage that folds flat. On sale this week only, ends July 29.</li>
+      <li>Color-coded sizes that nest, fold flat, and keep the cupboard calm. Shop the sale.</li>
+      <li>Build your bundle and stack the savings up to 40% off*. Christmas in July, ends July 29.</li>
+      <li>Freezer to microwave to dishwasher. The storage that saves space and stays tidy.</li>
+      <li>The kitchen reset that pays for itself. 15–40% off* through July 29.</li>
+    </ol>
+  </section>
+
+  <!-- ===================== WARM ===================== -->
+  <section class="pool">
+    <div class="pool-title"><span class="em">Warm Pool</span> — MOF/BOF (sale-led)</div>
+    <div class="meta">
+      <div class="doctitle">260624.2 - FLS US/CA - CIJ26 - MOF - Your Christmas in July is here - W-CLD</div>
+      <div><b>Persona:</b> Warm retargeting — past visitors, engagers, video viewers, past purchasers, email/SMS list (exclude last 7–14 day purchasers)</div>
+      <div><b>Awareness:</b> MOF/BOF (Warm) &nbsp;·&nbsp; <b>CTA:</b> Shop Now &nbsp;·&nbsp; <b>LP:</b> flatstacks.com (US) / flatstacks.ca (CA)</div>
+      <div><b>Angle:</b> The sale is live — 15% off everything, stacking on bundles up to 40% OFF* — your reason to finally add the pieces you have been meaning to</div>
+    </div>
+
+    <div class="sub">Primary text</div>
+    <div class="card"><div class="card-label">Variant 1</div>
+      <p>Your Christmas in July is here.</p>
+      <p>15% off everything, and because it stacks on the bundles, the savings reach up to 40% OFF*. The collapsible storage you have been eyeing just got a lot easier to say yes to.</p>
+      <p>This week only, ends July 29. Sort the cupboards out.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 2</div>
+      <p>4.8 stars from over 3,000 reviews, and this week they are 15–40% OFF*.</p>
+      <p>"No more swearing at my container storage drawer. I love the quality and the space savings the most." That is the kind of calm Christmas in July is on sale for.</p>
+      <p>15% off everything, bundles stack up to 40% off*. Ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 3</div>
+      <p>You know the set you keep meaning to finish? Now is the week.</p>
+      <p>Christmas in July is on: 15% off everything, with bundle savings stacking up to 40% OFF*. Add the sizes you have been missing and complete the color-coded set while the prices are down.</p>
+      <p>This week only, ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 4</div>
+      <p>The best-selling bundles are up to 40% OFF* for Christmas in July.</p>
+      <p>These are the sets that fold flat, nest together by size, and turn a chaotic cupboard into one tidy color-coded stack. The most-loved combinations, at the lowest prices of the season.</p>
+      <p>This week only. Double your storage with Flat Stacks before July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 5</div>
+      <p>You already know how good they are. So this part is easy.</p>
+      <p>15% off everything for Christmas in July, with the bundles stacking up to 40% OFF*. The same collapsible containers that gave you your cupboard back, now at their best price of the year.</p>
+      <p>Add the pieces you have been meaning to. Ends July 29.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+
+    <div class="sub">Headlines</div>
+    <ol class="lines">
+      <li>Your Christmas In July Is Here</li>
+      <li>15% Off Everything, Bundles Up To 40%*</li>
+      <li>Finish The Set, 15–40% Off*</li>
+      <li>Best-Selling Bundles Up To 40% Off*</li>
+      <li>This Week Only. Ends July 29.</li>
+    </ol>
+
+    <div class="sub">Descriptions</div>
+    <ol class="lines">
+      <li>15% off site-wide, bundles stack up to 40% off*. Christmas in July, this week only.</li>
+      <li>Rated 4.8 stars by 3,000+ kitchens. Now on sale through July 29.</li>
+      <li>Add the sizes you have been missing while the whole store is on sale.</li>
+      <li>The fold-flat storage that calms the cupboard. Best price of the year, ends July 29.</li>
+      <li>You know they work. Now they are 15–40% off*. Shop before July 29.</li>
+    </ol>
+  </section>
+
+  <!-- ===================== LAST CHANCE ===================== -->
+  <section class="pool">
+    <div class="pool-title"><span class="em">Last Chance</span> — BOF (deploys 27 July, runs to close)</div>
+    <div class="meta">
+      <div class="doctitle">260624.3 - FLS US/CA - CIJ26 - BOF - Last chance, the sale ends Wednesday - W-CLD</div>
+      <div><b>Persona:</b> Warm + cold who saw the sale and have not bought — final-days urgency</div>
+      <div><b>Awareness:</b> BOF (Hot/Retargeting), reused across warm + cold in the closing days &nbsp;·&nbsp; <b>CTA:</b> Shop Now</div>
+      <div><b>Angle:</b> The sale ends Wednesday 29 July — 15–40% OFF* — last chance before prices revert Thursday 30 July. Genuine end date only.</div>
+    </div>
+
+    <div class="sub">Primary text</div>
+    <div class="card"><div class="card-label">Variant 1</div>
+      <p>Last chance. Christmas in July ends Wednesday.</p>
+      <p>15% off everything, with bundles stacking up to 40% OFF*. After July 29 the prices go back to full and this one does not come round again until next year.</p>
+      <p>Sort the cupboards out before the clock runs out. Ends Wednesday.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 2</div>
+      <p>Same containers. Same color-coded set that folds flat and gives your cupboard back. Full price on Thursday.</p>
+      <p>Christmas in July ends Wednesday 29 July, so this is the last of the 15–40% OFF*. If it has been sitting in your cart, this is the nudge.</p>
+      <p>Shop now before prices revert.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 3</div>
+      <p>That cupboard is not going to sort itself out. And the sale is almost done.</p>
+      <p>The collapsible storage that folds flat and ends the lid-hunt is 15–40% OFF* until Wednesday. After July 29 it goes back to full price.</p>
+      <p>Last chance for Christmas in July. Ends Wednesday.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 4</div>
+      <p>3,000+ kitchens already made the swap. The window to join them at 15–40% OFF* closes Wednesday.</p>
+      <p>"No more swearing at my container storage drawer." Christmas in July ends July 29, and the sale prices go with it.</p>
+      <p>Last chance. Shop before Wednesday.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+    <div class="card"><div class="card-label">Variant 5</div>
+      <p>The set you have been meaning to finish is still 15–40% OFF*, but not for much longer.</p>
+      <p>Christmas in July ends Wednesday 29 July. Add the sizes you have been missing while the bundle savings still stack, because Thursday they are back to full price.</p>
+      <p>Last chance. Ends Wednesday.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+    </div>
+
+    <div class="sub">Headlines</div>
+    <ol class="lines">
+      <li>Last Chance: Sale Ends Wednesday</li>
+      <li>Full Price Thursday. 15–40% Off* Now.</li>
+      <li>Christmas In July Ends July 29</li>
+      <li>Last Chance For 15–40% Off*</li>
+      <li>Finish The Set Before Wednesday</li>
+    </ol>
+
+    <div class="sub">Descriptions</div>
+    <ol class="lines">
+      <li>15% off everything, bundles up to 40% off*. Ends Wednesday July 29.</li>
+      <li>The fold-flat storage that calms the cupboard. Full price returns Thursday.</li>
+      <li>Last days of Christmas in July. Shop before prices revert July 29.</li>
+      <li>Rated 4.8 stars by 3,000+ kitchens. Sale ends Wednesday.</li>
+      <li>Add the sizes you have been missing before the savings end Wednesday.</li>
+    </ol>
+  </section>
+
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com · flatstacks.ca</span>
+  </div>
+
+</div>
+
+</body>
+</html>

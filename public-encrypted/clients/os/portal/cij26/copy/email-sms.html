@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks — CIJ26 — Email &amp; SMS Copy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954; --aqua: #0FA3B1; --green: #54AE33; --charcoal: #1D1C1C;
+      --bg: #F5F9FA; --surface: #FFFFFF; --border: #DCE7EA; --muted: #61777E;
+      --draft-bg: #FFF6E5; --draft-bd: #E8A93B; --draft-tx: #8A5A00;
+    }
+    body { background: var(--bg); color: var(--charcoal); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; line-height: 1.55; min-height: 100vh; }
+    .header { background: var(--navy); color: #fff; padding: 24px 40px; display: flex; align-items: center; gap: 16px; }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: var(--aqua); }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .header-badge { margin-left: auto; background: rgba(84,174,51,0.18); border: 1px solid var(--green); color: #8BC34A; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+    .page { max-width: 880px; margin: 0 auto; padding: 32px 40px 80px; }
+    .crumb { margin-bottom: 20px; font-size: 12px; }
+    .crumb a { color: var(--aqua); text-decoration: none; font-weight: 600; }
+    .crumb a:hover { text-decoration: underline; }
+    .crumb span { color: var(--muted); }
+    h1 { font-size: 24px; color: var(--navy); margin-bottom: 6px; }
+    .lede { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+    .draft { background: var(--draft-bg); border: 1px solid var(--draft-bd); border-left: 3px solid var(--draft-bd); color: var(--draft-tx); border-radius: 10px; padding: 14px 18px; margin-bottom: 26px; font-size: 13px; font-weight: 600; }
+    .offer { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 10px; padding: 16px 20px; margin-bottom: 36px; font-size: 13px; line-height: 1.6; }
+    .offer b { color: var(--navy); }
+    .send { margin-bottom: 36px; }
+    .send-title { font-size: 16px; font-weight: 700; color: var(--charcoal); padding-bottom: 10px; border-bottom: 2px solid var(--green); margin-bottom: 8px; }
+    .send-title .em { color: var(--green); }
+    .meta { background: rgba(15,163,177,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin: 14px 0 20px; font-size: 12px; color: #334; }
+    .meta div { margin: 2px 0; }
+    .meta b { color: var(--navy); }
+    .sub { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 22px 0 10px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+    .card p { margin: 0 0 10px; }
+    .card p:last-child { margin-bottom: 0; }
+    .kv { margin: 0 0 8px; }
+    .kv .k { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aqua); }
+    .alt { color: var(--muted); }
+    .cta { display: inline-block; margin-top: 6px; background: var(--green); color: #fff; font-weight: 700; font-size: 12px; padding: 7px 14px; border-radius: 6px; }
+    .sms { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12.5px; background: #EEF6F7; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+    .fn { font-size: 11px; color: var(--muted); font-style: italic; }
+    .notes { background: rgba(11,57,84,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
+    .notes li { margin: 0 0 8px 18px; font-size: 13px; }
+    .footer { margin-top: 56px; border-top: 1px solid var(--border); padding-top: 20px; color: var(--muted); font-size: 11px; display: flex; justify-content: space-between; }
+    @media (max-width: 640px) { .header { padding: 20px; flex-wrap: wrap; } .page { padding: 24px 20px 60px; } }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Ocean <span>Sales</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">Flat Stacks &middot; Christmas in July 2026 🎄</div>
+  <div class="header-badge">Email &amp; SMS Copy</div>
+</div>
+
+<div class="page">
+
+  <div class="crumb"><a href="../index.html">&larr; CIJ26 campaign hub</a> <span>/ Email &amp; SMS Copy</span></div>
+
+  <h1>Email &amp; SMS Copy</h1>
+  <div class="lede">Three sends (pre-sale tease, launch, last chance) plus the sale abandoned-cart flow. Omnisend · US + CA (same copy, US spelling both).</div>
+
+  <div class="draft">⚠️ AI-generated first draft — for internal review. Not final and not approved for send; copy decisions sit with ABD.</div>
+
+  <div class="offer">
+    <b>Offer:</b> 15% OFF* site-wide, stacking on already-discounted bundles for total savings up to 40%. Sale dates 23–29 July 2026.<br>
+    <b>Send time:</b> 8:00am Recipient Timezone (brand tz America/Phoenix). <b>US vs CA:</b> copy identical, US spelling both; only the store link changes (flatstacks.com US / flatstacks.ca CA) and SMS sender/compliance footer. <code>{{STORE_URL}}</code> = per-market link.<br>
+    <span class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%. (On every offer-bearing send; SMS uses "up to 40% OFF" without the full footnote for space.)</span>
+  </div>
+
+  <!-- ===================== SEND 1 ===================== -->
+  <section class="send">
+    <div class="send-title"><span class="em">Send 1</span> — Pre-sale tease + add-to-cart</div>
+    <div class="meta">
+      <div><b>When:</b> 21/07/2026, 8:00am RTZ &nbsp;·&nbsp; <b>Channel:</b> Email &nbsp;·&nbsp; <b>Audience:</b> Full list</div>
+      <div><b>Job:</b> Reveal the offer early. Get people to load their cart now so they are ready on launch day.</div>
+    </div>
+    <div class="sub">Subject lines</div>
+    <div class="card">
+      <div class="kv"><span class="k">Primary</span><br>Christmas in July starts Thursday. Load your cart now.</div>
+      <div class="kv alt"><span class="k">Alt 1</span><br>Your early look: 15% OFF everything, bundles up to 40% OFF*</div>
+      <div class="kv alt"><span class="k">Alt 2</span><br>Best-sellers sell out fast. Get your cart ready for Thursday.</div>
+      <div class="kv"><span class="k">Preview text</span><br>The sale lands Thursday. Fill your cart today so you are not caught out.</div>
+    </div>
+    <div class="sub">Body</div>
+    <div class="card">
+      <p>Hi there,</p>
+      <p>Here is your early word before anyone else gets it. Our Christmas in July sale opens this Thursday 23 July, and it is the big one.</p>
+      <p>15% OFF* everything site-wide. And because that 15% stacks on bundles that are already discounted, the total savings climb to 40% OFF*. The more you build into a bundle, the more comes off.</p>
+      <p>This is the moment to finally sort the cupboards out. Get the matching set. Reclaim the shelf the random tubs have been hogging all year.</p>
+      <p>Here is the smart move. Load your cart now. Add the pieces and bundles you have been meaning to grab, leave them sitting there, and the second the sale goes live on Thursday you check out in seconds. No scrambling, no missing out.</p>
+      <p>Why now and not Thursday? Our best-sellers sell out fast on sale, and once a bundle is gone it is gone for the week. The people who fill their cart early are the ones who actually get what they want.</p>
+      <p>So go have a browse. Build the cart. We will see you Thursday.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+      <p><span class="cta">Build my cart now</span> &nbsp;<span class="alt">· Link: {{STORE_URL}}</span></p>
+    </div>
+  </section>
+
+  <!-- ===================== SEND 2 ===================== -->
+  <section class="send">
+    <div class="send-title"><span class="em">Send 2</span> — Launch</div>
+    <div class="meta">
+      <div><b>When:</b> 23/07/2026, 8:00am RTZ &nbsp;·&nbsp; <b>Channel:</b> Email + SMS &nbsp;·&nbsp; <b>Audience:</b> Full list</div>
+      <div><b>Job:</b> The sale is live. Sale + discount is the loudest thing in the message.</div>
+    </div>
+    <div class="sub">Subject lines</div>
+    <div class="card">
+      <div class="kv"><span class="k">Primary</span><br>Christmas in July is here. 15% OFF everything, bundles up to 40% OFF*</div>
+      <div class="kv alt"><span class="k">Alt 1</span><br>It's live. 15–40% OFF* the storage that folds flat.</div>
+      <div class="kv alt"><span class="k">Alt 2</span><br>Your Christmas in July just arrived. 15% OFF everything starts now.</div>
+      <div class="kv"><span class="k">Preview text</span><br>15% OFF site-wide, stacking up to 40% OFF* on bundles. Ends Wednesday 29 July.</div>
+    </div>
+    <div class="sub">Email body</div>
+    <div class="card">
+      <p>Hi there,</p>
+      <p>It's on. Christmas in July is officially here, and your kitchen is about to thank you.</p>
+      <p><b>15% OFF* EVERYTHING — Bundles stack up to 40% OFF*</b></p>
+      <p>15% comes off everything site-wide. Stack it on a bundle that is already discounted and the total savings reach 40% OFF*. The bigger the bundle, the bigger the saving.</p>
+      <p>You already know how good these are. They fold flat when you are done, so the storage disappears instead of taking over the cupboard. Less clutter, less stress, more room to actually use your kitchen.</p>
+      <p>This is your week to:</p>
+      <p>- Finish the set you started<br>- Add the colors you keep meaning to grab<br>- Build a bundle and get the most off<br>- Finally clear out the mismatched-tub chaos for good</p>
+      <p>The sale runs this week only and ends Wednesday 29 July. After that, prices go back to normal. No code needed, the sale price is already on every product.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+      <p><span class="cta">Shop the sale</span> &nbsp;<span class="alt">· Link: {{STORE_URL}}</span></p>
+    </div>
+    <div class="sub">SMS (≤160 chars) — 23/07 8:00am RTZ, full SMS-subscribed list</div>
+    <div class="card">
+      <p class="sms">Flat Stacks: Christmas in July is LIVE. 15% OFF everything, bundles up to 40% OFF. Ends Wed Jul 29. Shop now {{STORE_URL}} Reply STOP to opt out</p>
+      <p class="fn">SMS alt (shorter): Flat Stacks: Christmas in July is LIVE. 15% OFF all, bundles up to 40% OFF. Ends Wed. Shop {{STORE_URL}}</p>
+    </div>
+  </section>
+
+  <!-- ===================== SEND 3 ===================== -->
+  <section class="send">
+    <div class="send-title"><span class="em">Send 3</span> — Last chance</div>
+    <div class="meta">
+      <div><b>When:</b> 27/07/2026, 8:00am RTZ &nbsp;·&nbsp; <b>Channel:</b> Email &nbsp;·&nbsp; <b>Audience:</b> Non-purchasers</div>
+      <div><b>Job:</b> Genuine end-date urgency. Sale ends Wednesday.</div>
+    </div>
+    <div class="sub">Subject lines</div>
+    <div class="card">
+      <div class="kv"><span class="k">Primary</span><br>Last chance: the sale ends Wednesday.</div>
+      <div class="kv alt"><span class="k">Alt 1</span><br>Two days left. 15–40% OFF* ends Wednesday 29 July.</div>
+      <div class="kv alt"><span class="k">Alt 2</span><br>Don't pay full price Thursday. 15% OFF everything ends Wednesday.</div>
+      <div class="kv"><span class="k">Preview text</span><br>Christmas in July closes Wednesday 29 July. Prices go back to normal after that.</div>
+    </div>
+    <div class="sub">Body</div>
+    <div class="card">
+      <p>Hi there,</p>
+      <p>This is your last call.</p>
+      <p>Christmas in July ends Wednesday 29 July, and then every price goes back to normal. The same containers you have been eyeing all week will be full price again on Thursday.</p>
+      <p>You still have time to grab 15% OFF* everything, with bundle savings stacking up to 40% OFF*. A few days from now that window is shut until the next one.</p>
+      <p>If a tidy, organized cupboard has been on your list, this is the cheapest it gets this season. Build your bundle, get the most off, and let your kitchen finally breathe.</p>
+      <p>No code needed. The sale price is already on the product, right up until Wednesday night.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+      <p><span class="cta">Shop before it ends</span> &nbsp;<span class="alt">· Link: {{STORE_URL}}</span></p>
+    </div>
+  </section>
+
+  <!-- ===================== ABANDONED CART ===================== -->
+  <section class="send">
+    <div class="send-title"><span class="em">Sale Abandoned-Cart / Checkout Flow</span></div>
+    <div class="meta">
+      <div><b>Swap in</b> for 23–29/07, revert after; cap the sale version at sends triggered on/before 28/07.</div>
+      <div><b>Trigger:</b> cart abandoned / checkout started, no purchase. &nbsp; <b>Timing:</b> Msg 1 ~1h · Msg 2 ~12–24h · Msg 3 SMS ~24–36h (sale live only).</div>
+    </div>
+    <div class="sub">Msg 1 — Email (~1h)</div>
+    <div class="card">
+      <div class="kv"><span class="k">Subject</span><br>You left these in your cart, and the sale is still on.</div>
+      <div class="kv"><span class="k">Preview</span><br>15% OFF* everything, bundles up to 40%. Ends Wednesday 29 July.</div>
+      <p>Hi there, You were so close. Your cart is still sitting here, and the Christmas in July sale is still on, so your 15% OFF* (with bundles stacking up to 40% OFF*) is locked in if you finish up now. Sale prices end Wednesday 29 July, then everything goes back to normal. Grab your spot before it does.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+      <p><span class="cta">Finish my order</span> &nbsp;<span class="alt">· Link: {{STORE_URL}}</span></p>
+    </div>
+    <div class="sub">Msg 2 — Email (~12–24h)</div>
+    <div class="card">
+      <div class="kv"><span class="k">Subject</span><br>Still in your cart. The clutter isn't going to sort itself.</div>
+      <div class="kv"><span class="k">Preview</span><br>15–40% OFF* ends Wednesday. Your cart is waiting.</div>
+      <p>Hi there, Your Flat Stacks are still in your cart, and Christmas in July is still running, but not for long. 15% OFF* everything. Bundles up to 40% OFF*. The sale ends Wednesday 29 July and then prices go back to normal. This is the moment to finally get the cupboards organized and the mismatched tubs gone. The pieces fold flat when you are done, so the storage tucks away instead of taking over. Tidy cupboard, calmer kitchen, and right now it is on sale.</p>
+      <p class="fn">*15% off site-wide including already-discounted bundles, for total savings of up to 40%.</p>
+      <p><span class="cta">Complete my order</span> &nbsp;<span class="alt">· Link: {{STORE_URL}}</span></p>
+    </div>
+    <div class="sub">Msg 3 — SMS (~24–36h, sale live only, ≤160 chars)</div>
+    <div class="card">
+      <p class="sms">Flat Stacks: your cart is still here &amp; the sale ends Wed Jul 29. 15% OFF everything, bundles up to 40% OFF. Finish up {{STORE_URL}} Reply STOP to opt out</p>
+    </div>
+  </section>
+
+  <!-- ===================== TEAM NOTES ===================== -->
+  <section class="send">
+    <div class="send-title">Team notes</div>
+    <ul class="notes">
+      <li>Offer wording: always "15% OFF* everything" + "bundles up to 40% OFF*" or "15–40% OFF*". Never "40% off the bundles" (compliance gate — 40% is total stacked saving vs item RRP).</li>
+      <li>Asterisk + footnote on every offer-bearing email. SMS uses "up to 40% OFF" without full footnote (no room).</li>
+      <li>No discount code (price-edit). "The sale price is already on the product."</li>
+      <li>Only urgency = real end date, Wednesday 29 July 11:59pm.</li>
+      <li>Swap {{STORE_URL}} for flatstacks.com (US) / flatstacks.ca (CA) with Omnisend UTMs.</li>
+      <li>SMS new for 2026: confirm each market's sender ID + opt-out wording before scheduling.</li>
+    </ul>
+  </section>
+
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com · flatstacks.ca</span>
+  </div>
+
+</div>
+
+</body>
+</html>
