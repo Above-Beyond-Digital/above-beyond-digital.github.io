@@ -28,6 +28,7 @@ const PORTAL_GROUPS = [
   'clients/elx/portal',
   'clients/os/portal',
   'clients/mpe/portal',
+  'clients/fls-au/portal',
   'internal/portal',
 ];
 

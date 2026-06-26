@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Stacks Australia — ABD Portal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #2F6B1E;
+      --leaf: #4A9E2E;
+      --charcoal: #16201A;
+      --bg: #F6F9F4;
+      --surface: #FFFFFF;
+      --border: #E2EADD;
+      --muted: #5C6760;
+    }
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--green);
+      color: #fff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .header-logo span { color: #A7E08C; }
+    .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.7); }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(167,224,140,0.18);
+      border: 1px solid #A7E08C;
+      color: #DFF3D3;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 40px 80px; }
+    .intro {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--leaf);
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 40px;
+      font-size: 13px; line-height: 1.6; color: #334;
+    }
+    .intro b { color: var(--green); }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .report-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-card:hover { border-color: var(--leaf); box-shadow: 0 2px 12px rgba(74,158,46,0.16); }
+    .report-card-icon { font-size: 24px; }
+    .report-card-title { font-size: 15px; font-weight: 700; color: var(--charcoal); }
+    .report-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .report-card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+      background: rgba(74,158,46,0.12); color: var(--green);
+    }
+    .tag.live { background: rgba(74,158,46,0.16); color: #3C7D24; }
+    .report-card-arrow {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--leaf); font-weight: 600;
+    }
+    .footer {
+      margin-top: 60px; border-top: 1px solid var(--border);
+      padding-top: 20px; color: var(--muted); font-size: 11px;
+      display: flex; justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header { padding: 20px; flex-wrap: wrap; }
+      .page { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Flat Stacks <span>Australia</span></div>
+  <div class="header-divider"></div>
+  <div class="header-sub">ABD Client Portal</div>
+  <div class="header-badge">Confidential</div>
+</div>
+
+<div class="page">
+
+  <div class="intro">
+    <b>Flat Stacks Australia performance hub.</b> Reports and analysis for the AU business are published here.
+    One password unlocks every page in this portal — tick "Keep me signed in" and sub-pages open without
+    re-entering it.
+  </div>
+
+  <div class="section-title">Reports</div>
+  <div class="reports-grid">
+    <a class="report-card" href="performance-dashboard.html">
+      <div class="report-card-icon">📊</div>
+      <div class="report-card-title">Performance Dashboard</div>
+      <div class="report-card-desc">Core performance, July 2025 – June 2026: MER, funnel, AOV, new vs returning, Meta, Google and organic — plus a channel-level read on what's driving the post-reset numbers and whether the turnaround is working.</div>
+      <div class="report-card-meta">
+        <span class="tag">Jul 25 – Jun 26</span>
+        <span class="tag live">Live</span>
+      </div>
+      <div class="report-card-arrow">Open dashboard &rarr;</div>
+    </a>
+  </div>
+
+</div>
+
+<div class="page" style="padding-top: 0;">
+  <div class="footer">
+    <span>Above &amp; Beyond Digital — Confidential</span>
+    <span>flatstacks.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>
