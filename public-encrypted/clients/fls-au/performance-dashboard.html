@@ -1,0 +1,314 @@
+
+<title>Flat Stacks Australia — Performance Dashboard</title>
+<style>
+:root{
+  --ground:#FAFBFA; --panel:#FFFFFF; --ink:#16201A; --ink-soft:#5C6760; --ink-faint:#8A938C;
+  --line:#E6ECE7; --line-strong:#D3DCD5;
+  --brand:#4A9E2E; --brand-deep:#2F6B1E; --brand-wash:#EEF6EA;
+  --netsales:#6FB551; --spend:#AEBEB2; --meta:#3F6FB2; --google:#E0922F;
+  --nonbrand:#9DB0A2; --anon:#DCE3DD;
+  --pos:#2E9E5B; --neg:#C9402B;
+  --shadow:0 1px 2px rgba(20,40,28,.04),0 8px 24px rgba(20,40,28,.05);
+  --mono:ui-monospace,"Cascadia Mono","SFMono-Regular","Consolas",monospace;
+  --sans:-apple-system,"Segoe UI",system-ui,"Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+h1,h2,h3{text-wrap:balance;margin:0}
+header{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.hd{display:flex;align-items:center;gap:16px;padding:16px 0}
+.mark{display:flex;gap:3px;align-items:flex-end;height:30px}
+.mark i{width:7px;border-radius:2px;background:var(--brand);display:block}
+.mark i:nth-child(1){height:14px;opacity:.55}.mark i:nth-child(2){height:22px;opacity:.78}.mark i:nth-child(3){height:30px}
+.hd h1{font-size:18px;font-weight:650;letter-spacing:-.01em}
+.hd .sub{color:var(--ink-soft);font-size:13px;margin-top:1px}
+.hd .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);background:var(--ground);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-weight:600}
+.tag.warn{color:#9A5B12;background:#FCF3E6;border-color:#F0DEC0}
+section{padding:34px 0 8px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-deep);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--brand);border-radius:2px}
+.sec-h{font-size:23px;font-weight:680;letter-spacing:-.015em;margin-bottom:4px}
+.sec-d{color:var(--ink-soft);max-width:66ch;margin-bottom:20px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
+.kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:650}
+.kpi-v{font-family:var(--mono);font-size:25px;font-weight:600;letter-spacing:-.02em;margin:6px 0 2px}
+.kpi-s{font-size:11.5px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px}
+.chip.pos{color:#1c6e3f;background:#E7F4EC}.chip.neg{color:#9c2c1c;background:#FAEBE8}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;box-shadow:var(--shadow)}
+.card.hero{padding:22px 22px 16px}
+.card-h{display:flex;align-items:baseline;gap:10px;margin-bottom:2px}
+.card-h h3{font-size:15.5px;font-weight:660;letter-spacing:-.01em}
+.card-h .u{font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:4px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-soft);font-weight:600}
+.legend span i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.legend span.ln i{height:3px;border-radius:2px;width:16px}
+.legend span.tg i{height:0;width:16px;border-top:2px dashed var(--brand-deep);background:none;border-radius:0}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.axis text{font-family:var(--mono);font-size:10.5px;fill:var(--ink-faint)}
+.grid-l{stroke:var(--line);stroke-width:1}.zero-l{stroke:var(--line-strong);stroke-width:1}
+.annot{stroke:var(--neg);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
+.annot-t{font-family:var(--mono);font-size:9.5px;fill:var(--neg);font-weight:700}
+.endpoint{stroke:#fff;stroke-width:2}
+.tip{position:absolute;top:6px;pointer-events:none;background:var(--ink);color:#fff;border-radius:9px;padding:9px 11px;font-size:12px;min-width:150px;box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:5}
+.tip-h{font-weight:700;font-size:11px;letter-spacing:.03em;margin-bottom:6px;color:#cfe5c4;text-transform:uppercase}
+.tip-r{display:flex;justify-content:space-between;gap:14px;align-items:center;line-height:1.65}
+.tip-r span{display:inline-flex;align-items:center;gap:6px;color:#dfe6e0}
+.tip-r i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.tip-r b{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
+.prose p{margin:0 0 14px;max-width:80ch}.prose strong{font-weight:660}
+.callout{background:var(--brand-wash);border:1px solid #DCEBD3;border-left:3px solid var(--brand);border-radius:10px;padding:16px 18px;margin-bottom:20px}
+.callout .eyebrow{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+.twrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+th,td{padding:8px 11px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);background:#F7FAF7;position:sticky;top:0}
+th:first-child,td:first-child{text-align:left;font-family:var(--sans);font-weight:600}
+tbody tr:last-child td{border-bottom:none}tbody tr:hover td{background:#F7FAF7}
+tr.brk td{border-top:2px solid var(--brand);background:#FBFDFA}
+.notes{font-size:12.5px;color:var(--ink-soft);line-height:1.6}.notes li{margin-bottom:7px}
+footer{padding:30px 0 50px;color:var(--ink-faint);font-size:12px;border-top:1px solid var(--line);margin-top:30px}
+@media(max-width:920px){.kpis{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr}}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<header><div class="wrap hd">
+  <div class="mark"><i></i><i></i><i></i></div>
+  <div><h1>Flat Stacks Australia</h1><div class="sub">Core performance · Jul 2025 – Jun 2026</div></div>
+  <div class="right"><span class="tag">AUD</span><span class="tag">Monthly</span><span class="tag warn">Jun = MTD</span></div>
+</div></header>
+
+<div class="wrap">
+  <section>
+    <div class="eyebrow">At a glance</div>
+    <h2 class="sec-h">Where things stand now</h2>
+    <div class="sec-d">Apr–Jun 2026 average against the prior quarter (Jan–Mar 2026), the window that brackets the 1 April reset. Hover any chart for a given month's exact figures.</div>
+    <div class="kpis"><div class="kpi"><div class="kpi-l">MER</div><div class="kpi-v">2.65</div><div class="kpi-s">Apr–Jun vs Jan–Mar · goal 4.0 <span class="chip pos">▲ 1%</span></div></div><div class="kpi"><div class="kpi-l">Conversion rate</div><div class="kpi-v">2.3%</div><div class="kpi-s">Apr–Jun vs Jan–Mar <span class="chip neg">▼ 45%</span></div></div><div class="kpi"><div class="kpi-l">Avg order value</div><div class="kpi-v">A$143</div><div class="kpi-s">Apr–Jun vs Jan–Mar <span class="chip neg">▼ 13%</span></div></div><div class="kpi"><div class="kpi-l">Meta ROAS</div><div class="kpi-v">2.11</div><div class="kpi-s">Apr–Jun vs Jan–Mar <span class="chip neg">▼ 22%</span></div></div><div class="kpi"><div class="kpi-l">Google ROAS</div><div class="kpi-v">6.49</div><div class="kpi-s">Apr–Jun vs Jan–Mar <span class="chip neg">▼ 20%</span></div></div><div class="kpi"><div class="kpi-l">New-customer rate</div><div class="kpi-v">57.2%</div><div class="kpi-s">Apr–Jun vs Jan–Mar <span class="chip neg">▼ 25%</span></div></div></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Blended efficiency</div>
+    <h2 class="sec-h">MER, ad spend &amp; net sales</h2>
+    <div class="sec-d">Net sales and total ad spend (bars) against MER (line). Dashed green line is the 4.0 target; red marker is 1 April. Spend and sales fall together while MER lifts — the question is whether MER reaches 4 once spend scales back up.</div>
+    <div class="card hero">
+      <div class="card-h"><h3>Net sales &amp; ad spend vs MER</h3><span class="u">AUD · ratio</span></div>
+      <div class="legend"><span><i style="background:var(--netsales)"></i>Net sales</span><span><i style="background:var(--spend)"></i>Ad spend</span><span class="ln"><i style="background:var(--google)"></i>MER</span><span class="tg"><i></i>MER target 4.0</span></div>
+      <div class="chart" id="c_mer"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Store &amp; conversion</div>
+    <h2 class="sec-h">Shopify funnel</h2>
+    <div class="sec-d">Blended conversion rate dipped at the redesign launch and is recovering, but is still below pre-reset — and the recovery is driven by audience mix (see channel section), not new-visitor conversion.</div>
+    <div class="grid g2">
+      <div class="card"><div class="card-h"><h3>Add-to-cart &amp; conversion rate</h3><span class="u">% of sessions</span></div>
+        <div class="legend"><span class="ln"><i style="background:var(--brand)"></i>Add-to-cart rate</span><span class="ln"><i style="background:var(--meta)"></i>Conversion rate</span></div>
+        <div class="chart" id="c_funnel"></div></div>
+      <div class="card"><div class="card-h"><h3>Average order value</h3><span class="u">AUD</span></div>
+        <div class="chart" id="c_aov"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Customers</div>
+    <h2 class="sec-h">New vs returning</h2>
+    <div class="sec-d">Bars are customer counts (new + returning); line is the returning rate. Acquisition volume fell with spend and the mix tilted toward returning customers.</div>
+    <div class="card"><div class="card-h"><h3>Customers by type &amp; returning rate</h3><span class="u">count · %</span></div>
+      <div class="legend"><span><i style="background:var(--brand)"></i>New</span><span><i style="background:var(--nonbrand)"></i>Returning</span><span class="ln"><i style="background:var(--google)"></i>Returning rate</span></div>
+      <div class="chart" id="c_cust"></div></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">What's driving it</div>
+    <h2 class="sec-h">Channel mix &amp; customer type</h2>
+    <div class="sec-d">GA4 revenue by channel, and by new vs returning with each segment's conversion rate. This is where the post-reset revenue actually comes from — and why blended conversion moved. Pre-April "Untracked" revenue is a GA4 attribution gap the redesign appears to have fixed.</div>
+    <div class="grid g2">
+      <div class="card"><div class="card-h"><h3>Revenue by channel</h3><span class="u">AUD, GA4</span></div>
+        <div class="legend" id="leg_chan"></div>
+        <div class="chart" id="c_chan"></div></div>
+      <div class="card"><div class="card-h"><h3>New vs returning revenue &amp; CVR</h3><span class="u">AUD · %</span></div>
+        <div class="legend"><span><i style="background:#6FB551"></i>New rev</span><span><i style="background:#3F6FB2"></i>Returning rev</span><span><i style="background:#C2C9C3"></i>Untracked</span><span class="ln"><i style="background:#2F6B1E"></i>New CVR</span><span class="ln"><i style="background:#274E7D"></i>Returning CVR</span></div>
+        <div class="chart" id="c_nvr"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Paid · Meta</div>
+    <h2 class="sec-h">Facebook / Instagram</h2>
+    <div class="sec-d">Spend and platform-reported revenue (bars) with ROAS (line). Revenue is Meta-attributed, not Shopify net sales.</div>
+    <div class="card"><div class="card-h"><h3>Meta spend, revenue &amp; ROAS</h3><span class="u">AUD · ROAS</span></div>
+      <div class="legend"><span><i style="background:var(--meta)"></i>Spend</span><span><i style="background:var(--brand)"></i>Revenue</span><span class="ln"><i style="background:var(--google)"></i>ROAS</span></div>
+      <div class="chart" id="c_meta"></div></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Paid · Google</div>
+    <h2 class="sec-h">Google Ads</h2>
+    <div class="sec-d">Total Google Ads spend and reported revenue (bars) with ROAS (line). Spend was cut hard from April, leaving mostly efficient brand-led demand.</div>
+    <div class="card"><div class="card-h"><h3>Google spend, revenue &amp; ROAS</h3><span class="u">AUD · ROAS</span></div>
+      <div class="legend"><span><i style="background:var(--google)"></i>Spend</span><span><i style="background:var(--brand)"></i>Revenue</span><span class="ln"><i style="background:var(--meta)"></i>ROAS</span></div>
+      <div class="chart" id="c_google"></div></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Organic search</div>
+    <h2 class="sec-h">Organic traffic &amp; revenue</h2>
+    <div class="sec-d">Left: Search Console clicks split brand / non-brand (~45% anonymised by Google), with GA4 organic sessions (line). Right: GA4 organic revenue (single total — not splittable by brand).</div>
+    <div class="grid g2">
+      <div class="card"><div class="card-h"><h3>Organic clicks &amp; sessions</h3><span class="u">clicks · sessions</span></div>
+        <div class="legend"><span><i style="background:var(--brand)"></i>Brand</span><span><i style="background:var(--nonbrand)"></i>Non-brand</span><span><i style="background:var(--anon)"></i>Anonymised</span><span class="ln"><i style="background:var(--meta)"></i>GA4 sessions</span></div>
+        <div class="chart" id="c_orgt"></div></div>
+      <div class="card"><div class="card-h"><h3>Organic revenue</h3><span class="u">AUD, GA4</span></div>
+        <div class="chart" id="c_orgr"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">The numbers</div>
+    <h2 class="sec-h">Full monthly data</h2>
+    <div class="sec-d">Core metrics charted above. The green rule marks the April reset.</div>
+    <div class="twrap"><table id="dtable"></table></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">The read</div>
+    <h2 class="sec-h">Analysis — is the turnaround working?</h2>
+    <div class="prose" style="margin-top:14px">
+<div class="callout"><div class="eyebrow">The question</div>
+<p style="margin:0">From <strong>1 April 2026</strong> Flat Stacks AU deliberately reset — a website redesign and a change of advertising strategy — pulling spend back hard while the new approach bedded in. The aim was <strong>not</strong> a wind-down: it was to fix the unit economics (conversion rate and MER), then re-scale spend profitably and grow revenue again, targeting an <strong>MER around 4.0 at materially higher spend</strong>. The read below is on one thing: <em>is the data showing that working?</em></p></div>
+
+<p><strong>The headline MER gain is largely mechanical, not earned.</strong> Quarter-on-quarter, blended MER is essentially <strong>flat</strong> (2.62 Jan–Mar → 2.64 Apr–Jun); the rise people point to is the month-on-month climb off the April trough (2.32 → 2.66 → 2.98). Underneath it: returning-customer share jumped from 23.5% to 42.5%, new customers fell 78%, cost per new customer rose ~14% (A$86 → A$97), and platform ROAS actually <strong>fell</strong> (Meta 2.69 → 2.11; Google 8.01 → 6.28). Revenue dropped almost exactly in line with spend (both ~−75%), which tells us the paid spend was doing real, roughly-proportional work — the current efficiency is mostly a smaller business, not a discovered one.</p>
+
+<p><strong>What is actually carrying revenue — and lifting conversion — is the returning-customer base, not paid or organic.</strong> Paid Social (Meta) was the single biggest channel in March (A$42,288) and collapsed to A$3,269; Paid Shopping went to zero; Organic Search is now negligible (A$419 in June). Meanwhile returning customers held up: returning revenue went from 32.9% of tracked revenue (Mar) to 46.3% (Apr–Jun), and returning visitors convert at 3.5% against just 1.6% for new. That mix shift toward high-converting repeat buyers — reached largely through <strong>email</strong> (now ~22.8% of revenue and the highest-converting channel), brand search and direct — is what pulls the blended conversion rate back up. Note email itself isn't growing: its revenue is down in absolute terms (A$14,768 Mar → A$4,857 Jun); it just shrank slower than paid.</p>
+
+<p><strong>The lever a turnaround needs — new-visitor conversion — has not improved.</strong> New-customer CVR in June (1.6%) is still <em>below</em> March (1.7%) and July (1.9%). So the redesign has not yet made the site convert cold traffic better; the conversion-rate optics come from the audience mix, not the new experience. The redesign's clearest genuine win is data quality: a large pre-April "Untracked" revenue bucket (A$31,443, 27.2% of March, with impossible conversion rates) effectively disappeared from April — tracking was fixed. Good for measurement, but it also means pre/post GA4 figures aren't strictly comparable.</p>
+
+<p><strong>One encouraging signal.</strong> May is the single month that looks like the plan working: spend went <em>up</em> (A$8.4k → A$10.6k), new customers went <em>up</em> (77 → 111), AOV jumped (A$126 → A$163) and MER still improved — and it had the lowest returning-share of the quarter, so that gain wasn't a mix artifact. But June reverted to low-spend, returning-led mode, so it's one data point, not a trend.</p>
+
+<p><strong>The unbiased read.</strong> On this data the strategy is <strong>not yet proven to be working</strong>. The efficiency improvement is largely a smaller-spend, returning-customer mix effect; new-customer acquisition got more expensive and smaller; platform ROAS fell; and new-visitor conversion is still below pre-reset. The store is increasingly running on its existing base via email and brand — harvesting demand built earlier, not creating new demand. The genuine positives are narrow: cleaner tracking, a recovering returning-customer CVR, and the single May acquisition month. For the turnaround thesis to hold, two things still have to be demonstrated and neither is visible yet: (1) new-visitor conversion climbing above the pre-reset 1.7%–1.9%, and (2) MER holding near 4 as spend scales — today's number is flattered by spending only on the cheapest brand demand. The decisive test is a deliberate spend ramp (an extended May) that holds MER while new-customer CVR keeps climbing. Until that ramp happens and holds, continued investment is a bet on unproven leading indicators rather than demonstrated improvement.</p>
+</div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Methodology</div>
+    <h2 class="sec-h">Data notes &amp; definitions</h2>
+    <div class="notes" style="margin-top:12px">
+<ul>
+<li><strong>Currency &amp; period.</strong> All figures AUD. Monthly, July 2025 – June 2026; <strong>June 2026 is month-to-date (to the 25th)</strong>, so June absolute totals are partial. Rates (MER, ROAS, conversion, AOV) are unaffected.</li>
+<li><strong>MER</strong> = Shopify net sales ÷ (Meta spend + Google spend), as specified. It excludes other channels/costs.</li>
+<li><strong>Platform vs Shopify revenue.</strong> Meta/Google "revenue" and ROAS use each platform's reported conversion value (platform-attributed, won't sum to Shopify). MER uses Shopify net sales as the source of truth.</li>
+<li><strong>Channel &amp; customer-type</strong> figures are GA4 (purchaseRevenue; conversion rate = ecommercePurchases ÷ sessions). GA4 attribution differs from Shopify and from each ad platform. Pre-April "Untracked / (not set)" revenue is a GA4 tracking gap that the April redesign appears to have largely fixed, so pre/post GA4 comparisons aren't strictly like-for-like.</li>
+<li><strong>Google Ads</strong> shown as a total (the brand/non-brand split has been consolidated in the account).</li>
+<li><strong>Organic split.</strong> Brand vs non-brand traffic is Search Console clicks (query contains "flat stacks" = brand); ~45% of clicks are anonymised by Google ("Anonymised"). Organic revenue is GA4 Organic Search (not splittable by brand).</li>
+<li><strong>Sources.</strong> Shopify · Meta Ads acct 1787156028090681 · Google Ads acct 2052686950 · GA4 property 347982198 · Search Console flatstacks.com.au.</li>
+</ul>
+</div>
+  </section>
+</div>
+
+<footer><div class="wrap">Flat Stacks Australia performance dashboard · built from live Shopify, Meta, Google Ads, GA4 and Search Console data · all figures AUD · June 2026 month-to-date.</div></footer>
+
+<script>
+const DATA=[{"month": "2025-07", "net_sales": 195292.01, "gross_sales": 272354.88, "total_sales": 219409.78, "aov": 175.36, "orders": 1119, "sessions": 18259, "cart_additions": 2779, "atc_rate": 0.1522, "conversion_rate": 0.0605, "customers": 1056, "returning_customers": 380, "new_customers": 676, "returning_rate": 0.3598, "new_rate": 0.6402, "meta_spend": 48400.06, "meta_revenue": 179471.8, "meta_roas": 3.71, "google_cost": 5316.34, "google_value": 40028.08, "google_roas": 7.53, "google_brand_cost": 1700.21, "google_brand_value": 22470.88, "google_brand_roas": 13.22, "google_nonbrand_cost": 3616.13, "google_nonbrand_value": 17557.2, "google_nonbrand_roas": 4.86, "total_adspend": 53716.4, "mer": 3.64, "organic_sessions": 601, "organic_revenue": 4034.66, "gsc_total_clicks": 599, "gsc_brand_clicks": 229, "gsc_nonbrand_clicks": 102, "gsc_anonymised_clicks": 268}, {"month": "2025-08", "net_sales": 150303.06, "gross_sales": 249226.84, "total_sales": 167243.69, "aov": 183.57, "orders": 818, "sessions": 18896, "cart_additions": 2274, "atc_rate": 0.1203, "conversion_rate": 0.0417, "customers": 767, "returning_customers": 158, "new_customers": 609, "returning_rate": 0.206, "new_rate": 0.794, "meta_spend": 37980.49, "meta_revenue": 136386.14, "meta_roas": 3.59, "google_cost": 5694.96, "google_value": 29573.15, "google_roas": 5.19, "google_brand_cost": 2448.74, "google_brand_value": 14859.62, "google_brand_roas": 6.07, "google_nonbrand_cost": 3246.22, "google_nonbrand_value": 14713.53, "google_nonbrand_roas": 4.53, "total_adspend": 43675.45, "mer": 3.44, "organic_sessions": 1058, "organic_revenue": 3666.9, "gsc_total_clicks": 658, "gsc_brand_clicks": 293, "gsc_nonbrand_clicks": 108, "gsc_anonymised_clicks": 257}, {"month": "2025-09", "net_sales": 109829.83, "gross_sales": 172070.86, "total_sales": 123484.95, "aov": 173.12, "orders": 632, "sessions": 17048, "cart_additions": 1832, "atc_rate": 0.1075, "conversion_rate": 0.0362, "customers": 594, "returning_customers": 201, "new_customers": 393, "returning_rate": 0.3384, "new_rate": 0.6616, "meta_spend": 30620.91, "meta_revenue": 96077.2, "meta_roas": 3.14, "google_cost": 4280.54, "google_value": 23732.45, "google_roas": 5.54, "google_brand_cost": 1461.89, "google_brand_value": 12057.09, "google_brand_roas": 8.25, "google_nonbrand_cost": 2818.65, "google_nonbrand_value": 11675.36, "google_nonbrand_roas": 4.14, "total_adspend": 34901.45, "mer": 3.15, "organic_sessions": 971, "organic_revenue": 5633.65, "gsc_total_clicks": 533, "gsc_brand_clicks": 240, "gsc_nonbrand_clicks": 93, "gsc_anonymised_clicks": 200}, {"month": "2025-10", "net_sales": 104891.28, "gross_sales": 142851.53, "total_sales": 118566.98, "aov": 162.81, "orders": 646, "sessions": 16211, "cart_additions": 1888, "atc_rate": 0.1165, "conversion_rate": 0.0384, "customers": 607, "returning_customers": 215, "new_customers": 392, "returning_rate": 0.3542, "new_rate": 0.6458, "meta_spend": 32462.78, "meta_revenue": 84271.42, "meta_roas": 2.6, "google_cost": 4462.97, "google_value": 32769.7, "google_roas": 7.34, "google_brand_cost": 1457.92, "google_brand_value": 19034.09, "google_brand_roas": 13.06, "google_nonbrand_cost": 3005.05, "google_nonbrand_value": 13735.61, "google_nonbrand_roas": 4.57, "total_adspend": 36925.75, "mer": 2.84, "organic_sessions": 1181, "organic_revenue": 5718.01, "gsc_total_clicks": 550, "gsc_brand_clicks": 238, "gsc_nonbrand_clicks": 94, "gsc_anonymised_clicks": 218}, {"month": "2025-11", "net_sales": 117832.73, "gross_sales": 140374.7, "total_sales": 134514.28, "aov": 155.54, "orders": 757, "sessions": 14257, "cart_additions": 1907, "atc_rate": 0.1338, "conversion_rate": 0.0516, "customers": 724, "returning_customers": 255, "new_customers": 469, "returning_rate": 0.3522, "new_rate": 0.6478, "meta_spend": 29967.7, "meta_revenue": 99625.15, "meta_roas": 3.32, "google_cost": 5026.91, "google_value": 42744.86, "google_roas": 8.5, "google_brand_cost": 1269.3, "google_brand_value": 22523.31, "google_brand_roas": 17.74, "google_nonbrand_cost": 3757.62, "google_nonbrand_value": 20221.55, "google_nonbrand_roas": 5.38, "total_adspend": 34994.61, "mer": 3.37, "organic_sessions": 1186, "organic_revenue": 7882.53, "gsc_total_clicks": 561, "gsc_brand_clicks": 234, "gsc_nonbrand_clicks": 100, "gsc_anonymised_clicks": 227}, {"month": "2025-12", "net_sales": 105066.62, "gross_sales": 154331.87, "total_sales": 118523.65, "aov": 170.38, "orders": 616, "sessions": 13054, "cart_additions": 1821, "atc_rate": 0.1395, "conversion_rate": 0.0464, "customers": 581, "returning_customers": 195, "new_customers": 386, "returning_rate": 0.3356, "new_rate": 0.6644, "meta_spend": 31270.94, "meta_revenue": 85078.31, "meta_roas": 2.72, "google_cost": 3550.74, "google_value": 37848.68, "google_roas": 10.66, "google_brand_cost": 1248.78, "google_brand_value": 22856.68, "google_brand_roas": 18.3, "google_nonbrand_cost": 2301.96, "google_nonbrand_value": 14992.0, "google_nonbrand_roas": 6.51, "total_adspend": 34821.68, "mer": 3.02, "organic_sessions": 1389, "organic_revenue": 5216.35, "gsc_total_clicks": 502, "gsc_brand_clicks": 185, "gsc_nonbrand_clicks": 78, "gsc_anonymised_clicks": 239}, {"month": "2026-01", "net_sales": 109583.03, "gross_sales": 165703.42, "total_sales": 124006.87, "aov": 166.27, "orders": 662, "sessions": 13568, "cart_additions": 1997, "atc_rate": 0.1472, "conversion_rate": 0.0478, "customers": 641, "returning_customers": 147, "new_customers": 494, "returning_rate": 0.2293, "new_rate": 0.7707, "meta_spend": 31188.06, "meta_revenue": 104359.21, "meta_roas": 3.35, "google_cost": 3943.82, "google_value": 37679.97, "google_roas": 9.55, "google_brand_cost": 1216.53, "google_brand_value": 18674.83, "google_brand_roas": 15.35, "google_nonbrand_cost": 2727.29, "google_nonbrand_value": 19005.14, "google_nonbrand_roas": 6.97, "total_adspend": 35131.88, "mer": 3.12, "organic_sessions": 1450, "organic_revenue": 8687.23, "gsc_total_clicks": 665, "gsc_brand_clicks": 241, "gsc_nonbrand_clicks": 107, "gsc_anonymised_clicks": 317}, {"month": "2026-02", "net_sales": 86220.7, "gross_sales": 131701.86, "total_sales": 97244.67, "aov": 166.61, "orders": 516, "sessions": 11581, "cart_additions": 1555, "atc_rate": 0.1343, "conversion_rate": 0.0434, "customers": 495, "returning_customers": 110, "new_customers": 385, "returning_rate": 0.2222, "new_rate": 0.7778, "meta_spend": 31233.75, "meta_revenue": 77528.55, "meta_roas": 2.48, "google_cost": 3577.79, "google_value": 31467.77, "google_roas": 8.8, "google_brand_cost": 1214.98, "google_brand_value": 19220.72, "google_brand_roas": 15.82, "google_nonbrand_cost": 2362.81, "google_nonbrand_value": 12247.05, "google_nonbrand_roas": 5.18, "total_adspend": 34811.54, "mer": 2.48, "organic_sessions": 1358, "organic_revenue": 6930.95, "gsc_total_clicks": 573, "gsc_brand_clicks": 281, "gsc_nonbrand_clicks": 66, "gsc_anonymised_clicks": 226}, {"month": "2026-03", "net_sales": 84075.26, "gross_sales": 124055.38, "total_sales": 95059.33, "aov": 161.17, "orders": 523, "sessions": 14654, "cart_additions": 1487, "atc_rate": 0.1015, "conversion_rate": 0.0349, "customers": 500, "returning_customers": 128, "new_customers": 372, "returning_rate": 0.256, "new_rate": 0.744, "meta_spend": 32862.65, "meta_revenue": 74504.0, "meta_roas": 2.27, "google_cost": 4183.67, "google_value": 24613.53, "google_roas": 5.88, "google_brand_cost": 1348.13, "google_brand_value": 11192.21, "google_brand_roas": 8.3, "google_nonbrand_cost": 2835.54, "google_nonbrand_value": 13421.31, "google_nonbrand_roas": 4.73, "total_adspend": 37046.32, "mer": 2.27, "organic_sessions": 1222, "organic_revenue": 3330.99, "gsc_total_clicks": 530, "gsc_brand_clicks": 219, "gsc_nonbrand_clicks": 71, "gsc_anonymised_clicks": 240}, {"month": "2026-04", "net_sales": 19393.16, "gross_sales": 21285.64, "total_sales": 22681.36, "aov": 126.07, "orders": 155, "sessions": 7170, "cart_additions": 438, "atc_rate": 0.0611, "conversion_rate": 0.0206, "customers": 146, "returning_customers": 69, "new_customers": 77, "returning_rate": 0.4726, "new_rate": 0.5274, "meta_spend": 6109.88, "meta_revenue": 13344.2, "meta_roas": 2.18, "google_cost": 2259.33, "google_value": 10993.59, "google_roas": 4.87, "google_brand_cost": 2259.33, "google_brand_value": 10993.59, "google_brand_roas": 4.87, "google_nonbrand_cost": 0.0, "google_nonbrand_value": 0.0, "google_nonbrand_roas": null, "total_adspend": 8369.21, "mer": 2.32, "organic_sessions": 736, "organic_revenue": 829.81, "gsc_total_clicks": 284, "gsc_brand_clicks": 96, "gsc_nonbrand_clicks": 46, "gsc_anonymised_clicks": 142}, {"month": "2026-05", "net_sales": 28155.16, "gross_sales": 28650.82, "total_sales": 31847.96, "aov": 163.27, "orders": 174, "sessions": 7936, "cart_additions": 497, "atc_rate": 0.0626, "conversion_rate": 0.0214, "customers": 172, "returning_customers": 61, "new_customers": 111, "returning_rate": 0.3547, "new_rate": 0.6453, "meta_spend": 9029.66, "meta_revenue": 18730.99, "meta_roas": 2.07, "google_cost": 1537.96, "google_value": 11559.81, "google_roas": 7.52, "google_brand_cost": 1537.96, "google_brand_value": 11559.81, "google_brand_roas": 7.52, "google_nonbrand_cost": 0.0, "google_nonbrand_value": 0.0, "google_nonbrand_roas": null, "total_adspend": 10567.62, "mer": 2.66, "organic_sessions": 572, "organic_revenue": 1838.5, "gsc_total_clicks": 284, "gsc_brand_clicks": 83, "gsc_nonbrand_clicks": 45, "gsc_anonymised_clicks": 156}, {"month": "2026-06", "net_sales": 22027.8, "gross_sales": 23244.48, "total_sales": 25349.76, "aov": 140.11, "orders": 158, "sessions": 5670, "cart_additions": 427, "atc_rate": 0.0753, "conversion_rate": 0.0275, "customers": 153, "returning_customers": 70, "new_customers": 83, "returning_rate": 0.4575, "new_rate": 0.5425, "meta_spend": 5750.56, "meta_revenue": 12025.2, "meta_roas": 2.09, "google_cost": 1633.45, "google_value": 11573.21, "google_roas": 7.09, "google_brand_cost": 1633.45, "google_brand_value": 11573.21, "google_brand_roas": 7.09, "google_nonbrand_cost": 0.0, "google_nonbrand_value": 0.0, "google_nonbrand_roas": null, "total_adspend": 7384.01, "mer": 2.98, "organic_sessions": 421, "organic_revenue": 419.15, "gsc_total_clicks": 204, "gsc_brand_clicks": 65, "gsc_nonbrand_clicks": 33, "gsc_anonymised_clicks": 106}]; const CHAN=[{"name": "Paid Social", "color": "#3F6FB2", "data": [29502.37, 4251.36, 1848.7, 8235.44, 22731.92, 20595.49, 21628.29, 13166.29, 42288.28, 6315.1, 8595.96, 3269.35]}, {"name": "Paid Search & Shopping", "color": "#E0922F", "data": [54401.66, 97155.18, 64427.58, 47636.64, 36419.48, 40163.31, 39401.44, 33808.24, 6003.83, 2023.5, 4211.76, 3531.64]}, {"name": "Cross-network", "color": "#7E6BB5", "data": [13773.65, 9313.79, 6268.74, 7390.42, 14059.33, 11414.69, 15595.21, 9244.95, 9352.47, 3252.1, 3977.14, 4748.78]}, {"name": "Email", "color": "#2BA3A0", "data": [11427.04, 12721.1, 13511.93, 18102.38, 16723.75, 11150.0, 9281.24, 13385.46, 14768.38, 4493.21, 2878.3, 4856.57]}, {"name": "Direct", "color": "#6B7A72", "data": [19957.15, 11964.59, 10548.3, 8473.15, 8781.73, 4539.59, 4703.13, 3460.46, 5857.24, 1449.1, 3727.8, 1620.4]}, {"name": "Organic", "color": "#4A9E2E", "data": [11340.86, 9276.91, 11338.22, 10659.02, 16530.29, 10822.08, 17092.63, 11781.84, 5915.03, 1644.41, 3087.8, 2119.82]}, {"name": "SMS", "color": "#D98A9E", "data": [3891.52, 0.0, 2537.59, 2075.9, 3055.63, 6284.5, 111.96, 1479.35, 99.95, 0.0, 0.0, 0.0]}, {"name": "Untracked / other", "color": "#C2C9C3", "data": [6768.38, 1380.0, 1668.72, 476.04, 1961.12, 17484.14, 53866.66, 43301.65, 31503.01, 309.75, 2213.85, 1158.07]}]; const NVR={"new_rev": [85711.03, 93766.32, 58513.31, 58939.11, 65449.94, 66409.05, 70289.78, 59652.71, 57901.39, 9856.7, 15618.38, 11788.53], "ret_rev": [13393.75, 9747.79, 23794.61, 44109.88, 54813.31, 41041.45, 40995.08, 27658.53, 28449.65, 9630.47, 12989.33, 9516.1], "unt_rev": [51957.85, 42548.82, 29841.86, 0.0, 0.0, 15003.3, 50395.7, 42317.0, 29437.15, 0.0, 84.9, 0.0], "new_cvr": [0.0195, 0.016, 0.0125, 0.0104, 0.0212, 0.0213, 0.0221, 0.0196, 0.0168, 0.0124, 0.0133, 0.0163], "ret_cvr": [0.0143, 0.0073, 0.0155, 0.0311, 0.0482, 0.0392, 0.0382, 0.0379, 0.0259, 0.0298, 0.031, 0.0354]};
+const ML=DATA.map(r=>["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+r.month.split("-")[1]-1]);
+const MLONG=DATA.map(r=>{const [y,mo]=r.month.split("-");return ["January","February","March","April","May","June","July","August","September","October","November","December"][+mo-1]+" "+y;});
+const APR_IDX=DATA.findIndex(r=>r.month==="2026-04"); const NLAST=DATA.length-1;
+const fmt={money:v=>"A$"+Math.round(v).toLocaleString(),moneyk:v=>v>=1000?"A$"+(v/1000).toFixed(0)+"k":"A$"+Math.round(v),
+  pct:v=>(v*100).toFixed(1)+"%",pct0:v=>(v*100).toFixed(0)+"%",x:v=>v.toFixed(2)+"x",num:v=>Math.round(v).toLocaleString()};
+function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const f=v/p;const nf=f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10;return nf*p;}
+const col=getComputedStyle(document.documentElement);const C=k=>col.getPropertyValue(k).trim();
+function chart(id,cfg){
+  const W=760,H=300,hasR=(cfg.lines||[]).some(l=>l.axis==="right");
+  const m={t:18,r:hasR?54:18,b:30,l:56},iw=W-m.l-m.r,ih=H-m.t-m.b,n=DATA.length;
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(NS,"svg");svg.setAttribute("viewBox",`0 0 ${W} ${H}`);svg.setAttribute("class","axis");svg.setAttribute("role","img");
+  const el=document.getElementById(id);el.appendChild(svg);
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  let lmax=0,lmin=0;
+  if(cfg.bars){const st={};cfg.bars.forEach(b=>{const k=b.stack||Math.random();st[k]=st[k]||Array(n).fill(0);b.data.forEach((v,i)=>st[k][i]+=v);});Object.values(st).forEach(a=>lmax=Math.max(lmax,...a));}
+  (cfg.lines||[]).filter(l=>(l.axis||"left")==="left").forEach(l=>{lmax=Math.max(lmax,...l.data);lmin=Math.min(lmin,...l.data);});
+  lmax=niceMax(lmax*1.08);
+  const rlines=(cfg.lines||[]).filter(l=>l.axis==="right");let rmax=0;rlines.forEach(l=>rmax=Math.max(rmax,...l.data));
+  if(cfg.htarget&&cfg.htarget.axis==="right")rmax=Math.max(rmax,cfg.htarget.value);rmax=niceMax(rmax*1.12)||1;
+  const x=i=>m.l+(iw/n)*(i+0.5),yL=v=>m.t+ih-(v-lmin)/(lmax-lmin)*ih,yR=v=>m.t+ih-v/rmax*ih;
+  const ticks=5;
+  for(let t=0;t<=ticks;t++){const val=lmin+(lmax-lmin)*t/ticks,yy=yL(val);
+    svg.appendChild(mk("line",{x1:m.l,x2:m.l+iw,y1:yy,y2:yy,class:val===0?"zero-l":"grid-l"}));
+    const tx=mk("text",{x:m.l-8,y:yy+3.5,"text-anchor":"end"});tx.textContent=cfg.leftFmt(val);svg.appendChild(tx);}
+  if(rlines.length){for(let t=0;t<=ticks;t++){const val=rmax*t/ticks,yy=yR(val);const tx=mk("text",{x:m.l+iw+8,y:yy+3.5,"text-anchor":"start"});tx.textContent=cfg.rightFmt(val);svg.appendChild(tx);}}
+  DATA.forEach((r,i)=>{const tx=mk("text",{x:x(i),y:H-10,"text-anchor":"middle"});tx.textContent=ML[i];if(i===0||ML[i]==="Jan")tx.setAttribute("font-weight","700");svg.appendChild(tx);});
+  if(cfg.annot&&APR_IDX>0){const ax=m.l+(iw/n)*APR_IDX;svg.appendChild(mk("line",{x1:ax,x2:ax,y1:m.t,y2:m.t+ih,class:"annot"}));const tx=mk("text",{x:ax+4,y:m.t+10,class:"annot-t"});tx.textContent="1 Apr";svg.appendChild(tx);}
+  if(cfg.bars){const groups={};cfg.bars.forEach(b=>{const k=b.stack||b.color;(groups[k]=groups[k]||[]).push(b);});
+    const gk=Object.keys(groups),bw=Math.min(30,(iw/n)*0.6/gk.length);
+    gk.forEach((k,gi)=>{const cum=Array(n).fill(0);groups[k].forEach(b=>{b.data.forEach((v,i)=>{
+      const cx=x(i)-(gk.length*bw)/2+gi*bw+bw/2,y0=yL(cum[i]),y1=yL(cum[i]+v);cum[i]+=v;
+      if(v>0)svg.appendChild(mk("rect",{x:cx-bw/2,y:y1,width:bw,height:Math.max(0,y0-y1),fill:b.color,rx:2}));});});});}
+  if(cfg.htarget){const v=cfg.htarget.value,Y=cfg.htarget.axis==="right"?yR:yL,yy=Y(v);
+    svg.appendChild(mk("line",{x1:m.l,x2:m.l+iw,y1:yy,y2:yy,stroke:C("--brand-deep"),"stroke-width":1.2,"stroke-dasharray":"6 4",opacity:.85}));
+    const t=mk("text",{x:m.l+iw,y:yy-5,"text-anchor":"end",fill:C("--brand-deep"),"font-weight":700});t.textContent=cfg.htarget.label;svg.appendChild(t);}
+  (cfg.lines||[]).forEach(l=>{const Y=l.axis==="right"?yR:yL;const pts=l.data.map((v,i)=>`${x(i)},${Y(v)}`).join(" ");
+    if(l.fill){const area="M "+x(0)+","+yL(lmin)+" L "+l.data.map((v,i)=>`${x(i)},${Y(v)}`).join(" L ")+" L "+x(n-1)+","+yL(lmin)+" Z";
+      const gid="g"+id+l.color.replace(/[^a-z0-9]/gi,"");const gr=mk("linearGradient",{id:gid,x1:0,y1:0,x2:0,y2:1});
+      gr.appendChild(mk("stop",{offset:"0%","stop-color":l.color,"stop-opacity":.18}));gr.appendChild(mk("stop",{offset:"100%","stop-color":l.color,"stop-opacity":0}));
+      svg.appendChild(gr);svg.appendChild(mk("path",{d:area,fill:`url(#${gid})`}));}
+    svg.appendChild(mk("polyline",{points:pts,fill:"none",stroke:l.color,"stroke-width":l.dash?2:2.4,"stroke-dasharray":l.dash?"5 4":"","stroke-linejoin":"round","stroke-linecap":"round"}));
+    svg.appendChild(mk("circle",{cx:x(NLAST),cy:Y(l.data[NLAST]),r:3.6,fill:l.color,class:"endpoint"}));});
+  const tip=document.createElement("div");tip.className="tip";tip.style.display="none";el.appendChild(tip);
+  const guide=mk("line",{x1:0,x2:0,y1:m.t,y2:m.t+ih,stroke:C("--ink-faint"),"stroke-width":1,"stroke-dasharray":"2 3",opacity:0});svg.appendChild(guide);
+  const series=[...(cfg.bars||[]).map(b=>({name:b.name,color:b.color,data:b.data,fmt:b.tfmt||cfg.leftFmt})),
+    ...(cfg.lines||[]).map(l=>({name:l.name,color:l.color,data:l.data,fmt:l.tfmt||(l.axis==="right"?cfg.rightFmt:cfg.leftFmt)}))];
+  for(let i=0;i<n;i++){const hit=mk("rect",{x:m.l+(iw/n)*i,y:m.t,width:iw/n,height:ih,fill:"transparent"});hit.style.cursor="crosshair";
+    hit.addEventListener("mouseenter",()=>{guide.setAttribute("x1",x(i));guide.setAttribute("x2",x(i));guide.setAttribute("opacity",.5);
+      let html=`<div class="tip-h">${MLONG[i]}${i===NLAST?" · MTD":""}</div>`;
+      series.forEach(s=>{if(s.name)html+=`<div class="tip-r"><span><i style="background:${s.color}"></i>${s.name}</span><b>${s.fmt(s.data[i])}</b></div>`;});
+      tip.innerHTML=html;tip.style.display="block";const cw=el.clientWidth;let lpx=(x(i)/W)*cw;
+      tip.style.left=Math.min(Math.max(lpx-tip.offsetWidth/2,4),cw-tip.offsetWidth-4)+"px";});
+    svg.appendChild(hit);}
+  el.addEventListener("mouseleave",()=>{tip.style.display="none";guide.setAttribute("opacity",0);});
+}
+const g=f=>DATA.map(f);
+chart("c_mer",{bars:[{data:g(r=>r.net_sales),color:C("--netsales"),stack:"a",name:"Net sales",tfmt:fmt.money},
+  {data:g(r=>r.total_adspend),color:C("--spend"),stack:"b",name:"Ad spend",tfmt:fmt.money}],
+  lines:[{data:g(r=>r.mer),color:C("--google"),axis:"right",name:"MER",tfmt:fmt.x}],
+  leftFmt:fmt.moneyk,rightFmt:fmt.x,annot:true,htarget:{value:4,axis:"right",label:"Target 4.0"}});
+chart("c_funnel",{lines:[{data:g(r=>r.atc_rate),color:C("--brand"),name:"Add-to-cart",tfmt:fmt.pct},
+  {data:g(r=>r.conversion_rate),color:C("--meta"),name:"Conversion",tfmt:fmt.pct}],leftFmt:fmt.pct,annot:true});
+chart("c_aov",{lines:[{data:g(r=>r.aov),color:C("--google"),fill:true,name:"AOV",tfmt:fmt.money}],leftFmt:fmt.money,annot:true});
+chart("c_cust",{bars:[{data:g(r=>r.new_customers),color:C("--brand"),stack:"c",name:"New",tfmt:fmt.num},
+  {data:g(r=>r.returning_customers),color:C("--nonbrand"),stack:"c",name:"Returning",tfmt:fmt.num}],
+  lines:[{data:g(r=>r.returning_rate),color:C("--google"),axis:"right",name:"Returning rate",tfmt:fmt.pct}],
+  leftFmt:fmt.num,rightFmt:fmt.pct0,annot:true});
+document.getElementById("leg_chan").innerHTML=CHAN.map(c=>`<span><i style="background:${c.color}"></i>${c.name}</span>`).join("");
+chart("c_chan",{bars:CHAN.map(c=>({data:c.data,color:c.color,stack:"ch",name:c.name,tfmt:fmt.money})),leftFmt:fmt.moneyk,annot:true});
+chart("c_nvr",{bars:[{data:NVR.new_rev,color:"#6FB551",stack:"n",name:"New rev",tfmt:fmt.money},
+  {data:NVR.ret_rev,color:"#3F6FB2",stack:"n",name:"Returning rev",tfmt:fmt.money},
+  {data:NVR.unt_rev,color:"#C2C9C3",stack:"n",name:"Untracked",tfmt:fmt.money}],
+  lines:[{data:NVR.new_cvr,color:"#2F6B1E",axis:"right",name:"New CVR",tfmt:fmt.pct},
+    {data:NVR.ret_cvr,color:"#274E7D",axis:"right",name:"Returning CVR",tfmt:fmt.pct}],leftFmt:fmt.moneyk,rightFmt:fmt.pct,annot:true});
+chart("c_meta",{bars:[{data:g(r=>r.meta_spend),color:C("--meta"),stack:"s",name:"Spend",tfmt:fmt.money},
+  {data:g(r=>r.meta_revenue),color:C("--brand"),stack:"r",name:"Revenue",tfmt:fmt.money}],
+  lines:[{data:g(r=>r.meta_roas),color:C("--google"),axis:"right",name:"ROAS",tfmt:fmt.x}],leftFmt:fmt.moneyk,rightFmt:fmt.x,annot:true});
+chart("c_google",{bars:[{data:g(r=>r.google_cost),color:C("--google"),stack:"s",name:"Spend",tfmt:fmt.money},
+  {data:g(r=>r.google_value),color:C("--brand"),stack:"r",name:"Revenue",tfmt:fmt.money}],
+  lines:[{data:g(r=>r.google_roas),color:C("--meta"),axis:"right",name:"ROAS",tfmt:fmt.x}],leftFmt:fmt.moneyk,rightFmt:fmt.x,annot:true});
+chart("c_orgt",{bars:[{data:g(r=>r.gsc_brand_clicks),color:C("--brand"),stack:"o",name:"Brand clicks",tfmt:fmt.num},
+  {data:g(r=>r.gsc_nonbrand_clicks),color:C("--nonbrand"),stack:"o",name:"Non-brand clicks",tfmt:fmt.num},
+  {data:g(r=>r.gsc_anonymised_clicks),color:C("--anon"),stack:"o",name:"Anonymised",tfmt:fmt.num}],
+  lines:[{data:g(r=>r.organic_sessions),color:C("--meta"),axis:"right",name:"GA4 sessions",tfmt:fmt.num}],leftFmt:fmt.num,rightFmt:fmt.num,annot:true});
+chart("c_orgr",{lines:[{data:g(r=>r.organic_revenue),color:C("--brand"),fill:true,name:"Organic revenue",tfmt:fmt.money}],leftFmt:fmt.money,annot:true});
+const cols=[["Month",r=>ML[DATA.indexOf(r)]+" "+r.month.slice(0,4)],["Net sales",r=>fmt.money(r.net_sales)],
+ ["AOV",r=>fmt.money(r.aov)],["Orders",r=>r.orders],["MER",r=>r.mer.toFixed(2)],
+ ["Conv %",r=>fmt.pct(r.conversion_rate)],["ATC %",r=>fmt.pct(r.atc_rate)],["New %",r=>fmt.pct0(r.new_rate)],
+ ["Meta sp.",r=>fmt.money(r.meta_spend)],["Meta ROAS",r=>r.meta_roas.toFixed(2)],
+ ["Goog sp.",r=>fmt.money(r.google_cost)],["Goog ROAS",r=>r.google_roas.toFixed(2)],
+ ["Org sess.",r=>fmt.num(r.organic_sessions)],["Org rev.",r=>fmt.money(r.organic_revenue)]];
+document.getElementById("dtable").innerHTML="<thead><tr>"+cols.map(c=>`<th>${c[0]}</th>`).join("")+"</tr></thead><tbody>"+
+ DATA.map(r=>`<tr${r.month==="2026-04"?" class='brk'":""}>`+cols.map(c=>`<td>${c[1](r)}</td>`).join("")+"</tr>").join("")+"</tbody>";
+</script>
