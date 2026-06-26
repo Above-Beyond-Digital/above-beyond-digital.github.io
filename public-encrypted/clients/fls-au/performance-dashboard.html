@@ -119,9 +119,9 @@ footer{padding:30px 0 50px;color:var(--ink-faint);font-size:12px;border-top:1px 
   <section>
     <div class="eyebrow">Customers</div>
     <h2 class="sec-h">New vs returning</h2>
-    <div class="sec-d">Bars are customer counts (new + returning); line is the returning rate. Acquisition volume fell with spend and the mix tilted toward returning customers.</div>
-    <div class="card"><div class="card-h"><h3>Customers by type &amp; returning rate</h3><span class="u">count · %</span></div>
-      <div class="legend"><span><i style="background:var(--brand)"></i>New</span><span><i style="background:var(--nonbrand)"></i>Returning</span><span class="ln"><i style="background:var(--google)"></i>Returning rate</span></div>
+    <div class="sec-d">Bars are customer counts (new + returning); line is the new-customer rate. Both the volume and the share of new customers fell sharply after the spend cut — the business is leaning on its existing base.</div>
+    <div class="card"><div class="card-h"><h3>Customers by type &amp; new-customer rate</h3><span class="u">count · %</span></div>
+      <div class="legend"><span><i style="background:var(--brand)"></i>New</span><span><i style="background:var(--nonbrand)"></i>Returning</span><span class="ln"><i style="background:var(--google)"></i>New-customer rate</span></div>
       <div class="chart" id="c_cust"></div></div>
   </section>
 
@@ -283,7 +283,7 @@ chart("c_funnel",{lines:[{data:g(r=>r.atc_rate),color:C("--brand"),name:"Add-to-
 chart("c_aov",{lines:[{data:g(r=>r.aov),color:C("--google"),fill:true,name:"AOV",tfmt:fmt.money}],leftFmt:fmt.money,annot:true});
 chart("c_cust",{bars:[{data:g(r=>r.new_customers),color:C("--brand"),stack:"c",name:"New",tfmt:fmt.num},
   {data:g(r=>r.returning_customers),color:C("--nonbrand"),stack:"c",name:"Returning",tfmt:fmt.num}],
-  lines:[{data:g(r=>r.returning_rate),color:C("--google"),axis:"right",name:"Returning rate",tfmt:fmt.pct}],
+  lines:[{data:g(r=>r.new_rate),color:C("--google"),axis:"right",name:"New-customer rate",tfmt:fmt.pct}],
   leftFmt:fmt.num,rightFmt:fmt.pct0,annot:true});
 document.getElementById("leg_chan").innerHTML=CHAN.map(c=>`<span><i style="background:${c.color}"></i>${c.name}</span>`).join("");
 chart("c_chan",{bars:CHAN.map(c=>({data:c.data,color:c.color,stack:"ch",name:c.name,tfmt:fmt.money})),leftFmt:fmt.moneyk,annot:true});
